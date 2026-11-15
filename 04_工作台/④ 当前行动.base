@@ -1,0 +1,30 @@
+filters:
+  and:
+    - 'type == "行动"'
+    - 'action_state != "完成"'
+    - 'action_state != "取消"'
+properties:
+  id:
+    displayName: 编号
+  date:
+    displayName: 日期
+  person:
+    displayName: 对话人
+  nature:
+    displayName: 性质
+  evidence_quality:
+    displayName: 证据
+  source:
+    displayName: 出处
+views:
+  - type: table
+    name: 当前行动（独立行动记录；待澄清须先核实）
+    order:
+      - file.name
+      - date
+      - person
+      - nature
+      - evidence_quality
+    sort:
+      - property: date
+        direction: DESC

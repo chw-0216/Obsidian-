@@ -1,0 +1,41 @@
+filters:
+  and:
+    - 'type == "事件"'
+properties:
+  date:
+    displayName: 日期
+  person:
+    displayName: 对话人
+  level:
+    displayName: 层级
+  nature:
+    displayName: 性质
+  evidence_quality:
+    displayName: 证据
+  msg_count:
+    displayName: 条数
+views:
+  - type: table
+    name: 最近事件（按日期倒序）
+    limit: 40
+    order:
+      - file.name
+      - date
+      - person
+      - level
+      - nature
+      - evidence_quality
+    sort:
+      - property: date
+        direction: DESC
+  - type: table
+    name: 最近改动（按修改时间）
+    limit: 40
+    order:
+      - file.name
+      - date
+      - person
+      - file.mtime
+    sort:
+      - property: file.mtime
+        direction: DESC

@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>深度理解盘点 · 全维度 · 2026-10-04</title>
+<style>
+  :root{
+    --bg:#f7f8f7; --card:#ffffff; --line:#e3e6e3; --line2:#eef0ee;
+    --ink:#1c201d; --ink2:#5a625c; --ink3:#8b938d;
+    --teal:#1D9E75; --teal-bg:#eaf6f1;
+    --red:#c0392b; --red-bg:#fdeceb;
+    --amber:#b8860b; --amber-bg:#fdf6e3;
+    --mono:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    font-size:15px; line-height:1.72; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:940px; margin:0 auto; padding:56px 28px 96px}
+  header{border-bottom:2px solid var(--ink); padding-bottom:22px; margin-bottom:40px}
+  .kicker{font-size:12px; letter-spacing:.16em; color:var(--ink3); text-transform:uppercase; margin-bottom:10px}
+  h1{font-size:29px; line-height:1.3; margin:0 0 12px; font-weight:700; letter-spacing:-.01em}
+  .sub{color:var(--ink2); font-size:14px; margin:0}
+  h2{font-size:19px; margin:52px 0 18px; padding-left:12px; border-left:4px solid var(--teal); font-weight:700; letter-spacing:-.005em}
+  h3{font-size:15.5px; margin:28px 0 10px; font-weight:700; color:var(--ink)}
+  h4{font-size:14px; margin:20px 0 8px; font-weight:700; color:var(--ink2)}
+  p{margin:0 0 14px}
+  ul,ol{margin:0 0 14px; padding-left:22px}
+  li{margin:6px 0}
+  code{font-family:var(--mono); font-size:13px; background:#eef1ef; padding:1.5px 6px; border-radius:4px; color:#2c3a31}
+  pre{font-family:var(--mono); font-size:12.5px; line-height:1.65; background:#1e2421; color:#d8e2da;
+    padding:16px 18px; border-radius:8px; overflow-x:auto; margin:0 0 16px}
+  pre .c{color:#7f8f84} pre .k{color:#7fd1ac} pre .r{color:#f0a8a0}
+  .card{background:var(--card); border:1px solid var(--line); border-radius:10px; padding:22px 24px; margin:0 0 18px}
+  .verdict{background:var(--teal-bg); border:1px solid #bfe4d6; border-radius:10px; padding:22px 24px; margin:0 0 26px}
+  .verdict h3{margin-top:0; color:#116b4f}
+  .verdict ol{margin-bottom:0}
+  .warn{background:var(--red-bg); border:1px solid #f2c4bf; border-radius:10px; padding:18px 22px; margin:0 0 18px}
+  .warn h4{margin-top:0; color:#8f2a1e}
+  .note{background:var(--amber-bg); border:1px solid #f0dfae; border-radius:10px; padding:18px 22px; margin:0 0 18px}
+  .note h4{margin-top:0; color:#8a6508}
+  table{width:100%; border-collapse:collapse; font-size:13.5px; margin:0 0 16px}
+  th,td{padding:9px 11px; border-bottom:1px solid var(--line2); text-align:left; vertical-align:top}
+  th{background:#f1f3f1; font-weight:600; font-size:12px; color:var(--ink2); letter-spacing:.02em}
+  td.num{text-align:right; font-variant-numeric:tabular-nums; font-family:var(--mono); font-size:12.5px; white-space:nowrap}
+  tr.total td{border-top:1.5px solid var(--line); font-weight:700; background:#fafbfa}
+  .tag{display:inline-block; font-size:11px; padding:1px 7px; border-radius:20px; font-weight:600; letter-spacing:.02em}
+  .t-ok{background:#e2f3ec; color:#116b4f}
+  .t-no{background:#fdeceb; color:#a93226}
+  .t-part{background:#fdf6e3; color:#8a6508}
+  .t-new{background:#e8eefc; color:#2b4a9b}
+  .quote{border-left:3px solid #cfd6d1; padding:2px 0 2px 14px; color:var(--ink2); font-size:14px; margin:0 0 12px}
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:14px}
+  @media(max-width:720px){.grid2{grid-template-columns:1fr}}
+  .stat{background:var(--card); border:1px solid var(--line); border-radius:10px; padding:16px 18px}
+  .stat .n{font-size:24px; font-weight:700; font-family:var(--mono); letter-spacing:-.02em}
+  .stat .l{font-size:12px; color:var(--ink3); margin-top:2px}
+  footer{margin-top:64px; padding-top:20px; border-top:1px solid var(--line); font-size:12.5px; color:var(--ink3)}
+  .bar{height:7px; background:#eceeec; border-radius:4px; overflow:hidden; margin-top:6px}
+  .bar i{display:block; height:100%; background:var(--teal)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="kicker">自我理解引擎 · 全维度缺口盘点</div>
+  <h1>怎么做到「比你还理解你自己」</h1>
+  <p class="sub">2026-10-04 · 引擎 12 文件逐项体检 · 12 种数据源 × 只用 1 种 · 6 类瓶颈 × 可执行解法</p>
+</header>
+
+<div class="verdict">
+  <h3>结论先行（5 句）</h3>
+  <ol>
+    <li><b>引擎的三层骨架（人格 / 人际 / 事件）已经立住了</b>，不是从零开始 —— 缺的是「喂进去的东西」和「验一遍」。</li>
+    <li><b>★ 最大的结构性缺口：你身上有 12 种数据，引擎只读了 1 种。</b>聊天消息只占你全部数字痕迹的一小部分；朋友圈、收藏、搜索历史、转账、文件、群成员关系<b>全部没进引擎</b>。</li>
+    <li><b>★ 找到 3 个「比聊天记录更真」的语料源</b>：朋友圈自述（无评估语）、搜索历史（诚实的注意力）、微信收藏（主动留下的东西）。聊天里看到的是「应机态」，这三个更接近「镜像态」。</li>
+    <li><b>本轮纠正了 2 个错误结论</b>：朋友圈时间戳公式算错了（连带「2025-09 后停发」这个叙事整个是错的），已用数据内嵌时间戳交叉验证修正。</li>
+    <li><b>唯一必须你本人动手的只有 1 件事</b>：补标 <code>补标_29人距离表.csv</code>（29 人）。其余 5 类瓶颈我都能自己推。</li>
+  </ol>
+</div>
+
+<h2>一、引擎现状：12 个文件逐项体检</h2>
+
+<p>先把「已经有什么」摆清楚。引擎目前是 <b>3 层 + 3 协议 + 1 自测 + 2 数据表</b>：</p>
+
+<table>
+  <thead><tr><th>文件</th><th>体量</th><th>职责</th><th>状态</th></tr></thead>
+  <tbody>
+    <tr><td><code>SKILL.md</code></td><td class="num">178 行</td><td>入口：加载协议 / 四类任务路由 / 铁律 / 红线</td><td><span class="tag t-part">数字过期</span></td></tr>
+    <tr><td><code>01-人格核心.md</code></td><td class="num">26.4 KB</td><td>他是谁：我执 / 两套系统 / 三态 / 距离定律 / 觉悟</td><td><span class="tag t-ok">完整</span></td></tr>
+    <tr><td><code>02-读人协议.md</code></td><td class="num">2.7 KB</td><td>怎么给一个人定性</td><td><span class="tag t-ok">完整</span></td></tr>
+    <tr><td><code>03-读对话协议.md</code></td><td class="num">3.5 KB</td><td>怎么读一段实时对话</td><td><span class="tag t-ok">完整</span></td></tr>
+    <tr><td><code>04-人际地图.md</code></td><td class="num">11.0 KB</td><td>54 人：距离半径 / 关系 / 结向 / 消息量</td><td><span class="tag t-part">标定 34%</span></td></tr>
+    <tr><td><code>05-纠偏层.md</code></td><td class="num">58.2 KB</td><td>唯一裁定层：11 种失效模式 + 31 节裁定记录</td><td><span class="tag t-ok">最厚</span></td></tr>
+    <tr><td><code>06-理解度自测.md</code></td><td class="num">2.8 KB</td><td>D1/D2/D3 三维盲测（≥75 分达标）</td><td><span class="tag t-no">从未跑</span></td></tr>
+    <tr><td><code>07-事件档案.md</code></td><td class="num">48.6 KB</td><td>5 阶段主线 + 9 条因果链 + 雷区 / 成就锚点</td><td><span class="tag t-ok">完整</span></td></tr>
+    <tr><td><code>08-读事件协议.md</code></td><td class="num">5.0 KB</td><td>怎么用事件层回答（阶段检索 / 链定位 / 影响评估）</td><td><span class="tag t-ok">完整</span></td></tr>
+    <tr><td><code>事件库.csv</code></td><td class="num">2,687 行</td><td>结构化事件（阶段×距离×情感负荷×来源）</td><td><span class="tag t-part">未人工复核</span></td></tr>
+    <tr><td><code>距离地图.csv</code></td><td class="num">54 行</td><td>距离半径标定结果</td><td><span class="tag t-part">34%</span></td></tr>
+    <tr><td><code>scripts/</code> ×3</td><td class="num">23 KB</td><td>build_distance_map / build_event_layer / understand</td><td><span class="tag t-ok">可用</span></td></tr>
+  </tbody>
+</table>
+
+<div class="note">
+  <h4>一句话诊断</h4>
+  <p style="margin-bottom:0">骨架合格，<b>但「输入」和「校验」两头都欠</b>。像一个建模很漂亮、但只喂了 1/3 特征、且从没做过交叉验证的模型。</p>
+</div>
+
+<h2>二、★ 语料模态盘点：12 种数据，只读了 1 种</h2>
+
+<p>这是本次盘点最重要的发现。我把解密库里<b>所有子库</b>都翻了一遍，列出「每种数据能回答什么问题 / 引擎用没用」：</p>
+
+<table>
+  <thead><tr><th>模态</th><th>数据源</th><th class="num">规模</th><th>能回答什么（引擎现在答不了）</th><th>用了吗</th></tr></thead>
+  <tbody>
+    <tr><td>聊天消息</td><td><code>index.sqlite</code></td><td class="num">388,366</td><td>他对谁说什么</td><td><span class="tag t-ok">已用</span></td></tr>
+    <tr><td><b>朋友圈·自述</b></td><td><code>sns.db</code></td><td class="num">11 + 267</td><td><b>他不加评估语时，说人话是什么样</b></td><td><span class="tag t-new">未用</span></td></tr>
+    <tr><td>朋友圈·刷到谁</td><td><code>SnsTopItem_1</code></td><td class="num">7,401 / 951人</td><td>他的信息流里都是谁（被动注意力）</td><td><span class="tag t-new">未用</span></td></tr>
+    <tr><td>朋友圈·互动</td><td><code>SnsMessage_tmp3</code></td><td class="num">252 / 140相关</td><td>谁点赞评论了他（含 <code>is_relative_me</code>）</td><td><span class="tag t-new">未用</span></td></tr>
+    <tr><td><b>搜索历史</b></td><td><code>SearchRecent</code></td><td class="num">31</td><td><b>他主动找谁 = 他在想谁</b>（最诚实的注意力）</td><td><span class="tag t-new">未用</span></td></tr>
+    <tr><td><b>微信收藏</b></td><td><code>favorite.db</code></td><td class="num">230</td><td><b>他主动「留下」什么</b>（含 2014 年起）</td><td><span class="tag t-new">未用</span></td></tr>
+    <tr><td>转账</td><td><code>transferTable</code></td><td class="num">77 笔</td><td>钱的流向（现金流真相）</td><td><span class="tag t-new">未用</span></td></tr>
+    <tr><td>红包</td><td><code>redEnvelopeTable</code></td><td class="num">13</td><td>社交性金钱往来</td><td><span class="tag t-new">未用</span></td></tr>
+    <tr><td>好友申请</td><td><code>FMessageTable</code></td><td class="num">32</td><td>谁在什么时间找他（含何一沙）</td><td><span class="tag t-new">未用</span></td></tr>
+    <tr><td>收发文件</td><td><code>hardlink.db</code></td><td class="num">670 / 1,636 / 106</td><td>他在做什么项目（pdf 341 / docx 107…）</td><td><span class="tag t-new">未用</span></td></tr>
+    <tr><td>语音</td><td><code>media_0.db</code></td><td class="num">2,486</td><td>他什么时候愿意「说」而不是「打」</td><td><span class="tag t-new">未用</span></td></tr>
+    <tr><td>群成员关系</td><td><code>chatroom_member</code></td><td class="num">50,998</td><td>他和谁共享场域（714 个群）</td><td><span class="tag t-new">未用</span></td></tr>
+    <tr><td>媒体资源</td><td><code>message_resource.db</code></td><td class="num">51,850 + 135,375</td><td>图片 / 文件 / 视频的元数据</td><td><span class="tag t-new">未用</span></td></tr>
+    <tr><td>通讯录</td><td><code>contact.db</code></td><td class="num">42,708</td><td>全量关系底账（备注考古）</td><td><span class="tag t-ok">部分用</span></td></tr>
+    <tr><td>未读计数</td><td><code>session.db</code></td><td class="num">19,624</td><td>他「选择不看」什么（刷屏群的标价）</td><td><span class="tag t-new">未用</span></td></tr>
+    <tr><td>表情包</td><td><code>emoticon.db</code></td><td class="num">29 套</td><td>他的情绪表达工具箱</td><td><span class="tag t-new">未用</span></td></tr>
+    <tr><td>微信自带 FTS</td><td><code>message_fts.db</code></td><td class="num">2.3 GB</td><td>官方全文索引（备用交叉验证）</td><td><span class="tag t-new">未用</span></td></tr>
+  </tbody>
+</table>
+
+<div class="grid2">
+  <div class="stat"><div class="n">1 / 12</div><div class="l">引擎真正读进去的模态数</div><div class="bar"><i style="width:8%"></i></div></div>
+  <div class="stat"><div class="n">+10</div><div class="l">本轮新发现、可立即接入的数据源</div><div class="bar"><i style="width:83%"></i></div></div>
+</div>
+
+<h2>三、★ 3 个「比聊天记录更真」的语料源</h2>
+
+<p>为什么说「更真」？因为<b>聊天是应机态</b> —— 他在回别人，语言被对方的期待塑形（尤其对导师，是「表演层」）。而这三种是他<b>对着无人说话时留下的痕迹</b>。</p>
+
+<h3>3.1 朋友圈 11 条 —— 他不加评估语时的样子</h3>
+
+<p>先把<b>修正后</b>的完整清单摆出来（旧的日期是错的，见第四节）：</p>
+
+<table>
+  <thead><tr><th>#</th><th>时间</th><th>原文</th><th>备注</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td class="num">2025-07-03 21:57</td><td class="quote" style="margin:0">（无配文）</td><td>—</td></tr>
+    <tr><td>2</td><td class="num">2026-06-09 02:21</td><td class="quote" style="margin:0">再见</td><td>凌晨 2 点</td></tr>
+    <tr><td>3</td><td class="num">2026-06-10 20:09</td><td class="quote" style="margin:0">夜晚晴朗很配毕业音乐会的</td><td>配小视频 · 同现「子夜」「高晓斌 初中」</td></tr>
+    <tr><td>4</td><td class="num">2026-06-14 22:53</td><td class="quote" style="margin:0">（无配文）</td><td>—</td></tr>
+    <tr><td>5</td><td class="num">2026-06-16 20:46</td><td class="quote" style="margin:0">这么大的雨，适合在玻璃后面看一会儿喝点东西</td><td>—</td></tr>
+    <tr><td>6</td><td class="num">2026-07-07 17:03</td><td class="quote" style="margin:0">又避山中</td><td>「又」= 不是第一次</td></tr>
+    <tr><td>7</td><td class="num">2026-08-12 05:11</td><td class="quote" style="margin:0">（无配文）</td><td>凌晨 5 点</td></tr>
+    <tr><td>8</td><td class="num">2026-09-01 10:12</td><td class="quote" style="margin:0">阅读你我，美美与共 学习</td><td>转「高教社阅读与继续教育」· <b>母亲刘丽萍点赞+评论[玫瑰]</b></td></tr>
+    <tr><td>9</td><td class="num">2026-09-01 23:00</td><td class="quote" style="margin:0">云南夜静，替北方籍美食家们把云南菜试了个遍，回头好交差[旺柴]</td><td>★ 与澜沧线索直接相关</td></tr>
+    <tr><td>10</td><td class="num">2026-09-02 03:14</td><td class="quote" style="margin:0">老师乡村美育工作站[庆祝]×6</td><td>★ 转 <b>陈晔 · 乡村美育工作站学术主理人</b> · <b>母亲刘丽萍互动</b></td></tr>
+    <tr><td>11</td><td class="num">2026-09-02 21:21</td><td class="quote" style="margin:0">怀敬天地</td><td>—</td></tr>
+  </tbody>
+</table>
+
+<h4>从这 11 条能读出什么（3 条硬结论）</h4>
+<ol>
+  <li><b>发圈风格与聊天语言完全两套系统。</b>朋友圈全部是 <b>4–18 字的短句、纯感受 / 纯陈述、零评估语、零自我推销</b>。对照 <code>01-人格核心.md</code> 八-1「他所有的关系语言都是评估语言」—— 这是<b>一个明确的反例</b>：当没有人可评估时，他直接说感受（「这么大的雨，适合在玻璃后面看一会儿」）。<b>「评估语言」是应机产物，不是他的母语。</b></li>
+  <li><b>发圈是「事件驱动」，不是「日常驱动」。</b>2026 年两个爆发簇：<b>6 月（4 条）</b> 和 <b>9 月（4 条）</b>。6 月是毕业季 + 「又避山中」；9 月是乡村美育 + 云南 + 陈晔转发。<b>他只在「有值得标记的事」时发，平时完全静默</b>（8 月整月只 1 条）。</li>
+  <li><b>★ 母亲在朋友圈里会互动，且是唯一稳定互动的人。</b>第 8、10 条都有 <code>wxid_1wa75s1kze3o22 刘丽萍</code> 的点赞 / 评论（[玫瑰]）。这修正了「与父母同住 → 微信只承担事务通知」的单薄印象：<b>事务在私聊，情感在朋友圈</b> —— 这是两条不同的通道。</li>
+</ol>
+
+<div class="note">
+  <h4>★ 与导师线连起来看</h4>
+  <p style="margin-bottom:0">第 10 条：他<b>主动在朋友圈转发导师陈晔的「乡村美育工作站」</b>。对照 <code>05-纠偏层.md</code> 三·补·14「对陈晔表面绝对服从」—— 现在多了一个观测点：<b>连个人朋友圈都用来为她做传播</b>。这是「换机会的代价」里，他自己加的那部分劳动，不在她的要求清单上。</p>
+</div>
+
+<h3>3.2 搜索历史 —— 他主动找谁（31 条全量）</h3>
+
+<p>微信的 <code>SearchRecent</code> 表只留最近 31 条，但每一条都是<b>「他主动敲进去的字」</b>——比任何画像都诚实。</p>
+
+<pre><span class="c"># 2026-09-25 单日搜了 13 个词（像批量整理 / 集中回忆）</span>
+导 · 华天 · 杜铭 · 章 · 冯梦 · 火山 · Lzh · 如 · 武 · 海 · yu · * · 词元
+
+<span class="c"># 其余时间线</span>
+2026-10-03 <span class="k">关</span>      2026-10-02 <span class="k">刘丽</span>     2026-10-01 <span class="k">笑一</span>
+2026-09-29 <span class="k">笑</span>      2026-09-28 <span class="k">刘</span>       2026-09-26 xiao
+2026-09-12 xia     2026-09-10 jt      2026-09-09 XI / AI
+2026-09-03 米雪 / 词元   2026-08-31 安   2026-08-29 利
+2026-08-27 汪      2026-08-22 <span class="r">格拉斯哥 / 格拉斯</span>   2026-08-10 高晓斌   2026-08-08 高</pre>
+
+<p>三条读法：</p>
+<ul>
+  <li><b>「笑一 / 笑」反复出现在 09-29、10-01</b> —— 与 Q15（笑一定性）悬空同步，<b>他本人也在反复琢磨这件事</b>。</li>
+  <li><b>「格拉斯哥」2026-08-22</b> —— 留学记忆的回访，与 Q11（低学位）悬空呼应。</li>
+  <li><b>「华天」2026-09-25</b> —— 汤华天（2026 年度人物），印证他常说的「向汤华天同志学习」；<b>「词元」09-03</b> 是 AI 场景（token）。</li>
+</ul>
+
+<h3>3.3 微信收藏 —— 他主动「留下」的东西（230 条，跨度 11.5 年）</h3>
+
+<table>
+  <thead><tr><th>类型</th><th class="num">条数</th><th>说明</th></tr></thead>
+  <tbody>
+    <tr><td>图片</td><td class="num">89</td><td>—</td></tr>
+    <tr><td>文章</td><td class="num">68</td><td>他判断「值得再读」的内容</td></tr>
+    <tr><td>文本 / 链接</td><td class="num">21</td><td>含「这里是两个工具的登录方式」（2026-01-13）</td></tr>
+    <tr><td>文件</td><td class="num">20</td><td>—</td></tr>
+    <tr><td>视频 / 小程序 / 位置 / 语音 / 音乐</td><td class="num">30</td><td>位置含「泸州幺妹私房菜」等</td></tr>
+    <tr class="total"><td>合计</td><td class="num">230</td><td>时间 <b>2014-11-23 ~ 2026-05-19</b></td></tr>
+  </tbody>
+</table>
+
+<div class="note">
+  <h4>★ 一个意外收获：2014-11-23</h4>
+  <p style="margin-bottom:0">收藏里最早一条是 <b>2014-11-23</b> —— 比消息库（2024-11 起）早了整整 <b>10 年</b>。这是目前能摸到的<b>最早的本人数字痕迹</b>。收藏是「他主动选择保存」的行为，比聊天更能反映长期兴趣。标签只有 2 个，其中一个是 <code>Google密码</code>（多工具并用的旁证）。</p>
+</div>
+
+<h3>3.4 附带：钱与文件（两个能立刻用的新维度）</h3>
+<div class="grid2">
+  <div class="card">
+    <h4 style="margin-top:0">转账 77 笔 —— 最高频对象是母亲</h4>
+    <p style="font-size:13.5px; margin-bottom:6px"><code>wxid_1wa75s1kze3o22</code> = <b>刘丽萍</b>（alias <code>llp13910879928</code>，llp 即姓名拼音首字母）。大量「我收到」集中在 2025-07 ~ 2026-08。</p>
+    <p style="font-size:13.5px; margin-bottom:0">→ <b>现金流入口 = 家里</b>，与「海淀精华教学 2025.09 起」这条自我造血线并行。<b>钱的流向可以直接验证「关系支出 &gt; 现金安全」这个排序</b>。</p>
+  </div>
+  <div class="card">
+    <h4 style="margin-top:0">文件 670 个 —— pdf 占一半</h4>
+    <p style="font-size:13.5px; margin-bottom:6px">pdf 341 · docx 107 · xlsx 58 · pptx 35 · m4a 24。文件名样本直接暴露项目：<code>丝网印刷工作坊-10月3日-原比例矢量</code> · <code>在场与回应_澜沧独立章节_v1.pptx</code> · <code>汇丰_2026年高资产净值财富传承规划报告</code>。</p>
+    <p style="font-size:13.5px; margin-bottom:0">→ <b>「他在做什么项目」有了实物清单</b>，不再只靠聊天里的只言片语。</p>
+  </div>
+</div>
+
+<h2>四、本轮修正的 2 个错误（必须留档）</h2>
+
+<div class="warn">
+  <h4>错误 1：朋友圈时间戳公式算错了（连带结论错）</h4>
+  <p>旧记录写的是 <code>ts = (tid &amp; 0xFFFF...) &gt;&gt; 32</code>，据此解出「2024-11 ~ 2025-09，之后停发」。</p>
+  <p><b>实际公式</b>（本轮用数据内嵌时间戳交叉验证，与 <code>SnsTopItem_1.create_time</code> 完全吻合）：</p>
+  <pre>ts_ms = (tid &amp; 0xFFFFFFFFFFFFFFFF) &gt;&gt; <span class="k">23</span>   <span class="c"># 低 23 位=序号，高 41 位=毫秒时间戳</span></pre>
+  <p style="margin-bottom:0"><b>为什么 <code>&gt;&gt;32</code> 会错</b>：毫秒时间戳需要 41 位，<b>跨越了 32 位边界</b>，所以按 32 位切会错一个量级（解出 2078–2080 年）。</p>
+</div>
+
+<div class="warn">
+  <h4>错误 2：由错误 1 推出的「发圈率崩塌」叙事整个是错的</h4>
+  <p style="margin-bottom:0">旧结论：「2025-09 后完全停发朋友圈」。<b>实际是反的</b>：11 条里 <b>10 条在 2026 年</b>，且 <b>2026-06 与 2026-09 是两个发圈高峰</b>。真正成立的观察不是「停发」，而是<b>「只在事件驱动时爆发式发圈，平时静默」</b>。</p>
+</div>
+
+<h2>五、6 类瓶颈 × 每一类的解法</h2>
+
+<table>
+  <thead><tr><th>#</th><th>瓶颈</th><th>现状</th><th>解法</th><th>谁来做</th></tr></thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td><b>语料模态单一</b></td>
+      <td>12 种数据只用 1 种</td>
+      <td>按第三节清单逐个接入，优先朋友圈 / 搜索 / 收藏</td>
+      <td><span class="tag t-ok">我</span></td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td><b>距离标定率 34%</b><br><span style="font-size:12px;color:var(--ink3)">902 / 2,686</span></td>
+      <td>唯一需人工填表的瓶颈</td>
+      <td>补标 <code>补标_29人距离表.csv</code>（29 人）→ 重跑 <code>build_distance_map.py</code></td>
+      <td><span class="tag t-no">你</span></td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td><b>理解度自测从未跑</b></td>
+      <td><code>06</code> 定义了 D1/D2/D3 盲测，一次没跑</td>
+      <td>造 30 道盲测题（对话→本人会怎么回），我出题你判分</td>
+      <td><span class="tag t-ok">我</span> + <span class="tag t-no">你判分</span></td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td><b>事件未人工复核</b></td>
+      <td>2,687 条自动抽取，未确认</td>
+      <td>过一遍 <code>事件复核台.html</code>，确认/剔除</td>
+      <td><span class="tag t-no">你</span></td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td><b>4 个悬空裁定</b></td>
+      <td>Q15 笑一 / 云南澜沧动机 / 替安奇跑博士 / 导师「他们」指谁</td>
+      <td>本人一句话裁定 → 写进 <code>05-纠偏层.md</code></td>
+      <td><span class="tag t-no">你</span></td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td><b>引擎数据表过期</b></td>
+      <td><code>SKILL.md</code> 仍写 324,588 / 1,829 会话</td>
+      <td>本轮同步为 388,366 / 1,802 会话 + 新增数据源章节</td>
+      <td><span class="tag t-ok">本轮已修</span></td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="note">
+  <h4>「比你还理解你自己」到底缺哪一块</h4>
+  <p>缺的不是「更多聊天记录」—— 那部分已经饱和（38.8 万条，覆盖率 100%）。缺的是<b>「聊天之外的你」</b>：</p>
+  <ul style="margin-bottom:0">
+    <li>聊天里的你是<b>应机态</b>（对导师服从、对母亲发泄、对笑一降温）——这是<b>被对方塑形过的你</b>。</li>
+    <li>朋友圈 / 搜索 / 收藏里的你是<b>无人时的你</b>——<b>这一块引擎几乎空白</b>。</li>
+    <li>所以真正的差距不在「读得够不够细」，在<b>「看的是不是一个完整的你」</b>。</li>
+  </ul>
+</div>
+
+<h2>六、下一步行动清单（按性价比排序）</h2>
+
+<table>
+  <thead><tr><th>优先级</th><th>动作</th><th>产出</th><th>预计</th></tr></thead>
+  <tbody>
+    <tr><td><b>P0</b></td><td>把 11 条朋友圈 + 搜索历史 + 收藏 写成引擎新章节</td><td><code>09-无人时档案.md</code>（新文件）</td><td>本轮</td></tr>
+    <tr><td><b>P0</b></td><td>修正 <code>SKILL.md</code> 数据源表 + 加「数据源全景」章节</td><td>引擎可自查「还有哪些没读」</td><td>本轮</td></tr>
+    <tr><td><b>P1</b></td><td>把 2 个错误写进 <code>05-纠偏层.md</code></td><td>防复发记录</td><td>本轮</td></tr>
+    <tr><td><b>P1</b></td><td>写 <code>tools/export_sns.py</code>：朋友圈全量（含 267 条刷到的 + 951 人 + 互动）</td><td>朋友圈语料可检索</td><td>1 轮</td></tr>
+    <tr><td><b>P1</b></td><td>写 <code>tools/export_misc.py</code>：转账 / 红包 / 收藏 / 搜索 / 文件 → CSV</td><td>4 个新维度可查</td><td>1 轮</td></tr>
+    <tr><td><b>P2</b></td><td>造 30 道 D1/D2/D3 盲测题</td><td>引擎「真的懂了吗」有分数</td><td>1 轮</td></tr>
+    <tr><td><b>P2</b></td><td>你把 <code>补标_29人距离表.csv</code> 填了</td><td>距离标定率 34% → 80%+</td><td>你 20 分钟</td></tr>
+    <tr><td><b>P3</b></td><td>云南澜沧动机（新证据「回头好交差」）</td><td>Q 清单再消一条</td><td>你 1 句</td></tr>
+  </tbody>
+</table>
+
+<h2>七、数据主权与边界（不变）</h2>
+
+<ul>
+  <li><b>全程本地</b>：以上所有数据源都在本机解密库 <code>AppData\Local\ChatTrace\...</code>，未出本机，未上传任何第三方。</li>
+  <li><b>只读</b>：本轮所有脚本均以 <code>mode=ro</code> 打开数据库，不写入、不修改原始数据。</li>
+  <li><b>可回滚</b>：索引库保留 <code>index.sqlite.bak-v1-20261004</code> 回滚点。</li>
+  <li><b>红线未变</b>：朋友圈 / 搜索 / 收藏的新发现，一律作为「待裁定证据」，<b>不得当结论引用</b>，直到你本人确认。</li>
+</ul>
+
+<footer>
+  自我理解引擎 · 全维度缺口盘点 · 2026-10-04<br>
+  数据源：<code>ChatTrace</code> 本地解密库（只读）· 索引库 388,366 条 / 1,802 会话<br>
+  脚本：<code>tools/inventory_sources.py</code> · <code>peek_new_sources{,2,3}.py</code> · <code>dump_sns_mine.py</code> · <code>solve_tid.py</code>
+</footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>P0 事件级 · 可行性验证（本机文件扫描）</title>
+<style>
+  :root{
+    --ink:#1f1f1e; --ink2:#5f5e5a; --ink3:#888780;
+    --line:#e5e3dc; --line2:#d3d1c7;
+    --bg:#ffffff; --bg2:#faf9f6;
+    --acc:#993c1d; --acc-bg:#faece7;
+    --ok:#3b6d11; --ok-bg:#eaf3de;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    font-size:14px;line-height:1.7}
+  .wrap{max-width:880px;margin:0 auto;padding:48px 32px 80px}
+  header{border-bottom:2px solid var(--ink);padding-bottom:20px;margin-bottom:32px}
+  .kicker{font-size:12px;letter-spacing:.14em;color:var(--ink3);margin-bottom:10px}
+  h1{font-size:24px;font-weight:600;margin:0 0 8px;letter-spacing:-.01em}
+  .sub{font-size:13px;color:var(--ink2);margin:0}
+  h2{font-size:15px;font-weight:600;margin:44px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--line2)}
+  p{margin:0 0 12px}
+  .lead{background:var(--bg2);border-left:3px solid var(--acc);padding:16px 18px;margin:0 0 8px;border-radius:0 6px 6px 0}
+  .lead strong{color:var(--acc)}
+  .verdict{background:var(--acc-bg);border:1px solid #e8c9c0;border-radius:6px;padding:18px 20px;margin:16px 0}
+  .verdict .big{font-size:16px;font-weight:600;color:var(--acc);margin-bottom:8px}
+  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:13px}
+  th{text-align:left;font-weight:600;color:var(--ink2);padding:8px 10px;border-bottom:1px solid var(--line2);white-space:nowrap}
+  td{padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+  tbody tr:last-child td{border-bottom:none}
+  .num{font-variant-numeric:tabular-nums;white-space:nowrap;text-align:right}
+  .bars{margin:16px 0}
+  .b{display:flex;align-items:center;gap:10px;margin-bottom:7px;font-size:12.5px}
+  .b .lab{width:52px;color:var(--ink2);font-variant-numeric:tabular-nums;flex:none}
+  .b .track{flex:1;background:var(--bg2);border-radius:3px;height:16px;position:relative;overflow:hidden}
+  .b .fill{height:100%;background:var(--ink3);border-radius:3px}
+  .b .fill.hi{background:var(--acc)}
+  .b .val{width:66px;text-align:right;color:var(--ink3);font-variant-numeric:tabular-nums;flex:none}
+  .note{border:1px solid var(--line2);border-radius:6px;padding:14px 16px;margin:14px 0;background:var(--bg2)}
+  .note .t{font-weight:600;margin-bottom:6px;font-size:13px}
+  .good{border-color:#c0dd97;background:var(--ok-bg)} .good .t{color:var(--ok)}
+  ul{margin:8px 0 12px;padding-left:20px}
+  li{margin-bottom:6px}
+  code{background:var(--bg2);border:1px solid var(--line);border-radius:3px;padding:1px 5px;font-size:12px}
+  footer{margin-top:56px;padding-top:20px;border-top:1px solid var(--line2);font-size:12px;color:var(--ink3)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="kicker">自我理解引擎 · 阶段补全（第二轮）</div>
+  <h1>P0 事件级 · 可行性验证</h1>
+  <p class="sub">方法：扫描本机文件时间戳 · 只读 · 未移动、未修改、未删除任何文件</p>
+</header>
+
+<div class="verdict">
+  <div class="big">结论：不可行 —— 本机文件时间戳无法还原 P0 的事件级</div>
+  <p style="margin:0">不是「没扫到」，是<strong>扫到了但信号是坏的</strong>：2025–2026 的数字被数据导出污染，
+  而 2019–2024 有信号的部分<strong>恰好都是简历上已有的</strong>。增量信息 ≈ 0。</p>
+</div>
+
+<h2>一、扫描了什么</h2>
+<p>两轮扫描，覆盖 <code>Documents / Desktop / Pictures / Downloads / Videos / Music / OneDrive</code>，
+排除 <code>.git / node_modules / .venv / AppData</code> 等。第一轮全量，第二轮只取「个人产出」目录。</p>
+
+<table>
+  <thead><tr><th>轮次</th><th>范围</th><th class="num">文件数</th><th>用途</th></tr></thead>
+  <tbody>
+    <tr><td>第一轮</td><td>全量</td><td class="num">约 30 万</td><td>发现污染源</td></tr>
+    <tr><td>第二轮</td><td>只取个人产出目录</td><td class="num">184,665</td><td>试图还原真实密度</td></tr>
+  </tbody>
+</table>
+
+<h2>二、污染在哪（第一轮发现的）</h2>
+
+<table>
+  <thead><tr><th>年份</th><th>表面数字</th><th>实际构成</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>2025</strong></td>
+      <td class="num">36,208 文件</td>
+      <td>其中 <strong>25,723</strong> 来自聊天记录分析目录、<strong>10,229</strong> 来自微信文件目录 —— 合计 <strong>99%</strong>，是数据导出，不是他的产出</td>
+    </tr>
+    <tr>
+      <td><strong>2026</strong></td>
+      <td class="num">254,727 文件</td>
+      <td>其中 <strong>134,062</strong> 是 AI 会话归档、<strong>53,958</strong> 是微信照片、<strong>34,651</strong> 是聊天分析 —— 同样是数据落盘</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="note">
+  <div class="t">根因</div>
+  <p style="margin:0">Windows 的「创建时间」记的是 <strong>文件拷进这台机器的时间</strong>，不是内容产生的时间。
+  解压一个微信数据包，就会产生几万个「今天创建」的文件。</p>
+</div>
+
+<h2>三、换成「修改时间」+ 只取个人目录，还剩什么</h2>
+
+<div class="bars">
+  <div class="b"><span class="lab">2019</span><span class="track"><span class="fill" style="width:2%"></span></span><span class="val">125</span></div>
+  <div class="b"><span class="lab">2020</span><span class="track"><span class="fill" style="width:17%"></span></span><span class="val">1,193</span></div>
+  <div class="b"><span class="lab">2021</span><span class="track"><span class="fill" style="width:7%"></span></span><span class="val">494</span></div>
+  <div class="b"><span class="lab">2022</span><span class="track"><span class="fill" style="width:29%"></span></span><span class="val">2,014</span></div>
+  <div class="b"><span class="lab">2023</span><span class="track"><span class="fill" style="width:15%"></span></span><span class="val">1,029</span></div>
+  <div class="b"><span class="lab">2024</span><span class="track"><span class="fill hi" style="width:100%"></span></span><span class="val">6,964</span></div>
+  <div class="b"><span class="lab">2025</span><span class="track"><span class="fill" style="width:100%"></span></span><span class="val">26,724 *</span></div>
+  <div class="b"><span class="lab">2026</span><span class="track"><span class="fill" style="width:100%"></span></span><span class="val">134,012 *</span></div>
+</div>
+<p style="font-size:12px;color:var(--ink3);margin-top:-4px">* 2025–2026 仍含批量归档操作，不可比。条形按 2024 上限截断显示。</p>
+
+<h3 style="font-size:13px;color:var(--ink2);margin:22px 0 6px">能对上简历的四个峰值（这是唯一的好消息）</h3>
+
+<table>
+  <thead><tr><th>时间</th><th class="num">修改数</th><th>对应什么</th><th>是否新信息</th></tr></thead>
+  <tbody>
+    <tr><td>2019-06</td><td class="num">66</td><td>KPMG 实习收尾（简历：2019.01–06）</td><td>否</td></tr>
+    <tr><td>2022-06 / 07</td><td class="num">906 / 420</td><td>Tronic Trace 项目期（简历：2022.03–09）</td><td>否</td></tr>
+    <tr><td>2024-01 / 02</td><td class="num">1,460 / 1,185</td><td>格拉斯哥学期密集期</td><td>否</td></tr>
+    <tr><td>2024-10 / 12</td><td class="num">1,963 / 1,304</td><td>硕士论文与毕业（简历：2024.12 毕业）</td><td>否</td></tr>
+  </tbody>
+</table>
+
+<div class="note">
+  <div class="t">为什么说增量 ≈ 0</div>
+  <p style="margin:0">四个峰值<strong>全部能在简历上找到</strong>。文件时间戳没有告诉我们任何简历上没有的事
+  —— 没有新地点、没有新项目、没有新关系。</p>
+</div>
+
+<h2>四、一个附带发现（有用的）</h2>
+
+<div class="note good">
+  <div class="t">2023 年整年几乎是空的</div>
+  <p style="margin:0">2023-04 到 2023-11，每月文件数都在 <strong>3–12</strong> 之间 —— 那是他在格拉斯哥的完整学年。
+  <br>换句话说：<strong>他出国期间，本机几乎不产生文件</strong>。所以「用本机文件还原海外生活」这条路本身就是堵的。</p>
+</div>
+
+<h2>五、所以 P0 事件级应该从哪来</h2>
+
+<table>
+  <thead><tr><th>来源</th><th>可行性</th><th>说明</th></tr></thead>
+  <tbody>
+    <tr><td>本机文件时间戳</td><td style="color:var(--acc)">✗ 已排除</td><td>本次验证。信号被数据落盘污染，有效部分与简历重复</td></tr>
+    <tr><td>微信数据</td><td style="color:var(--acc)">✗ 已排除</td><td>微信最早只到 2023，且全年仅 6 条</td></tr>
+    <tr><td><strong>旧邮件（学校 / 工作）</strong></td><td style="color:var(--ok)">○ 可能</td><td>KPMG / 惠民数科 / 格拉斯哥 的往来邮件，是最接近事件级的来源</td></tr>
+    <tr><td><strong>旧手机备份</strong></td><td style="color:var(--ok)">○ 可能</td><td>若还在，短信 / 通话 / 相册时间戳是事件级</td></tr>
+    <tr><td><strong>本人回忆（对话式）</strong></td><td style="color:var(--ok)">◎ 最可行</td><td>沿用本轮的做法：一次一个问题，你答，我落盘。<strong>成本最低、精度最高</strong></td></tr>
+  </tbody>
+</table>
+
+<div class="verdict">
+  <div class="big">建议</div>
+  <p style="margin:0">P0 不要再找「客观来源」了 —— 现有客观来源（文件 / 微信）都堵死。
+  <strong>最可行的是回到对话式：你讲，我记。</strong>按本轮的速度，P0 大概 5–8 个问题就能补出骨架。</p>
+</div>
+
+<footer>
+  自我理解引擎 · P0 事件级可行性验证 · 2026-09-29<br>
+  扫描为只读操作，未移动 / 未修改 / 未删除任何文件 · 全部本地处理<br>
+  明细：<code>file_density.csv</code> · <code>personal_density.csv</code>
+</footer>
+
+</div>
+</body>
+</html>

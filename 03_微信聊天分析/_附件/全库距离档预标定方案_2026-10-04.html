@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>全库距离档预标定方案 · 2026-10-04</title>
+<style>
+  :root{
+    --bg:#f7f8f7; --card:#ffffff; --line:#e3e6e3; --line2:#eef0ee;
+    --ink:#1c201d; --ink2:#5a625c; --ink3:#8b938d;
+    --teal:#1D9E75; --teal-bg:#eaf6f1;
+    --red:#c0392b; --red-bg:#fdeceb;
+    --amber:#b8860b; --amber-bg:#fdf6e3;
+    --blue:#2b4a9b; --blue-bg:#e8eefc;
+    --mono:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    font-size:15px; line-height:1.72; -webkit-font-smoothing:antialiased;}
+  .wrap{max-width:980px; margin:0 auto; padding:56px 28px 96px}
+  header{border-bottom:2px solid var(--ink); padding-bottom:22px; margin-bottom:36px}
+  .kicker{font-size:12px; letter-spacing:.16em; color:var(--ink3); text-transform:uppercase; margin-bottom:10px}
+  h1{font-size:28px; line-height:1.3; margin:0 0 12px; font-weight:700; letter-spacing:-.01em}
+  .sub{color:var(--ink2); font-size:14px; margin:0}
+  h2{font-size:19px; margin:48px 0 16px; padding-left:12px; border-left:4px solid var(--teal); font-weight:700}
+  h3{font-size:15.5px; margin:26px 0 10px; font-weight:700}
+  p{margin:0 0 14px}
+  ul,ol{margin:0 0 14px; padding-left:22px}
+  li{margin:6px 0}
+  code{font-family:var(--mono); font-size:13px; background:#eef1ef; padding:1.5px 6px; border-radius:4px; color:#2c3a31}
+  .card{background:var(--card); border:1px solid var(--line); border-radius:10px; padding:22px 24px; margin:0 0 18px}
+  .verdict{background:var(--teal-bg); border:1px solid #bfe4d6; border-radius:10px; padding:22px 24px; margin:0 0 26px}
+  .verdict h3{margin-top:0; color:#116b4f}
+  .note{background:var(--amber-bg); border:1px solid #f0dfae; border-radius:10px; padding:18px 22px; margin:0 0 18px}
+  .note h4{margin-top:0; color:#8a6508}
+  .blue{background:var(--blue-bg); border:1px solid #c5d2f2; border-radius:10px; padding:18px 22px; margin:0 0 18px}
+  .blue h4{margin-top:0; color:#1f3a7d}
+  .red{background:var(--red-bg); border:1px solid #f2c9c4; border-radius:10px; padding:18px 22px; margin:0 0 18px}
+  .red h4{margin-top:0; color:#a93226}
+  table{width:100%; border-collapse:collapse; font-size:13.5px; margin:0 0 16px}
+  th,td{padding:9px 11px; border-bottom:1px solid var(--line2); text-align:left; vertical-align:top}
+  th{background:#f1f3f1; font-weight:600; font-size:12px; color:var(--ink2)}
+  td.n{text-align:center; font-variant-numeric:tabular-nums; font-family:var(--mono); font-size:12.5px; color:var(--ink3); width:34px}
+  td.num{text-align:right; font-variant-numeric:tabular-nums; font-family:var(--mono); font-size:12.5px}
+  .tag{display:inline-block; font-size:11px; padding:1px 7px; border-radius:20px; font-weight:600; white-space:nowrap}
+  .t-y{background:#fdeceb; color:#a93226}
+  .t-z{background:#fdf6e3; color:#8a6508}
+  .t-j{background:#e2f3ec; color:#116b4f}
+  .t-b{background:#e8eefc; color:#1f3a7d}
+  .t-g{background:#eef0ee; color:#5a625c}
+  .grid{display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin:0 0 24px}
+  .stat{background:var(--card); border:1px solid var(--line); border-radius:10px; padding:16px 18px; text-align:center}
+  .stat b{display:block; font-size:28px; font-weight:700; line-height:1.2; font-variant-numeric:tabular-nums}
+  .stat span{font-size:12.5px; color:var(--ink2)}
+  footer{margin-top:64px; padding-top:20px; border-top:1px solid var(--line); font-size:12.5px; color:var(--ink3)}
+  .bar{display:flex; height:26px; border-radius:6px; overflow:hidden; margin:0 0 8px; font-size:11px; color:#fff; font-weight:600}
+  .bar div{display:flex; align-items:center; justify-content:center}
+  .ladder{display:flex; flex-direction:column; gap:8px; margin:0 0 20px}
+  .rung{display:flex; align-items:center; gap:14px; background:var(--card); border:1px solid var(--line); border-radius:8px; padding:12px 16px}
+  .rung .k{font-family:var(--mono); font-size:12px; font-weight:700; color:var(--ink3); width:52px}
+  .rung .t{flex:1; font-size:13.5px}
+  .rung .v{font-family:var(--mono); font-weight:700; font-size:15px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="kicker">自我理解引擎 · 距离标定</div>
+  <h1>全库距离档 · 预标定方案</h1>
+  <p class="sub">2026-10-04 · 1,004 个私聊会话 · 核心结论：<b>距离档推不出来</b>，但复核量可以从 1,784 压到 302</p>
+</header>
+
+<div class="verdict">
+  <h3>结论先行</h3>
+  <p style="margin-bottom:10px">我用 29 人做标尺，试了 <b>6 个可量化特征</b>去自动推距离档 —— <b>全部失败</b>。</p>
+  <p style="margin-bottom:10px">消息量、时间跨度、活跃天数、我发占比、对价词、亲属词，
+  <b>没有一个能区分「中」和「远」</b>。混淆矩阵很干净：<b>5 个「中」全军覆没，24 个「远」全对</b>。</p>
+  <p style="margin-bottom:0">原因不复杂：<b>「中」不是互动强度，是关系性质</b>（对价 / 血缘 / 婚恋）——
+  这件事<b>只在你脑子里，不在数据里</b>。<br>
+  所以这一步真正的产出不是 1,004 个档位，而是：<b>把不确定性压缩成 302 个待你念的人</b>。</p>
+</div>
+
+<div class="grid">
+  <div class="stat"><b>1,004</b><span>私聊会话</span></div>
+  <div class="stat"><b style="color:#c0392b">302</b><span>需人工复核</span></div>
+  <div class="stat"><b style="color:#b8860b">17</b><span>近候选（≥1000 条）</span></div>
+  <div class="stat"><b style="color:#8a8f98">702</b><span>可默认「远」</span></div>
+</div>
+
+<h2>一、★ 核心结论：距离档推不出来（29 人实测）</h2>
+
+<p>规则先在有答案的 29 人身上跑，结果是这样的：</p>
+
+<table>
+  <thead><tr><th>已知档</th><th>预测「远」</th><th>命中率</th></tr></thead>
+  <tbody>
+    <tr><td><b>远（24 人）</b></td><td>24</td><td><b>100%</b> ✅</td></tr>
+    <tr><td><b>中（5 人）</b></td><td>0</td><td><b>0%</b> ❌</td></tr>
+  </tbody>
+</table>
+
+<p>「远」全对不是规则聪明 —— 是<b>「远」本来就是绝大多数</b>（24/29 = 82.8%）。随便全判「远」也有 82.8%。
+真正的问题是：<b>5 个「中」一个都没抓出来</b>。</p>
+
+<h3>六个特征逐一看，为什么全废</h3>
+
+<table>
+  <thead><tr><th>特征</th><th>「中」档实测</th><th>「远」档实测</th><th>能区分？</th></tr></thead>
+  <tbody>
+    <tr><td>消息量</td><td>32 ~ 1154</td><td>8 ~ 521</td><td><span class="tag t-y">不能</span> Pink 521 条是「远」，野¥稻 32 条是「中」</td></tr>
+    <tr><td>时间跨度</td><td>0 ~ 558 天</td><td>0 ~ 439 天</td><td><span class="tag t-y">不能</span> 笑笑 439 天是「远」</td></tr>
+    <tr><td>活跃天数</td><td>1 ~ 54</td><td>1 ~ 32</td><td><span class="tag t-y">不能</span></td></tr>
+    <tr><td>我发占比</td><td>0.56 ~ 0.81</td><td>0.46 ~ 0.89</td><td><span class="tag t-y">不能</span></td></tr>
+    <tr><td>对价词命中</td><td>3 / 5</td><td>15 / 24</td><td><span class="tag t-y">不能</span> 「远」命中率反而更高</td></tr>
+    <tr><td>亲属词命中</td><td>3 / 5</td><td>5 / 24</td><td><span class="tag t-y">弱信号</span> 有方向，但噪音大</td></tr>
+  </tbody>
+</table>
+
+<div class="blue">
+  <h4>为什么必然失败</h4>
+  <p style="margin-bottom:0">你对「中」的定义是<b>有对价 / 血缘 / 婚恋意图</b> —— 这三个都是<b>关系性质</b>。<br>
+  而数据里只有<b>行为</b>：发了多少条、聊了多久、谁更主动。<br>
+  <b>行为量和关系性质之间没有映射。</b> 一个每天找你报价的外包（行为量高），和一个你三年只聊过三次的表弟（行为量低），
+  在数据上完全不可比 —— 但在你心里，后者更近。</p>
+</div>
+
+<h2>二、那能做什么：分层，不是定档</h2>
+
+<p>放弃「自动定档」，改做两件数据<b>真的能支撑</b>的事：</p>
+
+<ol>
+  <li><b>分类</b> —— 1,802 个会话里，只有 <b>1,004 个是私聊真人</b>。其余是群聊 283、公众号 515、系统号 3 —— 这些不需要距离档。</li>
+  <li><b>分层</b> —— 按<b>你自己留下的线索</b>（微信标签 + 备注）排出复核优先级。
+      线索不是你给的，是你<b>早就标好的</b>。</li>
+</ol>
+
+<div class="note">
+  <h4>★ 关键发现：你的标签系统里有「态度词」</h4>
+  <p style="margin-bottom:0">1,549 人打过标签、48 种。其中一批<b>不是分类，是态度</b>：<br>
+  <code>高</code> 66 人 · <code>大佬</code> 9 · <code>无关</code> 38 · <code>严肃</code> 18 · <code>垃圾</code> 12 · <code>脏</code> 4 · <code>该死的烂叛徒</code> 3 · <code>蹭饭</code> 8<br>
+  这些是你<b>自己写下的判断</b>，比任何行为特征都硬。</p>
+</div>
+
+<div class="red">
+  <h4>⚠️ 但标签 ≠ 距离档（必须知道）</h4>
+  <p style="margin-bottom:0"><b>王小2</b> 的标签是「<b>大佬</b>」，但在 29 人表里你标的是「<b>远</b>」。<br>
+  <b>舒泽林</b> 的标签是「<b>无关｜高</b>」—— 同时标了「无关」和「高」。<br>
+  → 标签是<b>线索</b>，不是答案。<b>不得</b>用标签直接推档位。</p>
+</div>
+
+<h2>三、全库分层结果（1,004 私聊）</h2>
+
+<table>
+  <thead><tr><th>层</th><th>线索来源</th><th class="num">人数</th><th>处理方式</th></tr></thead>
+  <tbody>
+    <tr><td><b>L0</b></td><td>同住白名单（父 / 母 / 研一室友）</td><td class="num">3</td><td><b>直接定「零」</b>（引擎已裁定）</td></tr>
+    <tr><td><b>L1</b></td><td>态度标签（高 / 大佬 / 无关 / 严肃 / 垃圾 / 脏 / 蹭饭）</td><td class="num">42</td><td><b>必念</b> —— 你明确表过态的人</td></tr>
+    <tr><td><b>L2</b></td><td>学缘标签（城院 / 美术 / 实验研一 / 初中 / 格拉斯哥 / maclay）</td><td class="num">72</td><td>建议念 —— 有共同背景</td></tr>
+    <tr><td><b>L3</b></td><td>有真备注（备注 ≠ 昵称）</td><td class="num">59</td><td>建议念 —— 你主动写过字</td></tr>
+    <tr><td><b>L4</b></td><td>项目标签（hcare / 国富论 / kp sicco / 金展 / 国药）</td><td class="num">59</td><td>可抽样 —— 协作性质，大概率「远」</td></tr>
+    <tr><td><b>L5</b></td><td>无标签无备注（其中 <b>659 人</b>在通讯录、<b>110 人</b>不在＝公众号 / 服务号 / 已删好友）</td><td class="num">769</td><td><b>默认「远」</b> —— 最外围</td></tr>
+  </tbody>
+</table>
+
+<p>加上「近候选」与「消息量 ≥ 100」的，去重后 <b>复核清单 = 302 人</b>。
+构成：L0 3 · L1 42 · L2 72 · L3 59 · L4 9 · L5 里挑出的高互动 117。</p>
+
+<h2>四、★ 「近」候选 17 人（重要澄清）</h2>
+
+<p>29 人表里「近」＝ 0，容易读成「他没有近的人」。<b>这个读法是错的</b> —— 那 29 人是从<b>事件库</b>筛出来的，
+不是从<b>互动量</b>筛出来的。真正该看「近」的地方是全库互动排行。</p>
+
+<table>
+  <thead><tr><th class="n">#</th><th>名称</th><th class="num">消息量</th><th class="num">距今天</th><th>线索</th></tr></thead>
+  <tbody>
+    <tr><td class="n">1</td><td>导！急速回，三思回得体！！！</td><td class="num">7,262</td><td class="num">1</td><td>陈晔（导师）· 学缘「美术」</td></tr>
+    <tr><td class="n">2</td><td>笑一</td><td class="num">6,303</td><td class="num">0</td><td>有备注 · hcare</td></tr>
+    <tr><td class="n">3</td><td>文件传输助手</td><td class="num">6,463</td><td class="num">0</td><td>⚠️ <b>这是「自己」档，不是「近」</b></td></tr>
+    <tr><td class="n">4</td><td>陈昶文</td><td class="num">6,275</td><td class="num">99</td><td>有备注 · hcare｜实验式｜ing</td></tr>
+    <tr><td class="n">5</td><td>Eloise</td><td class="num">5,660</td><td class="num">26</td><td>hcare（核心央企在职）</td></tr>
+    <tr><td class="n">6</td><td>沐茜妍</td><td class="num">3,013</td><td class="num">18</td><td>无标签无备注</td></tr>
+    <tr><td class="n">7</td><td>甘泉</td><td class="num">2,901</td><td class="num">458</td><td>有备注 · <b>已断（458 天）</b></td></tr>
+    <tr><td class="n">8</td><td>🍬🍬</td><td class="num">2,642</td><td class="num">150</td><td>无标签无备注</td></tr>
+    <tr><td class="n">9</td><td>Parapluie</td><td class="num">2,068</td><td class="num">2</td><td>hcare</td></tr>
+    <tr><td class="n">10</td><td>小苹果</td><td class="num">2,009</td><td class="num">245</td><td>无标签无备注</td></tr>
+    <tr><td class="n">11</td><td>薛伟东烧焦一切</td><td class="num">1,987</td><td class="num">54</td><td>实验研一｜美术</td></tr>
+    <tr><td class="n">12</td><td>舒泽林</td><td class="num">1,767</td><td class="num">39</td><td>态度标签「无关｜高」</td></tr>
+    <tr><td class="n">13</td><td>王若彤</td><td class="num">1,435</td><td class="num">215</td><td>态度标签「无关」</td></tr>
+    <tr><td class="n">14</td><td>Sīrius R</td><td class="num">1,237</td><td class="num">40</td><td>hcare</td></tr>
+    <tr><td class="n">15</td><td>Darwin</td><td class="num">1,154</td><td class="num">40</td><td>29 人表里已是「中」</td></tr>
+    <tr><td class="n">16</td><td>李紫懿</td><td class="num">1,123</td><td class="num">128</td><td>有备注 · hcare｜实验研一｜美术｜ing</td></tr>
+    <tr><td class="n">17</td><td>高晓斌 初中</td><td class="num">1,035</td><td class="num">55</td><td>有备注 · hcare｜「。。。」</td></tr>
+  </tbody>
+</table>
+
+<p><b>去掉文件传输助手（＝自己），真实「近」候选 = 16 人</b>，且门槛很硬：
+<b>≥1000 条</b>。整个库只有 19 个会话过千条 —— 这是「近」的物理上限。</p>
+
+<div class="note">
+  <h4>看「距今天」这一列</h4>
+  <p style="margin-bottom:0">7,262 条的陈晔 <b>距今天 1 天</b>、笑一 <b>0 天</b>、Parapluie <b>2 天</b> ——
+  <b>还活着</b>。而甘泉 458 天、小苹果 245 天、王若彤 215 天 —— <b>已经死了</b>。<br>
+  → 「近」不只讲量，还讲<b>现在还在不在</b>。</p>
+</div>
+
+<h2>五、★ 必念清单：L1 态度标签 42 人</h2>
+
+<p>这 42 人是<b>你自己写过态度的人</b>，优先级最高 —— 念一遍就能校准一大片。</p>
+
+<table>
+  <thead><tr><th>标签</th><th>人（按消息量降序）</th></tr></thead>
+  <tbody>
+    <tr><td><span class="tag t-j">高</span></td><td>权禹仙 654 · 李紫玥 576 · 费泽方-贸大-北工商金工 127 · 倪越 120 · 高连奎 114 · 肖宇 107 · 严思语卓—Ash 77 · 梅淙然 15 · 社长--马钰泽 11 · 李澳 7 · 杜雯翠 6 · 珂涵 : ) 1</td></tr>
+    <tr><td><span class="tag t-b">大佬</span></td><td>梅宸羽 北京台 354 · 张爽 174 · <b>王小2 164</b> · 王佳玥 161 · 工藤 優作®31313 60 · Ποσειδῶν·Neptūnus 39 · 崔佰祥 21 · 刘盼 14 · 赵涛 4</td></tr>
+    <tr><td><span class="tag t-g">无关</span></td><td><b>舒泽林 1767</b> · <b>王若彤 1435</b> · 王子秋 354 · 柯益盈高中三班 251 · 计兆齐 高一五班 50 · 王子建 5 · 赵璧 5 · 李若尘 高一五班 4</td></tr>
+    <tr><td><span class="tag t-z">严肃</span></td><td>蔡黎明 586 · <b>蔡晓梅 396</b> · 大姨奶奶 155 · <b>奶奶 144</b> · 任桀颉 29 · 王亮 10 · 虹 5 · 李乐萌 4 · Siming Xu 3</td></tr>
+    <tr><td><span class="tag t-y">脏 / 蹭饭</span></td><td>🔞天涯海浪 💯 35 · 郭凯新 1 · Kaká 49 · 原来是匪翠啊 1</td></tr>
+  </tbody>
+</table>
+
+<p>注意两条：<b>舒泽林被标「无关」但消息量全库第 12</b>；<b>王小2 被标「大佬」但你判「远」</b>。
+这两个矛盾正好说明：标签记录的是<b>你某一刻的想法</b>，距离档是<b>你现在的判断</b>。</p>
+
+<h2>六、复核预算：你念多少人，我就能定多少</h2>
+
+<div class="ladder">
+  <div class="rung"><span class="k">最小</span><span class="t"><b>19 人</b>（消息量 ≥ 1000）—— 全部「近」候选 + 最重的「中」</span><span class="v">19</span></div>
+  <div class="rung"><span class="k">推荐</span><span class="t"><b>71 人</b>（消息量 ≥ 300）—— 近 + 中 基本全覆盖</span><span class="v">71</span></div>
+  <div class="rung"><span class="k">完整</span><span class="t"><b>201 人</b>（消息量 ≥ 100）—— 有实质互动的全部</span><span class="v">201</span></div>
+  <div class="rung"><span class="k">清单</span><span class="t"><b>302 人</b>（有线索的 + 高互动）—— 本报告交付的复核清单</span><span class="v">302</span></div>
+</div>
+
+<p>剩下 <b>702 人</b>（无标签无备注 + 消息量 &lt; 100）→ <b>默认「远」</b>。</p>
+
+<h2>七、方法论边界与红线</h2>
+
+<div class="red">
+  <h4>不得越界</h4>
+  <ol style="margin-bottom:0">
+    <li><b>不得</b>把「默认远」当已裁定 —— 它是<b>未验证的预标定</b>。准确率只在 29 人样本上是 82.8%，且那 29 人偏「有互动」，全库真实占比可能更高。</li>
+    <li><b>不得</b>用标签直接推档位 —— 王小2 / 舒泽林两例已证伪。</li>
+    <li><b>不得</b>把 L5 的 702 人当成「没关系的人」—— 那是「<b>数据看不出关系</b>」，不是「没有关系」。</li>
+    <li><b>不得</b>外传本报告名单（含大量真人姓名）。</li>
+  </ol>
+</div>
+
+<h2>八、落盘</h2>
+
+<table>
+  <thead><tr><th>文件</th><th>内容</th></tr></thead>
+  <tbody>
+    <tr><td><code>全库距离预标定_2026-10-04.csv</code></td><td>1,004 私聊 × 13 列（消息量 / 跨度 / 活跃 / 我发占比 / 距今天 / 标签 / 备注 / 层级 / 建议档 / 置信度 / 近候选）</td></tr>
+    <tr><td><code>距离档复核清单_2026-10-04.csv</code></td><td><b>302 人</b>，按 L0→L5 + 消息量排序，可直接一人一档念</td></tr>
+    <tr><td><code>tools/build_distance_prelabel.py</code></td><td>预标定生成脚本（只读索引库）</td></tr>
+    <tr><td><code>tools/calibrate_distance_rules.py</code></td><td>标尺校准脚本（29 人实测，含混淆矩阵）</td></tr>
+  </tbody>
+</table>
+
+<footer>
+  自我理解引擎 · 距离标定第 3 步（1/3 分类 → 2/3 分层 → 3/3 人工裁定）｜ 2026-10-04<br>
+  数据全程本地：<code>index.sqlite</code>（388,550 条）+ 通讯录 CSV（4,592 人），未出本机
+</footer>
+
+</div>
+</body>
+</html>

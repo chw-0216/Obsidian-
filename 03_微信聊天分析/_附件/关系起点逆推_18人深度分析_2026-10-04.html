@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>关系起点逆推 · 18 人深度分析 · 2026-10-04</title>
+<style>
+  :root{
+    --bg:#f7f8f7; --card:#ffffff; --line:#e3e6e3; --line2:#eef0ee;
+    --ink:#1c201d; --ink2:#5a625c; --ink3:#8b938d;
+    --teal:#1D9E75; --teal-bg:#eaf6f1;
+    --red:#c0392b; --red-bg:#fdeceb;
+    --amber:#b8860b; --amber-bg:#fdf6e3;
+    --blue:#2b4a9b; --blue-bg:#e8eefc;
+    --mono:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    font-size:15px; line-height:1.72; -webkit-font-smoothing:antialiased;}
+  .wrap{max-width:1000px; margin:0 auto; padding:56px 28px 96px}
+  header{border-bottom:2px solid var(--ink); padding-bottom:22px; margin-bottom:36px}
+  .kicker{font-size:12px; letter-spacing:.16em; color:var(--ink3); text-transform:uppercase; margin-bottom:10px}
+  h1{font-size:28px; line-height:1.3; margin:0 0 12px; font-weight:700; letter-spacing:-.01em}
+  .sub{color:var(--ink2); font-size:14px; margin:0}
+  h2{font-size:19px; margin:48px 0 16px; padding-left:12px; border-left:4px solid var(--teal); font-weight:700}
+  h3{font-size:15.5px; margin:26px 0 10px; font-weight:700}
+  p{margin:0 0 14px}
+  ul,ol{margin:0 0 14px; padding-left:22px}
+  li{margin:6px 0}
+  code{font-family:var(--mono); font-size:13px; background:#eef1ef; padding:1.5px 6px; border-radius:4px; color:#2c3a31}
+  .card{background:var(--card); border:1px solid var(--line); border-radius:10px; padding:22px 24px; margin:0 0 18px}
+  .verdict{background:var(--teal-bg); border:1px solid #bfe4d6; border-radius:10px; padding:22px 24px; margin:0 0 26px}
+  .verdict h3{margin-top:0; color:#116b4f}
+  .note{background:var(--amber-bg); border:1px solid #f0dfae; border-radius:10px; padding:18px 22px; margin:0 0 18px}
+  .note h4{margin-top:0; color:#8a6508}
+  .blue{background:var(--blue-bg); border:1px solid #c5d2f2; border-radius:10px; padding:18px 22px; margin:0 0 18px}
+  .blue h4{margin-top:0; color:#1f3a7d}
+  .red{background:var(--red-bg); border:1px solid #f2c9c4; border-radius:10px; padding:18px 22px; margin:0 0 18px}
+  .red h4{margin-top:0; color:#a93226}
+  table{width:100%; border-collapse:collapse; font-size:13px; margin:0 0 16px}
+  th,td{padding:8px 10px; border-bottom:1px solid var(--line2); text-align:left; vertical-align:top}
+  th{background:#f1f3f1; font-weight:600; font-size:12px; color:var(--ink2)}
+  td.n{text-align:center; font-variant-numeric:tabular-nums; font-family:var(--mono); font-size:12.5px; color:var(--ink3); width:32px}
+  td.num{text-align:right; font-variant-numeric:tabular-nums; font-family:var(--mono); font-size:12.5px}
+  .tag{display:inline-block; font-size:11px; padding:1px 7px; border-radius:20px; font-weight:600; white-space:nowrap}
+  .t-y{background:#fdeceb; color:#a93226}
+  .t-z{background:#fdf6e3; color:#8a6508}
+  .t-j{background:#e2f3ec; color:#116b4f}
+  .t-b{background:#e8eefc; color:#1f3a7d}
+  .t-g{background:#eef0ee; color:#5a625c}
+  .grid{display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin:0 0 24px}
+  .stat{background:var(--card); border:1px solid var(--line); border-radius:10px; padding:16px 18px; text-align:center}
+  .stat b{display:block; font-size:28px; font-weight:700; line-height:1.2; font-variant-numeric:tabular-nums}
+  .stat span{font-size:12.5px; color:var(--ink2)}
+  footer{margin-top:64px; padding-top:20px; border-top:1px solid var(--line); font-size:12.5px; color:var(--ink3)}
+  .q{font-family:var(--mono); font-size:11.5px; color:var(--ink3)}
+  .quote{background:#fafbfa; border-left:3px solid var(--line); padding:10px 14px; margin:8px 0; font-size:13.5px; color:#3a423c}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="kicker">自我理解引擎 · 关系起点逆推</div>
+  <h1>你怎么加到这些人的 · 18 人深度分析</h1>
+  <p class="sub">2026-10-04 · 四问逐人：① 怎么加的 ② 对方是谁 ③ 当时价值 ④ 之后价值</p>
+</header>
+
+<div class="verdict">
+  <h3>结论先行</h3>
+  <ol style="margin-bottom:0">
+    <li><b>你是「加人方」</b> —— 有记录的 425 个私聊里，<b>408 次是你主动加</b>（96%）。
+      ⚠️ 但「别人加你」微信根本不记录（实测 <code>已添加你</code> 命中 <b>0 条</b>）——<b>不能</b>读成「没人加你」。</li>
+    <li><b>开场白 ＝ 关系定位声明</b> —— 对高价值的人你必用<b>尊称 + 谦卑</b>（「陈老师好！！！」「学长打扰您了」「学姐好」「t哥t哥」）；
+      对平等的人用「<b>那啥</b>」。这不是习惯，是<b>分档动作</b>。</li>
+    <li><b>价值分四种形态，而且已经死了 4 个</b> —— 甘泉（458 天）· 小苹果（245 天）· 🍬🍬（150 天）· 陈昶文（99 天）。</li>
+    <li><b>★ 最大警报：Eloise 断崖</b> —— 2025 年 4,099 条 → 2026 年 <b>156 条</b>。
+      她曾是你最重的职业人脉，现在只剩「借 Gemini 账号 + 你给她推活动」。</li>
+  </ol>
+</div>
+
+<div class="grid">
+  <div class="stat"><b>408</b><span>你主动加（次）</span></div>
+  <div class="stat"><b>0</b><span>「别人加你」记录</span></div>
+  <div class="stat"><b style="color:#c0392b">4</b><span>已断的关系</span></div>
+  <div class="stat"><b style="color:#b8860b">1</b><span>断崖流失（Eloise）</span></div>
+</div>
+
+<h2>一、先说数据能说什么、不能说什么</h2>
+
+<table>
+  <thead><tr><th>问题</th><th>数据能不能答</th><th>依据</th></tr></thead>
+  <tbody>
+    <tr><td>是不是你主动加的</td><td><span class="tag t-j">能</span></td><td>system 消息「你已添加了X」/「X通过了你的朋友验证」</td></tr>
+    <tr><td>什么时候加的</td><td><span class="tag t-j">能</span></td><td>会话首条 ts</td></tr>
+    <tr><td>你加人时说了什么</td><td><span class="tag t-j">能</span></td><td>你的第一条 text</td></tr>
+    <tr><td>关系什么时候冷的</td><td><span class="tag t-j">能</span></td><td>年度消息量分布 + 距今天数</td></tr>
+    <tr><td><b>谁加的谁</b>（对方加你）</td><td><span class="tag t-y">不能</span></td><td>实测 <code>已添加你</code> = <b>0 条</b>，微信不落这种消息</td></tr>
+    <tr><td>对方真实身份</td><td><span class="tag t-z">半能</span></td><td>标签 / 备注 / 地区 + 对方第一句话（需你确认）</td></tr>
+  </tbody>
+</table>
+
+<div class="note">
+  <h4>⚠️ 一条必须纠正的读法</h4>
+  <p style="margin-bottom:0">「他加我 = 0」是<b>数据缺失</b>，<b>不是</b>「没人主动加你」。
+  微信只在「你加别人」时留 system 消息；别人加你、你通过，多数情况下不留。
+  → 本文所有「主动加」结论<b>只往上算，不往下推</b>。</p>
+</div>
+
+<h2>二、逐人四问（18 人）</h2>
+
+<p class="q">「怎么加的」列：<b>他主动加</b> = 有 system 证据 ｜ <b>无记录</b> = 早已互加 / 扫码 / 群转私（多为 2024 年前就认识）</p>
+
+<table>
+  <thead>
+    <tr><th class="n">#</th><th>人</th><th>① 怎么加的（时间 · 你的第一句）</th><th>② 对方是谁</th><th>③ 当时价值</th><th>④ 之后价值</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="n">1</td><td><b>刘丽萍</b><br><span class="q">16,336</span></td>
+      <td><b>你加</b> · 2024-12-30<br>「万事如意！」</td>
+      <td>母亲 · 央美版画系二级教授</td>
+      <td>换新号后重建通道</td>
+      <td><span class="tag t-j">增长</span> 2025:7015 → 2026:9289 · <b>今天</b>还转了 2500</td>
+    </tr>
+    <tr>
+      <td class="n">2</td><td><b>陈晔</b><br><span class="q">7,262</span></td>
+      <td><b>你加</b> · 2025-02-24<br>「陈老师好！！！」</td>
+      <td>导师 · 央美副教授 · 北京 West</td>
+      <td>考上后绑定导师</td>
+      <td><span class="tag t-j">增长</span> 3421 → 3841 · 距今 <b>1 天</b>（关灯关窗）</td>
+    </tr>
+    <tr>
+      <td class="n">3</td><td><b>笑一</b><br><span class="q">6,303</span></td>
+      <td><b>你加</b> · 2026-05-08<br>「那啥」</td>
+      <td>现任女友 · 北京 Haidian · hcare</td>
+      <td>情感</td>
+      <td><span class="tag t-j">全活</span> 2026 全年 6303 · 距今 <b>0 天</b></td>
+    </tr>
+    <tr>
+      <td class="n">4</td><td><b>陈昶文</b><br><span class="q">6,275</span></td>
+      <td><b>你加</b> · 2026-01-03<br>「啊」</td>
+      <td>hcare｜实验式｜ing · 上海</td>
+      <td>同侪 / 情绪出口（对方先倒苦水）</td>
+      <td><span class="tag t-y">已断</span> 3137 → 3138 · <b>2026-06-27 后归零</b>（99 天）</td>
+    </tr>
+    <tr>
+      <td class="n">5</td><td><b>Eloise</b><br><span class="q">5,660</span></td>
+      <td>无记录 · 2024-11-21<br>「那啥」</td>
+      <td>hcare · 冰岛 · <b>核心央企在职</b></td>
+      <td>职业咨询 + 情感支持</td>
+      <td><span class="tag t-y">断崖</span> 1405 → <b>4099</b> → <b>156</b> · 距今 26 天</td>
+    </tr>
+    <tr>
+      <td class="n">6</td><td><b>沐茜妍</b><br><span class="q">3,013</span></td>
+      <td><b>你加</b>（重加）· 2026-04-11<br>「热的话跟我说」</td>
+      <td>本名<b>林立娜</b> · 奥地利 Vienna</td>
+      <td>感情线（2025 年 2305 条）</td>
+      <td><span class="tag t-y">你切断</span> 2305 → 708 · <b>2026-09-16 你说「我有女朋友最近，别联系了」</b></td>
+    </tr>
+    <tr>
+      <td class="n">7</td><td><b>甘泉</b><br><span class="q">2,901</span></td>
+      <td><b>你加</b> · 2025-02-27<br>「！」</td>
+      <td>安道尔（地区可伪装）</td>
+      <td>2025 上半年高频</td>
+      <td><span class="tag t-y">已断</span> 2901 → 0 · <b>2025-07-03 后归零</b>（458 天）</td>
+    </tr>
+    <tr>
+      <td class="n">8</td><td><b>🍬🍬</b><br><span class="q">2,642</span></td>
+      <td>无记录 · 2025-08-15<br>「我在路上我睡过了」</td>
+      <td>安道尔（地区可伪装）</td>
+      <td>线下高频（睡过头/在路上）</td>
+      <td><span class="tag t-y">已断</span> 2577 → 65 · 距今 <b>150 天</b></td>
+    </tr>
+    <tr>
+      <td class="n">9</td><td><b>Parapluie</b><br><span class="q">2,068</span></td>
+      <td>无记录 · 2025-01-14<br>「我算了」</td>
+      <td>hcare · 法国 Nice</td>
+      <td>活动互推（对方先求助「帮我喊点人来」）</td>
+      <td><span class="tag t-j">增长</span> 841 → 1227 · 距今 <b>2 天</b></td>
+    </tr>
+    <tr>
+      <td class="n">10</td><td><b>小苹果</b><br><span class="q">2,009</span></td>
+      <td><b>你加</b> · 2025-01-25<br>「你好呀」</td>
+      <td>河北 张家口</td>
+      <td>线下往来（对方叫你「文哥」）</td>
+      <td><span class="tag t-y">已断</span> 1439 → 570 · 距今 <b>245 天</b></td>
+    </tr>
+    <tr>
+      <td class="n">11</td><td><b>薛伟东</b><br><span class="q">1,987</span></td>
+      <td><b>你加</b> · 2025-09-07<br>「哥那啥在吗」</td>
+      <td>实验研一｜美术（同门）</td>
+      <td>开学后同门求助</td>
+      <td><span class="tag t-j">稳定</span> 1042 → 945 · 距今 54 天</td>
+    </tr>
+    <tr>
+      <td class="n">12</td><td><b>汪伊俊</b><br><span class="q">1,913</span></td>
+      <td>无记录 · 2024-12-19<br>「明天去领准考证吗」</td>
+      <td>实验研一｜美术 · <b>研一室友</b></td>
+      <td>考研同伴（同一场考试）</td>
+      <td><span class="tag t-j">稳定</span> 80 → 986 → 847 · 距今 11 天</td>
+    </tr>
+    <tr>
+      <td class="n">13</td><td><b>舒泽林</b><br><span class="q">1,767</span></td>
+      <td>无记录 · 2024-11-26<br>「那啥」</td>
+      <td>北京 West · <b>g4人</b> · 高中同学 · 标签「无关｜高」</td>
+      <td>高端人脉入口</td>
+      <td><span class="tag t-j">稳定</span> 119 → 820 → 828 · 距今 39 天</td>
+    </tr>
+    <tr>
+      <td class="n">14</td><td><b>王若彤</b><br><span class="q">1,435</span></td>
+      <td>无记录 · 2024-11-13<br>「t哥t哥」</td>
+      <td>法国 Paris · <b>g4人</b></td>
+      <td>小圈子（她叫你「鹤哥」）</td>
+      <td><span class="tag t-y">衰减</span> 585 → 743 → 107 · 距今 <b>215 天</b></td>
+    </tr>
+    <tr>
+      <td class="n">15</td><td><b>Sīrius R</b><br><span class="q">1,237</span></td>
+      <td>无记录 · 2025-08-04<br>「学姐好」</td>
+      <td>hcare · 北京</td>
+      <td>活动对接（你推「平谷闭门对接会」）</td>
+      <td><span class="tag t-j">增长</span> 317 → 920 · 距今 40 天</td>
+    </tr>
+    <tr>
+      <td class="n">16</td><td><b>Darwin</b><br><span class="q">1,154</span></td>
+      <td>无记录 · 2025-08-02<br>「学长打扰您了」</td>
+      <td>英国 London · 公众号协作方</td>
+      <td>任务量最大（15 事件）</td>
+      <td><span class="tag t-z">闹翻</span> 496 → 658 · <b>2026-08-25 你说「抱歉学长一定注意」</b></td>
+    </tr>
+    <tr>
+      <td class="n">17</td><td><b>李紫懿</b><br><span class="q">1,123</span></td>
+      <td>无记录 · 2025-09-09<br>「hi」</td>
+      <td>hcare｜实验研一｜美术｜ing</td>
+      <td>同门</td>
+      <td><span class="tag t-y">衰减</span> 1014 → 109 · 距今 <b>128 天</b></td>
+    </tr>
+    <tr>
+      <td class="n">18</td><td><b>高晓斌</b><br><span class="q">1,035</span></td>
+      <td>无记录 · 2025-09-18<br>「祝高晓斌美女昨日生日快乐[庆祝]」</td>
+      <td>hcare｜瑞士 Zurich</td>
+      <td>生日破冰</td>
+      <td><span class="tag t-j">增长</span> 305 → 730 · 距今 55 天</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>三、你的开场白只有两种，而且是分档的</h2>
+
+<div class="blue">
+  <h4>姿态 A —— 尊称 + 谦卑（对「要攀」的人）</h4>
+  <div class="quote">「陈老师好！！！」（陈晔）·「学长打扰您了」（Darwin）·「学姐好」（Sīrius R）·「t哥t哥」（王若彤）·「哥那啥在吗」（薛伟东）</div>
+  <h4 style="margin-top:16px">姿态 B —— 零客套（对「平等」的人）</h4>
+  <div class="quote">「那啥」（笑一 / Eloise / 舒泽林）·「hi」（李紫懿）·「啊」（陈昶文）·「！」（甘泉）</div>
+  <p style="margin-bottom:0"><b>★ 这不是性格，是分档动作。</b> 你在<b>开口之前就已经把对方定好位了</b> ——
+  需要攀的用敬语，平等的用「那啥」。这与「备注即规程」是同一个人格的两面。</p>
+</div>
+
+<p>注意一个反例：<b>陈昶文</b> 的第一句是「啊」—— 但那是<b>他在回应对方</b>（对方先倒苦水「我感觉我真不该跟朋友接触太多」）。
+所以「谁先开口」也要看 —— 对方主动倾诉的，你直接接。</p>
+
+<h2>四、价值的四种形态（生死榜）</h2>
+
+<table>
+  <thead><tr><th>形态</th><th>人</th><th>特征</th></tr></thead>
+  <tbody>
+    <tr><td><span class="tag t-j">持续增长</span></td><td>刘丽萍 · 陈晔 · 笑一 · Parapluie · Sīrius R · 高晓斌</td><td>2026 &gt; 2025，且距今天数小</td></tr>
+    <tr><td><span class="tag t-j">稳定</span></td><td>舒泽林 · 薛伟东 · 汪伊俊 · Darwin</td><td>两年持平，中低频持续</td></tr>
+    <tr><td><span class="tag t-z">衰减中</span></td><td><b>Eloise</b>（4099→156）· 李紫懿（1014→109）· 王若彤（743→107）</td><td>量掉了一个数量级</td></tr>
+    <tr><td><span class="tag t-y">已断</span></td><td>甘泉 458 天 · 小苹果 245 天 · 🍬🍬 150 天 · 陈昶文 99 天</td><td>100 天以上零消息</td></tr>
+  </tbody>
+</table>
+
+<div class="red">
+  <h4>★ 警报 1：Eloise 断崖（最严重）</h4>
+  <p>2025 年 4,099 条 → 2026 年 <b>156 条</b>，掉了 <b>96%</b>。2026 全年只聊了三次：</p>
+  <ul>
+    <li><b>2026-03-26</b>：她问「3 月 28 的小聚多少人报名」（你在组织活动）</li>
+    <li><b>2026-03-31 凌晨 2:39</b>：<b>你向她暴露自我否定</b> ——
+      <div class="quote">「我混的那么差」「怎么睡得着」「我不是组织者，我说话没有用的，我就是发稿的」「曹总想把我开了，要不是我免费早换了」「没有任何价值。。。」</div>
+      她回：「差毛线啊」「看你组织好多活动」「因为你有能力」</li>
+    <li><b>2026-07-01</b>：她来问 Gemini 账号（事务）</li>
+    <li><b>2026-09-09</b>：<b>你反过来给她推资源</b>（「跟北京时装周同期的想不想去」「妇联的女性数字展」「有名额」）</li>
+  </ul>
+  <p style="margin-bottom:0"><b>关系形态变了</b>：从「你向她倾诉」→「你向她供给」。
+  ⚠️ 她是你<b>唯一</b>在凌晨暴露过「我没有价值」的人 —— 这条线的价值不是资源，是<b>你唯一敢示弱的地方</b>。</p>
+</div>
+
+<div class="red">
+  <h4>★ 警报 2：陈昶文 —— 6,275 条后彻底断（99 天）</h4>
+  <p style="margin-bottom:0">2025-12-13 加，2026-01-03 正式加，两年各 3,137 / 3,138 条，<b>极其对称</b>。
+  <b>2026-06-27 之后一条都没有。</b> 最后几天是语音往来（me voice ×2 / them voice）。
+  → 这是<b>一次性高浓度关系</b>：半年烧完 6,275 条，然后归零。⚠️ <b>原因待你裁定</b>。</p>
+</div>
+
+<div class="red">
+  <h4>★ 警报 3：沐茜妍 —— 是你主动切的，不是她</h4>
+  <p>2026-09-10 到 09-16 六天，她连发长文求复合（「我还是想和你再试试」「等我考上事业编月入 2 万就能给你还美团了」）。</p>
+  <p>你的回应只有三句，最后一句是：</p>
+  <div class="quote">「我有女朋友最近」「别联系了」「好好的吧」</div>
+  <p style="margin-bottom:0">⚠️ <b>注意责任归属</b>：这条线的终止<b>是你决定的</b>，不是她走的。
+  与「你道歉常是风险管理」是同一套逻辑 —— <b>你的切断也很干净</b>。</p>
+</div>
+
+<h2>五、三个新线索（本轮首次出现）</h2>
+
+<table>
+  <thead><tr><th>线索</th><th>内容</th><th>意义</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><b>「二爷」</b></td>
+      <td><b>舒泽林</b>叫你「二爷」（2024-11-26 首句就是「二爷二爷」）· <b>王若彤</b>也问「二爷到哪儿了」</td>
+      <td>这是你在 <b>g4人</b> 小圈子里的<b>绰号</b> —— 两人都带「g4人」标签</td>
+    </tr>
+    <tr>
+      <td><b>「鹤哥」</b></td>
+      <td>王若彤回你「鹤哥」</td>
+      <td>另一个圈内称呼（「鹤」← 浩文？），<b>待你确认来源</b></td>
+    </tr>
+    <tr>
+      <td><b>沐茜妍 = 林立娜</b></td>
+      <td>你 2026-09-12 说「结束吧<b>立娜</b>」</td>
+      <td>✅ 与引擎既有记载一致（本名林立娜）</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>六、这份逆推给你的三条结论</h2>
+
+<div class="card">
+  <ol style="margin-bottom:0">
+    <li><b>你几乎从不「被加」，全靠自己开口</b>（408 次主动）。但这不是「没人要你」——
+      是<b>你习惯主动</b>，且微信只记录主动那一侧。</li>
+    <li><b>你的开场白就是你的分档表</b> —— 敬语 / 那啥 二选一，你在加之前就完成了判断。
+      这跟「备注即规程」是同一件事：<b>你对关系永远先定规矩，再交往</b>。</li>
+    <li><b>你的人际资产正在静默流失</b> —— 18 个最重的关系里，
+      <b>4 个已断 + 3 个衰减 + 1 个闹翻 = 8 个不在增长</b>，只有 6 个在涨。
+      ★ 其中 <b>Eloise 是唯一一个「你示弱过」的人</b>，而它掉得最狠。</li>
+  </ol>
+</div>
+
+<div class="note">
+  <h4>⚠️ 需要你裁定的 3 个点</h4>
+  <ol style="margin-bottom:0">
+    <li><b>陈昶文</b> 2026-06-27 为什么断？（99 天）</li>
+    <li><b>甘泉 / 🍬🍬 / 小苹果</b> 是什么人？（数据里只有地区，都填「安道尔」——疑似伪装）</li>
+    <li><b>「鹤哥」</b> 这个称呼从哪来？</li>
+  </ol>
+</div>
+
+<h2>七、落盘</h2>
+
+<table>
+  <thead><tr><th>文件</th><th>内容</th></tr></thead>
+  <tbody>
+    <tr><td><code>_tmp/relation_origin_v2.txt</code></td><td>19 人起点逆推原始材料（加好友方式 / 首句 / 年度分布 / 最近 4 条）</td></tr>
+    <tr><td><code>_tmp/key_segments.txt</code></td><td>Eloise 2026 全年 · 陈昶文 6 月末 · 沐茜妍 9 月 · 王若彤 尾部</td></tr>
+    <tr><td><code>tools/probe_relation_origin.py</code> / <code>_v2.py</code></td><td>关系起点逆推脚本（只读索引库）</td></tr>
+    <tr><td><code>tools/probe_key_segments.py</code></td><td>关键转折片段抽取脚本</td></tr>
+  </tbody>
+</table>
+
+<footer>
+  自我理解引擎 · 关系起点逆推 ｜ 2026-10-04 ｜ 只覆盖「已核对会话」<br>
+  数据全程本地：<code>index.sqlite</code>（388,550 条）· 未出本机 ｜ ⚠️ 本报告含大量真人姓名，<b>不得外传</b>
+</footer>
+
+</div>
+</body>
+</html>

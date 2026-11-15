@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>这一年 · 大胆猜测（2025-10 → 2026-10）</title>
+<style>
+  :root{
+    --bg:#F8F7F4; --card:#FFFFFF; --ink:#161514; --ink2:#3B3835; --mut:#7C756C;
+    --line:#E6E1D8; --line2:#F1EDE6;
+    --red:#A32B22; --redbg:#FBF0EE; --redline:#EBD3CF;
+    --teal:#2B5B60; --tealbg:#EEF5F4;
+    --gold:#87683A; --goldbg:#F9F4E9;
+    --inkbg:#F2F0EB;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);
+    font-family:"Microsoft YaHei","PingFang SC",sans-serif;
+    font-size:15px;line-height:1.85;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1020px;margin:0 auto;padding:0 30px 100px}
+
+  header{padding:64px 0 34px;border-bottom:2px solid var(--ink)}
+  .kick{font-size:11.5px;letter-spacing:.34em;color:var(--red);font-weight:700;margin-bottom:16px}
+  h1{font-family:"Songti SC","SimSun",serif;font-size:42px;line-height:1.22;font-weight:700}
+  h1 em{font-style:normal;color:var(--red)}
+  .sub{margin-top:18px;font-size:15.5px;color:var(--ink2);max-width:780px}
+  .meta{margin-top:22px;font-size:12px;color:var(--mut);letter-spacing:.05em}
+  .meta span{display:inline-block;margin-right:18px}
+
+  .banner{margin:34px 0 6px;background:var(--redbg);border:1px solid var(--redline);padding:24px 28px}
+  .banner .t{font-size:11.5px;letter-spacing:.22em;color:var(--red);font-weight:700;margin-bottom:12px}
+  .banner .n{font-family:"Songti SC",serif;font-size:46px;line-height:1.05;color:var(--red)}
+  .banner .n small{font-size:17px;font-weight:400;color:var(--ink2);margin-left:6px}
+  .banner p{font-size:13.5px;color:var(--ink2);margin-top:10px}
+
+  h2{font-family:"Songti SC","SimSun",serif;font-size:23px;margin:60px 0 6px;padding-bottom:11px;border-bottom:1px solid var(--ink)}
+  h2 .n{color:var(--red);font-size:14px;margin-right:9px;letter-spacing:.08em}
+  .lead{color:var(--mut);font-size:13.5px;margin:11px 0 24px}
+
+  .g{background:var(--card);border:1px solid var(--line);padding:22px 26px;margin-bottom:14px}
+  .g > h3{font-size:16.5px;margin-bottom:10px;display:flex;align-items:baseline;gap:10px}
+  .g > h3 .tag{font-size:10.5px;font-weight:700;color:#fff;background:var(--ink);padding:3px 8px;letter-spacing:.08em}
+  .g > h3 .tag.r{background:var(--red)} .g > h3 .tag.t{background:var(--teal)} .g > h3 .tag.g{background:var(--gold)}
+  .g > h3 .cf{margin-left:auto;font-size:11px;color:var(--mut);letter-spacing:.04em}
+  .g p{font-size:14px;color:var(--ink2)}
+  .g p + p{margin-top:9px}
+
+  .evd{margin-top:13px;border-top:1px dashed var(--line);padding-top:12px}
+  .evd .lb{font-size:11px;letter-spacing:.16em;color:var(--mut);font-weight:700;margin-bottom:8px}
+  .evd ul{list-style:none}
+  .evd li{position:relative;padding:5px 0 5px 16px;font-size:13.2px;color:var(--ink2);font-variant-numeric:tabular-nums}
+  .evd li::before{content:"";position:absolute;left:0;top:14px;width:5px;height:5px;background:var(--red);border-radius:50%}
+  .evd li b{color:var(--ink);font-weight:700}
+  .evd li .d{color:var(--red);font-weight:700;font-variant-numeric:tabular-nums}
+
+  .q{font-family:"Songti SC",serif;font-size:13.5px;color:var(--ink);background:var(--inkbg);
+     border-left:2px solid var(--red);padding:10px 15px;margin:10px 0;line-height:1.8}
+
+  table{width:100%;border-collapse:collapse;font-size:13px;margin:4px 0}
+  th{text-align:left;font-size:11px;letter-spacing:.06em;color:var(--mut);font-weight:700;padding:8px 9px;border-bottom:2px solid var(--ink)}
+  td{padding:7px 9px;border-bottom:1px solid var(--line2);vertical-align:top;font-variant-numeric:tabular-nums}
+  td.r{text-align:right}
+  .hi{background:var(--redbg)}
+  .hi td{font-weight:700;color:var(--red)}
+
+  .bar{display:grid;grid-template-columns:70px 1fr 92px;align-items:center;gap:10px;font-size:12px;color:var(--mut);margin:4px 0}
+  .bar i{font-style:normal;font-variant-numeric:tabular-nums}
+  .bar .tr{height:9px;background:var(--line2);position:relative}
+  .bar .tr u{position:absolute;left:0;top:0;bottom:0;background:var(--red);text-decoration:none;opacity:.82}
+  .bar.hi2 .tr u{background:var(--red);opacity:1}
+
+  .warn{background:var(--goldbg);border:1px solid #E8DCC0;padding:17px 21px;font-size:13.3px;color:var(--ink2);margin:20px 0}
+  .warn b{color:var(--gold)}
+  .stop{background:var(--redbg);border:1px solid var(--redline);padding:17px 21px;font-size:13.3px;color:var(--ink2);margin:20px 0}
+  .stop b{color:var(--red)}
+
+  ol.pk{padding-left:0;list-style:none;counter-reset:p}
+  ol.pk li{counter-increment:p;position:relative;padding:11px 0 11px 42px;border-bottom:1px solid var(--line2);font-size:13.7px}
+  ol.pk li::before{content:counter(p);position:absolute;left:0;top:11px;width:25px;height:25px;line-height:25px;text-align:center;font-size:12px;font-weight:700;color:#fff;background:var(--ink);border-radius:50%}
+  ol.pk li b{color:var(--red)}
+
+  .nx{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:12px}
+  .nx div{background:var(--card);border:1px solid var(--line);padding:15px 18px}
+  .nx div b{display:block;font-size:13.5px;margin-bottom:5px}
+  .nx div p{font-size:12.6px;color:var(--mut)}
+
+  footer{margin-top:70px;padding-top:20px;border-top:1px solid var(--line);font-size:12px;color:var(--mut);line-height:1.9}
+  @media(max-width:700px){.wrap{padding:0 17px 64px}h1{font-size:28px}.nx{grid-template-columns:1fr}.bar{grid-template-columns:58px 1fr 76px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="kick">仅本机 · 含债务与实名信息 · 严禁外传</div>
+  <h1>这一年<br><em>大胆猜测</em></h1>
+  <p class="sub">不再数条数。这一轮换了打法：<b>先看钱，再看他说了什么，最后才看关系</b>。因为数据给出的答案很直接 —— 这一年最重的事，不在他发的消息里，在他<b>没有说的那件事</b>上。</p>
+  <div class="meta">
+    <span>窗口 · 2025-10-01 → 2026-10-04</span>
+    <span>样本 · 全库 388,550 条（只读）</span>
+    <span>层级 · 钱 / 自述 / 关系结构 / 时序</span>
+  </div>
+</header>
+
+<div class="banner">
+  <div class="t">这一年最硬的一个数字</div>
+  <div class="n">223 <small>笔</small> ／ 247,850 <small>元</small></div>
+  <p>这是 <b>2026 年 1–10 月母亲单向转给他的金额</b>（按月统计微信转账通知）。<br>
+  占两年转账总额（389 笔 / 347,550 元）的 <b>71.3%</b>。单月最高：<b>2026-08，42 笔 / 60,900 元</b>。</p>
+</div>
+
+<!-- ════════ 一 ════════ -->
+<h2><span class="n">猜测 一</span>这一年他真正在扛的，不是学业，是现金流</h2>
+<p class="lead">我此前所有分析都盯着「谁跟他说了多少话」。这次反过来看钱，结论完全变了。</p>
+
+<div class="g">
+  <h3><span class="tag r">核心</span>债务不是 2026-07 才开始的，是 2025-03 就有记录<span class="cf">跨 20 个月</span></h3>
+  <p>此前判断「2026-07-14 向程颂孟秋借钱 = 缺口出现」。<b>这个时间点错了 16 个月。</b>把全库所有债务关键词逐月排开，最早一条在 <b>2025-03-10</b>。</p>
+  <div class="evd">
+    <div class="lb">证据链（全部为原文，可直接回查）</div>
+    <ul>
+      <li><span class="d">2025-03-10</span> 母亲：<b>「不还逾期了」</b></li>
+      <li><span class="d">2025-09-05</span> 汪伊俊：<b>「你们要是用钱别用网贷」「别真借钱消费奥」</b> ← 同学在劝</li>
+      <li><span class="d">2025-12-31</span> 郭赛男：「我现在办贷款」</li>
+      <li><span class="d">2026-01-04</span> AAAA：<b>「走招商和浙商的贷款」「还有一堆网贷」「就卡贷款这儿了」</b></li>
+      <li><span class="d">2026-03-25</span> 【奇富借条】催收：<b>「您通过我司贷款已逾期，致电失联」</b></li>
+      <li><span class="d">2026-04-22</span> 【神州租车】：违章费用未支付，「以免对您未来用车及贷款等授信服务产生不利影响」</li>
+      <li><span class="d">2026-04-24</span> Pink（贷款中介）：「贷款要批下来」「0逾期」「我妈63了能在邮储办下来贷款吗」</li>
+      <li><span class="d">2026-06-12</span> 陈昶文：<b>「待会儿那你信息借网贷」</b></li>
+      <li><span class="d">2026-07-14</span> 程颂孟秋：<b>「最近网贷有点借不出来了」「能借我就还你[捂脸]」</b></li>
+      <li><span class="d">2026-07-23</span> 程颂孟秋：<b>「现在500都在逾期[捂脸]」</b></li>
+      <li><span class="d">2026-08-18</span> 母亲：<b>「你逾期了半个月了」「这属于贷款严重逾期」「影响征信很严重」</b>；母亲自己也说「贷款有点逾期了我也」</li>
+      <li><span class="d">2026-09-22</span> 他：<b>「老妈能要 250 块钱吗还一笔欠款[捂脸]」</b></li>
+      <li><span class="d">2026-09-25 → 10-04</span> 【美团】月付催收，连续 8 条，应还 <b>2,311.99 元</b>（9 月 3 日那期 4,597.3 元）</li>
+    </ul>
+  </div>
+  <p style="margin-top:13px"><b>读数</b>：这条线不是「某个月缺钱」，是<b>一条持续 20 个月、且逐月加重的线</b>。2026 年 1 月起从「信用卡/花呗」升级到「招商、浙商、奇富借条、美团月付」多平台；4 月起找贷款中介；7 月<b>网贷额度用尽</b>（「借不出来了」）→ 转向同学；8 月全面逾期。</p>
+</div>
+
+<div class="g">
+  <h3><span class="tag">猜测</span>母亲是唯一的「结算中心」，而且她知道得比任何人多</h3>
+  <p>两年 <b>389 笔 / 347,550 元</b>。但金额本身不是重点 —— <b>笔数才是</b>。</p>
+  <div class="evd">
+    <div class="lb">母亲转账 · 逐月笔数（全窗口）</div>
+    <ul>
+      <li>2025-01 <b>31 笔</b> · 2025-02 <b>32 笔</b> · 2025-03 <b>30 笔</b> · 2025-04 <b>30 笔</b> <span style="color:var(--mut)">（格拉斯哥时期，定额生活费）</span></li>
+      <li>2025-05 → 2025-07 <b>6 / 6 / 5 笔</b> <span style="color:var(--mut)">（回国，骤降）</span></li>
+      <li>2025-11 10 笔 · 2025-12 14 笔 · 2026-01 4 笔 · 2026-02 10 笔</li>
+      <li>2026-03 <b>24 笔</b> → 04 18 → 05 16 → 06 <b>30 笔</b> → 07 <b>36 笔</b> → 08 <b>42 笔</b>（峰值）→ 09 <b>37 笔</b></li>
+    </ul>
+  </div>
+  <p style="margin-top:12px">「一个月 30–42 笔」不是生活费，是<b>代付</b>。对照原文：母亲 2026-08-18 说「需要还花呗和一个网贷」，说明她在<b>逐笔替他平账</b>。而 2026-09-22 他开口要 <b>250 元</b> —— 单笔金额已经小到这种程度，说明<b>是「补缺口」而不是「要钱花」</b>。</p>
+  <p>母亲同时还在他手上过这些东西：车险三份 PDF（交强/驾意/商业）、银行账号、她的邮箱 <code>liuliping@cafa.edu.cn</code>、租车违章（登记人是她）、以及她自己的信用卡账单。再加上 <b>2026-06-13「上午陪我妈在医院」</b> 与 12 月里连续多次「去医院」。</p>
+  <div class="q">母亲 2025-12-20：「你欠小个子钱了吗？」「欠别人钱了？」</div>
+  <p><b>她在 2025 年 12 月就主动问过这件事。</b>所以「母亲不知情」这个假设不成立。</p>
+</div>
+
+<!-- ════════ 二 ════════ -->
+<h2><span class="n">猜测 二</span>这一年他同时运行 6–7 个项目，每一个都是「一个人的项目」</h2>
+<p class="lead">filehelper 里 4,375 条自述，是这两年最诚实的一份语料。逐月读完，能拼出他到底在忙什么。</p>
+
+<div class="g">
+  <h3><span class="tag t">结构</span>六个并行项目，全部由他一人承压</h3>
+  <div class="evd">
+    <div class="lb">从 filehelper 自述里还原出的项目清单</div>
+    <ul>
+      <li><b>① 论坛会务</b>（2025-10）—— 第五届美学与艺术研究学术研讨会。他自己写任务清单、按负责人分组、每天 18:00 催进度。分工里「廖玉琢 / 杨斐 / 蔡」三人，<b>他是唯一被点名做物料采购 + 会场布置的</b>。</li>
+      <li><b>② 井邻 / 洞台乡村工作站</b>（2025-10 起）—— 「碳迹合约」→「栗约未来」→ 2026-07-11 开站首印仪式。深夜 01:00–02:50 一个人写方案、算二叉树定价、做 PPT。</li>
+      <li><b>③ Movers4Climate / 知行计划</b>（2026-06 起）—— 2026-07-01 立项成功。到 <b>2026-08-26 他自己对老师承认：「现在实际情况是没有队员能够同行，植物染和丝网流程没有稳定跑通」</b>。</li>
+      <li><b>④ 澜沧支教（绿墨护未）</b>（2026-08 起）—— 2026-09-01 他在云南给笑一过生日；09-02「知行计划澜沧丝网实践课.pptx」；09-03「支教证明」「成员信息表_绿墨护未.xlsx」。</li>
+      <li><b>⑤ 入党</b>（2025-09 起）—— 2025-10-27 谈话记录、2026-09-22 第三季度思想汇报。</li>
+      <li><b>⑥ 北京台 AIGC 实习</b>（2026-01–04）—— 向导师报备过（2026-01-11「老师我去北京卫视的 ai 实验室实习三个月」）。</li>
+      <li><b>⑦ 家教</b>（全窗口不断）—— 全库第一大会话，21,978 条。</li>
+    </ul>
+  </div>
+  <p style="margin-top:12px"><b>七件事、一个人。</b>而 ③ 的那句「没有队员能够同行」，恰好接在本人此前的裁定「同门但是都坑过我」后面 —— <b>两条独立来源说的是同一件事。</b></p>
+</div>
+
+<!-- ════════ 三 ════════ -->
+<h2><span class="n">猜测 三</span>他把「关系」全部工程化了 —— 这是本轮最意外的发现</h2>
+<p class="lead">filehelper 里有一类内容此前从未被识别：<b>他为真实的人际互动写「剧本」</b>。不是记录，是准备。</p>
+
+<div class="g">
+  <h3><span class="tag r">关键</span>七次「写剧本」，对象从母亲到同学到恋人</h3>
+  <div class="evd">
+    <div class="lb">原文（截断）</div>
+    <ul>
+      <li><span class="d">2026-06-13 02:00+</span> <b>版画大会（母亲 + 一个女孩）</b>：「让你母亲在前面带节奏——版画教授逛版画大会，她有天然的话语权，你提前跟她说好的『多递话给女孩』在这里执行」<br>同一条下面：「<b>上午陪我妈在医院，来得匆忙，您们担待</b>」（当天他母亲在住院/就诊）</li>
+      <li><span class="d">2026-07-16</span> KTV：「说好的KTV安排上？…我踩好点了，就在中关村」+ 配套策略「五天没联系并不等于关系冷掉…只发一条，不先问『在干嘛』」</li>
+      <li><span class="d">2026-08-08/09</span> 剧本杀 + 高晓斌：「你其实一直在给她提供三样东西：<b>便利、照顾、主动</b>。…一旦数量太多，它们会从『男性吸引力』逐渐变成：『蔡浩文是一个很方便、很贴心、很好相处的人。』这是很好的朋友位置。但它不会自动升级成：『我想主动拥有这个男人。』」</li>
+      <li><span class="d">2026-08-17/18</span> 七夕话术模板：「三段式反馈（事实复述 + 你的感受 + 指向）」，配 4 条可直接抄的回复范例</li>
+      <li><span class="d">2026-08-26</span> 韩云峰 / 韩建中：<code>01_韩建中_人物卡.md</code>、<code>04_韩云峰_大胆侧写与今日剧本.md</code>、<code>05_今日互动策略库.md</code> —— <b>完整的人物卡 + 剧本 + 策略库三件套</b></li>
+      <li><span class="d">2026-09-09 / 09-10</span> 见面：「周四见面五步」「多轮流程（关键节点）」，精确到 11:30 / 11:45 / 12:00 每个时间点说什么</li>
+      <li><span class="d">2026-09-11</span> 耳钉补偿：「昨晚的耳钉找到没？找不到别难过，老公给你买一对新的」+ 解释为什么这样回</li>
+    </ul>
+  </div>
+  <p style="margin-top:13px"><b>读数</b>：这不是「恋爱脑」，这是<b>把关系当项目管理</b>——和「备注即规程」「群名当自我指令」是同一个机制，只是这次载体换成了 AI。</p>
+</div>
+
+<div class="g">
+  <h3><span class="tag g">敏感</span>2026-08 是「方法论转向」的月份 —— 但这只是一个假设</h3>
+  <p>把 8 月单独拎出来，有三组互相矛盾的材料：</p>
+  <div class="evd">
+    <div class="lb">同一个月里的三类文本</div>
+    <ul>
+      <li><b>（a）诊断他人</b> · 08-24 深夜，大量关于「PUA / 药物（1,4-BD / GHB）/ 顺从性塑造 / 救世主独占身份」的分析，立场明确是<b>识别操控者</b>（「既然对方是极其熟练的高阶 PUA 操控者」）。</li>
+      <li><b>（b）学习术语</b> · 09-16 一条孤立的清单：「<b>冷读术 间歇性奖励 愧疚植入 沉默施压 框架争夺 关系锚点</b>」——六个词全是权力技术名词。</li>
+      <li><b>（c）自己也用</b> · 08-26 一条：「见面第一句：『过来。』/『看着我。』/『先叫老公。』不用解释、不用铺垫，一个眼神、一个动作就是支配。」</li>
+    </ul>
+  </div>
+  <p style="margin-top:12px"><b>三个可证伪的解释</b>，数据不足以判定，我不选：</p>
+  <ul style="list-style:none;margin-top:8px">
+    <li style="padding:6px 0 6px 16px;position:relative;font-size:13.3px"><span style="position:absolute;left:0;top:13px;width:5px;height:5px;background:var(--gold);border-radius:50%"></span><b>解释 A</b>：他在为「帮某人脱离一段操控关系」做知识准备，(c) 是同一批对话里的推演练习。</li>
+    <li style="padding:6px 0 6px 16px;position:relative;font-size:13.3px"><span style="position:absolute;left:0;top:13px;width:5px;height:5px;background:var(--gold);border-radius:50%"></span><b>解释 B</b>：他意识到自己长期处于「供给型」位置（08-08 那段 AI 诊断就是证据），开始学习「反模式」工具箱。</li>
+    <li style="padding:6px 0 6px 16px;position:relative;font-size:13.3px"><span style="position:absolute;left:0;top:13px;width:5px;height:5px;background:var(--gold);border-radius:50%"></span><b>解释 C</b>：两者都有，且他本人未必分得清。</li>
+  </ul>
+  <div class="stop" style="margin-top:14px">
+    <b>⚠️ 三条红线</b>：① <b>不得</b>把 (b)(c) 读成「他在操控别人」——没有行为证据，只有文本；② <b>不得</b>据此对任何一方做道德评判；③ <b>不得</b>把这段内容写进任何可能外传的材料。这一段只作为「他 2026-08 在密集学习关系权力技术」的<b>存在性记录</b>。
+  </div>
+</div>
+
+<!-- ════════ 四 ════════ -->
+<h2><span class="n">猜测 四</span>关系结构：谁在索取他，谁在对等</h2>
+<p class="lead">「我发占比」是这一年最锋利的一个指标 —— 它直接量出「这段关系里谁在供给」。</p>
+
+<table>
+  <thead><tr><th>关系</th><th class="r">这一年条数</th><th class="r">我发</th><th class="r">对方发</th><th class="r">我占比</th><th>读数</th></tr></thead>
+  <tbody>
+    <tr><td>文件传输助手</td><td class="r">4,375</td><td class="r">4,374</td><td class="r">1</td><td class="r">100%</td><td>自己</td></tr>
+    <tr class="hi"><td>导师「导！急速回…」</td><td class="r">6,196</td><td class="r">3,990</td><td class="r">2,206</td><td class="r">64%</td><td>他是主要供给方</td></tr>
+    <tr><td>李紫懿</td><td class="r">685</td><td class="r">488</td><td class="r">197</td><td class="r">71%</td><td>近乎单向</td></tr>
+    <tr><td>汪伊俊</td><td class="r">1,073</td><td class="r">719</td><td class="r">354</td><td class="r">67%</td><td>近乎单向</td></tr>
+    <tr><td>琢（廖玉琢）</td><td class="r">635</td><td class="r">372</td><td class="r">263</td><td class="r">59%</td><td>他更主动</td></tr>
+    <tr><td>舒泽林</td><td class="r">933</td><td class="r">586</td><td class="r">347</td><td class="r">63%</td><td>他更主动</td></tr>
+    <tr><td>笑一</td><td class="r">6,303</td><td class="r">3,289</td><td class="r">3,014</td><td class="r">52%</td><td><b>几乎对等</b></td></tr>
+    <tr><td>刘丽萍（母亲）</td><td class="r">12,950</td><td class="r">5,942</td><td class="r">7,008</td><td class="r">46%</td><td>母亲发得更多</td></tr>
+    <tr><td>陈昶文</td><td class="r">6,275</td><td class="r">2,811</td><td class="r">3,464</td><td class="r">45%</td><td>对方发得更多</td></tr>
+    <tr><td>沐茜妍</td><td class="r">708</td><td class="r">257</td><td class="r">451</td><td class="r">36%</td><td>他在被动接收</td></tr>
+    <tr><td>巩世峰</td><td class="r">183</td><td class="r">0</td><td class="r">183</td><td class="r">0%</td><td>完全单向接收</td></tr>
+  </tbody>
+</table>
+
+<div class="g" style="margin-top:16px">
+  <h3><span class="tag t">结论</span>他的「供给模式」有一张非常清楚的排序</h3>
+  <p>按「我发占比」从高到低排：<b>导师 64% → 同学/同门 59–71% → 笑一 52% → 母亲 46% → 陈昶文 45% → 沐茜妍 36%</b>。</p>
+  <p>换句话说：<b>他越是把对方当「要维护的关系」，他发得越多；越是被对方当关系的人，他反而发得少。</b>这不是巧合 —— 和「备注即规程」指向同一个机制：<b>需要维护的关系，才需要他投入；不需要维护的，他就不设防。</b></p>
+  <p>而 <b>2026-08-08 那段 AI 诊断，说的就是这件事的代价</b>：供给太多 → 变成「很方便、很贴心、很好相处的人」→ 停在朋友位。</p>
+</div>
+
+<!-- ════════ 五 ════════ -->
+<h2><span class="n">猜测 五</span>导师线的真相：他用「助教劳动」换「位置」</h2>
+<p class="lead">这一年导师线 6,196 条，他发 64%。内容读下来，功能非常明确。</p>
+
+<div class="g">
+  <h3><span class="tag">功能</span>收作业、催同学、听答辩、当志愿者</h3>
+  <div class="evd">
+    <div class="lb">原文</div>
+    <ul>
+      <li><span class="d">2026-01-01</span> 他：「感谢您在过去一年里的悉心指导和无私帮助。新的一年，学生一定<b>一改去年颓势</b>奋发图强」</li>
+      <li><span class="d">2026-01-05</span> 师：「周三你来听研三的答辩」/「或者找杨茉当志愿者」→ 他：「我今晚就找杨茉老师」</li>
+      <li><span class="d">2026-01-08 23:15</span> 他：「老师我睡了一觉刚醒」→ 23:19 发同学名单 → 23:24 报告「这五位同学的作业没有收到以外都收到了」</li>
+      <li><span class="d">2026-01-09</span> 师：「卫晓薇说要重修」/「另外四个你私信他们催一下下」</li>
+      <li><span class="d">2026-01-11</span> 他：「老师我去北京卫视的 ai 实验室实习三个月」→ 师：「几号开始」</li>
+    </ul>
+  </div>
+  <p style="margin-top:12px"><b>读数</b>：他在导师这里的角色是<b>事务执行者</b>（收作业、催交、听答辩、拉志愿者），而且是<b>主动报备实习</b>。凌晨 23:15 醒、23:24 交名单 —— 这不是学业关系，是<b>值班关系</b>。</p>
+  <p>这也让此前那条裁定更清楚：他说导师「什么都没给过我」—— 数据支持这个说法。<b>他给了 3,990 条，拿回 2,206 条，且内容以指令为主。</b></p>
+</div>
+
+<!-- ════════ 六 ════════ -->
+<h2><span class="n">猜测 六</span>笑一：这一年唯一一段「从业务接口长成对等关系」的关系</h2>
+<p class="lead">首条消息是业务咨询，五个月后成了 6,303 条。这个转化在本库 1,802 个会话里是罕见的。</p>
+
+<div class="g">
+  <h3><span class="tag t">起点</span>2026-05-08 20:27 · 第一条是问考题</h3>
+  <div class="q">
+    她：「想问下小升初考试主要是央美附中，都什么流程，考试内容是什么」<br>
+    她：「<b>我帮我兼职机构的老师问的，她们想辅导</b>[捂脸]」
+  </div>
+  <p style="margin-top:10px">→ 起点是<b>一个教育机构的业务咨询</b>。他答得很足（清华附美术班、占坑班、几何形体/速写/色彩三科）。</p>
+  <p>三个月后（2026-08-18 七夕）他写：「<b>三个多月前，你跟我说的第一句话，是问央美附中的考题。那时候我怎么也想不到，这个来问升学的小姑娘，后来会每天第一个跟我说『早』</b>」。</p>
+  <p><b>读数</b>：这是本库里唯一一条能完整看到「陌生人 → 业务 → 亲密」全过程的线，而且 <b>我发占比 52%，是全部高体量关系里最接近对等的</b>。</p>
+  <div class="stop" style="margin-top:12px">
+    <b>⚠️ 不得推断她的年龄、身份、职业</b>。数据只能支持「她替兼职机构的老师问考题」这一件事。任何超出这个范围的推断都属于臆测，<b>禁止写入任何材料</b>。
+  </div>
+</div>
+
+<!-- ════════ 七 ════════ -->
+<h2><span class="n">猜测 七</span>2026-07 为什么三条线同时断</h2>
+<p class="lead">此前我只说「三线同时转折」。现在有了钱的坐标，可以给一个更好的解释。</p>
+
+<table>
+  <thead><tr><th>日期</th><th>事件</th><th>与钱的关系</th></tr></thead>
+  <tbody>
+    <tr><td>2026-06-12</td><td>陈昶文：「待会儿那你信息借网贷」</td><td>直接相关</td></tr>
+    <tr><td>2026-06-27</td><td>陈昶文线终止（最后一条）</td><td>15 天后</td></tr>
+    <tr><td>2026-07-02</td><td><b>父亲线终止</b>（末句「我在干活」；前一句父亲问「是你妈撒谎？」）</td><td>—</td></tr>
+    <tr><td>2026-07-09~10</td><td><b>井邻事件</b>（被叫去救场，到了没住处）</td><td>—</td></tr>
+    <tr><td>2026-07-11</td><td>洞台村工作站开站首印仪式</td><td>—</td></tr>
+    <tr><td>2026-07-14</td><td>向程颂孟秋借钱：「<b>最近网贷有点借不出来了</b>」</td><td>直接相关</td></tr>
+    <tr><td>2026-07-18 → 08-04</td><td>向舒泽林借还 500 / 520 / 20（对方「你咋还有利息呢」）</td><td>直接相关</td></tr>
+    <tr><td>2026-07-23</td><td>程颂孟秋：「现在 500 都在逾期」</td><td>直接相关</td></tr>
+    <tr><td>2026-08-18</td><td>母亲：「你逾期了半个月了」「影响征信很严重」；母亲转账峰值月（42 笔 / 60,900）</td><td>直接相关</td></tr>
+  </tbody>
+</table>
+
+<div class="g" style="margin-top:16px">
+  <h3><span class="tag r">猜测</span>7 月不是「三条线断了」，是「额度用完了」</h3>
+  <p><b>两条额度在同一个月见底</b>：</p>
+  <p>① <b>金融额度</b> —— 7 月 14 日他自己说「网贷有点借不出来了」；此前 1–6 月已在招商、浙商、奇富借条、美团月付多平台周转。<b>7 月是这条路走不通的月份。</b></p>
+  <p>② <b>人情额度</b> —— 井邻事件（7-09）与父亲线终止（7-02）都在这个月。而这两个关系有一个共同特征：<b>他是净供给方，且从未要求回报</b>（父亲线他 46%、琢线他 59%）。</p>
+  <p><b>所以猜测是</b>：7 月是<b>「他一直靠两样东西撑着」这两样同时见底的月份</b> —— 外部是金融额度，内部是「再撑一下就好」的耐心。这也解释了为什么笑一线恰好从 7 月开始爆发（869 条）：<b>在两条旧额度耗尽时，出现了一段对等的新关系。</b></p>
+  <div class="q" style="margin-top:12px">⚠️ 这是<b>时序耦合</b>，不是因果。上述所有「所以」「解释」都标注为猜测，未经本人确认前不得当结论引用。</div>
+</div>
+
+<!-- ════════ 八 ════════ -->
+<h2><span class="n">八</span>本轮可证伪清单（下一轮要挖的）</h2>
+<ol class="pk">
+  <li><b>债务的起点是不是 2025-03？</b> —— 母亲 2025-03-10 说「不还逾期了」，主语不明（可能是她自己，也可能是他）。需要看该月前后原文。</li>
+  <li><b>347,550 元里，有多少是「代付」而不是「生活费」？</b> —— 目前只能靠笔数推断（30–42 笔/月 ≠ 生活费）。需要逐笔分类。</li>
+  <li><b>「陈昶文：待会儿那你信息借网贷」（2026-06-12）具体是什么？</b> —— 这是全库最重的一条未解原文，前后各 20 条未读。</li>
+  <li><b>父亲 2026-07-02 那句「是你妈撒谎？」的前因</b> —— 6 月母亲在医院，7 月 2 日父亲质问。中间 19 天发生了什么？</li>
+  <li><b>井邻事件里「洞台村工作站」的账</b> —— 2026-07-11 开站仪式是他做的方案；7-09 被坑。项目款项谁出、谁收？</li>
+  <li><b>2026-04 贷款中介 Pink 那条线</b> —— 「我妈63了能在邮储办下来贷款吗」的主语是谁？若涉及母亲资质，是重大风险项。</li>
+  <li><b>「绿墨护未」是不是他的注册主体</b> —— 2026-09-03「成员信息表_绿墨护未.xlsx」+ 王博提供营业执照收款码，两条线是否连得上？</li>
+  <li><b>导师线 2026-07 的 1,332 条说了什么</b> —— 本月导师线是第二活跃，但内容未读。</li>
+</ol>
+
+<div class="nx">
+  <div><b>下一轮 · 第 1 优先级</b><p>读「陈昶文 2026-06-12 借网贷」前后 40 条 + 程颂孟秋全线 + 舒泽林全线 → 把「人情借贷」这一支做完整。</p></div>
+  <div><b>下一轮 · 第 2 优先级</b><p>把母亲 389 笔逐笔分类（生活费 / 代付 / 还款），并按「他开口 vs 她主动」二分 → 判断他是否在「报喜不报忧」。</p></div>
+  <div><b>下一轮 · 第 3 优先级</b><p>读导师线 2026-07（1,332 条）与 2026-10 前 4 天（172 条）→ 判断「位置」是否在变。</p></div>
+  <div><b>下一轮 · 第 4 优先级</b><p>父亲线 2026-06-01 → 07-02 全量（19 天）→ 给「是你妈撒谎」一个可证伪的解释。</p></div>
+</div>
+
+<div class="warn" style="margin-top:26px">
+<b>⚠️ 全文引用限制</b><br>
+· 本报告含<b>债务金额、平台名、贷款中介、身份证号级别信息</b>，<b>仅限本机留存，不得外传、不得上传、不得截图分享</b>。<br>
+· 所有「猜测」均为<b>可证伪假设</b>，未经本人确认，<b>不得当作结论引用</b>。<br>
+· 第三部分（关系权力技术）与第六部分（笑一）为<b>最敏感段落</b>，引用时须同时引用其红线条款。<br>
+· 全部数据来自本地索引库只读查询，未上传任何第三方。
+</div>
+
+<footer>
+  窗口 · 2025-10-01 → 2026-10-04 ｜ 样本 · 388,550 条 / 1,802 会话（本地只读）<br>
+  脚本 · <code>tools/focus_year_content.py</code>（自述 + 金钱）· <code>focus_year_relation.py</code>（我发占比 + 首次出现 + 称呼）· <code>probe_debt_timeline.py</code>（转账逐月 + 债务原文）<br>
+  中间产物 · <code>_tmp/focus_year_content.txt</code>（1,469 行）· <code>focus_year_relation.txt</code>（498 行）<br>
+  本文件全程本地生成。
+</footer>
+
+</div>
+</body>
+</html>

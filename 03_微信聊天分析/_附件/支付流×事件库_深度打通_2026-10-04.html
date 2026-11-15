@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>支付流 × 事件库 · 深度打通 · 2026-10-04</title>
+<style>
+  :root{
+    --bg:#f7f8fa; --card:#fff; --ink:#1a1d24; --sub:#5b6270; --line:#e6e9ef;
+    --accent:#2f6fed; --warn:#c0392b; --ok:#1e8e5a; --amber:#b8860b; --soft:#f2f5fb;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+       font-family:-apple-system,"Segoe UI","Microsoft YaHei",sans-serif;line-height:1.75;font-size:15px}
+  .wrap{max-width:940px;margin:0 auto;padding:40px 26px 80px}
+  header{border-bottom:3px solid var(--ink);padding-bottom:22px;margin-bottom:34px}
+  h1{font-size:27px;margin:0 0 8px;letter-spacing:-.4px}
+  .meta{color:var(--sub);font-size:13px}
+  .tag{display:inline-block;background:var(--ink);color:#fff;font-size:11px;
+       padding:2px 9px;border-radius:10px;margin-right:6px;vertical-align:2px}
+  .tag.red{background:var(--warn)} .tag.ok{background:var(--ok)} .tag.blue{background:var(--accent)}
+  h2{font-size:19px;margin:44px 0 14px;padding-left:12px;border-left:5px solid var(--accent)}
+  h3{font-size:16px;margin:26px 0 10px;color:#242a35}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px 22px;margin:16px 0}
+  .lead{background:var(--soft);border:1px solid #d8e2f7;border-left:5px solid var(--accent);
+        border-radius:10px;padding:18px 22px;margin:20px 0}
+  .danger{background:#fdf3f2;border:1px solid #f3d6d2;border-left:5px solid var(--warn);
+          border-radius:10px;padding:16px 20px;margin:16px 0}
+  .ok{background:#f1faf5;border:1px solid #d3ecdf;border-left:5px solid var(--ok);
+      border-radius:10px;padding:16px 20px;margin:16px 0}
+  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:14px;
+        background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  th{background:#eef2f9;text-align:left;padding:10px 12px;font-weight:600;font-size:13px;
+     color:#39404e;border-bottom:1px solid var(--line)}
+  td{padding:9px 12px;border-bottom:1px solid #f0f2f6;vertical-align:top}
+  tr:last-child td{border-bottom:none}
+  .num{text-align:right;font-variant-numeric:tabular-nums;font-family:ui-monospace,Consolas,monospace}
+  .hi{color:var(--warn);font-weight:700} .mid{color:var(--amber);font-weight:600}
+  .good{color:var(--ok);font-weight:600}
+  code{background:#eef2f9;padding:1px 6px;border-radius:5px;font-size:13px;font-family:ui-monospace,Consolas,monospace}
+  .quote{background:#fafbfd;border-left:3px solid #c9d4e8;padding:10px 16px;margin:12px 0;
+         font-size:14px;color:#333a47;border-radius:0 8px 8px 0}
+  ul,ol{padding-left:22px;margin:10px 0} li{margin:6px 0}
+  .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:16px 0}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+  .kpi .v{font-size:21px;font-weight:700;letter-spacing:-.5px}
+  .kpi .l{font-size:12px;color:var(--sub);margin-top:2px}
+  .bar{height:10px;background:#e9eef7;border-radius:5px;overflow:hidden;margin:6px 0;position:relative}
+  .bar i{display:block;height:100%;border-radius:5px}
+  .bar i.before{background:#e0b4b0} .bar i.after{background:var(--ok)}
+  .flow{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin:16px 0;
+        font-family:ui-monospace,Consolas,monospace;font-size:12.5px;line-height:1.9;overflow-x:auto;white-space:pre}
+  footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);color:var(--sub);font-size:12.5px}
+  @media(max-width:700px){.grid{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>支付流 × 事件库 · 深度打通</h1>
+  <div class="meta">
+    <span class="tag blue">三层合并</span><span class="tag ok">缺口 57% → 4%</span><span class="tag red">仅本机</span><br>
+    生成于 2026-10-04 ｜ 事件库 2,686 → <b>2,813</b> 条 ｜ 全程本地只读
+  </div>
+</header>
+
+<div class="lead">
+  <b>结论先行 —— 这一轮做了三件事，每一件都改动了结论：</b>
+  <ol style="margin:8px 0 0">
+    <li><b>修了 110 条日期错误</b> —— 事件库有年份解析 bug，「P0 前史」里 24 条其实是近两年的事。</li>
+    <li><b>把「钱」并进了事件库</b> —— 事件库对钱的盲区从 <b class="hi">57% 降到 4%</b>（大额日空白 7 天 → 2 天）。</li>
+    <li><b>发现事件抽取源断在 2026-07</b> —— 2026-08/09/10 三个月事件几乎空白，而支出是全年最高。这是<b>事件库最大的一块缺口</b>。</li>
+  </ol>
+</div>
+
+<div class="grid">
+  <div class="kpi"><div class="v">2,813</div><div class="l">事件库（原 2,686）</div></div>
+  <div class="kpi"><div class="v">+127</div><div class="l">新增「钱」事件</div></div>
+  <div class="kpi"><div class="v">110</div><div class="l">日期年份已修正</div></div>
+  <div class="kpi"><div class="v">4%</div><div class="l">大额日事件空白（原 57%）</div></div>
+</div>
+
+<h2>一、第一步：修日期 —— 事件库有 110 条年份错误</h2>
+
+<p>用实时索引库当尺子，逐条核对「事件日期是否落在该对话人的真实消息时间范围内」，发现 <b>416 条越界（15.5%）</b>。其中：</p>
+
+<table>
+  <tr><th>类型</th><th class="num">条数</th><th>处理</th></tr>
+  <tr><td><b>月日精确落在真实范围内 → 年份错</b></td><td class="num hi">110</td><td><b>已自动修正</b>（保留原值到 <code>日期_原始</code>）</td></tr>
+  <tr><td>月日也不在范围内 → 日期不精确</td><td class="num mid">306</td><td>标记 <code>日期待核</code>，不动</td></tr>
+  <tr><td>对话人未匹配 / 无日期</td><td class="num">281</td><td>无法核对</td></tr>
+</table>
+
+<div class="quote">
+  <b>典型例子</b>：<code>计兆齐 高一五班</code> 在索引库里<b>只有一天</b>（2025-03-16），事件却写 <b>2024-03-16</b> —— 月日分毫不差，年份差 1 年。<br>
+  <code>丰瑜</code> 真实 2025-09-21 起，事件写 <b>2023-09-21</b>，差 2 年。
+</div>
+
+<div class="ok">
+  <b>修正效果</b>：「P0 前史（2017–2024）」事件数 <b>31 → 7 条</b> ——
+  有 24 条本来被当成「前史」的，其实就发生在近两年。时间轴从此不再凭空多出两年。
+</div>
+
+<h2>二、第二步：把「钱」事件化 —— 盲区 57% → 4%</h2>
+
+<p>交叉分析发现一个刺眼的事实：</p>
+
+<div class="danger">
+  <b>支出 ≥¥500 的 23 天里，7 天事件库完全空白 —— 而这 7 天占了 57% 的金额。</b><br>
+  也就是说：<b>事件库对「钱」几乎是盲的；钱最多的那些日子，恰恰是事件最空的日子。</b><br>
+  <span style="color:var(--sub)">原因：事件抽取的源（07 导出 / DeepSeek 工作区）只抽「社交/学业/项目」类事件，从没把支付当成事件源。</span>
+</div>
+
+<h3>补进什么</h3>
+<table>
+  <tr><th>新来源</th><th class="num">条数</th><th>入选规则</th></tr>
+  <tr><td><b>C · 支付流事件</b></td><td class="num">64</td><td>单笔支出 ≥¥500 · 扣款失败 · 还款成功 · 额度变动 · <b>火车票/高速通行费</b></td></tr>
+  <tr><td><b>D · 转账事件</b></td><td class="num">63</td><td>人际转账 ≥¥1,000（同会话同日同额去重）</td></tr>
+</table>
+
+<h3>效果对比</h3>
+<div class="card">
+  <div style="font-size:13px;color:var(--sub)">大额日「事件库空白」占比</div>
+  <div class="bar"><i class="before" style="width:57%"></i></div>
+  <div style="font-size:12px;color:var(--sub)">打通前 <b>57%</b>（7/23 天）</div>
+  <div class="bar" style="margin-top:12px"><i class="after" style="width:4%"></i></div>
+  <div style="font-size:12px;color:var(--sub)">打通后 <b class="good">4%</b>（2/23 天）</div>
+</div>
+
+<h3>顺带把 2026-08~10 的缺口填了一半</h3>
+<table>
+  <tr><th>月份</th><th class="num">打通前</th><th class="num">打通后</th><th>补进来的</th></tr>
+  <tr><td>2026-08</td><td class="num">3</td><td class="num good">25</td><td>央美学费 ¥20,000 · 美团月付还款 · 母亲 4 笔转账 · 8 笔高速通行费</td></tr>
+  <tr><td>2026-09</td><td class="num">5</td><td class="num good">18</td><td><b>云南行程（普洱→昆明 ¥172 / 昆明→石家庄 ¥293.5）</b> · 月付额度 3 次提额 · 母亲转账</td></tr>
+  <tr><td>2026-10</td><td class="num">0</td><td class="num good">3</td><td><b>美团月付扣款失败</b> · ¥1,310 支出 · 母亲转账 ¥2,500</td></tr>
+</table>
+
+<h2>三、第三步：发现事件库最大的一块缺口 —— 抽取源断在 2026-07</h2>
+
+<p>这是本轮<b>最重要的发现</b>。事件库的月度分布是这样的：</p>
+
+<table>
+  <tr><th>月份</th><th class="num">事件数</th><th class="num">支出</th><th>说明</th></tr>
+  <tr><td>2026-03</td><td class="num">177</td><td class="num">¥6,340</td><td>正常</td></tr>
+  <tr><td><b>2026-04</b></td><td class="num"><b>242</b></td><td class="num">¥1,849</td><td><b>事件全年最高，支出却很低</b> —— 事件多 ≠ 花钱多</td></tr>
+  <tr><td>2026-05</td><td class="num">200</td><td class="num">¥5,958</td><td>提车月</td></tr>
+  <tr><td>2026-06</td><td class="num">110</td><td class="num">¥1,502</td><td></td></tr>
+  <tr><td>2026-07</td><td class="num">102</td><td class="num">¥2,142</td><td>抽取源的最后一站</td></tr>
+  <tr><td><b>2026-08</b></td><td class="num hi">3 → 25</td><td class="num hi">¥28,418</td><td><b>支出全年最高，事件却断崖</b></td></tr>
+  <tr><td><b>2026-09</b></td><td class="num hi">5 → 18</td><td class="num hi">¥7,182</td><td>同上</td></tr>
+  <tr><td><b>2026-10</b></td><td class="num hi">0 → 3</td><td class="num">¥3,504</td><td>同上（截至 10-04）</td></tr>
+</table>
+
+<div class="danger">
+  <b>根因</b>：事件的两个源 —— <code>v3_annotations</code>（源 A）与 <code>deep_contact_analysis.json</code>（源 B）——
+  都是在 <b>2026-07 前后</b>跑出来的（对应 <code>07_WeFlow原始导出_2026-07-24</code>）。
+  <b>2026-08 之后根本没被抽过</b>，不是「没发生事」。
+  <br><br>
+  而 2026-08~10 恰恰是<b>信息密度最高的三个月</b>：央美学费、美团月付债务线、云南行、三次剐蹭、开学、美术馆实习录用。
+</div>
+
+<h2>四、交叉分析：钱与事，到底是什么关系</h2>
+
+<h3>发现 1｜钱和事在时间上「不同步」</h3>
+<p>逐月三线对齐后，一个反直觉的模式浮出来：<b>事件最多的月份，支出最低；支出最高的月份，事件最少。</b></p>
+<table>
+  <tr><th>对照</th><th>事件数</th><th>支出</th></tr>
+  <tr><td>2026-04（事件峰值）</td><td class="num">242</td><td class="num">¥1,849</td></tr>
+  <tr><td>2026-08（支出峰值）</td><td class="num">25</td><td class="num">¥28,418</td></tr>
+</table>
+<p><b>解释</b>：事件多的月份是「人在社交场」（见人、上课、跑活动）；支出高的月份是「人在生存场」（交学费、还债、买车）。
+两条线测的是<b>人生的两个不同侧面</b>，不是同一件事的两种度量。</p>
+
+<h3>发现 2｜「双高日」只有 10 天 —— 钱和事同时发生是罕见的</h3>
+<p>支出 ≥¥300 且当天事件 ≥3 条的日子，全库只有 10 天。最有信息量的是：</p>
+<table>
+  <tr><th>日期</th><th class="num">支出</th><th class="num">事件</th><th>当天发生了什么</th></tr>
+  <tr><td><b>2026-03-18</b></td><td class="num">¥4,498</td><td class="num">10</td><td><b>+ing 关系崩盘</b>（深夜骚扰被怒斥、威胁报警）+ 母亲转 ¥3,400</td></tr>
+  <tr><td><b>2026-05-08</b></td><td class="num">¥1,207</td><td class="num">14</td><td><b>墨羽彤车祸索赔</b>（租车、代课、承诺赔偿）+ 母亲转 ¥5,000 周转</td></tr>
+  <tr><td>2026-05-19</td><td class="num">¥1,708</td><td class="num">12</td><td>上牌日 + 导师知行计划 + 望京房子让 Parapluie 住（关系回暖）</td></tr>
+  <tr><td>2025-10-22</td><td class="num">¥5,028</td><td class="num">5</td><td>单笔 ¥4,000 + ¥1,000；同日学术事务（问卷、作业、智晓律）</td></tr>
+</table>
+<div class="quote">
+  <b>★ 2026-05-08 是最典型的一天</b>：同一天里，<b>车祸索赔（事）</b>与<b>母亲转 5,000（钱）</b>同时发生 ——
+  而这两件事在事件库里此前是分开的、从没被连起来过。
+</div>
+
+<h3>发现 3｜高速通行费把「行车轨迹」带出来了（意外收获）</h3>
+<div class="quote">
+  2026-08 一个月内 <b>12 笔高速通行费</b>，站点集中在：<br>
+  <code>宽沟站</code> · <code>京承主站</code> · <code>火寺路站</code> · <code>十三陵站</code> · <code>土桥站</code> · <code>顺义城站</code> · <code>潞苑北街站</code>
+</div>
+<p>宽沟在<b>怀柔</b>，十三陵在<b>昌平</b> —— 都在北京北部近郊。这不是随机消费，是<b>固定路线</b>。
+用「高速通行费 + 车牌（京 A·CP0263）」可以继续拉出完整行车轨迹，这是此前完全没有的一层证据。</p>
+
+<h3>发现 4｜云南行程正式进事件库</h3>
+<div class="flow">2026-09-04  出行票务 ¥172.00（普洱站 → 昆明南站）
+2026-09-04  出行票务 ¥293.50（昆明站 → 石家庄站）</div>
+<p>此前「云南澜沧是『想去』还是『被要求』」是个悬空问题；现在它<b>成了事件库里一条带金额、带站点、可检索的记录</b>。</p>
+
+<h2>五、还剩什么（诚实说明）</h2>
+
+<table>
+  <tr><th>缺口</th><th>规模</th><th>补齐路径</th></tr>
+  <tr>
+    <td><b>2026-08~10 事件仍偏薄</b></td>
+    <td>25 / 18 / 3 条<br>（其他月 100–240）</td>
+    <td><b>需要用全量索引库重跑一次事件抽取</b>（源 A/B 只覆盖到 2026-07）。
+        这是唯一能真正填平的办法 —— 我这边能补的（钱、行程、转账）已经补完了。</td>
+  </tr>
+  <tr>
+    <td>306 条日期不精确</td>
+    <td>11.4%</td>
+    <td>已标记 <code>日期待核</code>。这类是 LLM 从上下文推断的日期，误差几天到几个月，无法自动校正。</td>
+  </tr>
+  <tr>
+    <td>2 天大额日仍空白</td>
+    <td>¥3,081 / 4%</td>
+    <td>当日无单笔 ≥¥500，属正常（零散小额）。</td>
+  </tr>
+  <tr>
+    <td>商户名缺失</td>
+    <td>—</td>
+    <td>微信账单导出（全量 CSV 含每笔商户名）→ 可把消费结构真正跑出来。</td>
+  </tr>
+</table>
+
+<h2>六、落盘</h2>
+<table>
+  <tr><th>产出</th><th>路径</th></tr>
+  <tr><td>本报告</td><td><code>支付流×事件库_深度打通_2026-10-04.html</code></td></tr>
+  <tr><td>逐日合并表</td><td><code>_tmp\payment_event_daily.csv</code></td></tr>
+  <tr><td>交叉明细</td><td><code>_tmp\payment_event_cross.txt</code></td></tr>
+  <tr><td>日期审计</td><td><code>_tmp\event_date_audit.txt</code> · <code>.csv</code></td></tr>
+  <tr><td>脚本（全只读）</td><td><code>tools\cross_payment_events.py</code> · <code>audit_event_dates.py</code> · <code>fix_event_dates.py</code> · <code>build_payment_events.py</code></td></tr>
+  <tr><td>事件库（已更新）</td><td><code>…\self-understanding-engine\references\事件库.csv</code>（2,813 条）</td></tr>
+  <tr><td>备份</td><td><code>events_merged.csv.bak-20261004</code>（改日期前）· <code>events_merged.csv.bak-money</code>（加钱事件前）</td></tr>
+</table>
+
+<div class="danger">
+  <b>红线</b>：本报告含真人姓名与金额，<b>仅本机留存，不得外传</b>。
+  所有数据库访问均为 <code>mode=ro</code>；事件库改动全部可回滚（两份备份）。
+</div>
+
+<footer>
+  数据源：微信本地索引库（全本地解密）× 事件库 ｜ 全程只读提取<br>
+  生成：2026-10-04 ｜ 本页含敏感信息，仅本机
+</footer>
+
+</div>
+</body>
+</html>

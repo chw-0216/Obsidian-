@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>最近一年覆盖体检 · 2026-09-29</title>
+<style>
+  :root{
+    --ink:#1f1f1e; --ink2:#5f5e5a; --ink3:#888780;
+    --line:#e5e3dc; --line2:#d3d1c7;
+    --bg:#ffffff; --bg2:#faf9f6;
+    --acc:#993c1d; --acc-bg:#faece7;
+    --ok:#2f6b4f; --ok-bg:#eaf3ee;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    font-size:14px;line-height:1.7}
+  .wrap{max-width:900px;margin:0 auto;padding:48px 32px 80px}
+  header{border-bottom:2px solid var(--ink);padding-bottom:20px;margin-bottom:32px}
+  .kicker{font-size:12px;letter-spacing:.14em;color:var(--ink3);margin-bottom:10px}
+  h1{font-size:24px;font-weight:600;margin:0 0 8px;letter-spacing:-.01em}
+  .sub{font-size:13px;color:var(--ink2);margin:0}
+  h2{font-size:15px;font-weight:600;margin:44px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--line2)}
+  h3{font-size:13px;font-weight:600;margin:24px 0 8px;color:var(--ink2)}
+  p{margin:0 0 12px}
+  .lead{background:var(--bg2);border-left:3px solid var(--acc);padding:16px 18px;margin:0 0 8px;border-radius:0 6px 6px 0}
+  .lead strong{color:var(--acc)}
+  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:13px}
+  th{text-align:left;font-weight:600;color:var(--ink2);padding:8px 10px;border-bottom:1px solid var(--line2);white-space:nowrap}
+  td{padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+  td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+  tbody tr:last-child td{border-bottom:none}
+  .hit{color:var(--acc);font-weight:600}
+  .dim{color:var(--ink3)}
+  .ok{color:var(--ok);font-weight:600}
+  code{background:var(--bg2);border:1px solid var(--line);border-radius:3px;padding:1px 5px;font-size:12px}
+  pre{background:var(--bg2);border:1px solid var(--line);border-radius:6px;padding:14px 16px;margin:12px 0;
+    font-size:12.5px;line-height:1.75;font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;overflow-x:auto;color:var(--ink)}
+  .note{border:1px solid var(--line2);border-radius:6px;padding:14px 16px;margin:14px 0;background:var(--bg2)}
+  .note .t{font-weight:600;margin-bottom:6px;font-size:13px}
+  .warn{border-color:#e8c9c0;background:var(--acc-bg)} .warn .t{color:var(--acc)}
+  .good{border-color:#c9dcd0;background:var(--ok-bg)} .good .t{color:var(--ok)}
+  ul{margin:8px 0 12px;padding-left:20px} li{margin-bottom:5px}
+  .pill{display:inline-block;font-size:11px;padding:1px 7px;border-radius:9px;border:1px solid var(--line2);color:var(--ink2);vertical-align:1px}
+  .pill.a{border-color:#e8c9c0;background:var(--acc-bg);color:var(--acc)}
+  .pill.g{border-color:#c9dcd0;background:var(--ok-bg);color:var(--ok)}
+  .mbar{display:grid;grid-template-columns:76px 1fr 46px;gap:8px;align-items:center;margin-bottom:5px;font-size:12px}
+  .mbar .track{height:14px;background:#f2efe8;border-radius:3px;overflow:hidden}
+  .mbar .fill{height:100%;background:var(--acc);border-radius:3px}
+  .mbar .fill.g{background:var(--ok)}
+  .mbar .fill.zero{background:#d9d5cc}
+  .mbar .v{text-align:right;font-variant-numeric:tabular-nums;color:var(--ink2)}
+  footer{margin-top:56px;padding-top:20px;border-top:1px solid var(--line2);font-size:12px;color:var(--ink3)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="kicker">自我理解引擎 · 覆盖体检</div>
+  <h1>最近一年覆盖体检（2025-09 ~ 2026-09）</h1>
+  <p class="sub">1,582 条事件 · 导出快照截止 2026-07-23 · 三个缺口 · 还需 12~16 轮</p>
+</header>
+
+<div class="lead">
+  <p style="margin:0">最近一年的事件<strong>覆盖到 2026-07-23 就断了</strong> ——
+  <strong>2026-08 只有 1 条，2026-09 是 0 条</strong>。</p>
+  <p style="margin:10px 0 0">但查证后有个<strong class="ok">好消息</strong>：微信原始数据是<strong>活的</strong>（
+  <code>message_1.db</code> 今天 23:42 还在写）——
+  所以这两个月<strong>不是没有，是没导出</strong>，<strong>重跑一次就能补上</strong>。</p>
+</div>
+
+<h2>一、最近一年数据实况</h2>
+
+<p class="dim">事件库共 2,686 条，其中最近一年（2025-09 起）<strong>1,582 条 = 58.9%</strong>。</p>
+
+<div class="mbar"><div>2025-09</div><div class="track"><div class="fill g" style="width:70.8%"></div></div><div class="v">155</div></div>
+<div class="mbar"><div>2025-10</div><div class="track"><div class="fill g" style="width:97.7%"></div></div><div class="v">214</div></div>
+<div class="mbar"><div>2025-11</div><div class="track"><div class="fill" style="width:34.2%"></div></div><div class="v">75</div></div>
+<div class="mbar"><div>2025-12</div><div class="track"><div class="fill g" style="width:74.9%"></div></div><div class="v">164</div></div>
+<div class="mbar"><div>2026-01</div><div class="track"><div class="fill g" style="width:68.0%"></div></div><div class="v">149</div></div>
+<div class="mbar"><div>2026-02</div><div class="track"><div class="fill" style="width:31.5%"></div></div><div class="v">69</div></div>
+<div class="mbar"><div>2026-03</div><div class="track"><div class="fill g" style="width:74.0%"></div></div><div class="v">162</div></div>
+<div class="mbar"><div>2026-04</div><div class="track"><div class="fill g" style="width:100%"></div></div><div class="v">219</div></div>
+<div class="mbar"><div>2026-05</div><div class="track"><div class="fill g" style="width:82.2%"></div></div><div class="v">180</div></div>
+<div class="mbar"><div>2026-06</div><div class="track"><div class="fill g" style="width:46.1%"></div></div><div class="v">101</div></div>
+<div class="mbar"><div>2026-07</div><div class="track"><div class="fill" style="width:42.0%"></div></div><div class="v">92</div></div>
+<div class="mbar"><div>2026-08</div><div class="track"><div class="fill zero" style="width:0.5%"></div></div><div class="v hit">1</div></div>
+<div class="mbar"><div>2026-09</div><div class="track"><div class="fill zero" style="width:0%"></div></div><div class="v hit">0</div></div>
+
+<div class="note warn">
+  <div class="t">⚠️ 数据尾部断点 —— 但这是「导出断点」，不是「现实断点」</div>
+  <p style="margin:0">最后一条正常事件是 <strong>2026-07-23</strong>。之后只有 07-28、08-14 各 1 条零散记录。</p>
+  <p style="margin:8px 0 0"><strong>查证结果</strong>：微信原始数据目录
+  <code>C:\Users\wardc\xwechat_files\</code> <strong class="ok">是活的</strong> ——
+  <code>message_1.db</code> 最后写入 <strong>2026-09-29 23:42</strong>（就是刚才）。
+  所以事件库的断点＝<strong>上一次导出的时间</strong>，不是那两个月没聊天。</p>
+  <p style="margin:8px 0 0">→ <strong class="ok">结论：盲区可修，不需要靠回忆补。</strong>重跑一次「导出 → 挖掘」即可。</p>
+</div>
+
+<h2>二、三个缺口</h2>
+
+<table>
+  <thead><tr><th>缺口</th><th>规模</th><th>性质</th><th>谁来补</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>① 时间盲区</strong></td>
+      <td><strong>2026-07-24 ~ 09-29</strong>（约 68 天）</td>
+      <td><span class="pill g">可自动修</span> 数据在，只是没导出</td>
+      <td><strong>重跑导出 + 挖掘</strong>（我来做）</td>
+    </tr>
+    <tr>
+      <td><strong>② 距离标定</strong></td>
+      <td><strong>1,784 / 2,686 条</strong>无距离</td>
+      <td>34% → 100%</td>
+      <td>你填 <code>补标_29人距离表.csv</code></td>
+    </tr>
+    <tr>
+      <td><strong>③ 主题未裁定</strong></td>
+      <td>最近一年 <strong>3 条主线</strong></td>
+      <td>有数据，但只有<strong>机器推断</strong>，没有你亲口确认</td>
+      <td>问答 8~10 轮</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>③ 的细目：最近一年 6 条主线，3 条已裁定、3 条没有</h3>
+
+<table>
+  <thead><tr><th>主线</th><th>最近一年的分量</th><th>裁定状态</th></tr></thead>
+  <tbody>
+    <tr><td><strong>情感线</strong></td><td>笑一 5,625 · 陈昶文 6,275 · 沐茜妍 1,699 · 甘泉 2,839</td><td><span class="pill g">✅ 已裁定</span> Q6 / Q8（两档结构）</td></tr>
+    <tr><td><strong>债务与现金流</strong></td><td>3,000/月 · 2,000 欠款 · 两起事故赔偿</td><td><span class="pill g">✅ 已裁定</span> Q4 / Q11+ / Q12</td></tr>
+    <tr><td><strong>父亲冲突</strong></td><td>2026-04 / 06-27 两次高强度</td><td><span class="pill g">✅ 已裁定</span> Q5</td></tr>
+    <tr><td><strong>学业线</strong></td><td><strong>导师陈晔 79 次对话</strong>（最近一年第一）· 开题 · 研一课程 · 答辩</td><td><span class="pill a">⬜ 未裁定</span></td></tr>
+    <tr><td><strong>项目 / 实习线</strong></td><td>北京台 AIGC（01~02）· 井邻 · 联合国项目 · 央美美术馆媒体部（09）· 教学</td><td><span class="pill a">⬜ 未裁定</span></td></tr>
+    <tr><td><strong>新的人际</strong></td><td>汪伊俊 24 · 李紫懿 21 · 薛伟东 25 · Parapluie 17 · Pink 16 · 郑英泽 15 …</td><td><span class="pill a">⬜ 未裁定</span></td></tr>
+  </tbody>
+</table>
+
+<div class="note">
+  <div class="t">为什么学业线排第一</div>
+  <p style="margin:0">最近一年里，<strong>导师陈晔 79 次对话，是全库第一</strong>（第二名陈昶文 50）。
+  但整条学业线<strong>一条裁定都没有</strong> —— 这是目前最大的「数据多、理解少」的落差。</p>
+</div>
+
+<h2>三、最近一年人物 TOP15</h2>
+
+<table>
+  <thead><tr><th class="num">#</th><th>对话人</th><th class="num">事件</th><th>备注</th></tr></thead>
+  <tbody>
+    <tr><td class="num">1</td><td><strong>导师 陈晔</strong></td><td class="num">79</td><td>最近一年第一 —— <span class="hit">整条学业线未裁定</span></td></tr>
+    <tr><td class="num">2</td><td>陈昶文</td><td class="num">50</td><td>大一学妹 · 曾追 195 天 · 属第一档</td></tr>
+    <tr><td class="num">3</td><td>沐茜妍（林立娜）</td><td class="num">26</td><td>已裁定（工具性持有）</td></tr>
+    <tr><td class="num">4</td><td>薛伟东</td><td class="num">25</td><td>未裁定</td></tr>
+    <tr><td class="num">5</td><td>汪伊俊</td><td class="num">24</td><td>未裁定</td></tr>
+    <tr><td class="num">6</td><td>笑一</td><td class="num">21</td><td>已裁定（第一档）</td></tr>
+    <tr><td class="num">7</td><td>李紫懿</td><td class="num">21</td><td>研一同学 · 团支书 · 未裁定</td></tr>
+    <tr><td class="num">8</td><td>ɪɴɢ 📎</td><td class="num">19</td><td>乡建面试同伴 · 未裁定</td></tr>
+    <tr><td class="num">9</td><td>Parapluie</td><td class="num">17</td><td>未裁定</td></tr>
+    <tr><td class="num">10</td><td>Sīrius R / Pink</td><td class="num">16</td><td>未裁定</td></tr>
+    <tr><td class="num">11</td><td>郑英泽 / 杨丁懿</td><td class="num">15</td><td>未裁定</td></tr>
+    <tr><td class="num">12</td><td>洪佳锐 / 婷婷</td><td class="num">14</td><td>未裁定</td></tr>
+    <tr><td class="num">13</td><td>高晓斌 / Darwin</td><td class="num">14</td><td>高晓斌＝第二档；Darwin＝工作线</td></tr>
+    <tr><td class="num">14</td><td>李柏艳</td><td class="num">13</td><td>未裁定</td></tr>
+    <tr><td class="num">15</td><td>梅宸羽（北京台）</td><td class="num">10</td><td>实习同事 · 未裁定</td></tr>
+  </tbody>
+</table>
+
+<h2>四、还需要几轮？（估 8~10 轮）</h2>
+
+<h3>批次 0 · 补盲区（不用问答，跑工具）</h3>
+<ul>
+  <li><strong>重跑导出 + 事件挖掘</strong> —— 把 2026-07-24 ~ 09-29 的 68 天补进事件库</li>
+  <li>补完后自动多出 <strong>约 200~400 条事件</strong>（按日均推算），最近一年覆盖率从 58.9% → <strong>约 70%</strong></li>
+  <li>⚠️ 需要你确认：<strong>现在方便跑一次微信导出吗？</strong>（WeFlow，全程本地）</li>
+</ul>
+
+<h3>批次 1 · 最近一年三条主线（6~8 轮）</h3>
+<ul>
+  <li><strong>学业线</strong>（2~3 轮）—— 导师陈晔 79 次对话在谈什么？开题 / 课程 / 评奖 / 未来规划；这条为什么全库第一？</li>
+  <li><strong>实习与项目线</strong>（2~3 轮）—— 北京台 AIGC 为什么结束？井邻 / 联合国项目 / 栗壳纪 的真实位置</li>
+  <li><strong>教学线</strong>（1~2 轮）—— 精华培训学校是现金流还是负担？</li>
+</ul>
+
+<h3>批次 2 · 新人际裁定（2~3 轮）</h3>
+<ul>
+  <li>陈昶文 / 李紫懿 / 汪伊俊 / 薛伟东 —— 最近一年高频，但一条裁定都没有</li>
+  <li>重点问：<strong>各自属于哪一档</strong>（第一档 / 第二档 / 工作线 / 纯事务）</li>
+</ul>
+
+<h3>另外（不算「轮」，是填表）</h3>
+<ul>
+  <li><strong>距离标定 1,784 条</strong> —— <code>补标_29人距离表.csv</code> 里 29 个人，每人填「零/近/中/远」</li>
+</ul>
+
+<h2>五、一句话回答「差多少」</h2>
+
+<pre>时间轴     ██████████████████░░   导出快照到 2026-07-23，最后 68 天待补（可自动修）
+事件量     ████████████████████   1,582 条（占全库 58.9%）
+情感线理解 ████████████████████   已裁定（两档结构）
+债务理解   ████████████████████   已裁定（两笔 + 信息隔离）
+父亲理解   ████████████████████   已裁定（资源冲突）
+学业线理解 ███░░░░░░░░░░░░░░░░░   数据最多（79 次），裁定为零
+项目线理解 ██░░░░░░░░░░░░░░░░░░   仅机器推断
+新人际理解 █░░░░░░░░░░░░░░░░░░░   4 个高频人物未裁定
+距离标定   ███████░░░░░░░░░░░░░   34%
+P0 事件级  ░░░░░░░░░░░░░░░░░░░░   ≈0%（已实测无源）</pre>
+
+<div class="note good">
+  <div class="t">✅ 结论</div>
+  <p style="margin:0">「最近一年」的<strong>情感 / 债务 / 父亲</strong>三条线已经吃透；
+  时间盲区<strong>可自动修</strong>（数据活着，只是没导出）。</p>
+  <p style="margin:8px 0 0">真正需要<strong>你补信息的只有 8~10 轮</strong>：
+  <strong>学业线 · 实习项目线 · 教学线 · 4 个高频新人</strong>。距离标定另算（填表）。</p>
+</div>
+
+<div class="note warn">
+  <div class="t">隐私等级：最高</div>
+  <p style="margin:0">本页含人名、金额、关系定性。仅本地保存，任何对外输出都不得出现。</p>
+</div>
+
+<footer>
+  自我理解引擎 · 最近一年覆盖体检 · 2026-09-29 23:55<br>
+  数据来源：events_merged.csv（2,686 条）· 微信取证库 71,550 条 · 全程本地处理
+</footer>
+
+</div>
+</body>
+</html>

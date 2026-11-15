@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>校友会活动发布时段作战卡 · 2026-10-10</title>
+<style>
+  :root{
+    --ink:#1c1c1a; --ink2:#4a4a46; --ink3:#8a8a84;
+    --line:#e4e2dc; --line2:#d3d1c7;
+    --bg:#faf9f6; --card:#ffffff;
+    --blue:#185FA5; --blue-bg:#E6F1FB;
+    --teal:#0F6E56; --teal-bg:#E1F5EE;
+    --purple:#534AB7; --purple-bg:#EEEDFE;
+    --amber:#854F0B; --amber-bg:#FAEEDA;
+    --red:#A32D2D; --red-bg:#FCEBEB;
+    --gray-bg:#F1EFE8;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; padding:48px 24px 80px;
+    background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    font-size:15px; line-height:1.75;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:880px; margin:0 auto;}
+
+  header{border-bottom:2px solid var(--ink); padding-bottom:20px; margin-bottom:8px;}
+  .kicker{font-size:12px; letter-spacing:.14em; color:var(--ink3); text-transform:uppercase; margin:0 0 10px;}
+  h1{font-size:27px; font-weight:600; margin:0 0 10px; letter-spacing:-.01em;}
+  .sub{font-size:13.5px; color:var(--ink2); margin:0;}
+  .meta{font-size:12.5px; color:var(--ink3); margin:12px 0 0;}
+
+  h2{
+    font-size:18px; font-weight:600; margin:52px 0 6px;
+    padding-left:12px; border-left:3px solid var(--ink);
+    line-height:1.35;
+  }
+  h2 .n{color:var(--ink3); font-weight:400; margin-right:8px; font-size:15px;}
+  h3{font-size:15px; font-weight:600; margin:26px 0 8px; color:var(--ink);}
+  p{margin:10px 0;}
+  .lead{color:var(--ink2); font-size:14px; margin:0 0 18px;}
+
+  table{width:100%; border-collapse:collapse; margin:16px 0; font-size:13.5px;}
+  th,td{text-align:left; padding:9px 12px; border-bottom:1px solid var(--line); vertical-align:top;}
+  th{background:var(--gray-bg); font-weight:600; font-size:12.5px; color:var(--ink2); letter-spacing:.02em; border-bottom:1px solid var(--line2);}
+  td.num{font-variant-numeric:tabular-nums; white-space:nowrap;}
+  tr:last-child td{border-bottom:1px solid var(--line2);}
+
+  .tag{display:inline-block; font-size:11.5px; padding:1px 8px; border-radius:20px; font-weight:600; line-height:1.7; white-space:nowrap;}
+  .t-main{background:var(--blue-bg); color:var(--blue);}
+  .t-sub{background:var(--teal-bg); color:var(--teal);}
+  .t-eve{background:var(--purple-bg); color:var(--purple);}
+  .t-warn{background:var(--amber-bg); color:var(--amber);}
+  .t-bad{background:var(--red-bg); color:var(--red);}
+  .t-none{background:var(--gray-bg); color:var(--ink3);}
+
+  .quote{
+    background:var(--card); border:1px solid var(--line); border-left:3px solid var(--ink);
+    border-radius:0 8px 8px 0; padding:14px 18px; margin:14px 0;
+    font-size:14px; color:var(--ink);
+  }
+  .quote .src{display:block; margin-top:8px; font-size:12px; color:var(--ink3); font-variant-numeric:tabular-nums;}
+  .quote strong{font-weight:600;}
+
+  .card{background:var(--card); border:1px solid var(--line); border-radius:10px; padding:18px 20px; margin:16px 0;}
+  .card.hi{border-left:3px solid var(--blue);}
+  .card.wa{border-left:3px solid var(--amber);}
+
+  .grid2{display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:12px; margin:16px 0;}
+  .metric{background:var(--card); border:1px solid var(--line); border-radius:9px; padding:14px 16px;}
+  .metric .lb{font-size:12px; color:var(--ink3); margin:0 0 6px;}
+  .metric .vl{font-size:24px; font-weight:600; font-variant-numeric:tabular-nums; line-height:1.2; margin:0;}
+  .metric .nt{font-size:12px; color:var(--ink2); margin:5px 0 0;}
+
+  .bar{height:9px; background:var(--gray-bg); border-radius:5px; overflow:hidden; margin-top:6px;}
+  .bar > i{display:block; height:100%; background:var(--blue); border-radius:5px;}
+  .bar.teal > i{background:var(--teal);}
+  .bar.purple > i{background:var(--purple);}
+  .bar.gray > i{background:var(--line2);}
+
+  ol,ul{margin:10px 0; padding-left:22px;}
+  li{margin:6px 0;}
+
+  .tl{border-left:2px solid var(--line2); margin:18px 0 18px 6px; padding-left:22px;}
+  .tl .step{position:relative; margin-bottom:20px;}
+  .tl .step::before{
+    content:''; position:absolute; left:-29px; top:7px;
+    width:11px; height:11px; border-radius:50%;
+    background:var(--card); border:2.5px solid var(--blue);
+  }
+  .tl .step.s2::before{border-color:var(--teal);}
+  .tl .step.s3::before{border-color:var(--purple);}
+  .tl .when{font-size:12.5px; color:var(--ink3); font-variant-numeric:tabular-nums; margin:0 0 2px;}
+  .tl .what{font-size:14.5px; font-weight:600; margin:0 0 2px;}
+  .tl .why{font-size:13px; color:var(--ink2); margin:0;}
+
+  .note{font-size:12.5px; color:var(--ink3); margin-top:8px;}
+  .divider{height:1px; background:var(--line); margin:44px 0 0; border:0;}
+  footer{margin-top:34px; padding-top:18px; border-top:1px solid var(--line); font-size:12.5px; color:var(--ink3);}
+  code{background:var(--gray-bg); padding:1px 6px; border-radius:4px; font-size:12.5px; font-family:ui-monospace,SFMono-Regular,Menlo,monospace;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <p class="kicker">格拉斯哥北京校友会 · 发布节奏</p>
+  <h1>校友会活动发布时段作战卡</h1>
+  <p class="sub">你几点发活动公众号 / 群公告 / 朋友圈，报名转化最好。</p>
+  <p class="meta">数据来源：与 <strong>Darwin（曹总）</strong> 会话 1,157 条（2025-08-02 起）· 9 个「格拉斯哥北京校友会」群 4,884 条 · 你发布的 34 条【联合活动】文案 · 统计口径为索引库 <code>ts</code> 时间戳，截至 2026-10-10</p>
+</header>
+
+<!-- ============ 1 ============ -->
+<h2><span class="n">01</span>结论：三个发布窗口</h2>
+<p class="lead">一句话：<strong>上午 10 点前后是主战场，下午 5 点是第二战场，晚上 9:30–10 点用于补推和给曹总过目。</strong></p>
+
+<table>
+  <thead>
+    <tr><th style="width:118px;">窗口</th><th style="width:104px;">推荐时间</th><th>为什么</th><th style="width:82px;">用途</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><span class="tag t-main">主推</span></td>
+      <td class="num"><strong>10:00–11:30</strong></td>
+      <td>群活跃<strong>单时点峰值</strong>（10:00 占全天 10.0%）· 曹总历史上三次点名「上午 10:30 / 中午 11:30」都落在这里</td>
+      <td>正式群发</td>
+    </tr>
+    <tr>
+      <td><span class="tag t-sub">次选</span></td>
+      <td class="num"><strong>16:30–17:30</strong></td>
+      <td>第二高峰（17:00 占 8.3%、16:00 占 7.6%）——下班前刷手机，报名决策高峰</td>
+      <td>备选 / 复推</td>
+    </tr>
+    <tr>
+      <td><span class="tag t-eve">晚间</span></td>
+      <td class="num"><strong>21:30–22:00</strong></td>
+      <td><strong>曹总本人最活跃</strong>（22:00 占他发言 13.9%、23:00 占 13.5%）· 他两次明确要求「晚上 9 点半」「晚上 9 点以后」</td>
+      <td>补推 + 交审</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="grid2">
+  <div class="metric">
+    <p class="lb">群活跃峰值</p>
+    <p class="vl">10:00</p>
+    <p class="nt">占全天群消息 10.0%</p>
+  </div>
+  <div class="metric">
+    <p class="lb">工作日 09–12 合计</p>
+    <p class="vl">25.2%</p>
+    <p class="nt">四个小时吃掉四分之一流量</p>
+  </div>
+  <div class="metric">
+    <p class="lb">周末 09–12 合计</p>
+    <p class="vl">35.1%</p>
+    <p class="nt">周末要更早发</p>
+  </div>
+  <div class="metric">
+    <p class="lb">最该避开的星期</p>
+    <p class="vl">周六</p>
+    <p class="nt">仅占 5.8%，全天最低</p>
+  </div>
+</div>
+
+<!-- ============ 2 ============ -->
+<h2><span class="n">02</span>最硬的依据：曹总自己讲过的流量规律</h2>
+<p class="lead">比起我推算的数字，<strong>曹总本人的原话优先级更高</strong>——他就是校友会的运营者，这些是他踩出来的经验。他其实在 2025-09-18 那一天，一口气把规律讲完了：</p>
+
+<div class="quote">
+  现在吃饭时间，流量一般<br>
+  <strong>6 点左右，还有晚上 9:30 以后发流量好一点</strong><br>
+  早上就是 <strong>8 点 30–9 点</strong><br>
+  <strong>一般晚上最好，然后中午、早上</strong>
+  <span class="src">曹总 · 2025-09-18 19:04–19:09（同一晚连续四条，等于一份完整规则）</span>
+</div>
+
+<p>他后来反复重申同一条规律，并给出过具体指令：</p>
+
+<table>
+  <thead><tr><th style="width:120px;">时间</th><th>曹总原话</th></tr></thead>
+  <tbody>
+    <tr><td class="num">2025-09-17 13:48</td><td>晚上 9 点半再发吧</td></tr>
+    <tr><td class="num">2025-09-02 10:42</td><td>11:30～12 点之间吧</td></tr>
+    <tr><td class="num">2025-10-24 13:42</td><td>下午群里就发了吧</td></tr>
+    <tr><td class="num">2026-01-05 16:55</td><td>晚上 9 点以后发</td></tr>
+    <tr><td class="num">2026-03-11 23:20</td><td>然后群里<strong>明天中午 11 点半发 9 个群</strong>，要发群公告</td></tr>
+    <tr><td class="num">2026-03-11 23:31</td><td>明天中午 11 点 30 发 9 个群，<strong>自己定好闹钟</strong></td></tr>
+    <tr><td class="num">2026-03-13 23:02</td><td>明天<strong>上午 10 点 30</strong> 发一下 8 个群哈</td></tr>
+    <tr><td class="num">2026-05-22 20:50</td><td>明天活动<strong>再各个群发一下</strong>哈（复推）</td></tr>
+  </tbody>
+</table>
+
+<div class="card hi">
+  <p style="margin:0;"><strong>读出来的两条铁律</strong></p>
+  <ol style="margin-bottom:0;">
+    <li><strong>上午 10:30–11:30 是他偏好的群发点</strong>（发 9 个群那种大动作，他三次都定在这个区间）。</li>
+    <li><strong>晚上 9 点后是他自己的工作时间</strong>——他几乎都在 22:00–23:30 布置「明天几点发」。所以<strong>文案要在当晚 21:00–22:00 先发给他审</strong>，正好接上他的批阅节奏，第二天上午你就能准点群发。</li>
+  </ol>
+</div>
+
+<!-- ============ 3 ============ -->
+<h2><span class="n">03</span>群活跃实测：谁在看，什么时候看</h2>
+<p class="lead">9 个「格拉斯哥北京校友会」群共 4,884 条消息，按小时拆开：</p>
+
+<table>
+  <thead><tr><th style="width:96px;">时段</th><th style="width:88px;">占全天</th><th>热度</th><th style="width:150px;">解读</th></tr></thead>
+  <tbody>
+    <tr><td class="num">08:00</td><td class="num">6.7%</td><td><div class="bar"><i style="width:67%"></i></div></td><td>上班路上，已有人刷</td></tr>
+    <tr><td class="num"><strong>09:00</strong></td><td class="num"><strong>9.0%</strong></td><td><div class="bar"><i style="width:90%"></i></div></td><td>晨间高峰起点</td></tr>
+    <tr><td class="num"><strong>10:00</strong></td><td class="num"><strong>10.0%</strong></td><td><div class="bar"><i style="width:100%"></i></div></td><td><span class="tag t-main">全天峰值</span></td></tr>
+    <tr><td class="num">11:00</td><td class="num">7.5%</td><td><div class="bar"><i style="width:75%"></i></div></td><td>午休前收尾</td></tr>
+    <tr><td class="num">12:00</td><td class="num">3.6%</td><td><div class="bar gray"><i style="width:36%"></i></div></td><td>午饭，反而在低谷</td></tr>
+    <tr><td class="num">13:00</td><td class="num">5.7%</td><td><div class="bar gray"><i style="width:57%"></i></div></td><td>午后回升</td></tr>
+    <tr><td class="num">14:00</td><td class="num">5.4%</td><td><div class="bar gray"><i style="width:54%"></i></div></td><td>—</td></tr>
+    <tr><td class="num">15:00</td><td class="num">4.5%</td><td><div class="bar gray"><i style="width:45%"></i></div></td><td>全天最静</td></tr>
+    <tr><td class="num"><strong>16:00</strong></td><td class="num"><strong>7.6%</strong></td><td><div class="bar teal"><i style="width:76%"></i></div></td><td>下班前抬头</td></tr>
+    <tr><td class="num"><strong>17:00</strong></td><td class="num"><strong>8.3%</strong></td><td><div class="bar teal"><i style="width:83%"></i></div></td><td><span class="tag t-sub">第二峰</span></td></tr>
+    <tr><td class="num">18:00</td><td class="num">5.0%</td><td><div class="bar gray"><i style="width:50%"></i></div></td><td>通勤</td></tr>
+    <tr><td class="num">19:00</td><td class="num">4.2%</td><td><div class="bar gray"><i style="width:42%"></i></div></td><td>晚饭</td></tr>
+    <tr><td class="num">20:00</td><td class="num">4.9%</td><td><div class="bar gray"><i style="width:49%"></i></div></td><td>—</td></tr>
+    <tr><td class="num">21:00</td><td class="num">5.8%</td><td><div class="bar purple"><i style="width:58%"></i></div></td><td>晚间小高峰</td></tr>
+    <tr><td class="num">22:00</td><td class="num">5.4%</td><td><div class="bar purple"><i style="width:54%"></i></div></td><td>曹总本人在这</td></tr>
+    <tr><td class="num">23:00</td><td class="num">4.5%</td><td><div class="bar gray"><i style="width:45%"></i></div></td><td>—</td></tr>
+  </tbody>
+</table>
+
+<div class="card wa">
+  <p style="margin:0 0 6px;"><strong>一个反直觉的发现</strong></p>
+  <p style="margin:0;">群在 <strong>12:00 只有 3.6%</strong>、15:00 只有 4.5%——<strong>午休和下午中段其实是低谷</strong>。所以「中午发」这个直觉并不对：真正的中午窗口是 <strong>11:00 之前</strong>（趁午休前把消息顶到列表最上面），而不是 12 点整。曹总说「中午 11 点半发 9 个群」，选的正是 11:00–12:00 这个交界，很准。</p>
+</div>
+
+<!-- ============ 4 ============ -->
+<h2><span class="n">04</span>你的实际习惯 vs 推荐</h2>
+<p class="lead">你 34 条【联合活动】文案的发布时刻分布：</p>
+
+<table>
+  <thead><tr><th style="width:110px;">你的时段</th><th style="width:80px;">次数</th><th>是否落在高活跃窗口</th></tr></thead>
+  <tbody>
+    <tr><td class="num">09:00</td><td class="num">4</td><td><span class="tag t-main">命中主推</span></td></tr>
+    <tr><td class="num">11:00</td><td class="num">3</td><td><span class="tag t-main">命中主推</span></td></tr>
+    <tr><td class="num">12:00</td><td class="num">2</td><td><span class="tag t-none">低谷</span></td></tr>
+    <tr><td class="num"><strong>13:00</strong></td><td class="num"><strong>7</strong></td><td><span class="tag t-none">你的最高频，但只是中位</span></td></tr>
+    <tr><td class="num">14:00</td><td class="num">3</td><td><span class="tag t-none">—</span></td></tr>
+    <tr><td class="num">15:00</td><td class="num">2</td><td><span class="tag t-bad">全天最静</span></td></tr>
+    <tr><td class="num">16:00</td><td class="num">3</td><td><span class="tag t-sub">命中次选</span></td></tr>
+    <tr><td class="num">17:00</td><td class="num">1</td><td><span class="tag t-sub">命中次选</span></td></tr>
+    <tr><td class="num">18:00</td><td class="num">3</td><td><span class="tag t-none">—</span></td></tr>
+    <tr><td class="num">21:00</td><td class="num">3</td><td><span class="tag t-eve">命中晚间</span></td></tr>
+    <tr><td class="num">22:00</td><td class="num">2</td><td><span class="tag t-eve">命中晚间</span></td></tr>
+    <tr><td class="num">23:00</td><td class="num">1</td><td><span class="tag t-eve">命中晚间</span></td></tr>
+  </tbody>
+</table>
+
+<p><strong>结论</strong>：你的发布<strong>白天 25 次 / 晚间 9 次</strong>，重心在白天——大方向是对的。但存在两个可优化的偏移：</p>
+<ul>
+  <li><strong>13:00 用得最多（7 次），却是次优时段</strong>（群活跃 5.7%，只有峰值的六成）。同一个动作<strong>提前两小时到 11:00 前</strong>，触达能明显更好。</li>
+  <li><strong>15:00 发过 2 次</strong>——这是全天最静的一小时（4.5%），建议完全避开。</li>
+  <li><strong>晚间只用了 9 次</strong>，而曹总反复强调「晚上最好」。晚间是<strong>被你自己低估的窗口</strong>。</li>
+</ul>
+
+<!-- ============ 5 ============ -->
+<h2><span class="n">05</span>发布节奏 SOP：一条活动发三次</h2>
+<p class="lead">14 场历史活动里，首发提前量的中位数是 <strong>3.5 天</strong>（最短 1 天、最长 28 天）。曹总的习惯是<strong>「一次首发 + 活动前复推」</strong>——他说过「明天活动再各个群发一下」「再补发一下嘉宾名单」。所以标准动作是三拍：</p>
+
+<div class="tl">
+  <div class="step">
+    <p class="when">T−3～5 天 · 21:00–22:00</p>
+    <p class="what">① 文案定稿 → 发曹总审</p>
+    <p class="why">他 22:00–23:30 在线，此时发过去当晚就能改完，不占用第二天的时间。</p>
+  </div>
+  <div class="step">
+    <p class="when">T−3～5 天 · 次日 10:00–11:30</p>
+    <p class="what">② 首发：公众号 + 9 个群 + 群公告</p>
+    <p class="why">蹭全天峰值；也正好是他指定的「上午 10:30 / 中午 11:30」区间。发完在群里置顶。</p>
+  </div>
+  <div class="step s2">
+    <p class="when">T−1 天 · 16:30–17:30</p>
+    <p class="what">③ 复推：换角度再发一次</p>
+    <p class="why">用「嘉宾名单」「议程」「报名倒计时」做钩子，别原样重发。踩下班前第二峰。</p>
+  </div>
+  <div class="step s3">
+    <p class="when">T 当天 · 09:00–10:00</p>
+    <p class="what">④ 最后提醒（可选）</p>
+    <p class="why">只发一个群公告或朋友圈，给还没报名的人最后一推。</p>
+  </div>
+</div>
+
+<div class="card">
+  <p style="margin:0 0 8px;"><strong>如果只有一次机会（比如临时接到的活动）</strong></p>
+  <p style="margin:0;">选 <strong>活动前 3 天的 10:00–11:30</strong>。若时间已不足 3 天，退而求其次选 <strong>前一晚 21:30</strong>——晚间虽然群活跃不如上午，但曹总在，<strong>有问题能当场解决</strong>，不至于第二天上午发现文案要改而错过窗口。</p>
+</div>
+
+<!-- ============ 6 ============ -->
+<h2><span class="n">06</span>星期选择</h2>
+<p class="lead">9 个群按星期拆开，差距比想象中大：</p>
+
+<table>
+  <thead><tr><th style="width:100px;">星期</th><th style="width:88px;">占全天</th><th>热度</th><th style="width:140px;">建议</th></tr></thead>
+  <tbody>
+    <tr><td>周一</td><td class="num">14.6%</td><td><div class="bar gray"><i style="width:68%"></i></div></td><td>—</td></tr>
+    <tr><td><strong>周二</strong></td><td class="num"><strong>21.5%</strong></td><td><div class="bar"><i style="width:100%"></i></div></td><td><span class="tag t-main">首选</span></td></tr>
+    <tr><td>周三</td><td class="num">16.9%</td><td><div class="bar teal"><i style="width:79%"></i></div></td><td>可选</td></tr>
+    <tr><td>周四</td><td class="num">17.1%</td><td><div class="bar teal"><i style="width:80%"></i></div></td><td>可选</td></tr>
+    <tr><td>周五</td><td class="num">16.5%</td><td><div class="bar teal"><i style="width:77%"></i></div></td><td>可选</td></tr>
+    <tr><td>周六</td><td class="num">5.8%</td><td><div class="bar gray"><i style="width:27%"></i></div></td><td><span class="tag t-bad">避开</span></td></tr>
+    <tr><td>周日</td><td class="num">7.6%</td><td><div class="bar gray"><i style="width:35%"></i></div></td><td>一般</td></tr>
+  </tbody>
+</table>
+
+<p>首发日优先落在 <strong>周二</strong>，其次周三 / 周四。周末两天合计只占 13.4%，<strong>周六全天最低</strong>——但如果活动本身就在周末，那更要利用<strong>周末上午 09:00–12:00 占 35.1%</strong> 这个特性，把复推放在周末上午而不是周末晚上。</p>
+
+<!-- ============ 7 ============ -->
+<h2><span class="n">07</span>红线与说明</h2>
+<ul>
+  <li><strong>以上是行为推算，不是平台官方数据。</strong>样本为 9 个校友会群 + 与曹总的 1,157 条对话，不代表公众号后台阅读数据。若你能拿到公众号后台的「阅读完成时段」报告，以那个为准。</li>
+  <li><strong>曹总的指定时间永远优先于本卡。</strong>他说「明天 11 点半发」，就 11 点半发——本卡只在你需要自己定时间时使用。</li>
+  <li><strong>数据窗口有限。</strong>索引库时间窗覆盖 2024-11-10 起，早于此的发布习惯不在统计内；「格拉斯哥北京校友会 2026」群只有 1,318 条，样本量小的结论（如周六低活跃）不宜过度解读。</li>
+  <li><strong>「群公告」和「朋友圈」是两件事。</strong>群公告会被 @所有人，只用于首发和最后提醒，一天不超过一次；朋友圈无此限制，可配合任意窗口。</li>
+  <li>本卡不含任何聊天原文以外的推断；引用曹总原话处均为逐字摘录。</li>
+</ul>
+
+<hr class="divider">
+<footer>
+  生成于 2026-10-10 · 基于本地微信索引库（只读）· 数据不出本机<br>
+  重跑方式：查询 <code>index.sqlite</code> 中 <code>session_key='Darwin480015'</code> 与 9 个校友会群，按 <code>ts</code> 的小时位聚合
+</footer>
+
+</div>
+</body>
+</html>

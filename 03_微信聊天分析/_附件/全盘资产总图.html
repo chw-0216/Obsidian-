@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>微信数据分析资产 · 全盘总图</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  :root{--bg:#f6f7f9;--panel:#fff;--ink:#1b1e23;--ink2:#5b6472;--ink3:#8d95a3;
+    --line:#e5e8ed;--a:#3b6fd4;--g:#2b9a68;--o:#d9881c;--p:#7c5cd6;--r:#c9465f;--t:#0d9488;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+    line-height:1.7;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1180px;margin:0 auto;padding:46px 26px 90px}
+  header{border-bottom:3px solid var(--ink);padding-bottom:20px;margin-bottom:8px}
+  h1{margin:0 0 8px;font-size:29px;letter-spacing:-.4px}
+  .sub{color:var(--ink2);font-size:14px}
+  .pill{display:inline-block;background:var(--ink);color:#fff;font-size:11.5px;padding:3px 10px;border-radius:20px;margin-right:7px;margin-bottom:4px}
+  .pill.g{background:var(--g)} .pill.r{background:var(--r)} .pill.o{background:var(--o)} .pill.p{background:var(--p)}
+  h2{font-size:18.5px;margin:46px 0 6px;padding-left:12px;border-left:4px solid var(--a)}
+  h2 .n{color:var(--ink3);font-weight:600;font-size:13px;margin-right:6px}
+  h3{font-size:14.5px;margin:24px 0 6px;color:var(--ink2)}
+  .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:11px;margin:18px 0}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:14px 15px}
+  .card .k{font-size:11.5px;color:var(--ink3)}
+  .card .v{font-size:23px;font-weight:700;margin:4px 0 1px;font-variant-numeric:tabular-nums}
+  .card .d{font-size:11.5px;color:var(--ink3)}
+  .card.hl{border-color:#cfe0f8;background:linear-gradient(135deg,#f5f9ff,#fff)}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:18px 20px;margin:15px 0}
+  .chartbox{position:relative;height:290px}
+  table{width:100%;border-collapse:collapse;font-size:13px;margin:9px 0}
+  th,td{padding:8px 9px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+  th{color:var(--ink3);font-weight:600;font-size:11.5px;background:#fafbfc}
+  td.num{font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+  tr:hover td{background:#fafbfc}
+  .verdict{background:linear-gradient(135deg,#f5f8ff,#fff);border:1px solid #d6e2f7;
+    border-left:4px solid var(--a);border-radius:11px;padding:16px 20px;margin:16px 0}
+  .verdict h3{margin-top:0;color:var(--a);font-size:15px}
+  .verdict.r{border-left-color:var(--r);border-color:#f2d1da;background:linear-gradient(135deg,#fff5f7,#fff)}
+  .verdict.r h3{color:var(--r)}
+  .verdict.g{border-left-color:var(--g);border-color:#cdeade;background:linear-gradient(135deg,#f2fbf7,#fff)}
+  .verdict.g h3{color:var(--g)}
+  .verdict.o{border-left-color:var(--o);border-color:#f0e2c6;background:linear-gradient(135deg,#fffaf0,#fff)}
+  .verdict.o h3{color:var(--o)}
+  .verdict.t{border-left-color:var(--t);border-color:#c4e8e4;background:linear-gradient(135deg,#f0fbfa,#fff)}
+  .verdict.t h3{color:var(--t)}
+  .tag{display:inline-block;font-size:10.5px;padding:2px 7px;border-radius:4px;background:#eef2f7;color:var(--ink2);margin-right:4px;white-space:nowrap}
+  .tag.deep{background:#fde8ed;color:var(--r)} .tag.med{background:#fdf4e3;color:var(--o)}
+  .tag.ok{background:#e8f6f0;color:var(--g)} .tag.info{background:#e4ecfb;color:var(--a)}
+  .tag.purple{background:#f0eafb;color:var(--p)}
+  ul,ol{margin:7px 0;padding-left:21px} li{margin:4px 0}
+  code{background:#f2f4f7;padding:1px 5px;border-radius:4px;font-size:12px;
+    font-family:ui-monospace,"Cascadia Code",Consolas,monospace}
+  .foot{margin-top:46px;padding-top:14px;border-top:1px solid var(--line);color:var(--ink3);font-size:11.5px}
+  .tree{font-family:ui-monospace,"Cascadia Code",Consolas,monospace;font-size:12px;
+    background:#fafbfc;border:1px solid var(--line);border-radius:9px;padding:14px 16px;
+    white-space:pre;overflow-x:auto;line-height:1.75}
+  @media(max-width:820px){.cards{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>微信数据分析资产 · 全盘总图</h1>
+  <div class="sub">蔡浩文（wxid_zn4ozsnn8esr21）· 全盘只读扫描 · 生成于 2026-09-26</div>
+  <div style="margin-top:11px">
+    <span class="pill">7 套分析流水线</span>
+    <span class="pill g">10 类数据源</span>
+    <span class="pill o">≈33.6 GB 原始导出</span>
+    <span class="pill p">608 个 AI 会话</span>
+    <span class="pill r">7.06M Token 已烧</span>
+  </div>
+</header>
+
+<div class="cards">
+  <div class="card hl"><div class="k">原始消息总量</div><div class="v">465,562</div><div class="d">WeFlow 全量 2026-07-24</div></div>
+  <div class="card hl"><div class="k">深度标注片段</div><div class="v">6,303</div><div class="d">100% 覆盖 · 7.06M token</div></div>
+  <div class="card hl"><div class="k">已分析联系人</div><div class="v">472</div><div class="d">/ 478 全量 · 成功率 98.7%</div></div>
+  <div class="card hl"><div class="k">跨工具 AI 会话</div><div class="v">608</div><div class="d">5 个工具 20,233 条消息</div></div>
+</div>
+
+<!-- ========== 核心发现 ========== -->
+<div class="verdict r">
+  <h3>⚠️ 最重要的一个发现：你以为没跑完的全量标注，其实早就跑完了</h3>
+  <p style="margin:6px 0">你在 <code>10_DeepSeek-v3分析工作区\CHECKPOINT.md</code> 里记的状态是「深度联系人分析 🔄 进行中 102/478」。但那个文件是 <b>9 月 1 日 19:57</b> 写的。同一天 <b>20:35</b>，<code>deep_contact_analysis.json</code> 落盘，实际完成 <b>472/478（98.7%）</b>，失败只有 6 个（4 个 API 502、2 个 JSON 解析错）。</p>
+  <p style="margin:6px 0"><b>也就是说：478 个联系人的完整深度画像，已经躺在硬盘上了，只是没有生成可视报告。</b>这是你整个数据资产里价值最高、也最被埋没的一块。</p>
+</div>
+
+<h2><span class="n">01</span>七套流水线 · 各自跑到了哪一步</h2>
+
+<div class="panel">
+<table>
+<thead><tr><th>#</th><th>流水线</th><th>位置</th><th>引擎</th><th>完成度</th><th>产出</th></tr></thead>
+<tbody>
+<tr><td>1</td><td><b>WeChat-MiMo-Analyzer</b></td><td><code>微信聊天记录清理\01_主项目</code></td><td>小米 MiMo</td><td><span class="tag deep">试跑</span> 227/6303 片段 (3.6%)</td><td>87 旧标注 + 140 激进标注 + 17 条 Layer2</td></tr>
+<tr><td>2</td><td><b>wechat-personal-ai</b>（数字分身）</td><td><code>…\02_第二套工作流</code></td><td>—</td><td><span class="tag med">仅 Schema</span> 6 张表全空</td><td>只有 24 条 observation，未产出</td></tr>
+<tr><td>3</td><td><b>DeepSeek-v3 分区</b>（主力）</td><td><code>…\10_DeepSeek-v3分析工作区</code></td><td>deepseek-v4-pro</td><td><span class="tag ok">已完成</span> <b>6,280/6,303</b></td><td>主库 188MB · 29 表 · 10,874 条片段标注 + 73,359 条消息级标注</td></tr>
+<tr><td>4</td><td><b>Phase2 模式提取</b></td><td><code>…\runs\deep_evolution\phase2_patterns</code></td><td>同上</td><td><span class="tag ok">100/100</span></td><td>100 份联系人模式 JSON（节奏/话题/情感曲线/事件锚点）</td></tr>
+<tr><td>5</td><td><b>Phase3 自我进化</b></td><td><code>…\runs\deep_evolution\phase3_evolution</code></td><td>同上</td><td><span class="tag ok">100/100</span></td><td>100 人重要性排名 + 盲点修正 + 深层洞察</td></tr>
+<tr><td>6</td><td><b>深度联系人分析</b>（最全）</td><td><code>…\runs\deep_contact_analysis</code></td><td>同上</td><td><span class="tag ok">472/478</span> <b>98.7%</b></td><td><b>1.3 MB 全量画像 JSON</b> · 每人含角色/亲密度/权力结构/时间演化/关键事件/自我进化</td></tr>
+<tr><td>7</td><td><b>事件提取与评审</b></td><td><code>…\runs\deep_p1 / deep_alumni / deep_pending / event_review_p1_deep</code></td><td>同上</td><td><span class="tag med">分片</span></td><td>事件包 + 事件终审判断 JSONL + 评审 HTML</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="verdict t">
+  <h3>流水线 3 的硬指标（FULL-RUN-40RPM-QUALITY-REPORT）</h3>
+  <table style="margin-top:8px">
+    <tr><td>片段覆盖率</td><td class="num"><b>6,303 / 6,303 = 100%</b></td><td>成功标注 6,280，失败 25（0.4%）</td></tr>
+    <tr><td>429 限流错误</td><td class="num"><b>0</b></td><td>全程无速率限制</td></tr>
+    <tr><td>Token 消耗</td><td class="num"><b>7,064,293</b></td><td>输入 3,660,778 + 输出 3,403,515</td></tr>
+    <tr><td>去重机制</td><td class="num">sha256+model+prompt</td><td>续跑自动跳过已完成单元，不重复烧 token</td></tr>
+  </table>
+  <p style="margin:10px 0 0;font-size:12.5px;color:var(--ink2)"><b>踩过的三个坑（都已修）：</b>① 端点默认开思维链，输出全落进 <code>reasoning_content</code> → 请求体必须加 <code>thinking:{type:disabled}</code>；② <code>skip-validation</code> 模式下仍调 <code>_find_result</code>，缺单元直接抛 <code>ValueError</code> 变永久失败；③ aiohttp 默认 <code>trust_env=False</code> 不走系统代理 → 改 <code>True</code>。<br><b>端点迁移史：</b>DeepSeek 官方（1,497 条后 402 余额耗尽）→ NVIDIA 免费（代理出口 IP 饱和，429 风暴）→ 自建端点 <code>156.238.239.147:3000</code>（跑通）。</p>
+</div>
+
+<h2><span class="n">02</span>数据源地图 · 10 处，别再找了</h2>
+
+<div class="panel">
+<table>
+<thead><tr><th>#</th><th>数据源</th><th>路径</th><th>体量</th><th>时间窗</th></tr></thead>
+<tbody>
+<tr><td>1</td><td><b>WeFlow 全量原始导出</b></td><td><code>07_聊天记录分析\微信聊天记录清理\07_WeFlow原始导出_2026-07-24\</code></td><td class="num"><b>33.6 GB</b><br>71,848 文件</td><td>2024-11-10<br>~ 2026-07-24</td></tr>
+<tr><td>2</td><td>WeFlow 增量导出</td><td><code>…\微信聊天记录清理\08_WeFlow增量导出_2026-08-24\</code></td><td class="num">32 文件<br>8.5 MB</td><td>2026-08-24</td></tr>
+<tr><td>3</td><td>笑一 最新聊天记录</td><td><code>Desktop\笑一\01_最新聊天记录\笑一-聊天记录.json</code></td><td class="num"><b>5,625 条</b></td><td>~ 2026-09-25</td></tr>
+<tr><td>4</td><td>笑一 历史归档</td><td><code>DSH工作区\01_人物\笑一\10_数据\</code> + <code>99_归档\</code></td><td class="num">3,852 条</td><td>2026-08-31</td></tr>
+<tr><td>5</td><td>陈晔导师专项</td><td><code>中期汇报_2026-09\04_聊天记录数据\陈晔导师聊天记录_2026-09-15导出\</code></td><td class="num">6,925 条</td><td>~ 2026-09-15</td></tr>
+<tr><td>6</td><td>井邻与版画 9 会话</td><td><code>…\04_聊天记录数据\井邻与版画_9个会话_2026-09-19拉取\</code></td><td class="num">9 会话<br>含摘要</td><td>~ 2026-09-19</td></tr>
+<tr><td>7</td><td>导（deerluna）专项</td><td><code>07_聊天记录分析\3\导_聊天记录.json</code> + <code>texts\私聊_导…\</code></td><td class="num">3,348 条</td><td>2025-02 ~ 08</td></tr>
+<tr><td>8</td><td>中秋专项 6 人</td><td><code>Desktop\_research_tmp\weflow_midautumn\</code></td><td class="num">540 条</td><td>2026-09-11 ~ 21</td></tr>
+<tr><td>9</td><td>刘华赞全套（含朋友圈媒体）</td><td><code>07_聊天记录分析\刘华赞_微信分析_20260926\</code></td><td class="num">5 层结构<br>19 条朋友圈</td><td>~ 2026-09-26</td></tr>
+<tr><td>10</td><td>通讯录 + 会话快照</td><td><code>_research_tmp\contacts_all_20260926.json</code> · <code>sessions_all_20260926.json</code></td><td class="num">1,000 联系人</td><td>2026-09-26</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>原始导出的内部分层（第 1 项拆开看）</h3>
+<div class="tree">07_WeFlow原始导出_2026-07-24/
+├── 01_WeFlow可读导出/          ← 分析用的可读 JSON（私聊_xxx/ 群聊_xxx/ 朋友圈/ 公众号/）
+└── 02_原始数据备份/            ← 微信本机库原始副本
+    └── xwechat_files/wxid_zn4ozsnn8esr21_db45/
+        ├── msg/                ← 消息库
+        ├── msg/file/           ← 聊天文件（docx/pdf/xlsx，含你的论文）
+        └── ...
+
+会话结构（WeFlow 6.1.0 口径）：
+  群聊      248 个 → 341,423 条（73.3%）
+  私聊      725 个 →  71,550 条（15.4%）
+  公众号    498 个 →  52,589 条（11.3%）
+  ─────────────────────────────
+  合计    1,471 会话 → 465,562 条</div>
+
+<div class="verdict o">
+  <h3>噪音警告：北京家教信息群</h3>
+  <p style="margin:6px 0"><b>259,123 条</b>，占全量 55.7%，是第二名（Q&amp;L北京29家教老师群 10,269）的 <b>25 倍</b>。这是纯广告群，任何统计口径下都必须先剔除，否则所有比例都会被它拉偏。</p>
+  <p style="margin:6px 0;font-size:12.5px;color:var(--ink2)">真实有价值的私聊 TOP8：Eloise 4,686 · 文件传输助手 3,903 · 陈昶文 3,753 · 导 3,348 · 甘泉 2,839 · 沐茜妍 1,699 · 小苹果 1,440 · 薛伟东 1,091</p>
+</div>
+
+<h2><span class="n">03</span>472 人深度画像 · 已产出内容实样</h2>
+
+<p>这是流水线 6 的实际产出格式。每人一份，字段完整度相当高。举 <b>文件传输助手</b>（重要性 10）为例：</p>
+
+<div class="panel">
+<table>
+<tbody>
+<tr><th style="width:130px">角色</th><td>工具性自我 / 私人数字仓库</td></tr>
+<tr><th>亲密度</th><td>1（满级 10）· 权力结构：<b>我方主导（纯单向）</b></td></tr>
+<tr><th>时间跨度</th><td>1,731,568,750 ~ 1,784,825,971（≈ 2024-11 ~ 2026-07）</td></tr>
+<tr><th>演化</th><td>稳定 — 关系本质一成不变的单向传输，用作跨平台中转站、灵感草稿箱、资料备份库</td></tr>
+<tr><th>关键事件</th><td>
+  2024-11-14 首次传输展览概述文稿，奠定"学术/创作草稿箱"用途<br>
+  2024-12-09 密集传输考研政治资料（肖四、肖八笔记）<br>
+  2025-01-18 批量转发实习与招聘信息链接
+</td></tr>
+<tr><th>情感基调</th><td>中性 · 信任度 <b>10</b> · 正向比 0.0</td></tr>
+<tr><th>互动模式</th><td>发起方：我方 · 节奏：密集 · 回应：单向</td></tr>
+<tr><th>重要性</th><td><b>10</b> — "是用户个人思想、创作与生活轨迹的完整数字镜像"</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>Phase3 重要性排名的表达质量（Top 1 原文）</h3>
+<div class="verdict p">
+  <p style="margin:0;font-size:13.5px;line-height:1.9"><b>ɪɴɢ 📎 — 重要性 9</b></p>
+  <p style="margin:8px 0 0;font-size:13px;line-height:1.9;color:var(--ink2)">"ɪɴɢ 📎 是我情感版图上一座被焚毁的城。关系始于温柔——日常接送、深夜对谈、丧亲之痛中一句哲学抚慰，让我误以为找到了光。我迅速将自己工具化，成为司机、票务、随叫随到的安慰者，试图用功能性证明爱的资格。但光之下是黑洞般的渴求。我无法忍受对方情感重心的偏移，"吕小菊"成为我嫉妒的符号。当日常协调无法满足情感期待，我开始侵入深夜——用手机号点外卖成了一种扭曲的连接仪式。对方从隐忍到爆发，用"关我屁事"筑起高墙，最终以删除好友完成沉默的审判。我获得了边界的血色认知：爱不是侵入的特权，付出不是控制的通行证。"</p>
+  <p style="margin:8px 0 0;font-size:12px;color:var(--ink3)">—— 模型自我投射为第一人称复盘。质量远超一般"对话摘要"，接近心理侧写。</p>
+</div>
+
+<h3>Phase3 Top 10 重要性榜</h3>
+<div class="panel">
+<table>
+<thead><tr><th>排名</th><th>联系人</th><th>重要性</th><th>排名</th><th>联系人</th><th>重要性</th></tr></thead>
+<tbody>
+<tr><td class="num">1</td><td>ɪɴɢ 📎</td><td class="num">9</td><td class="num">6</td><td>煎饼狗包子</td><td class="num">9</td></tr>
+<tr><td class="num">2</td><td>养不肥</td><td class="num">9</td><td class="num">7</td><td>程颂孟秋</td><td class="num">9</td></tr>
+<tr><td class="num">3</td><td>导！急速回，三思回得体！！！</td><td class="num">9</td><td class="num">8</td><td>蔡晓梅</td><td class="num">9</td></tr>
+<tr><td class="num">4</td><td>文件传输助手</td><td class="num">9</td><td class="num">9</td><td>蔡黎明</td><td class="num">9</td></tr>
+<tr><td class="num">5</td><td>李佳杨</td><td class="num">9</td><td class="num">10</td><td>陈昶文</td><td class="num">9</td></tr>
+</tbody>
+</table>
+<p style="font-size:12px;color:var(--ink3);margin:6px 0 0">分布：imp=9 共 10 人 · imp=8 共 47 人 · imp=7 共 37 人 · imp=6 共 2 人 · 其余 imp=4/3</p>
+</div>
+
+<h2><span class="n">04</span>跨工具 AI 会话库 · 608 个会话一个库</h2>
+
+<div class="panel">
+<table>
+<thead><tr><th>来源</th><th>消息数</th><th>会话数</th><th>用户/助手/工具</th><th>标题覆盖</th></tr></thead>
+<tbody>
+<tr><td><b>Codex</b> (OpenAI)</td><td class="num">12,988</td><td class="num">475</td><td>3,817 / 9,171 / 0</td><td class="num">92.4%</td></tr>
+<tr><td><b>Claude Code</b></td><td class="num">3,520</td><td class="num">38</td><td>36 / 1,652 / 1,832</td><td class="num">57.9%</td></tr>
+<tr><td><b>DSH</b> (DeepSeek Harness)</td><td class="num">3,477</td><td class="num">85</td><td>736 / 2,741 / 0</td><td class="num">94.0%</td></tr>
+<tr><td><b>ZCode</b> (Trae)</td><td class="num">243</td><td class="num">6</td><td>0 / 243 / 0</td><td class="num">100%</td></tr>
+<tr><td><b>Grok</b></td><td class="num">5</td><td class="num">5</td><td>5 / 0 / 0</td><td class="num">0%</td></tr>
+<tr style="background:#fafbfc"><td><b>合计</b></td><td class="num"><b>20,233</b></td><td class="num"><b>608</b></td><td colspan="2"></td></tr>
+</tbody>
+</table>
+<p><b>位置</b>：<code>Documents\New project gpt\AI-archive\conversations\unified.db</code>（169.5 MB · SQLite + FTS5 全文索引）</p>
+<p><b>启动方式</b>：<code>start_search.bat</code> 起 Datasette Web UI 于 <code>http://127.0.0.1:8001</code>，9 个预置查询可直接用；<code>update_data.bat</code> 增量刷新；<code>etl.py</code> 幂等可重跑。</p>
+<p><b>意义</b>：你可以跨 Claude / Codex / DSH / Grok / ZCode 五个工具做全文检索，还能查"工具间引用"（比如 Codex 里提到 Claude 的次数）。这是复盘你自己工作流的唯一入口。</p>
+</div>
+
+<h2><span class="n">05</span>已完成的人物深度分析 · 分两条线</h2>
+
+<h3>A 线 — 流水线自动生成（472 人，机器口径）</h3>
+<div class="panel">
+<p style="margin:4px 0">覆盖 478 个联系人中的 472 个，输出统一 JSON 结构：<br>
+<span class="tag info">role</span><span class="tag info">intimacy</span><span class="tag info">power_structure</span><span class="tag info">evolution</span><span class="tag info">key_events</span><span class="tag info">emotional_tone</span><span class="tag info">interaction_pattern</span><span class="tag info">self_evolution</span><span class="tag info">importance</span></p>
+<p style="margin:4px 0"><b>6 个失败待补</b>：姚一行（JSON 解析）、唐小豆 / 密斯乐溪Lexi / 我在等地球爆炸 / 昭越（均 HTTP 502）、Joy（JSON 未闭合）</p>
+</div>
+
+<h3>B 线 — 人写 / 对话式深度报告（真正有洞察的那批）</h3>
+<div class="panel">
+<table>
+<thead><tr><th>人物</th><th>成果</th><th>位置</th></tr></thead>
+<tbody>
+<tr><td><b>笑一</b>（现任）</td><td>W-PRISM 侧写 · 恐惧回避型依恋 · 私密空间驱动引擎 · 深度归因与行为预测 · 个体心理图谱 · 生理状态层 · 作息行为框架 · 生日行动包 · 七日作战手册 · 决战日执行手册 · 租车决策终局研判 · 成功劝说攻略 <b>等 14+ 份</b></td><td><code>Desktop\笑一\02_分析报告\</code><br><code>DSH工作区\01_人物\笑一\20_分析\</code></td></tr>
+<tr><td><b>导</b>（奥特巫曼 / deerluna，陈晔）</td><td>W-PRISM_X 极限侧写 + 分析数据附录 · deerluna 情感分析报告 · 完整聊天分析报告 · 情感轨迹 / 权力结构 / 冲突修复 / 关键事件提取 <b>4 份专项</b></td><td><code>07_聊天记录分析\3\</code></td></tr>
+<tr><td><b>韩云峰</b>（韩建中）</td><td>人物卡 · 井邻合作跟进分析与行动方案 · 井邻项目全景 · 大胆侧写与今日剧本 · 今日互动策略库 · 交接文件总览 <b>6 份</b></td><td><code>06_井邻项目_宣传申报与合作\韩云峰\</code></td></tr>
+<tr><td><b>李梓燏</b>（Ealthy）</td><td>深度穿透侧写 v3 · 穿透分析报告 · 完整互动导出 <b>3 份</b></td><td><code>DSH工作区\01_人物\李梓燏\</code></td></tr>
+<tr><td><b>火山雪0号</b></td><td>穿透分析报告 · 聊天版阿伦式方案</td><td><code>DSH工作区\01_人物\火山雪0号\</code></td></tr>
+<tr><td><b>刘华赞</b>（赞赞姐）</td><td>人物与关系分析报告 · 朋友圈分析报告 · 关系速查卡 · 事件时间线 · 证据链 · 共同群普查 · 19 条朋友圈媒体下载</td><td><code>07_聊天记录分析\刘华赞_微信分析_20260926\</code></td></tr>
+<tr><td><b>沐茜妍</b>（前任）</td><td><b>恋爱学习复盘</b> — 104 天时间线 · 三次未接住的信号 · 六条经验教训 · 对照李博文线</td><td><code>…\10_DeepSeek-v3分析工作区\reports\LOVE-LESSONS-MUXIYAN-20260817.md</code></td></tr>
+<tr><td><b>你自己</b></td><td>微信数据人物画像分析（含债务/情感/健康/作息全维度）· 克隆人数据标注框架（L1–L5 五层）· 人际网络标注 55 人表</td><td><code>…\05_人工报告与人工标注\</code><br><code>中期汇报_2026-09\12_聊天分析成果\</code></td></tr>
+<tr><td><b>陈昶文</b> · <b>米雪</b> · <b>姜涛老师</b> · <b>关宇佳</b> · <b>王华青</b> · <b>郭师傅</b> · <b>马慧楠</b> · <b>吴显</b>(北京台网管)</td><td>数据在，分析薄或缺失</td><td>分散于 <code>07_聊天记录分析\</code> 与 <code>10_个人资料与旧文件\工作日志\</code></td></tr>
+</tbody>
+</table>
+</div>
+
+<h2><span class="n">06</span>待办与缺口</h2>
+
+<div class="verdict g">
+  <h3>立刻可做的三件事（门槛极低）</h3>
+  <ol style="margin:6px 0">
+    <li><b>把 472 人画像转成可读报告</b> —— 数据已 100% 就绪，只差一个渲染脚本。这是当前投入产出比最高的一步。</li>
+    <li><b>补跑 6 个失败联系人</b> —— 5 个是 502 瞬时错，重跑即可；只 1 个真解析问题。</li>
+    <li><b>启动 AI 会话库检索</b> —— 双击 <code>start_search.bat</code>，608 个会话立刻可搜。</li>
+  </ol>
+</div>
+
+<div class="verdict o">
+  <h3>需要澄清的</h3>
+  <ul style="margin:6px 0">
+    <li><b>"舒哥" = 舒泽林</b> —— 已从人际网络标注表确认：<code>舒泽林,735,中纪委一巡家庭,欠钱</code>，你称"舒哥"。此前按文件名搜不到是因为导出未以他命名。</li>
+    <li><b>"李紫ju"</b> —— 表里有两个：<b>李紫懿</b>(726，研一同学，团支书"拜金有合作"，可发展) 与 <b>李紫玥</b>(576，本科同学，"本科泡过可再发展")。注释用字不同，是两个人。</li>
+    <li><b>已有数据零分析</b>：陈昶文(3,753，但只有 Codex 的 MBTI 会话，无系统报告)、米雪、Eloise(4,686，但有 contact_profiles 完整画像)、甘泉(2,839)、小苹果(1,440)、薛伟东(1,091)、🍬🍬(1,017)。</li>
+  </ul>
+</div>
+
+<div class="verdict r">
+  <h3>数据治理：三个必须先处理的风险</h3>
+  <ol style="margin:6px 0">
+    <li><b>明文凭据</b> —— <code>contact_analyzer.py</code> 曾把 MiMo 凭据硬编码在源码里。原文件已移入回收站，归档保留了脱敏版 + 模板 + 安全说明。请确认回收站已清空。</li>
+    <li><b>端点信息仍在文档里</b> —— <code>CHECKPOINT.md</code> 记录着自建端点 IP 与端口、Key 的环境变量名、系统代理。Key 本身在环境变量里（好），但端点地址暴露了。建议把该文件里的端点段脱敏。</li>
+    <li><b>7 处分散 + 版本重复</b> —— 同一份笑一数据有 5,625 / 3,852 / 600 三个版本，散在 4 个位置；导的记录有 2 份；"工作日志"目录里还藏着一整套聊天 JSON。建议合并到统一归档区，原路径只留指针。</li>
+  </ol>
+</div>
+
+<h2><span class="n">07</span>覆盖度自检</h2>
+<div class="panel">
+<table>
+<thead><tr><th>维度</th><th>已覆盖</th><th>状态</th></tr></thead>
+<tbody>
+<tr><td>原始消息抓取</td><td>465,562 条 / 1,471 会话 / 33.6 GB</td><td><span class="tag ok">完整</span></td></tr>
+<tr><td>片段级标注</td><td>6,303 / 6,303</td><td><span class="tag ok">100%</span></td></tr>
+<tr><td>消息级标注</td><td>73,359 条</td><td><span class="tag ok">已落盘</span></td></tr>
+<tr><td>联系人画像</td><td>472 / 478</td><td><span class="tag ok">98.7%</span></td></tr>
+<tr><td>Phase2 模式提取</td><td>100 / 100</td><td><span class="tag ok">完成</span></td></tr>
+<tr><td>Phase3 自我进化</td><td>100 / 100</td><td><span class="tag ok">完成</span></td></tr>
+<tr><td>群聊分析</td><td>248 个群共 341,423 条，仅个别集团做过</td><td><span class="tag deep">大面积空白</span></td></tr>
+<tr><td>公众号分析</td><td>498 个订阅，仅做过分类统计</td><td><span class="tag med">浅层</span></td></tr>
+<tr><td>朋友圈分析</td><td>仅刘华赞 1 人 + 全量快照</td><td><span class="tag deep">稀疏</span></td></tr>
+<tr><td>跨工具 AI 会话</td><td>608 会话已入库，未做内容分析</td><td><span class="tag med">已入库未挖掘</span></td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="verdict">
+  <h3>结论</h3>
+  <p style="margin:6px 0">你手里的不是"一些聊天记录"，而是一套<b>已经跑通的、工业级规模的个人数据管线</b>：33.6 GB 原始数据、7.06M token 的 AI 标注、472 人的结构化画像、608 个跨工具 AI 会话索引，外加 7 套流水线的代码与踩坑记录。</p>
+  <p style="margin:6px 0">真正的问题不在于"还有没有数据"，而在于<b>产出没有被渲染成你能用的东西</b>。最大的一块——472 人画像——已经躺在盘上快一个月，只差一步可视化。</p>
+</div>
+
+<div class="foot">
+  全盘只读扫描 · 未修改任何原始数据 · 生成于 2026-09-26 · 数据主权：全程本机处理，不上传第三方<br>
+  本报告仅为资产地图，不含聊天正文内容；所有原文引用均来自你已有的分析文档。
+</div>
+
+</div>
+</body>
+</html>

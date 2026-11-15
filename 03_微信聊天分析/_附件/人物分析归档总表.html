@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>人物分析归档总表 · DSH + Claude Code</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  :root{--bg:#f6f7f9;--panel:#fff;--ink:#1b1e23;--ink2:#5b6472;--ink3:#8d95a3;
+    --line:#e5e8ed;--a:#3b6fd4;--g:#2b9a68;--o:#d9881c;--p:#7c5cd6;--r:#c9465f;--t:#0d9488;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+    line-height:1.7;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1140px;margin:0 auto;padding:46px 26px 90px}
+  header{border-bottom:3px solid var(--ink);padding-bottom:20px;margin-bottom:8px}
+  h1{margin:0 0 8px;font-size:28px;letter-spacing:-.4px}
+  .sub{color:var(--ink2);font-size:14px}
+  .pill{display:inline-block;background:var(--ink);color:#fff;font-size:11.5px;padding:3px 10px;border-radius:20px;margin-right:7px}
+  h2{font-size:18px;margin:42px 0 4px;padding-left:12px;border-left:4px solid var(--a)}
+  h2 .n{color:var(--ink3);font-weight:600;font-size:13px;margin-right:6px}
+  h3{font-size:14.5px;margin:22px 0 4px;color:var(--ink2)}
+  .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:11px;margin:18px 0}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:14px 15px}
+  .card .k{font-size:11.5px;color:var(--ink3)}
+  .card .v{font-size:23px;font-weight:700;margin:4px 0 1px;font-variant-numeric:tabular-nums}
+  .card .d{font-size:11.5px;color:var(--ink3)}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:18px 20px;margin:15px 0}
+  .chartbox{position:relative;height:300px}
+  table{width:100%;border-collapse:collapse;font-size:13px;margin:9px 0}
+  th,td{padding:8px 9px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+  th{color:var(--ink3);font-weight:600;font-size:11.5px;background:#fafbfc}
+  td.num{font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+  tr:hover td{background:#fafbfc}
+  .verdict{background:linear-gradient(135deg,#f5f8ff,#fff);border:1px solid #d6e2f7;
+    border-left:4px solid var(--a);border-radius:11px;padding:16px 20px;margin:16px 0}
+  .verdict h3{margin-top:0;color:var(--a);font-size:15px}
+  .verdict.r{border-left-color:var(--r);border-color:#f2d1da;background:linear-gradient(135deg,#fff5f7,#fff)}
+  .verdict.r h3{color:var(--r)}
+  .verdict.g{border-left-color:var(--g);border-color:#cdeade;background:linear-gradient(135deg,#f2fbf7,#fff)}
+  .verdict.g h3{color:var(--g)}
+  .verdict.o{border-left-color:var(--o);border-color:#f0e2c6;background:linear-gradient(135deg,#fffaf0,#fff)}
+  .verdict.o h3{color:var(--o)}
+  .verdict.t{border-left-color:var(--t);border-color:#c4e8e4;background:linear-gradient(135deg,#f0fbfa,#fff)}
+  .verdict.t h3{color:var(--t)}
+  .tag{display:inline-block;font-size:10.5px;padding:2px 7px;border-radius:4px;background:#eef2f7;color:var(--ink2);margin-right:4px;white-space:nowrap}
+  .tag.deep{background:#fde8ed;color:var(--r)} .tag.med{background:#fdf4e3;color:var(--o)}
+  .tag.ok{background:#e8f6f0;color:var(--g)} .tag.info{background:#e4ecfb;color:var(--a)}
+  .tag.purple{background:#f0eafb;color:var(--p)}
+  ul,ol{margin:7px 0;padding-left:21px} li{margin:4px 0}
+  .foot{margin-top:46px;padding-top:14px;border-top:1px solid var(--line);color:var(--ink3);font-size:11.5px}
+  .fname{font-size:11px;color:var(--ink3);display:block;margin-top:2px;word-break:break-all}
+  @media(max-width:820px){.cards{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>人物分析归档总表</h1>
+  <div class="sub">
+    <span class="pill">DSH 工作区</span>
+    <span class="pill">Claude Code</span>
+    <span class="pill">ChatGPT</span>
+    已完成的深度人物分析成果清单 · 2026-09-26 汇总
+  </div>
+</header>
+
+<div class="cards">
+  <div class="card"><div class="k">已深度分析人物</div><div class="v">7</div><div class="d">有专门报告</div></div>
+  <div class="card"><div class="k">分析文档总数</div><div class="v">30+</div><div class="d">跨 5 个目录</div></div>
+  <div class="card"><div class="k">数据总量</div><div class="v">46万+</div><div class="d">条消息</div></div>
+  <div class="card"><div class="k">通讯录</div><div class="v">1,000</div><div class="d">联系人卡片</div></div>
+</div>
+
+<h2><span class="n">01</span>已完成深度分析的人物</h2>
+<p>这些人物你已经用 DSH / Claude Code 跑过完整的侧写报告：「穿透分析」「W-PRISM 侧写」「人物卡」等。</p>
+
+<table>
+  <thead><tr><th>人物</th><th>分析成果</th><th class="num">数据量</th><th>位置</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><b>笑一</b><br><span class="fname">关系对象</span></td>
+      <td><span class="tag deep">W-PRISM 侧写</span><span class="tag deep">恐惧回避型依恋</span><span class="tag deep">私密空间引擎</span>共 <b>14+ 份</b></td>
+      <td class="num">5,625</td>
+      <td><span class="fname">Desktop\笑一\02_分析报告\ + DSH工作区\01_人物\笑一\</span></td>
+    </tr>
+    <tr>
+      <td><b>导（奥特巫曼 / deerluna）</b><br><span class="fname">导师，昵称"导！急速回，三思回得体！！！"</span></td>
+      <td><span class="tag deep">W-PRISM X 极限侧写</span><span class="tag deep">分析数据附录</span></td>
+      <td class="num">6,691</td>
+      <td><span class="fname">Desktop\07_聊天记录分析\3\W-PRISM_X_*.md</span></td>
+    </tr>
+    <tr>
+      <td><b>韩云峰 / 韩建中</b><br><span class="fname">井邻项目合作方</span></td>
+      <td><span class="tag med">大胆侧写</span><span class="tag med">人物卡</span><span class="tag med">今日剧本</span><span class="tag med">互动策略库</span>共 <b>6 份</b></td>
+      <td class="num">—</td>
+      <td><span class="fname">Desktop\06_井邻项目_宣传申报与合作\韩云峰\</span></td>
+    </tr>
+    <tr>
+      <td><b>李梓燏（Ealthy）</b><br><span class="fname">高频私聊对象</span></td>
+      <td><span class="tag deep">深度穿透侧写 v3</span><span class="tag deep">穿透分析报告</span><span class="tag deep">完整互动导出</span></td>
+      <td class="num">—</td>
+      <td><span class="fname">DSH工作区\01_人物\李梓燏\</span></td>
+    </tr>
+    <tr>
+      <td><b>火山雪0号</b></td>
+      <td><span class="tag med">穿透分析报告</span><span class="tag med">聊天版阿伦式方案</span></td>
+      <td class="num">—</td>
+      <td><span class="fname">DSH工作区\01_人物\火山雪0号\</span></td>
+    </tr>
+    <tr>
+      <td><b>刘华赞（赞赞姐）</b></td>
+      <td><span class="tag ok">微信人物与关系分析报告</span><span class="tag ok">朋友圈分析报告</span><span class="tag ok">关系速查卡</span></td>
+      <td class="num">21+3</td>
+      <td><span class="fname">Desktop\07_聊天记录分析\刘华赞_微信分析_20260926\03_报告\</span></td>
+    </tr>
+    <tr>
+      <td><b>姜涛老师</b></td>
+      <td><span class="tag info">教师节祝福流程与侧写</span></td>
+      <td class="num">133</td>
+      <td><span class="fname">Desktop\07_聊天记录分析\jt导出_2026-09-10\</span></td>
+    </tr>
+    <tr>
+      <td><b>陈昶文</b></td>
+      <td><span class="tag info">MBTI 分析（Codex 会话有记录）</span></td>
+      <td class="num">6,275</td>
+      <td><span class="fname">Desktop\07_聊天记录分析\3\陈昶文_聊天记录.json</span></td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="verdict r">
+  <h3>🔴 舒哥 / 王利敏：提到了，但还没做深度分析</h3>
+  <ul style="margin-bottom:0">
+    <li><b>舒哥</b>：全盘搜索<b>未找到任何文件</b>（文件名层面）。可能叫"舒泽林"（735 条私聊）或其他昵称。需要你确认是哪一个。</li>
+    <li><b>王利敏</b>：找到了数据 —— <code>Desktop\_research_tmp\weflow_midautumn\王利敏_a35599192.json</code>（<b>48 条</b>）。<b>数据在，但还没有分析报告。</b></li>
+  </ul>
+</div>
+
+<h2><span class="n">02</span>中秋专项导出的 6 人（weflow_midautumn）</h2>
+<p>这个目录是 <b>2026-09-25</b> 专门导出的，明显是在准备中秋节的联络。这 6 人目前只有数据、没有分析：</p>
+<div class="panel">
+  <div class="chartbox"><canvas id="mid"></canvas></div>
+</div>
+<table>
+  <thead><tr><th>人物</th><th class="num">条数</th><th>时间区间</th><th>状态</th></tr></thead>
+  <tbody>
+    <tr><td>杜铭</td><td class="num">226</td><td>2025-10-17 ~ 2026-07-18</td><td><span class="tag">仅数据</span></td></tr>
+    <tr><td>武宏</td><td class="num">103</td><td>2026-03-03 ~ 2026-06-20</td><td><span class="tag">仅数据（另有武宏老师版 103 条）</span></td></tr>
+    <tr><td>冯梦波</td><td class="num">76</td><td>2025-11-21 ~ 2026-03-03</td><td><span class="tag">仅数据</span></td></tr>
+    <tr><td>王利敏</td><td class="num">48</td><td>2026-09-11 ~ 2026-09-20</td><td><span class="tag">仅数据</span></td></tr>
+    <tr><td>章燕紫</td><td class="num">44</td><td>2025-11-05 ~ 2026-02-17</td><td><span class="tag">仅数据</span></td></tr>
+    <tr><td>海燕</td><td class="num">43</td><td>2026-09-12 ~ 2026-09-21</td><td><span class="tag">仅数据（最新，近期有互动）</span></td></tr>
+  </tbody>
+</table>
+
+<div class="verdict t">
+  <h3>洞察：这批人是 9 月新接触的</h3>
+  <p style="margin-bottom:0"><b>王利敏（9/11-9/20）和海燕（9/12-9/21）</b>的时间区间都在最近两周 —— 说明这是<b>正在进行中的新关系/新联络</b>，不是历史遗留。配合"中秋"目录名，很可能你在准备中秋节的问候。杜铭、冯梦波、章燕紫、武宏则是较长期的联系人（多为美院圈/艺术圈，冯梦波是知名新媒体艺术家）。</p>
+</div>
+
+<h2><span class="n">03</span>联系人全库：1,000 张卡片</h2>
+<div class="verdict">
+  <h3>最新发现：完整通讯录导出</h3>
+  <p style="margin-bottom:0">位置：<code>Desktop\_research_tmp\contacts_all_20260926.json</code> —— <b>1,000 个联系人卡片</b>（9/26 导出，就是今天）。字段含 username、displayName、nickname、alias、detailDescription、region 等。这是你的<b>完整社交名录</b>，可用于：① 姓名↔微信号映射；② 按地区/行业分类；③ 与聊天记录交叉索引。</p>
+</div>
+
+<h2><span class="n">04</span>分析成果的分布地图</h2>
+<table>
+  <thead><tr><th>位置</th><th>内容</th><th>人物/主题</th></tr></thead>
+  <tbody>
+    <tr><td><code>Desktop\笑一\02_分析报告\</code></td><td>14+ 份</td><td>笑一全套（含作战手册、见面方案、理论框架）</td></tr>
+    <tr><td><code>Desktop\DSH工作区\01_人物\</code></td><td>3 人档案</td><td>笑一、李梓燏、火山雪0号、米雪</td></tr>
+    <tr><td><code>Desktop\07_聊天记录分析\3\</code></td><td>W-PRISM X + 情感分析</td><td>导（导师）、陈昶文、deerluna</td></tr>
+    <tr><td><code>Desktop\07_聊天记录分析\刘华赞_微信分析_20260926\</code></td><td>4 份报告 + 结构化数据</td><td>刘华赞（含证据链、事件时间线、朋友圈）</td></tr>
+    <tr><td><code>Desktop\06_井邻项目_宣传申报与合作\韩云峰\</code></td><td>6 份</td><td>韩云峰/韩建中 + 井邻项目全景</td></tr>
+    <tr><td><code>Documents\ChatGPT\人物聊天关系分析\</code></td><td>2 份</td><td>韩云峰（WeFlow导出 + 侧写策略）</td></tr>
+    <tr><td><code>Desktop\07_聊天记录分析\jt导出_2026-09-10\</code></td><td>1 份</td><td>姜涛老师</td></tr>
+    <tr><td><code>Desktop\_research_tmp\weflow_midautumn\</code></td><td>6 人数据</td><td>中秋专项（未分析）</td></tr>
+  </tbody>
+</table>
+
+<h2><span class="n">05</span>缺口清单：有数据但没分析的</h2>
+<div class="verdict o">
+  <h3>⚠️ 这些人物数据在手，但从未分析</h3>
+  <table style="font-size:12.5px">
+    <thead><tr><th>人物</th><th class="num">条数</th><th>优先级</th></tr></thead>
+    <tbody>
+      <tr><td><b>Eloise</b></td><td class="num">4,686</td><td><span class="tag deep">最高</span> 除陈昶文外最大的私人关系</td></tr>
+      <tr><td>甘泉</td><td class="num">2,839</td><td><span class="tag med">高</span></td></tr>
+      <tr><td>沐茜妍</td><td class="num">1,699</td><td><span class="tag med">高</span></td></tr>
+      <tr><td>小苹果</td><td class="num">1,440</td><td><span class="tag med">高</span></td></tr>
+      <tr><td>薛伟东</td><td class="num">1,091</td><td><span class="tag">中</span></td></tr>
+      <tr><td>王若彤 / 杨丁懿 / 金钰 / 汪伊俊 / 舒泽林 / 李紫懿 / 郑英泽</td><td class="num">700-1000</td><td><span class="tag">中</span></td></tr>
+      <tr><td>中秋 6 人（杜铭/武宏/冯梦波/王利敏/章燕紫/海燕）</td><td class="num">43-226</td><td><span class="tag ok">近期需求</span></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="verdict g">
+  <h3>✓ 建议下一步</h3>
+  <ol style="margin-bottom:0">
+    <li><b>先补中秋 6 人</b> —— 时间敏感（中秋将至），且数据量小（共 540 条），能快速出结果。</li>
+    <li><b>再挖 Eloise（4,686 条）</b> —— 最大的未分析私人关系，用同一套 W-PRISM 框架可出完整侧写。</li>
+    <li><b>用 1,000 联系人库做交叉索引</b> —— 把所有人物分析成果与微信号、地区、行业对应起来，形成统一人物档案库。</li>
+    <li><b>确认"舒哥"是谁</b> —— 提供微信号或昵称，我去定位数据。</li>
+  </ol>
+</div>
+
+<div class="foot">
+  生成于 2026-09-26 · 覆盖 DSH 工作区 / Claude 工作区 / ChatGPT / 07_聊天记录分析 / 井邻项目<br>
+  本表仅索引已存在的分析成果，不重复分析；新增分析会自动并入。
+</div>
+
+</div>
+
+<script>
+Chart.defaults.color='#8d95a3';
+Chart.defaults.font.family='-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif';
+Chart.defaults.font.size=11.5;
+new Chart(document.getElementById('mid'),{
+  type:'bar',
+  data:{labels:['杜铭','武宏','冯梦波','王利敏','章燕紫','海燕'],
+    datasets:[{label:'消息条数',data:[226,103,76,48,44,43],
+      backgroundColor:['#3b6fd4','#7c5cd6','#3b6fd4','#c9465f','#7c5cd6','#c9465f'],borderRadius:5}]},
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:false},
+      tooltip:{callbacks:{label:c=>c.parsed.y+' 条'}}},
+    scales:{y:{grid:{color:'#e5e8ed'},title:{display:true,text:'条数'}},x:{grid:{display:false}}}}
+});
+</script>
+</body>
+</html>

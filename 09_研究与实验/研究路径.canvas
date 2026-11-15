@@ -1,0 +1,282 @@
+{
+  "nodes": [
+    {
+      "id": "n0",
+      "type": "file",
+      "file": "09_研究与实验/00_研究总览.md",
+      "x": 0,
+      "y": 0,
+      "width": 420,
+      "height": 210
+    },
+    {
+      "id": "n1",
+      "type": "file",
+      "file": "09_研究与实验/理论/01_时态记忆与检索评测.md",
+      "x": -480,
+      "y": 280,
+      "width": 420,
+      "height": 210
+    },
+    {
+      "id": "n2",
+      "type": "file",
+      "file": "09_研究与实验/02_开源选型.md",
+      "x": 0,
+      "y": 280,
+      "width": 420,
+      "height": 210
+    },
+    {
+      "id": "n3",
+      "type": "file",
+      "file": "09_研究与实验/理论/04_作品研究与现场变化.md",
+      "x": 480,
+      "y": 280,
+      "width": 420,
+      "height": 210
+    },
+    {
+      "id": "n4",
+      "type": "file",
+      "file": "09_研究与实验/实验/EXP-R01_记忆与纠正回归.md",
+      "x": -720,
+      "y": 600,
+      "width": 420,
+      "height": 210
+    },
+    {
+      "id": "n5",
+      "type": "file",
+      "file": "09_研究与实验/实验/EXP-R02_可纠正版印肖像.md",
+      "x": -240,
+      "y": 600,
+      "width": 420,
+      "height": 210
+    },
+    {
+      "id": "n6",
+      "type": "file",
+      "file": "09_研究与实验/实验/EXP-R03_手势音乐对照.md",
+      "x": 240,
+      "y": 600,
+      "width": 420,
+      "height": 210
+    },
+    {
+      "id": "n7",
+      "type": "file",
+      "file": "09_研究与实验/实验/EXP-R04_参与式美育变化记录.md",
+      "x": 720,
+      "y": 600,
+      "width": 420,
+      "height": 210
+    },
+    {
+      "id": "n8",
+      "type": "file",
+      "file": "09_研究与实验/06_评测与停止条件.md",
+      "x": 0,
+      "y": 930,
+      "width": 420,
+      "height": 210
+    },
+    {
+      "id": "n9",
+      "type": "file",
+      "file": "09_研究与实验/09_资料与产出地图.md",
+      "x": 1200,
+      "y": 0,
+      "width": 420,
+      "height": 210
+    },
+    {
+      "id": "n10",
+      "type": "file",
+      "file": "09_研究与实验/10_全流程操作.md",
+      "x": 1200,
+      "y": 280,
+      "width": 420,
+      "height": 210
+    },
+    {
+      "id": "n11",
+      "type": "file",
+      "file": "09_研究与实验/运行视图/当前联调结果.md",
+      "x": 1200,
+      "y": 930,
+      "width": 420,
+      "height": 210
+    },
+    {
+      "id": "n12",
+      "type": "file",
+      "file": "04_工作台/当前任务.md",
+      "x": 1200,
+      "y": 1260,
+      "width": 420,
+      "height": 210
+    },
+    {
+      "id": "n13",
+      "type": "file",
+      "file": "09_研究与实验/11_字段映射与接入边界.md",
+      "x": 1680,
+      "y": 280,
+      "width": 420,
+      "height": 210
+    }
+  ],
+  "edges": [
+    {
+      "id": "e0",
+      "fromNode": "n0",
+      "fromSide": "bottom",
+      "toNode": "n1",
+      "toSide": "top",
+      "toEnd": "arrow"
+    },
+    {
+      "id": "e1",
+      "fromNode": "n0",
+      "fromSide": "bottom",
+      "toNode": "n2",
+      "toSide": "top",
+      "toEnd": "arrow"
+    },
+    {
+      "id": "e2",
+      "fromNode": "n0",
+      "fromSide": "bottom",
+      "toNode": "n3",
+      "toSide": "top",
+      "toEnd": "arrow"
+    },
+    {
+      "id": "e3",
+      "fromNode": "n1",
+      "fromSide": "bottom",
+      "toNode": "n4",
+      "toSide": "top",
+      "toEnd": "arrow"
+    },
+    {
+      "id": "e4",
+      "fromNode": "n2",
+      "fromSide": "bottom",
+      "toNode": "n5",
+      "toSide": "top",
+      "toEnd": "arrow"
+    },
+    {
+      "id": "e5",
+      "fromNode": "n3",
+      "fromSide": "bottom",
+      "toNode": "n5",
+      "toSide": "top",
+      "toEnd": "arrow"
+    },
+    {
+      "id": "e6",
+      "fromNode": "n3",
+      "fromSide": "bottom",
+      "toNode": "n6",
+      "toSide": "top",
+      "toEnd": "arrow"
+    },
+    {
+      "id": "e7",
+      "fromNode": "n3",
+      "fromSide": "bottom",
+      "toNode": "n7",
+      "toSide": "top",
+      "toEnd": "arrow"
+    },
+    {
+      "id": "e8",
+      "fromNode": "n4",
+      "fromSide": "bottom",
+      "toNode": "n8",
+      "toSide": "top",
+      "toEnd": "arrow"
+    },
+    {
+      "id": "e9",
+      "fromNode": "n5",
+      "fromSide": "bottom",
+      "toNode": "n8",
+      "toSide": "top",
+      "toEnd": "arrow"
+    },
+    {
+      "id": "e10",
+      "fromNode": "n6",
+      "fromSide": "bottom",
+      "toNode": "n8",
+      "toSide": "top",
+      "toEnd": "arrow"
+    },
+    {
+      "id": "e11",
+      "fromNode": "n7",
+      "fromSide": "bottom",
+      "toNode": "n8",
+      "toSide": "top",
+      "toEnd": "arrow"
+    },
+    {
+      "id": "e12",
+      "fromNode": "n0",
+      "fromSide": "bottom",
+      "toNode": "n9",
+      "toSide": "top",
+      "toEnd": "arrow",
+      "label": "按项目找输入产出"
+    },
+    {
+      "id": "e13",
+      "fromNode": "n9",
+      "fromSide": "bottom",
+      "toNode": "n10",
+      "toSide": "top",
+      "toEnd": "arrow",
+      "label": "开始一轮"
+    },
+    {
+      "id": "e14",
+      "fromNode": "n10",
+      "fromSide": "bottom",
+      "toNode": "n11",
+      "toSide": "top",
+      "toEnd": "arrow",
+      "label": "联调并看复核"
+    },
+    {
+      "id": "e15",
+      "fromNode": "n8",
+      "fromSide": "bottom",
+      "toNode": "n11",
+      "toSide": "top",
+      "toEnd": "arrow",
+      "label": "检查与能力缺口"
+    },
+    {
+      "id": "e16",
+      "fromNode": "n11",
+      "fromSide": "bottom",
+      "toNode": "n12",
+      "toSide": "top",
+      "toEnd": "arrow",
+      "label": "人工处理并回写"
+    },
+    {
+      "id": "e17",
+      "fromNode": "n10",
+      "fromSide": "bottom",
+      "toNode": "n13",
+      "toSide": "top",
+      "toEnd": "arrow",
+      "label": "字段与边界"
+    }
+  ]
+}

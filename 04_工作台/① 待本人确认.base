@@ -1,0 +1,54 @@
+filters:
+  and:
+    - 'need_confirm == true'
+properties:
+  id:
+    displayName: 编号
+  status:
+    displayName: 状态
+  verdict:
+    displayName: ★ 我的判定
+  self_confirmed:
+    displayName: 文档提过
+  person:
+    displayName: 对话人
+  nature:
+    displayName: 性质
+  evidence_quality:
+    displayName: 证据
+  review_status:
+    displayName: ★ 我的复核
+  source:
+    displayName: 出处
+views:
+  - type: table
+    name: 结论 · 待拍板
+    filters:
+      and:
+        - 'type == "结论"'
+    order:
+      - file.name
+      - id
+      - verdict
+      - status
+      - self_confirmed
+      - source
+    sort:
+      - property: status
+        direction: ASC
+  - type: table
+    name: 事件 · 待复核（A 级）
+    limit: 40
+    filters:
+      and:
+        - 'type == "事件"'
+    order:
+      - file.name
+      - date
+      - person
+      - nature
+      - review_status
+      - evidence_quality
+    sort:
+      - property: date
+        direction: DESC

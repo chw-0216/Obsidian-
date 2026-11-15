@@ -1,0 +1,85 @@
+views:
+- type: table
+  name: 项目
+  filters:
+    and:
+    - type == "导航项目"
+  order:
+  - file.name
+  - source_note
+  - original_status
+  - protected_source
+  - relation_count
+- type: table
+  name: 人物与专题
+  filters:
+    and:
+    - file.inFolder("03_微信聊天分析/01_人物档案")
+  order:
+  - file.name
+  - role
+  - messages
+  - updated
+- type: table
+  name: 事件
+  filters:
+    and:
+    - type == "事件"
+  order:
+  - file.name
+  - id
+  - date
+  - person
+  - source_audit
+  - support_review
+- type: table
+  name: 结论
+  filters:
+    and:
+    - type == "结论"
+  order:
+  - file.name
+  - id
+  - status
+  - verdict
+  - has_counter
+  - link_method
+- type: table
+  name: 独立行动
+  filters:
+    and:
+    - type == "行动"
+  order:
+  - file.name
+  - action_state
+  - due
+  - priority
+  - effort_minutes
+  - energy_required
+- type: table
+  name: 备考
+  filters:
+    and:
+    - file.inFolder("05_公考备考")
+  order:
+  - file.name
+  - status
+  - updated
+- type: table
+  name: 来源问题
+  filters:
+    and:
+    - support_review == "待核验"
+  order:
+  - file.name
+  - id
+  - source_audit
+- type: table
+  name: 资料附件
+  filters:
+    and:
+    - file.inFolder("03_微信聊天分析/_附件")
+  order:
+  - file.name
+  - file.ext
+  - file.size

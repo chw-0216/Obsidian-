@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>最近 68 天事件梳理 · 2026-07-24 → 09-29</title>
+<style>
+  :root{
+    --ink:#1f1f1e; --ink2:#5f5e5a; --ink3:#888780;
+    --line:#e5e3dc; --line2:#d3d1c7;
+    --bg:#ffffff; --bg2:#faf9f6;
+    --acc:#993c1d; --acc-bg:#faece7;
+    --ok:#2f6b4f; --ok-bg:#eaf3ee;
+    --blue:#2c5f8a; --blue-bg:#eaf0f6;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    font-size:14px;line-height:1.7}
+  .wrap{max-width:920px;margin:0 auto;padding:48px 32px 80px}
+  header{border-bottom:2px solid var(--ink);padding-bottom:20px;margin-bottom:32px}
+  .kicker{font-size:12px;letter-spacing:.14em;color:var(--ink3);margin-bottom:10px}
+  h1{font-size:24px;font-weight:600;margin:0 0 8px;letter-spacing:-.01em}
+  .sub{font-size:13px;color:var(--ink2);margin:0}
+  h2{font-size:15px;font-weight:600;margin:44px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--line2)}
+  h3{font-size:13.5px;font-weight:600;margin:26px 0 8px}
+  p{margin:0 0 12px}
+  .lead{background:var(--bg2);border-left:3px solid var(--acc);padding:16px 18px;margin:0 0 8px;border-radius:0 6px 6px 0}
+  .lead strong{color:var(--acc)}
+  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:13px}
+  th{text-align:left;font-weight:600;color:var(--ink2);padding:8px 10px;border-bottom:1px solid var(--line2);white-space:nowrap}
+  td{padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+  td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+  tbody tr:last-child td{border-bottom:none}
+  .hit{color:var(--acc);font-weight:600}
+  .dim{color:var(--ink3)}
+  .ok{color:var(--ok);font-weight:600}
+  .bl{color:var(--blue);font-weight:600}
+  code{background:var(--bg2);border:1px solid var(--line);border-radius:3px;padding:1px 5px;font-size:12px}
+  .note{border:1px solid var(--line2);border-radius:6px;padding:14px 16px;margin:14px 0;background:var(--bg2)}
+  .note .t{font-weight:600;margin-bottom:6px;font-size:13px}
+  .warn{border-color:#e8c9c0;background:var(--acc-bg)} .warn .t{color:var(--acc)}
+  .good{border-color:#c9dcd0;background:var(--ok-bg)} .good .t{color:var(--ok)}
+  .info{border-color:#c5d5e4;background:var(--blue-bg)} .info .t{color:var(--blue)}
+  ul{margin:8px 0 12px;padding-left:20px} li{margin-bottom:5px}
+  .pill{display:inline-block;font-size:11px;padding:1px 7px;border-radius:9px;border:1px solid var(--line2);color:var(--ink2);vertical-align:1px}
+  .pill.a{border-color:#e8c9c0;background:var(--acc-bg);color:var(--acc)}
+  .pill.g{border-color:#c9dcd0;background:var(--ok-bg);color:var(--ok)}
+  .pill.b{border-color:#c5d5e4;background:var(--blue-bg);color:var(--blue)}
+  .tl{position:relative;margin:18px 0 8px;padding-left:22px}
+  .tl::before{content:"";position:absolute;left:5px;top:6px;bottom:6px;width:1px;background:var(--line2)}
+  .tl .it{position:relative;margin-bottom:16px}
+  .tl .it::before{content:"";position:absolute;left:-21px;top:7px;width:9px;height:9px;border-radius:50%;
+    background:var(--bg);border:2px solid var(--acc)}
+  .tl .it.g::before{border-color:var(--ok)}
+  .tl .it.b::before{border-color:var(--blue)}
+  .tl .d{font-size:12px;color:var(--ink3);font-variant-numeric:tabular-nums}
+  .tl .h{font-weight:600;font-size:13.5px}
+  .tl .b{font-size:12.5px;color:var(--ink2)}
+  .mbar{display:grid;grid-template-columns:64px 1fr 52px;gap:8px;align-items:center;margin-bottom:5px;font-size:12px}
+  .mbar .track{height:14px;background:#f2efe8;border-radius:3px;overflow:hidden}
+  .mbar .fill{height:100%;background:var(--acc);border-radius:3px}
+  .mbar .v{text-align:right;font-variant-numeric:tabular-nums;color:var(--ink2)}
+  footer{margin-top:56px;padding-top:20px;border-top:1px solid var(--line2);font-size:12px;color:var(--ink3)}
+  .q{counter-reset:qq}
+  .q .item{position:relative;padding-left:34px;margin-bottom:18px}
+  .q .item::before{counter-increment:qq;content:"Q" counter(qq);position:absolute;left:0;top:1px;
+    font-size:11px;font-weight:700;color:#fff;background:var(--acc);border-radius:4px;padding:2px 6px}
+  .q .item .qq{font-weight:600;font-size:13.5px}
+  .q .item .opts{font-size:12.5px;color:var(--ink2);margin-top:4px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="kicker">自我理解引擎 · 盲区补录</div>
+  <h1>最近 68 天事件梳理（2026-07-24 → 09-29）</h1>
+  <p class="sub">624 个会话 · 77,707 条消息 · 最近 68 天 13,577 条 · 全程本地处理</p>
+</header>
+
+<div class="lead">
+  <p style="margin:0">上次事件库断在 <strong>2026-07-23</strong>。这次从微信原始库重跑了 <strong>近一年</strong>（2025-09-29 起）的导出，
+  把断掉的 68 天接上了 —— <strong>不需要靠回忆补</strong>。</p>
+  <p style="margin:10px 0 0">读完这 68 天，最要紧的结论是：<strong>此前「学业线未裁定」的判断需要修正</strong> ——
+  这条线不是「数据多、理解少」，而是<strong>整条主线本身在 2026 年夏天换了内容</strong>。</p>
+</div>
+
+<h2>一、数据概况</h2>
+
+<table>
+  <thead><tr><th>项</th><th class="num">数值</th><th>说明</th></tr></thead>
+  <tbody>
+    <tr><td>导出会话</td><td class="num">624</td><td>近一年有活动的私聊（已剔除商业/服务号 54 个）</td></tr>
+    <tr><td>消息总量</td><td class="num">77,707</td><td>2025-09-29 ~ 2026-09-29</td></tr>
+    <tr><td><strong>最近 68 天</strong></td><td class="num hit">13,577</td><td>2026-07-24 ~ 09-29 —— 本次补的盲区</td></tr>
+    <tr><td>月度峰值</td><td class="num">2025-12</td><td>10,380 条/月（近一年最高）</td></tr>
+  </tbody>
+</table>
+
+<h3>最近 68 天消息量 TOP10</h3>
+<div class="mbar"><div>笑一</div><div class="track"><div class="fill" style="width:100%"></div></div><div class="v">4,869</div></div>
+<div class="mbar"><div>母亲</div><div class="track"><div class="fill" style="width:49%"></div></div><div class="v">2,372</div></div>
+<div class="mbar"><div>导(陈晔)</div><div class="track"><div class="fill" style="width:28%"></div></div><div class="v">1,355</div></div>
+<div class="mbar"><div>安奇</div><div class="track"><div class="fill" style="width:9%"></div></div><div class="v">447</div></div>
+<div class="mbar"><div>Jason 关宇佳</div><div class="track"><div class="fill" style="width:7%"></div></div><div class="v">356</div></div>
+<div class="mbar"><div>银窝头</div><div class="track"><div class="fill" style="width:6%"></div></div><div class="v">279</div></div>
+<div class="mbar"><div>高晓斌</div><div class="track"><div class="fill" style="width:6%"></div></div><div class="v">271</div></div>
+<div class="mbar"><div>舒泽林</div><div class="track"><div class="fill" style="width:5%"></div></div><div class="v">252</div></div>
+<div class="mbar"><div>唐紫璇</div><div class="track"><div class="fill" style="width:3%"></div></div><div class="v">170</div></div>
+<div class="mbar"><div>氮气鲨鱼</div><div class="track"><div class="fill" style="width:3%"></div></div><div class="v">163</div></div>
+
+<h2>二、最近 68 天的六条主线</h2>
+
+<table>
+  <thead><tr><th>主线</th><th>这 68 天里发生了什么</th><th>此前记录</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>① 乡村美育工作站</strong><br><span class="dim">怀柔 · 洞台村</span></td>
+      <td>制版 / 海报 / 招募 / 装空调柜子显示屏 / 补工作日志 / 记账 / 引流。<br>
+          <strong class="hit">8-15 首单失败</strong>被批「没有招募来参与者」；9-19 关总告知有<strong>政府采购</strong>机会</td>
+      <td><span class="pill a">未记录</span></td>
+    </tr>
+    <tr>
+      <td><strong>② 云南澜沧支教</strong></td>
+      <td>8-27 出发 → 9-4 回京。澜沧三中，课题「植物里的颜色」。<br>
+          <strong>「绿墨护未」</strong>项目 · 知行计划介绍信 · 家长不支持艺术，硬凑 20 多人</td>
+      <td><span class="pill a">未记录</span></td>
+    </tr>
+    <tr>
+      <td><strong>③ 央美美术馆实习</strong></td>
+      <td>9-24 拿到资格，岗位「拍摄及视频制作助理」，<strong>每周四天</strong>。<br>
+          媒体部主任<strong>何一沙</strong>直接对接；导师陈晔的意见是「可以去」</td>
+      <td><span class="pill g">已有</span>（本次补上到岗细节）</td>
+    </tr>
+    <tr>
+      <td><strong>④ 临汾 AIGC 训练营</strong></td>
+      <td>9-15 起：中国视协主办，山西广电局 + 临汾宣传部，差旅算力全包。<br>用户需创作<strong>山西文化题材短片脚本</strong>，9-20~25 落地</td>
+      <td><span class="pill a">未记录</span></td>
+    </tr>
+    <tr>
+      <td><strong>⑤ 情感线</strong></td>
+      <td><strong>笑一</strong>：4,869 条 / 68 天，已到「老公老婆」、接送、谈同居。<br>
+          <strong>沐茜妍</strong>：9-10~16 明确分手，用户「我有女朋友最近」</td>
+      <td><span class="pill g">部分已有</span>（本次需修正）</td>
+    </tr>
+    <tr>
+      <td><strong>⑥ 家庭与债务</strong></td>
+      <td>8-5 与父亲冲突（「给他道歉了，他不理我」）。<br>
+          8-18 向母亲坦白花呗+网贷逾期；8-12 对朋友说「到处借钱」</td>
+      <td><span class="pill g">已有</span>（本次补具体日期）</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>三、三条与旧裁定不符的发现</h2>
+
+<div class="note warn">
+  <div class="t">① 「导师陈晔 79 次对话」严重低估 —— 实际近 68 天 1,355 条</div>
+  <p style="margin:0">旧事件库把陈晔记成「79 次事件」，是<strong>全库第一但量级很小</strong>。
+  实际这 68 天里，与他的会话有 <strong>1,355 条消息</strong>，仅次于笑一和母亲。</p>
+  <p style="margin:8px 0 0">而且<strong>他给用户的备注名是「导！急速回，三思回得体！！！」</strong> ——
+  一个把「回复速度」和「措辞得体」写进备注的关系，不可能是低频的学业咨询。</p>
+</div>
+
+<div class="note warn">
+  <div class="t">② 「学业线」的真实内容不是上课，是「运营一个乡村工作站」</div>
+  <p style="margin:0">这 68 天里与导师的对话，几乎不涉及课程、论文、开题。内容是：</p>
+  <ul style="margin:8px 0 0">
+    <li>制版、海报设计、招募方案、定价（村民免费 / 井邻客人 58 / 预约 68）</li>
+    <li>装空调、搬柜子、装显示屏、修电源闸、借东西</li>
+    <li>补工作日志、记账「账单不可能出现任何漏洞」、写总结报告</li>
+    <li>接待：政协主席、区委书记、宣传部长、北京日报/新京报记者</li>
+    <li>被追问：「人呢」「好了吗」「你的工作日志」「这不行，你得有首单」</li>
+  </ul>
+  <p style="margin:8px 0 0">→ <strong>用户在导师这里的角色，更接近「项目现场执行 + 后勤总管」，不是「学生」。</strong></p>
+</div>
+
+<div class="note warn">
+  <div class="t">③ 笑一：自述「先玩玩」，行为是「准同居」</div>
+  <p style="margin:0">用户此前亲口定性笑一属<strong>「第一档 · 先玩玩类」</strong>。但这 68 天的实际行为是：</p>
+  <ul style="margin:8px 0 0">
+    <li>互称「老公 / 老婆」，日均 70+ 条</li>
+    <li>持续开车接送（北语 ⇄ 潘家园 ⇄ 健身房），随叫随到</li>
+    <li>用户主动说「等你回来咱们一起住」</li>
+    <li>关系已含性内容，且由用户主导设定（「给你一个任务」「看看谁先求饶」）</li>
+    <li>9-16 对沐茜妍说「我有女朋友最近」—— <strong>指的应该是笑一</strong></li>
+  </ul>
+  <p style="margin:8px 0 0">→ <strong>「先玩玩」是自我叙述，不是行为事实。</strong>这两者不一致本身，比哪一个是「真的」更重要。</p>
+</div>
+
+<h2>四、时间轴（这 68 天真正发生的事）</h2>
+
+<div class="tl">
+  <div class="it"><div class="d">07-24 ~ 08-14</div><div class="h">怀柔工作站：制版 + 装设备 + 迎检</div>
+    <div class="b">制版、装显示屏/空调/柜子、修电源；政协主席刘久刚、怀柔区委书记、北京日报记者先后到场；8-15 首单失败被批</div></div>
+  <div class="it b"><div class="d">08-05 ~ 08-09</div><div class="h">父亲冲突 + 安奇求推荐信</div>
+    <div class="b">父亲回后沙峪，「给他道歉了，他不理我」；安奇要读博，用户用母亲的央美邮箱和签名替她签推荐信（澳门大学）</div></div>
+  <div class="it g"><div class="d">08-15</div><div class="h">工作站首单失败</div>
+    <div class="b">导师：「你没有招募来参与者，没有实现第一单」「你需要自己去引流，务必有首单」</div></div>
+  <div class="it"><div class="d">08-18</div><div class="h">债务向母亲摊牌</div>
+    <div class="b">「需要还花呗和一个网贷」「都是之前点外卖欠的」「贷款有点逾期了我也」</div></div>
+  <div class="it b"><div class="d">08-27 → 09-04</div><div class="h">云南澜沧支教</div>
+    <div class="b">澜沧三中上课、绿墨护未问卷、知行计划介绍信；姜老师接站盖章；学生刘嘉豪/李艳红</div></div>
+  <div class="it g"><div class="d">09-10 ~ 09-16</div><div class="h">与沐茜妍彻底分手</div>
+    <div class="b">「我现在也不是你男朋友了」→ 9-16「我有女朋友最近」</div></div>
+  <div class="it"><div class="d">09-15</div><div class="h">临汾 AIGC 训练营入局</div>
+    <div class="b">导师安排：「你准备下临汾」→ 山西文化题材脚本</div></div>
+  <div class="it g"><div class="d">09-24</div><div class="h">央美美术馆实习确定</div>
+    <div class="b">何一沙主任对接；用户主动问导师「这个实习我该不该去」，导师答「可以去」</div></div>
+  <div class="it"><div class="d">09-25</div><div class="h">中秋 · 关系网维护</div>
+    <div class="b">当天给 10+ 人发中秋祝福（姜老师、安奇、yumilier、jt…）</div></div>
+</div>
+
+<h2>五、从这 68 天里读出来的三个机制</h2>
+
+<h3>机制一：导师 = 资源入口，不只是学业</h3>
+<p>这 68 天里，导师（陈晔）向用户输送的机会包括：美术馆实习招募公告、荣宝斋实习、临汾 AIGC 训练营、微专业招生。
+用户对他的姿态是<strong>零延迟、零反驳、全盘承接</strong>（「明白老师」「收到老师」出现上百次）。</p>
+<p>这不是「学生向老师请教」，是<strong>下级向上级的资源依附</strong> —— 用户清楚机会从哪来。</p>
+
+<h3>机制二：母亲 = 央美关系网的实体接口</h3>
+<p>母亲不只是「家里长辈」。这 68 天里她在做的是：</p>
+<ul>
+  <li>给用户提供央美人事内幕（谁上谁下、谁跟谁不对付）</li>
+  <li>帮「导」运作书记职位（「王晓琳下，你导的书记没问题了」）</li>
+  <li>给安奇写推荐信、被用户借用邮箱和签名</li>
+  <li>兜底：要 50 块、要生活费、要 ETC、代申请进京证</li>
+</ul>
+<p>→ <strong>「家庭兜底」这条此前已裁定的机制，实际比记录的更主动</strong> —— 母亲在替儿子经营他的关系网。</p>
+
+<h3>机制三：资源流出依然没有对等回报</h3>
+<p>这 68 天里，用户为别人做的事：替安奇跑博士申请（用母亲资源）、给云南初中生承诺「寄礼物、管吃住、带你逛北京」、
+给志愿者招募方主动让利（「需要用车可以帮忙拉物料」「我能印文化衫」）。
+而对方给回来的，多为「好的」「谢谢」「[玫瑰]」。</p>
+
+<h2>六、还差什么（需要你确认的 5 个点）</h2>
+
+<div class="q">
+  <div class="item">
+    <div class="qq">笑一的真实定性 —— 「先玩玩」还是「已经是女朋友」？</div>
+    <div class="opts">A 先玩玩，感情投入是她的，我在配合 ／ B 已经是女朋友了，之前那么说是不想承认 ／ C 介于两者之间 ／ D 其他</div>
+  </div>
+  <div class="item">
+    <div class="qq">导师陈晔这条线，你在里面的位置到底是什么？</div>
+    <div class="opts">A 学生，帮他做项目换机会 ／ B 项目现场负责人，本质是打工 ／ C 合伙人，工作站有我的份 ／ D 其他</div>
+  </div>
+  <div class="item">
+    <div class="qq">云南澜沧这趟，是你想去还是被要求去？</div>
+    <div class="opts">A 自己想去的，有目的 ／ B 导师要求「立项了就得做」，我推不掉 ／ C 为了支教证明/履历 ／ D 其他</div>
+  </div>
+  <div class="item">
+    <div class="qq">替安奇跑博士、用你妈的邮箱和签名 —— 你图什么？</div>
+    <div class="opts">A 纯帮忙，认识多年 ／ B 想攒人情，以后用得上 ／ C 有别的意思 ／ D 其他</div>
+  </div>
+  <div class="item">
+    <div class="qq">8-18 向母亲摊牌的那笔网贷，现在什么状态？</div>
+    <div class="opts">A 已经还清了 ／ B 还在还，家里不知道具体数 ／ C 又新增了 ／ D 其他</div>
+  </div>
+</div>
+
+<div class="note info">
+  <div class="t">为什么问这 5 个</div>
+  <p style="margin:0">这 5 个点是这 68 天里<strong>数据能看出「有事」、但看不出「为什么」</strong>的地方。
+  其余部分（时间、人物、事件、金额）我已经从聊天里读出来了，不需要你再说一遍。</p>
+</div>
+
+<div class="note good">
+  <div class="t">✅ 本次补录结论</div>
+  <p style="margin:0">盲区已补：<strong>2026-07-24 → 09-29 共 13,577 条消息</strong>全部落地本地，事件断点接上。
+  最近一年的覆盖率从 58.9% 提升到接近全覆盖。</p>
+  <p style="margin:8px 0 0">下一轮只需要你回答上面 5 个问题，我就能把最近一年的事件层补完。</p>
+</div>
+
+<div class="note warn">
+  <div class="t">隐私等级：最高</div>
+  <p style="margin:0">本页含人名、金额、关系定性、性相关内容。仅本地保存，任何对外输出都不得出现。</p>
+</div>
+
+<footer>
+  自我理解引擎 · 最近 68 天事件梳理 · 2026-09-30<br>
+  数据来源：WeFlow 本地 API 导出（624 会话 / 77,707 条）· 全程本地处理，未上传任何第三方
+</footer>
+
+</div>
+</body>
+</html>

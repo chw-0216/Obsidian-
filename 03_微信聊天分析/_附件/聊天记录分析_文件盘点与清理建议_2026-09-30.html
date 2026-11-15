@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>聊天记录分析 · 文件盘点与清理建议</title>
+<style>
+  :root{
+    --ink:#1f1f1e; --ink2:#5f5e5a; --ink3:#888780;
+    --line:#e5e3dc; --line2:#d3d1c7;
+    --bg:#ffffff; --bg2:#faf9f6;
+    --acc:#993c1d; --acc-bg:#faece7;
+    --ok:#2f6b4f; --ok-bg:#eaf3ee;
+    --blue:#2c5f8a; --blue-bg:#eaf0f6;
+    --warnbg:#fff8e6; --warnbd:#e8d9a8;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    font-size:14px;line-height:1.7}
+  .wrap{max-width:960px;margin:0 auto;padding:48px 32px 80px}
+  header{border-bottom:2px solid var(--ink);padding-bottom:20px;margin-bottom:28px}
+  .kicker{font-size:12px;letter-spacing:.14em;color:var(--ink3);margin-bottom:10px}
+  h1{font-size:23px;font-weight:600;margin:0 0 8px;letter-spacing:-.01em}
+  .sub{font-size:13px;color:var(--ink2);margin:0}
+  h2{font-size:15px;font-weight:600;margin:42px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--line2)}
+  h3{font-size:13.5px;font-weight:600;margin:24px 0 8px}
+  p{margin:0 0 12px}
+  .danger{background:#fdf0ed;border:2px solid #d9534f;border-radius:6px;padding:16px 18px;margin:0 0 20px}
+  .danger .t{font-weight:700;color:#b03a35;margin-bottom:6px;font-size:14px}
+  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:13px}
+  th{text-align:left;font-weight:600;color:var(--ink2);padding:8px 10px;border-bottom:1px solid var(--line2);white-space:nowrap}
+  td{padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+  td.num{font-variant-numeric:tabular-nums;white-space:nowrap;text-align:right}
+  tbody tr:last-child td{border-bottom:none}
+  .hit{color:var(--acc);font-weight:600}
+  .dim{color:var(--ink3)}
+  .ok{color:var(--ok);font-weight:600}
+  .bl{color:var(--blue);font-weight:600}
+  code{background:var(--bg2);border:1px solid var(--line);border-radius:3px;padding:1px 5px;font-size:12px}
+  .note{border:1px solid var(--line2);border-radius:6px;padding:14px 16px;margin:14px 0;background:var(--bg2)}
+  .note .t{font-weight:600;margin-bottom:6px;font-size:13px}
+  .good{border-color:#c9dcd0;background:var(--ok-bg)} .good .t{color:var(--ok)}
+  .info{border-color:#c5d5e4;background:var(--blue-bg)} .info .t{color:var(--blue)}
+  .warn{border-color:var(--warnbd);background:var(--warnbg)} .warn .t{color:#8a6d1f}
+  ul{margin:8px 0 12px;padding-left:20px} li{margin-bottom:5px}
+  .pill{display:inline-block;font-size:11px;padding:1px 7px;border-radius:9px;border:1px solid var(--line2);color:var(--ink2);vertical-align:1px;white-space:nowrap}
+  .pill.k{border-color:#c9dcd0;background:var(--ok-bg);color:var(--ok)}
+  .pill.d{border-color:#e8c9c0;background:var(--acc-bg);color:var(--acc)}
+  .pill.q{border-color:#c5d5e4;background:var(--blue-bg);color:var(--blue)}
+  .bar{display:grid;grid-template-columns:1fr 130px;gap:10px;align-items:center;margin-bottom:7px;font-size:13px}
+  .bar .track{height:16px;background:#f2efe8;border-radius:3px;overflow:hidden}
+  .bar .fill{height:100%;border-radius:3px}
+  footer{margin-top:56px;padding-top:20px;border-top:1px solid var(--line2);font-size:12px;color:var(--ink3)}
+  .big{font-size:28px;font-weight:700;color:var(--acc);font-variant-numeric:tabular-nums}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="kicker">聊天记录分析 · 文件盘点</div>
+  <h1>清理建议清单（2026-09-30 · 已复核）</h1>
+  <p class="sub">扫描范围：<code>桌面\07_聊天记录分析\</code> · 共 <strong>31.8GB / 6.1 万个文件</strong> · 全程只读扫描，<strong>未删除任何文件</strong></p>
+  <p class="sub" style="margin-top:6px"><strong>状态：你已选择「先别删，先看报告」—— 目前零改动。</strong></p>
+</header>
+
+<div class="danger">
+  <div class="t">⚠️ 此操作非常危险，可能导致不可逆的数据丢失！</div>
+  <p style="margin:0 0 8px">聊天记录是<strong>不可再生数据</strong> —— 删掉就没了，微信不会帮你恢复。</p>
+  <p style="margin:0">所以我<strong>没有删任何东西</strong>。下面是完整清单，<strong>你逐项确认后我才动手</strong>，而且默认走<strong>回收站</strong>而不是直接删除。</p>
+</div>
+
+<h2>一、空间去哪了</h2>
+
+<div class="bar"><div>07_WeFlow原始导出_2026-07-24</div><div><div class="track"><div class="fill" style="width:100%;background:#993c1d"></div></div></div></div>
+<div class="bar"><div>　└ 02_原始数据备份（微信客户端副本）</div><div><div class="track"><div class="fill" style="width:60%;background:#b5533a"></div></div></div></div>
+<div class="bar"><div>　└ 01_WeFlow可读导出（含媒体）</div><div><div class="track"><div class="fill" style="width:39%;background:#c96a4f"></div></div></div></div>
+<div class="bar"><div>10_DeepSeek-v3分析工作区</div><div><div class="track"><div class="fill" style="width:2%;background:#888780"></div></div></div></div>
+<div class="bar"><div>01_主项目_WeChat-MiMo-Analyzer</div><div><div class="track"><div class="fill" style="width:0.4%;background:#888780"></div></div></div></div>
+<div class="bar"><div>其余全部（合计）</div><div><div class="track"><div class="fill" style="width:0.3%;background:#888780"></div></div></div></div>
+
+<table>
+  <thead><tr><th>项</th><th class="num">大小</th><th class="num">文件</th><th>性质</th></tr></thead>
+  <tbody>
+    <tr><td><strong>07/02_原始数据备份</strong></td><td class="num hit">19.0 GB</td><td class="num">43,178</td><td>微信客户端数据的只读复制（2026-07-24 时点）</td></tr>
+    <tr><td><strong>07/01_WeFlow可读导出</strong></td><td class="num hit">12.0 GB</td><td class="num">16,068</td><td>3,772 个会话导出，<strong>含图片/视频/语音</strong></td></tr>
+    <tr><td>10_DeepSeek-v3分析工作区</td><td class="num">628 MB</td><td class="num">575</td><td>远程 API 标注管线（<span class="hit">端点已 502 失效</span>）。<strong>⚠️ 内含 <code>wechat-analysis-v3.sqlite3</code>（116MB）—— 事件库的来源</strong></td></tr>
+    <tr><td>01_主项目_WeChat-MiMo-Analyzer</td><td class="num">125 MB</td><td class="num">74</td><td>旧分析工具（远程 Claude API）</td></tr>
+    <tr><td>其余全部</td><td class="num">~90 MB</td><td class="num">~900</td><td>见下方分类</td></tr>
+  </tbody>
+</table>
+
+<div class="note info">
+  <div class="t">一句话</div>
+  <p style="margin:0"><strong>97% 的空间在两块</strong>：微信客户端副本（19GB）+ 含媒体的旧导出（12GB）。
+  剩下 800MB 全是零碎。</p>
+</div>
+
+<h2>二、建议保留 —— 不动</h2>
+
+<table>
+  <thead><tr><th>项</th><th class="num">大小</th><th>为什么留</th></tr></thead>
+  <tbody>
+    <tr><td><strong>09_WeFlow增量导出_2026-09-29</strong></td><td class="num">48 MB</td><td><span class="pill k">最新</span> 624 会话 / 77,707 条，覆盖到 2026-09-29 —— <strong>本次分析的底座</strong></td></tr>
+    <tr><td><strong>05_人工报告与人工标注</strong></td><td class="num">42 KB</td><td><span class="pill k">引擎依赖</span> <code>人际网络标注.csv</code> 是引擎「人工锚点」的唯一来源</td></tr>
+    <tr><td>00_总清单与安全说明</td><td class="num">7 KB</td><td>清理规则与安全说明</td></tr>
+    <tr><td>weflow_live（实时监控）</td><td class="num">4.6 MB</td><td><span class="pill k">在用</span> LIVE 状态卡今天 00:36 还在更新</td></tr>
+    <tr><td>weflow_extract（朋友圈导出）</td><td class="num">11.6 MB</td><td>朋友圈数据源，09-22 最新</td></tr>
+  </tbody>
+</table>
+
+<h2>三、建议清理 —— 明确冗余（约 800MB）</h2>
+
+<p class="dim">这些要么已被更新的版本覆盖，要么依赖的服务已经失效，要么是重复导出。</p>
+
+<table>
+  <thead><tr><th>项</th><th class="num">大小</th><th>为什么可清</th></tr></thead>
+  <tbody>
+    <tr><td>10_DeepSeek-v3分析工作区</td><td class="num">626 MB</td><td>依赖 <code>156.238.239.147:3000</code>，<strong>已 502 失效</strong>；且该管线<strong>会上传聊天内容到第三方</strong>，与数据主权约定冲突</td></tr>
+    <tr><td>01_主项目_WeChat-MiMo-Analyzer</td><td class="num">124 MB</td><td>旧分析工具，同样走远程 API；已被引擎体系取代</td></tr>
+    <tr><td>11_杂项收集 里的安装包</td><td class="num">19 MB</td><td><code>WeChatKeyTool.exe</code>(17MB) + <code>WhatsApp Installer.exe</code>(1.4MB) —— 安装包，装完即可弃</td></tr>
+    <tr><td>08_WeFlow增量导出_2026-08-24</td><td class="num">8.5 MB</td><td><strong>已被 09（更新、更全）覆盖</strong></td></tr>
+    <tr><td>知行计划立项群导出 ×3<br><span class="dim">08-24 / 08-31 / 09-18</span></td><td class="num">9 MB</td><td><strong>重复导出</strong>，只留 09-24 那份</td></tr>
+    <tr><td>米雪导出 ×2<br><span class="dim">08-31 / 09-18</span></td><td class="num">90 KB</td><td><strong>重复导出</strong>，只留 09-24 那份</td></tr>
+    <tr><td>09_未迁移脚本与运行依赖</td><td class="num">4.9 MB</td><td>Python vendor 包（idna/yarl/attrs 等第三方库）</td></tr>
+    <tr><td>06_历史与配置索引</td><td class="num">644 KB</td><td>含 653KB 的一次性 rollout 日志</td></tr>
+    <tr><td>03_规划文档_Claude-Code-MiMo</td><td class="num">122 KB</td><td>旧方案文档（已被引擎取代）</td></tr>
+    <tr><td>02_第二套工作流_wechat-personal-ai</td><td class="num">257 KB</td><td>旧工作流代码，未采用</td></tr>
+    <tr><td>04_Grok-MiMo审计</td><td class="num">1.8 KB</td><td>一次性审计</td></tr>
+    <tr><td>空目录 4 个</td><td class="num">0</td><td><code>2/</code> <code>texts/</code> <code>_噪音隔离区/</code> <code>_噪音隔离区_孤儿目录/</code></td></tr>
+  </tbody>
+</table>
+
+<div class="note good">
+  <div class="t">这一批是安全的</div>
+  <p style="margin:0">合计约 <strong>800MB</strong>。全部是「重复的 / 失效的 / 装完就没用的」。
+  唯一的原始数据（微信客户端）和最新导出<strong>都不在里面</strong>。</p>
+</div>
+
+<h2>四、需要你拍板 —— 两块大件（31GB）</h2>
+
+<h3>A. 07/02_原始数据备份 · 19.0GB</h3>
+
+<p>这是 2026-07-24 对微信客户端数据的<strong>只读复制</strong>。当初的 README 明确写着「删除不影响微信原始数据」。</p>
+
+<table>
+  <thead><tr><th>对照</th><th class="num">2026-07-24 备份</th><th class="num">源目录现在</th><th>判断</th></tr></thead>
+  <tbody>
+    <tr><td><code>C:\Users\wardc\xwechat_files</code></td><td class="num">14.95 GB</td><td class="num ok">31.5 GB</td><td>源在，且更大更新 → <strong>备份是旧快照</strong></td></tr>
+    <tr><td><code>C:\Users\wardc\Documents\WeChat Files</code></td><td class="num">4.03 GB</td><td class="num ok">4.0 GB</td><td>源在，大小相当 → <strong>备份冗余</strong></td></tr>
+  </tbody>
+</table>
+
+<div class="note warn">
+  <div class="t">⚠️ 但有一个真实风险</div>
+  <p style="margin:0">微信会<strong>自动清理</strong>超过一定时间的图片/视频。
+  备份里 2026-07-24 之前的媒体，<strong>源目录里可能已经被清掉了</strong> ——
+  也就是说，这份备份可能是那些旧照片的<strong>唯一副本</strong>。</p>
+</div>
+
+<h3>B. 07/01_WeFlow可读导出 · 12.0GB</h3>
+
+<p>3,772 个会话的导出，<strong>含图片/视频/语音/表情</strong>。其中：</p>
+
+<table>
+  <thead><tr><th>构成</th><th class="num">数量</th><th>说明</th></tr></thead>
+  <tbody>
+    <tr><td><strong>公众号会话</strong></td><td class="num hit">658 个</td><td>纯噪音，从无互动价值</td></tr>
+    <tr><td>群聊</td><td class="num">93 个</td><td>含「花卷儿工作室里的懒龙们」1.6GB 等</td></tr>
+    <tr><td>私聊</td><td class="num">~3,000 个</td><td>其中「文件传输助手」1.2GB · 梅宸羽 1.0GB · 陈晔 479MB</td></tr>
+    <tr><td>朋友圈</td><td class="num">3.4 GB</td><td>朋友圈媒体（图片/视频）</td></tr>
+  </tbody>
+</table>
+
+<div class="note warn">
+  <div class="t">⚠️ 关键差别</div>
+  <p style="margin:0"><strong>我这次新导的 09（50MB）只有文字，没有媒体。</strong><br>
+  所以如果删掉 07/01，<strong>图片、视频、语音就没了</strong>（微信原始库里可能还在，但会随微信自动清理而消失）。</p>
+</div>
+
+<div class="note info">
+  <div class="t">一个折中选项（本轮新发现）</div>
+  <p style="margin:0"><strong>658 个公众号会话可以整块删</strong>（它们本来就没互动价值），
+  再删掉所有会话里的 <code>media/</code> 目录、<strong>保留全部文字 JSON</strong> ——
+  这样能释放大部分空间，<strong>文字一条不丢</strong>。</p>
+</div>
+
+<h2>五、我的建议（按风险从低到高）</h2>
+
+<table>
+  <thead><tr><th>#</th><th>动作</th><th class="num">释放</th><th>风险</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td><strong>清理第三节全部</strong>（重复 / 失效 / 装完没用）</td><td class="num ok">~700 MB</td><td><span class="pill k">无风险</span></td></tr>
+    <tr><td>2</td><td>07/01 的 <strong>658 个公众号会话</strong>整块删</td><td class="num ok">? GB</td><td><span class="pill k">无风险</span> 本来就没价值</td></tr>
+    <tr><td>3</td><td>07/01 所有会话的 <code>media/</code> 目录 → 删；<strong>文字 JSON 全保留</strong></td><td class="num ok">~10 GB</td><td><span class="pill q">需你确认</span> 图片/视频会没</td></tr>
+    <tr><td>4</td><td>07/02_原始数据备份 → 若你按 3-2-1 已有外部备份，则删本机副本</td><td class="num ok">19.0 GB</td><td><span class="pill q">需你确认</span> 见下方风险提示</td></tr>
+    <tr><td>5</td><td>07/01 的<strong>朋友圈/</strong>（3.4GB）→ 若不看朋友圈媒体，可删</td><td class="num ok">3.4 GB</td><td><span class="pill q">需你确认</span></td></tr>
+  </tbody>
+</table>
+
+<p><strong>最小方案（1+2）≈ 700MB，零信息损失。</strong><br>
+<strong>中等方案（1+2+3+5）≈ 14GB，文字一条不丢。</strong><br>
+<strong>彻底方案（全部）≈ 31GB，图片/视频/旧快照都没了。</strong></p>
+
+<div class="note warn">
+  <div class="t">⚠️ 执行前的最后一道确认</div>
+  <p style="margin:0">你选了「<strong>先别删，我先看报告</strong>」—— 所以现在<strong>一个文件都没动</strong>。
+  想执行哪一档，直接说编号即可。</p>
+</div>
+
+<div class="note">
+  <div class="t">执行方式（无论选哪档）</div>
+  <ul style="margin:0">
+    <li>默认走 <strong>Windows 回收站</strong>（可还原），不用 <code>rm</code></li>
+    <li>分批执行，<strong>每批最多 10 项</strong>，每批后核对</li>
+    <li>先备份「将被删除项」的清单文件到工作区，随时可查</li>
+  </ul>
+</div>
+
+<h2>六、顺带吸收的成果（清理前已全部抢救）</h2>
+
+<p>扫描时发现了几份<strong>你自己做过的高价值分析</strong>。截至本报告更新（2026-09-30 晚），
+<strong>已全部吸收进引擎</strong>，不会随清理丢失。</p>
+
+<table>
+  <thead><tr><th>文件</th><th>内容</th><th>状态</th></tr></thead>
+  <tbody>
+    <tr><td><code>3\W-PRISM_X_极限侧写报告.md</code></td><td>你 2026-08-19 对<strong>陈晔</strong>做的深度侧写（6,691 条 / 539 天）</td><td><span class="pill k">已吸收</span> → `05` 三·补·14 五·补 · `07` <strong>链 9</strong></td></tr>
+    <tr><td><code>3\W-PRISM_X_分析数据附录.md</code></td><td>同上，统计数据附录</td><td><span class="pill k">已吸收</span> → `05` 三·补·16</td></tr>
+    <tr><td><code>3\deerluna_emotional_analysis_report.md</code><br><span class="dim">+ 完整聊天分析报告 / 权力结构分析 / 关键事件提取</span></td><td>陈晔情绪 + 权力结构 + 关键事件</td><td><span class="pill k">已吸收</span> → `05` 三·补·16</td></tr>
+    <tr><td><code>刘华赞_微信分析_20260926\</code></td><td>完整人物分析（含证据链、朋友圈专题）</td><td><span class="pill k">已吸收</span> → `04` <strong>新增「母辈代维」第五类关系</strong></td></tr>
+    <tr><td><code>weflow_live\_live_status.md</code></td><td>笑一线实时状态卡（今天还在更新）</td><td><span class="pill k">在用</span></td></tr>
+  </tbody>
+</table>
+
+<div class="note good">
+  <div class="t">★ 本轮吸收的三条净结论（已写进引擎）</div>
+  <ul style="margin:6px 0 0">
+    <li><strong>导师线「换不到」有第二重原因：计价体系错位</strong> —— 你投的是「态度」（道歉、感谢、加倍劳动），
+    她要的是「结果」（按时交付）。<strong>两者不在同一个计价体系里。</strong>（比「她薄凉」更准确）</li>
+    <li><strong>你的「！！！」风格被导师当面规训过</strong> —— 2025-09-19「以后尽量不要发叹号」，9-24 又补一次。</li>
+    <li><strong>人际地图有个盲区：母辈代维关系</strong> —— 刘华赞 21 条消息撑 604 天，靠的不是你，是刘丽萍 ↔ 华天雪。
+    <strong>你妈在用她当你的参照系</strong>（2026-08-09「越找越差，还没赞赞靠谱」）。</li>
+  </ul>
+</div>
+
+<div class="note good">
+  <div class="t">★ 最重要的一个发现</div>
+  <p style="margin:0">你 <strong>2026-08-19</strong> 自己写的 W-PRISM 侧写里，有一个「**黑暗模型**」：</p>
+  <p style="margin:8px 0 0;padding-left:12px;border-left:2px solid var(--ok)">
+    「我不需要给他太多认可，否则他会以为自己已经够好了。偶尔关心一下，让他保持忠诚。<strong>他渴望我的认可，这是他的弱点。</strong>」</p>
+  <p style="margin:8px 0 0">而你今天说的「**我感觉她薄凉，不会给我什么**」—— <strong>和你 8-19 写下的几乎同构</strong>。
+  两种渠道、相隔一个月，结论一致。</p>
+</div>
+
+<div class="note warn">
+  <div class="t">隐私等级：最高</div>
+  <p style="margin:0">本页含人名、关系定性、对导师的负面评价。仅本地保存，任何对外输出都不得出现。</p>
+</div>
+
+<footer>
+  聊天记录分析 · 文件盘点与清理建议 · 2026-09-30<br>
+  扫描：只读，未删除任何文件 · 共 31.8GB / 61,000 个文件
+</footer>
+
+</div>
+</body>
+</html>

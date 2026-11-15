@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>自我理解引擎 v1.0 · 说明书</title>
+<style>
+  :root{--ink:#1f2a33;--ink-soft:#42505c;--ink-mute:#6b7885;--paper:#faf8f4;--paper-2:#f2eee6;
+    --line:#e0dacd;--line-strong:#cfc6b4;--accent:#9e3b32;--inkblue:#2a4a63;--gold:#8a6d3b;--green:#3b6d11;--maxw:940px;}
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--paper);color:var(--ink);
+    font-family:"Microsoft YaHei","PingFang SC",system-ui,-apple-system,"Segoe UI",sans-serif;
+    font-size:16px;line-height:1.9;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px 96px;}
+  header.cover{border-bottom:2px solid var(--ink);padding:60px 0 26px;margin-bottom:8px;}
+  .kicker{font-size:12.5px;letter-spacing:.32em;color:var(--accent);font-weight:700;margin-bottom:18px;}
+  h1.title{font-family:"Songti SC","Source Han Serif SC",Georgia,serif;font-size:33px;line-height:1.35;margin:0 0 14px;font-weight:700;}
+  .subtitle{font-family:"Songti SC","Source Han Serif SC",Georgia,serif;font-size:17.5px;color:var(--ink-soft);margin:0 0 24px;line-height:1.6;}
+  .meta{display:flex;flex-wrap:wrap;gap:10px 26px;font-size:13px;color:var(--ink-mute);border-top:1px solid var(--line);padding-top:16px;}
+  .meta b{color:var(--ink-soft);font-weight:600;}
+  .thesis{background:#fff;border:1px solid var(--line-strong);border-left:4px solid var(--accent);border-radius:0 6px 6px 0;padding:26px 30px;margin:34px 0;}
+  .thesis .lab{font-size:11.5px;letter-spacing:.24em;color:var(--accent);font-weight:700;margin-bottom:12px;}
+  .thesis p{margin:0 0 12px;font-size:17px;line-height:1.85;}
+  .thesis p:last-child{margin-bottom:0;}
+  .thesis strong{color:var(--accent);}
+  h2{font-family:"Songti SC","Source Han Serif SC",Georgia,serif;font-size:22px;font-weight:700;margin:52px 0 18px;padding-bottom:10px;border-bottom:1px solid var(--line-strong);scroll-margin-top:20px;}
+  h2 .num{color:var(--accent);font-size:16px;margin-right:12px;font-family:Georgia,serif;}
+  h3{font-size:17px;font-weight:700;margin:28px 0 12px;color:var(--inkblue);}
+  p{margin:0 0 15px;text-align:justify;}
+  strong{color:var(--ink);font-weight:700;}
+  em{font-style:normal;color:var(--accent);font-weight:600;}
+  ul,ol.body{margin:0 0 16px;padding-left:22px;}li{margin-bottom:8px;}
+  .tbl-wrap{overflow-x:auto;margin:20px 0 26px;border:1px solid var(--line);border-radius:6px;background:#fff;}
+  table{width:100%;border-collapse:collapse;font-size:13.6px;}
+  caption{caption-side:top;text-align:left;padding:14px 18px 10px;font-size:13px;color:var(--ink-mute);font-weight:600;}
+  th,td{padding:11px 15px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line);}
+  thead th{background:var(--paper-2);font-weight:700;font-size:12.8px;border-bottom:1.5px solid var(--line-strong);}
+  tbody tr:last-child td{border-bottom:none;}tbody tr:hover{background:#fcfbf8;}
+  td .cn{font-family:"Songti SC",Georgia,serif;font-weight:600;}
+  code{background:#f2eee6;padding:2px 7px;border-radius:4px;font-family:Consolas,monospace;font-size:13px;color:#7a3b32;}
+  pre{background:#2b3238;color:#e8e6e0;padding:18px 20px;border-radius:6px;overflow-x:auto;font-family:Consolas,monospace;font-size:13px;line-height:1.7;}
+  blockquote{margin:20px 0;padding:14px 22px;border-left:3px solid var(--line-strong);background:#fbfaf7;color:var(--ink-soft);font-size:14.5px;}
+  .callout{border:1px solid var(--line-strong);border-radius:6px;padding:18px 22px;margin:24px 0;background:#fff;position:relative;}
+  .callout::before{content:attr(data-label);position:absolute;top:-11px;left:18px;background:var(--paper);padding:0 9px;font-size:11.5px;letter-spacing:.18em;color:var(--accent);font-weight:700;}
+  .callout p:last-child{margin-bottom:0;}
+  .callout.warn{border-color:#e0cba8;}.callout.warn::before{color:#a8631a;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:14px;margin:20px 0 26px;}
+  .card{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:#fff;}
+  .card h5{margin:0 0 6px;font-size:14.5px;color:var(--ink);font-family:"Songti SC",Georgia,serif;}
+  .card .f{font-size:11.5px;color:var(--ink-mute);font-family:Consolas,monospace;margin-bottom:8px;}
+  .card p{font-size:13.3px;margin:0;color:var(--ink-soft);line-height:1.7;text-align:left;}
+  .tag{display:inline-block;padding:1px 9px;border-radius:20px;font-size:11.5px;font-weight:700;background:#f0e7dc;color:var(--gold);border:1px solid #e3d6c4;white-space:nowrap;}
+  .tag.green{background:#e8f0dd;color:var(--green);border-color:#d5e3c2;}
+  .tag.red{background:#f6e6e4;color:var(--accent);border-color:#ecd2ce;}
+  .num-big{display:flex;flex-wrap:wrap;gap:14px;margin:22px 0;}
+  .stat{flex:1;min-width:150px;border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:#fff;text-align:center;}
+  .stat .v{font-family:Georgia,serif;font-size:29px;font-weight:700;color:var(--accent);line-height:1.1;}
+  .stat .l{font-size:12.5px;color:var(--ink-mute);margin-top:6px;}
+  footer{margin-top:70px;padding-top:22px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink-mute);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;}
+  @media(max-width:640px){h1.title{font-size:25px;}.wrap{padding:0 18px 70px;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="cover">
+  <div class="kicker">系统 · v1.0</div>
+  <h1 class="title">自我理解引擎</h1>
+  <p class="subtitle">让任何 AI 会话，像你本人一样读懂你的聊天记录</p>
+  <div class="meta">
+    <span><b>安装位置：</b><code>~/.workbuddy-ai/skills/self-understanding-engine/</code></span>
+    <span><b>构建：</b>2026-09-29</span>
+  </div>
+</header>
+
+<div class="thesis">
+  <div class="lab">它解决什么</div>
+  <p>过去每一次「读错」，都不是因为数据不够，而是因为<strong>跳过了两件事</strong>：</p>
+  <p>① 没有装「你的人格模型」——于是只读到字面，读不到话背后的驱动；<br>
+     ② 没有先过「纠偏层」——于是机器把性别、关系、条数读反（已发生多次）。</p>
+  <p>这个引擎把这两件事<strong>做成强制步骤</strong>：先纠偏，再读数据；先定距离，再判关系。</p>
+</div>
+
+<!-- 1 -->
+<h2 id="s1"><span class="num">01</span>核心命题</h2>
+<blockquote>
+  理解 ≠ 读字面。<br>
+  <strong>理解 ＝ 用本人的我执去读本人的话，再用人工锚点校准。</strong>
+</blockquote>
+<p>三件事缺一不可：缺「我执模型」→ 读不到驱动；缺「人工锚点」→ 会读反；缺「距离地图」→ 会把「关系浅」误判成「关系好」。</p>
+
+<!-- 2 -->
+<h2 id="s2"><span class="num">02</span>组成（6 份参考 + 2 个脚本）</h2>
+
+<div class="grid">
+  <div class="card"><h5>01 人格核心</h5><div class="f">references/01-人格核心.md</div><p>他是谁：我执「证明有用」／两套系统／三态架构／距离定律／投射几何／停机条件。</p></div>
+  <div class="card"><h5>05 纠偏层 ★</h5><div class="f">references/05-纠偏层.md</div><p><strong>先读这个，再读数据。</strong>六种失效模式 + 已推翻清单 + 修正记录。这是「回滚率」的落地。</p></div>
+  <div class="card"><h5>04 人际地图</h5><div class="f">references/04-人际地图.md</div><p>53 人 × 距离半径 / 关系 / 结向 / 消息量，按半径分组。</p></div>
+  <div class="card"><h5>02 读人协议</h5><div class="f">references/02-读人协议.md</div><p>给一个人定性：定半径 → 四级筛 → 双向核算 → 判结向。</p></div>
+  <div class="card"><h5>03 读对话协议</h5><div class="f">references/03-读对话协议.md</div><p>读实时对话：三态诊断 / 称呼字典 / 红线 / 时段 / 输出格式。</p></div>
+  <div class="card"><h5>06 理解度自测</h5><div class="f">references/06-理解度自测.md</div><p>可打分的「理解」定义：盲测 10 人，预测你的判断，≥75 分达标。</p></div>
+  <div class="card"><h5>距离地图生成</h5><div class="f">scripts/build_distance_map.py</div><p>从标注表自动补「距离半径 + 负面性质」，并统计伤害率。</p></div>
+  <div class="card"><h5>理解包输出</h5><div class="f">scripts/understand.py</div><p>一条命令为一个具体的人输出「人格核心 + 卡片 + 读法提示」。</p></div>
+</div>
+
+<!-- 3 -->
+<h2 id="s3"><span class="num">03</span>怎么用</h2>
+
+<h3>方式 A · 直接对话（最常用）</h3>
+<p>你只要说「像本人一样读一下 XX」或直接提某人的名字，引擎就会被加载。它按 SKILL.md 的协议，先纠偏、再定距离、再给结论。</p>
+
+<h3>方式 B · 命令行</h3>
+<pre>cd ~/.workbuddy-ai/skills/self-understanding-engine/scripts
+python understand.py --who 陈昶文     # 输出理解包
+python understand.py --list           # 列出 53 人（按距离分组）
+python build_distance_map.py          # 重算距离地图</pre>
+
+<h3>方式 C · 自测（验证是否真的理解）</h3>
+<p>随机抽 10 人隐藏答案，让引擎只凭聊天记录预测「距离半径 / 结向 / 三态」，再打分。<strong>这是唯一能证明「像本人一样」的方法。</strong></p>
+
+<!-- 4 -->
+<h2 id="s4"><span class="num">04</span>它已经自己证明过一次</h2>
+
+<p>建引擎的过程中，脚本第一轮跑出来的结果是——</p>
+
+<div class="num-big">
+  <div class="stat"><div class="v">0%</div><div class="l">零距离·伤害率</div></div>
+  <div class="stat"><div class="v">17.6%</div><div class="l">近距离·伤害率</div></div>
+  <div class="stat"><div class="v">9.1%</div><div class="l">中距离·伤害率</div></div>
+  <div class="stat"><div class="v">0%</div><div class="l">远距离·伤害率</div></div>
+</div>
+
+<p>这个结果<strong>推翻了上一轮报告里的结论</strong>：上一轮说「远距离 0 负面」——错了，远距离确实有负面，但那是<em>事务性</em>的（工具用完即止、欠钱），不是<em>伤害</em>。</p>
+
+<div class="callout" data-label="这恰恰是引擎的意义">
+  <p>修正后的定律更精确：<strong>关系性伤害 ∝ 1/距离；事务性结清 ∝ 距离；零距离两者皆无。</strong></p>
+  <p>而「自己推翻自己」这件事，就是「回滚率」指标在真实运行——<em>一个不会推翻自己的理解系统，不算理解系统。</em></p>
+</div>
+
+<!-- 5 -->
+<h2 id="s5"><span class="num">05</span>维护规则（保持它不腐化）</h2>
+<ul>
+  <li>新发现的规律 → 追加到 <code>01-人格核心.md</code></li>
+  <li>新的失效模式 / 被推翻的结论 → 追加到 <code>05-纠偏层.md</code>（<strong>必做</strong>）</li>
+  <li>新的距离标定 → 改 <code>build_distance_map.py</code> 后重跑</li>
+  <li>每次自测得分 → 记录，与上次对比（理解度的进度条）</li>
+</ul>
+
+<div class="callout warn" data-label="边界">
+  <p>引擎能做到的是：<strong>把你的显性判断规则装上，并在已知的坑前设防。</strong></p>
+  <p>它做不到的是：<em>替你判断那些你自己都还没想清楚的事。</em> 所以它的输出格式里强制保留一行——「<strong>我无法从数据回答的：___</strong>」。<strong>真正的理解，是知道边界在哪。</strong></p>
+</div>
+
+<!-- 6 -->
+<h2 id="s6"><span class="num">06</span>下一步</h2>
+<ol class="body">
+  <li><strong>跑一次自测</strong>（06 号协议），拿到基准分——这是 v1.0 的起点。</li>
+  <li><strong>补全 472 人</strong>：目前距离半径只标了 53 人（有 ground truth 的那批），可扩到全部 472 人。</li>
+  <li><strong>接实时</strong>：把 <code>understand.py</code> 与 <code>wechat-data-forensics</code> 的 <code>live.py</code> 打通，实现「拉取 → 三态 → 红线 → 建议」一条链。</li>
+  <li><strong>建 L0 镜像语料</strong>：文件传输助手 3,903 条，作为克隆人项目的镜像基线。</li>
+</ol>
+
+<footer>
+  <span>自我理解引擎 v1.0 · 说明书</span>
+  <span>2026-09-29</span>
+</footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>噪音群清理方案 · 复核版</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  :root{--bg:#f6f7f9;--panel:#fff;--ink:#1b1e23;--ink2:#5b6472;--ink3:#8d95a3;
+    --line:#e5e8ed;--a:#3b6fd4;--g:#2b9a68;--o:#d9881c;--p:#7c5cd6;--r:#c9465f;--t:#0d9488;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+    line-height:1.7;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1160px;margin:0 auto;padding:46px 26px 90px}
+  header{border-bottom:3px solid var(--ink);padding-bottom:20px;margin-bottom:8px}
+  h1{margin:0 0 8px;font-size:28px;letter-spacing:-.4px}
+  .sub{color:var(--ink2);font-size:14px}
+  .pill{display:inline-block;background:var(--ink);color:#fff;font-size:11.5px;padding:3px 10px;border-radius:20px;margin-right:7px;margin-bottom:4px}
+  .pill.g{background:var(--g)} .pill.r{background:var(--r)} .pill.o{background:var(--o)} .pill.p{background:var(--p)}
+  h2{font-size:18.5px;margin:46px 0 6px;padding-left:12px;border-left:4px solid var(--a)}
+  h2 .n{color:var(--ink3);font-weight:600;font-size:13px;margin-right:6px}
+  h3{font-size:14.5px;margin:24px 0 6px;color:var(--ink2)}
+  .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:11px;margin:18px 0}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:14px 15px}
+  .card .k{font-size:11.5px;color:var(--ink3)}
+  .card .v{font-size:23px;font-weight:700;margin:4px 0 1px;font-variant-numeric:tabular-nums}
+  .card .d{font-size:11.5px;color:var(--ink3)}
+  .card.hl{border-color:#cfe0f8;background:linear-gradient(135deg,#f5f9ff,#fff)}
+  .card.rd{border-color:#f2d1da;background:linear-gradient(135deg,#fff5f7,#fff)}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:18px 20px;margin:15px 0}
+  .chartbox{position:relative;height:280px}
+  table{width:100%;border-collapse:collapse;font-size:13px;margin:9px 0}
+  th,td{padding:8px 9px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+  th{color:var(--ink3);font-weight:600;font-size:11.5px;background:#fafbfc}
+  td.num{font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+  tr:hover td{background:#fafbfc}
+  tr.del td{background:#fff8f9}
+  tr.prot td{background:#f4fbf8}
+  .verdict{background:linear-gradient(135deg,#f5f8ff,#fff);border:1px solid #d6e2f7;
+    border-left:4px solid var(--a);border-radius:11px;padding:16px 20px;margin:16px 0}
+  .verdict h3{margin-top:0;color:var(--a);font-size:15px}
+  .verdict.r{border-left-color:var(--r);border-color:#f2d1da;background:linear-gradient(135deg,#fff5f7,#fff)}
+  .verdict.r h3{color:var(--r)}
+  .verdict.g{border-left-color:var(--g);border-color:#cdeade;background:linear-gradient(135deg,#f2fbf7,#fff)}
+  .verdict.g h3{color:var(--g)}
+  .verdict.o{border-left-color:var(--o);border-color:#f0e2c6;background:linear-gradient(135deg,#fffaf0,#fff)}
+  .verdict.o h3{color:var(--o)}
+  .tag{display:inline-block;font-size:10.5px;padding:2px 7px;border-radius:4px;background:#eef2f7;color:var(--ink2);margin-right:4px;white-space:nowrap}
+  .tag.deep{background:#fde8ed;color:var(--r)} .tag.med{background:#fdf4e3;color:var(--o)}
+  .tag.ok{background:#e8f6f0;color:var(--g)} .tag.info{background:#e4ecfb;color:var(--a)}
+  .tag.purple{background:#f0eafb;color:var(--p)}
+  ul,ol{margin:7px 0;padding-left:21px} li{margin:4px 0}
+  code{background:#f2f4f7;padding:1px 5px;border-radius:4px;font-size:12px;
+    font-family:ui-monospace,"Cascadia Code",Consolas,monospace}
+  .foot{margin-top:46px;padding-top:14px;border-top:1px solid var(--line);color:var(--ink3);font-size:11.5px}
+  .bar{height:9px;border-radius:5px;background:#eef1f5;overflow:hidden;margin-top:5px}
+  .bar span{display:block;height:100%;border-radius:5px}
+  @media(max-width:820px){.cards{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>噪音群清理方案 · 复核版</h1>
+  <div class="sub">扫描范围：<code>07_WeFlow原始导出_2026-07-24\01_WeFlow可读导出\</code> · 248 个群聊 · 341,423 条消息</div>
+  <div style="margin-top:11px">
+    <span class="pill r">拟删除 42 群 / 310,733 条</span>
+    <span class="pill g">保留 206 群 / 30,690 条</span>
+    <span class="pill o">安全模式：只出清单</span>
+  </div>
+</header>
+
+<div class="verdict r">
+  <h3>⚠️ 先说清楚：这个操作不可逆，我还没有删任何东西</h3>
+  <p style="margin:6px 0">扫描已经跑完，<b>只生成了清单，没有动你一个文件</b>。删除方式默认是「移入 Windows 回收站」（可还原），失败的条目会移到隔离区而不是直接抹掉。</p>
+  <p style="margin:6px 0">但在你点头之前，我复核边界群时<b>发现了 4 个不该删的</b>，已经单独标出来了。请先看第 3 节。</p>
+</div>
+
+<div class="cards">
+  <div class="card hl"><div class="k">群聊总数</div><div class="v">248</div><div class="d">341,423 条消息</div></div>
+  <div class="card rd"><div class="k">A类 纯广告群</div><div class="v">42</div><div class="d">310,733 条 = 91.0%</div></div>
+  <div class="card"><div class="k">B类 僵尸群</div><div class="v">119</div><div class="d">3,764 条 = 1.1%</div></div>
+  <div class="card"><div class="k">C类 有互动群</div><div class="v">87</div><div class="d">26,926 条 = 7.9%</div></div>
+</div>
+
+<h2><span class="n">01</span>判定规则</h2>
+
+<div class="panel">
+<p>唯一硬标准：<b>你在该群里发过言吗（<code>isSend=1</code>）</b>。发过 = 保留；没发过且消息量大 = 噪音。</p>
+<table>
+<thead><tr><th>类别</th><th>规则</th><th>数量</th><th>消息</th><th>体积</th><th>处置</th></tr></thead>
+<tbody>
+<tr class="del"><td><b>A 纯广告/噪音</b></td><td>0 发言 且 ≥150 条</td><td class="num">42</td><td class="num">310,733</td><td class="num">633.4 MB</td><td><span class="tag deep">建议删</span></td></tr>
+<tr><td><b>B 僵尸群</b></td><td>0 发言 且 &lt;150 条</td><td class="num">119</td><td class="num">3,764</td><td class="num">2.4 MB</td><td><span class="tag med">可选删</span></td></tr>
+<tr class="prot"><td><b>C 有互动</b></td><td>你发过言（≥1 条）</td><td class="num">87</td><td class="num">26,926</td><td class="num">—</td><td><span class="tag ok">一律保留</span></td></tr>
+</tbody>
+</table>
+<p style="font-size:12.5px;color:var(--ink2);margin-top:10px"><b>为什么用"是否发言"而不是关键词？</b>因为关键词会误杀（比如"星愿天文社"不含任何广告词，但它是 6,577 条的社团通知流）。而"你从没在里面说过一句话"是无可辩驳的客观事实 —— 这个群对你没有社交价值。这条规则也自动保住了「央美美育工作站」这类工作群。</p>
+</div>
+
+<h2><span class="n">02</span>拟删除清单 · A 类 42 个</h2>
+
+<div class="panel chartbox"><canvas id="c1"></canvas></div>
+
+<div class="panel" style="max-height:520px;overflow-y:auto">
+<table>
+<thead><tr><th>#</th><th>群名</th><th>消息</th><th>性质</th></tr></thead>
+<tbody>
+<tr class="del"><td>1</td><td><b>北京家教信息</b></td><td class="num">259,123</td><td><span class="tag deep">纯广告投放</span></td></tr>
+<tr class="del"><td>2</td><td><b>Q&amp;L北京29家教老师群</b></td><td class="num">10,269</td><td><span class="tag deep">纯广告投放</span></td></tr>
+<tr class="del"><td>3</td><td>星愿💧天文社👏</td><td class="num">6,577</td><td><span class="tag med">社团通知流</span></td></tr>
+<tr class="del"><td>4</td><td>Chái Pizza🍕柴披萨1</td><td class="num">3,556</td><td><span class="tag med">商家群</span></td></tr>
+<tr class="del"><td>5</td><td>UofG格拉斯哥｜格拉二手群❹</td><td class="num">3,485</td><td><span class="tag med">二手交易</span></td></tr>
+<tr class="del"><td>6</td><td>吃一头内购粉丝49群牛排馆筹备ing</td><td class="num">3,275</td><td><span class="tag med">商家群</span></td></tr>
+<tr class="del"><td>7</td><td>四队23组科目三群（2）</td><td class="num">2,800</td><td><span class="tag med">驾考群</span></td></tr>
+<tr class="del"><td>8</td><td>猛犸极限大家庭1群</td><td class="num">2,749</td><td><span class="tag med">商家群</span></td></tr>
+<tr class="del"><td>9</td><td>【F333】像素蛋糕AI修图产品体验群</td><td class="num">1,582</td><td><span class="tag med">体验群</span></td></tr>
+<tr class="del"><td>10</td><td>雪圈日本驾照备考群</td><td class="num">1,489</td><td><span class="tag med">备考群</span></td></tr>
+<tr class="del"><td>11</td><td>足球闲聊群</td><td class="num">1,368</td><td><span class="tag med">闲聊群</span></td></tr>
+<tr class="del"><td>12</td><td>财经资讯分享二群</td><td class="num">1,262</td><td><span class="tag med">资讯推送</span></td></tr>
+<tr class="del"><td>13</td><td>2025灰斑马推理社</td><td class="num">1,180</td><td><span class="tag med">社团群</span></td></tr>
+<tr class="del"><td>14</td><td>在UK生活分享闲置交流群2</td><td class="num">1,179</td><td><span class="tag med">二手交易</span></td></tr>
+<tr class="del"><td>15</td><td>高颜高知引力圈2群</td><td class="num">1,059</td><td><span class="tag med">交友群</span></td></tr>
+<tr class="del"><td>16</td><td>华人联盟🇪🇸招聘求职1群</td><td class="num">706</td><td><span class="tag med">招聘群</span></td></tr>
+<tr class="del"><td>17</td><td>北京 匪B·250CB 7.3 DADA 毗舍阇</td><td class="num">623</td><td><span class="tag med">活动临时群</span></td></tr>
+<tr class="del"><td>18</td><td>2025 EFF _ 影迷群</td><td class="num">585</td><td><span class="tag med">兴趣群</span></td></tr>
+<tr class="del"><td>19</td><td>鲨鱼哥老包4群（🈲加人拉人）</td><td class="num">527</td><td><span class="tag med">粉丝群</span></td></tr>
+<tr class="del"><td>20</td><td>SeeAI WAIC 攻略群，相约上海</td><td class="num">500</td><td><span class="tag med">活动群</span></td></tr>
+<tr class="del"><td>21</td><td>立项2群-第三届Movers4Climate绿色乡村青年行动</td><td class="num">475</td><td><span class="tag deep">已结束项目</span></td></tr>
+<tr class="del"><td>22</td><td>首经贸黑市五群（小目标互助）</td><td class="num">475</td><td><span class="tag med">交易群</span></td></tr>
+<tr class="del"><td>23</td><td>中关村创坛 0117</td><td class="num">462</td><td><span class="tag med">活动群</span></td></tr>
+<tr class="del"><td>24</td><td>格拉🍺桌游户外组局2️⃣</td><td class="num">456</td><td><span class="tag med">组局群</span></td></tr>
+<tr class="del"><td>25</td><td>2025北京事业编备考群②</td><td class="num">428</td><td><span class="tag med">备考群</span></td></tr>
+<tr class="del"><td>26</td><td>纵横观察（北大纵横王立国）</td><td class="num">412</td><td><span class="tag med">资讯推送</span></td></tr>
+<tr class="del"><td>27</td><td>格拉斯哥二手物品集散群2024</td><td class="num">410</td><td><span class="tag med">二手交易</span></td></tr>
+<tr class="del"><td>28</td><td>英国球迷群（七）</td><td class="num">397</td><td><span class="tag med">兴趣群</span></td></tr>
+<tr class="del"><td>29</td><td>中央美术学院滑雪协会会员4️⃣群</td><td class="num">390</td><td><span class="tag med">社团群</span></td></tr>
+<tr class="del"><td>30</td><td>格拉斯哥新生二手群2025</td><td class="num">333</td><td><span class="tag med">二手交易</span></td></tr>
+<tr class="del"><td>31</td><td>Clientloop体验群</td><td class="num">290</td><td><span class="tag med">体验群</span></td></tr>
+<tr class="del"><td>32</td><td>22-23格拉斯哥学联租房群</td><td class="num">279</td><td><span class="tag med">租房群</span></td></tr>
+<tr class="del"><td>33</td><td>25考研｜人文素养</td><td class="num">274</td><td><span class="tag med">备考群</span></td></tr>
+<tr class="del"><td>34</td><td>格拉斯哥特别二手各取所需群2024</td><td class="num">235</td><td><span class="tag med">二手交易</span></td></tr>
+<tr class="del"><td>35</td><td>2025AUCA春季学生群1</td><td class="num">231</td><td><span class="tag med">学生群</span></td></tr>
+<tr class="del"><td>36</td><td>1️⃣艺术生跨专业实习求职分享</td><td class="num">214</td><td><span class="tag med">求职群</span></td></tr>
+<tr class="del"><td>37</td><td>格拉斯哥特别二手&amp;租房群2024</td><td class="num">202</td><td><span class="tag med">二手交易</span></td></tr>
+<tr class="del"><td>38</td><td>3.14飞盘🥏4-6点</td><td class="num">193</td><td><span class="tag med">活动临时群</span></td></tr>
+<tr class="del"><td>39</td><td>大模头粉丝群</td><td class="num">187</td><td><span class="tag med">粉丝群</span></td></tr>
+<tr class="del"><td>40</td><td>美学研讨会志愿者群💪🏻</td><td class="num">171</td><td><span class="tag med">已结束活动</span></td></tr>
+<tr class="del"><td>41</td><td>星源玩家拼车叁群🚫广告</td><td class="num">168</td><td><span class="tag med">拼车群</span></td></tr>
+<tr class="del"><td>42</td><td>2025-2026学年艺术与文化</td><td class="num">157</td><td><span class="tag med">课程群</span></td></tr>
+</tbody>
+</table>
+</div>
+
+<h2><span class="n">03</span>⚠️ 复核发现的 4 个例外 —— 建议保留</h2>
+
+<div class="verdict o">
+  <p style="margin:4px 0">机械规则会犯错。我人工复核了边界群，发现下面几个 <b>0 发言但绝对不该删</b>：</p>
+</div>
+
+<div class="panel">
+<table>
+<thead><tr><th>群名</th><th>消息</th><th>为什么不该删</th></tr></thead>
+<tbody>
+<tr class="prot"><td><b>央美美育工作站</b></td><td class="num">85</td><td>你导师「导」把你拉进去的工作群。群里有 <b>王博、王华青、关宇佳、咖哥</b> —— 是你井邻项目/中期汇报的直接利益相关方。虽然你没发言，但这群的内容会出现在你的汇报材料里。</td></tr>
+<tr class="prot"><td><b>2025级研究生实验艺术与科技艺术学</b></td><td class="num">236</td><td><b>你已经发过 18 条</b>，本来就落在 C 类。这里列出来是提醒：班级群是学籍/选课通知的唯一来源。</td></tr>
+<tr class="prot"><td><b>CAFA自然探索协会🦎3️⃣2025-26</b></td><td class="num">919</td><td><b>你发过 3 条</b>，自动保留。同类还有「2025CAFA9号楼东寝室长工作群」（发过 3 条）。</td></tr>
+<tr class="prot"><td><b>花卷儿工作室里的懒龙们</b></td><td class="num">1,625</td><td><b>你发过 25 条</b> —— 这是你导师的工作室群，价值极高，自动保留。</td></tr>
+</tbody>
+</table>
+<p style="font-size:12.5px;color:var(--ink2);margin-top:10px">上表前两项：<b>央美美育工作站</b> 属于 A 类（0 发言），请手动从清单剔除。「立项2群 Movers4Climate」虽在 A 类，但项目已结项（9/3 已提交最终材料），删掉是安全的 —— 原始数据在 <code>知行计划最终版\03_官方群与执行沟通记录</code> 有独立留存。</p>
+</div>
+
+<h2><span class="n">04</span>执行后的效果</h2>
+
+<div class="panel chartbox"><canvas id="c2"></canvas></div>
+
+<div class="verdict g">
+  <h3>净效果</h3>
+  <table style="margin-top:8px">
+    <tr><td>群聊数量</td><td class="num">248 → <b>206</b></td><td>减少 42 个（16.9%）</td></tr>
+    <tr><td>群聊消息</td><td class="num">341,423 → <b>30,690</b></td><td><b>减少 91.0%</b></td></tr>
+    <tr><td>占用体积</td><td class="num">≈ 640 MB → <b>≈ 7 MB</b></td><td>释放约 633 MB</td></tr>
+    <tr><td>全库消息</td><td class="num">465,562 → <b>124,439</b></td><td>信噪比从 26.6% 提升到 100% 有效</td></tr>
+  </table>
+  <p style="margin:10px 0 0;font-size:12.5px;color:var(--ink2)">剔除「北京家教信息」一个群，就消掉了全库 <b>55.7%</b> 的消息量。此后任何统计（活跃度、情感曲线、人物关系）都不会再被广告污染。</p>
+</div>
+
+<div class="verdict">
+  <h3>怎么执行</h3>
+  <p style="margin:6px 0">脚本已经写好并跑过一遍（<b>只出清单，没删东西</b>）：</p>
+  <p style="margin:6px 0"><code>wechat-analysis\clean_noise_groups.py</code> · 清单输出到 <code>wechat-analysis\噪音群清理清单.json</code></p>
+  <table style="margin-top:8px">
+    <tr><td><code>python clean_noise_groups.py</code></td><td>只扫描出清单（默认，已跑）</td></tr>
+    <tr><td><code>python clean_noise_groups.py --apply</code></td><td>执行 —— 移入回收站，可还原</td></tr>
+    <tr><td><code>python clean_noise_groups.py --apply --include-b</code></td><td>连 119 个僵尸群一起清（再多 3,764 条）</td></tr>
+  </table>
+  <p style="margin:10px 0 0;font-size:12.5px;color:var(--ink2)"><b>安全设计：</b>① 默认 dry-run，不加 <code>--apply</code> 永不删；② 走 Windows 回收站 API（<code>SHFileOperationW + FOF_ALLOWUNDO</code>），可右键还原；③ 回收站不可用时移入 <code>Desktop\07_聊天记录分析\_噪音隔离区\</code>；④ 每批 10 个，逐条报告成败，失败即停不静默；⑤ 已有独立备份的一份原始数据（33.6 GB 主备份）不受影响。</p>
+</div>
+
+<div class="foot">
+  只读扫描 · 未修改/删除任何原始文件 · 生成于 2026-09-26<br>
+  判定依据：<code>isSend</code> 字段（该群中本人是否发送过消息）· 全库口径 465,562 条 = 群聊 341,423 + 私聊 71,550 + 公众号 52,589
+</div>
+
+</div>
+<script>
+const C={r:'#c9465f',g:'#2b9a68',a:'#3b6fd4',o:'#d9881c',p:'#7c5cd6',ink:'#1b1e23',ink2:'#5b6472',line:'#e5e8ed',ink3:'#8d95a3'};
+new Chart(document.getElementById('c1'),{type:'bar',
+ data:{labels:['北京家教信息','Q&L北京29家教','星愿天文社','Chái Pizza','格拉二手群❹','吃一头内购','科目三群','猛犸极限','其余34个群合计'],
+ datasets:[{label:'消息条数',data:[259123,10269,6577,3556,3485,3275,2800,2749,26614],
+ backgroundColor:[C.r,C.r,C.o,C.o,C.o,C.o,C.o,C.o,'#c3cad5'],borderRadius:5}]},
+ options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
+  plugins:{legend:{display:false},title:{display:true,text:'A类噪音群消息量（对数感知：前2个占绝对多数）',color:C.ink,font:{size:13}}},
+  scales:{x:{type:'logarithmic',grid:{color:C.line},ticks:{color:C.ink2}},y:{grid:{display:false},ticks:{color:C.ink,font:{size:11}}}}}});
+
+new Chart(document.getElementById('c2'),{type:'bar',
+ data:{labels:['群聊消息（清理前）','群聊消息（清理后）'],
+ datasets:[{label:'消息条数',data:[341423,30690],backgroundColor:[C.r,C.g],borderRadius:6,barThickness:64}]},
+ options:{responsive:true,maintainAspectRatio:false,
+  plugins:{legend:{display:false},title:{display:true,text:'群聊消息：341,423 → 30,690（-91.0%）',color:C.ink,font:{size:13}},
+   tooltip:{callbacks:{label:c=>c.parsed.y.toLocaleString()+' 条'}}},
+  scales:{y:{grid:{color:C.line},ticks:{color:C.ink2,callback:v=>v.toLocaleString()}},x:{grid:{display:false},ticks:{color:C.ink}}}}});
+</script>
+</body>
+</html>

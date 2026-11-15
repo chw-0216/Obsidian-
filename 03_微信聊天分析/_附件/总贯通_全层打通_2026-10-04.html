@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>总贯通 · 全层打通报告（2026-10-04）</title>
+<style>
+  :root{
+    --bg:#F8F7F4; --card:#FFFFFF; --ink:#161514; --ink2:#3B3835; --mut:#7C756C;
+    --line:#E6E1D8; --line2:#F1EDE6;
+    --red:#A32B22; --redbg:#FBF0EE; --redline:#EBD3CF;
+    --teal:#2B5B60; --tealbg:#EEF5F4;
+    --gold:#87683A; --goldbg:#F9F4E9;
+    --inkbg:#F2F0EB;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);
+    font-family:"Microsoft YaHei","PingFang SC",sans-serif;
+    font-size:15px;line-height:1.85;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1060px;margin:0 auto;padding:0 30px 100px}
+
+  header{padding:64px 0 34px;border-bottom:2px solid var(--ink)}
+  .kick{font-size:11.5px;letter-spacing:.34em;color:var(--red);font-weight:700;margin-bottom:16px}
+  h1{font-family:"Songti SC","SimSun",serif;font-size:42px;line-height:1.22;font-weight:700}
+  h1 em{font-style:normal;color:var(--red)}
+  .sub{margin-top:18px;font-size:15.5px;color:var(--ink2);max-width:800px}
+  .meta{margin-top:22px;font-size:12px;color:var(--mut);letter-spacing:.05em}
+  .meta span{display:inline-block;margin-right:18px}
+
+  .banner{margin:34px 0 6px;background:var(--redbg);border:1px solid var(--redline);padding:24px 28px}
+  .banner .t{font-size:11.5px;letter-spacing:.22em;color:var(--red);font-weight:700;margin-bottom:12px}
+  .banner .n{font-family:"Songti SC",serif;font-size:46px;line-height:1.05;color:var(--red)}
+  .banner .n small{font-size:17px;font-weight:400;color:var(--ink2);margin-left:6px}
+  .banner p{font-size:13.5px;color:var(--ink2);margin-top:10px}
+
+  h2{font-family:"Songti SC","SimSun",serif;font-size:23px;margin:60px 0 6px;padding-bottom:11px;border-bottom:1px solid var(--ink)}
+  h2 .n{color:var(--red);font-size:14px;margin-right:9px;letter-spacing:.08em}
+  .lead{color:var(--mut);font-size:13.5px;margin:11px 0 24px}
+
+  .g{background:var(--card);border:1px solid var(--line);padding:22px 26px;margin-bottom:14px}
+  .g > h3{font-size:16.5px;margin-bottom:10px;display:flex;align-items:baseline;gap:10px}
+  .g > h3 .tag{font-size:10.5px;font-weight:700;color:#fff;background:var(--ink);padding:3px 8px;letter-spacing:.08em}
+  .g > h3 .tag.r{background:var(--red)} .g > h3 .tag.t{background:var(--teal)} .g > h3 .tag.g{background:var(--gold)}
+  .g > h3 .cf{margin-left:auto;font-size:11px;color:var(--mut);letter-spacing:.04em}
+  .g p{font-size:14px;color:var(--ink2)}
+  .g p + p{margin-top:9px}
+
+  .evd{margin-top:13px;border-top:1px dashed var(--line);padding-top:12px}
+  .evd .lb{font-size:11px;letter-spacing:.16em;color:var(--mut);font-weight:700;margin-bottom:8px}
+  .evd ul{list-style:none}
+  .evd li{position:relative;padding:5px 0 5px 16px;font-size:13.2px;color:var(--ink2);font-variant-numeric:tabular-nums}
+  .evd li::before{content:"";position:absolute;left:0;top:14px;width:5px;height:5px;background:var(--red);border-radius:50%}
+  .evd li b{color:var(--ink);font-weight:700}
+
+  .q{font-family:"Songti SC",serif;font-size:13.5px;color:var(--ink);background:var(--inkbg);
+     border-left:2px solid var(--red);padding:10px 15px;margin:10px 0;line-height:1.8}
+
+  table{width:100%;border-collapse:collapse;font-size:13px;margin:4px 0}
+  th{text-align:left;font-size:11px;letter-spacing:.06em;color:var(--mut);font-weight:700;padding:8px 9px;border-bottom:2px solid var(--ink)}
+  td{padding:7px 9px;border-bottom:1px solid var(--line2);vertical-align:top;font-variant-numeric:tabular-nums}
+  td.r{text-align:right}
+  .hi{background:var(--redbg)}
+  .hi td{font-weight:700;color:var(--red)}
+  .ok{color:var(--teal);font-weight:700}
+  .no{color:var(--red);font-weight:700}
+
+  .bar{display:grid;grid-template-columns:86px 1fr 96px;align-items:center;gap:10px;font-size:12px;color:var(--mut);margin:4px 0}
+  .bar i{font-style:normal;font-variant-numeric:tabular-nums}
+  .bar .tr{height:9px;background:var(--line2);position:relative}
+  .bar .tr u{position:absolute;left:0;top:0;bottom:0;background:var(--red);text-decoration:none;opacity:.82}
+  .bar.hi2 .tr u{background:var(--red);opacity:1}
+
+  .warn{background:var(--goldbg);border:1px solid #E8DCC0;padding:17px 21px;font-size:13.3px;color:var(--ink2);margin:20px 0}
+  .warn b{color:var(--gold)}
+  .stop{background:var(--redbg);border:1px solid var(--redline);padding:17px 21px;font-size:13.3px;color:var(--ink2);margin:20px 0}
+  .stop b{color:var(--red)}
+
+  .flow{background:var(--card);border:1px solid var(--line);padding:20px 24px;margin:14px 0;font-family:Consolas,monospace;font-size:12.4px;line-height:2;color:var(--ink2);white-space:pre;overflow-x:auto}
+
+  ol.pk{padding-left:0;list-style:none;counter-reset:p}
+  ol.pk li{counter-increment:p;position:relative;padding:11px 0 11px 42px;border-bottom:1px solid var(--line2);font-size:13.7px}
+  ol.pk li::before{content:counter(p);position:absolute;left:0;top:11px;width:25px;height:25px;line-height:25px;text-align:center;font-size:12px;font-weight:700;color:#fff;background:var(--ink);border-radius:50%}
+  ol.pk li b{color:var(--red)}
+
+  .nx{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:12px}
+  .nx div{background:var(--card);border:1px solid var(--line);padding:15px 18px}
+  .nx div b{display:block;font-size:13.5px;margin-bottom:5px}
+  .nx div p{font-size:12.6px;color:var(--mut)}
+
+  footer{margin-top:70px;padding-top:20px;border-top:1px solid var(--line);font-size:12px;color:var(--mut);line-height:1.9}
+  @media(max-width:700px){.wrap{padding:0 17px 64px}h1{font-size:28px}.nx{grid-template-columns:1fr}.bar{grid-template-columns:70px 1fr 80px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="kick">全层打通 · 断点体检 · 多层次交叉 · 修正</div>
+  <h1>七层数据，<em>四个断点，一条没人看见的链</em></h1>
+  <div class="sub">引擎 / 知识库 / 事件库 / 距离地图 / 实时索引 / HTML 产出 / 记忆 —— 七层之间互相引用，
+  但从没有一份文件规定「谁是真相」。这一轮把断点全找出来、修掉，并建立单一真相源。</div>
+  <div class="meta">
+    <span>索引库 388,705 条 / 1,802 会话</span>
+    <span>距离地图 53 → 82 人</span>
+    <span>事件标定率 39.2% → 46.1%</span>
+    <span>2026-10-04</span>
+  </div>
+</header>
+
+<div class="banner">
+  <div class="t">最严重的断点</div>
+  <div class="n">142 <small>→</small> 16,336</div>
+  <p>距离地图里母亲的条数是 <b>142</b>，实际是 <b>16,336</b> —— 差 <b>115 倍</b>。
+  而「母亲关系淡」这个结论，当初就是建立在那个 142 上的。<br>
+  更要命的是：这个过期文件是 <b>事件库和实时判读的输入</b>。错的不只是一个数字，是下游全部。</p>
+</div>
+
+<h2><span class="n">01</span>断点体检：七层里有四个真断点</h2>
+<div class="lead">扫描方式：交叉比对每个数字的「声称值」与「可复算值」。</div>
+
+<table>
+  <thead><tr><th style="width:30px">#</th><th>断点</th><th style="width:210px">证据</th><th style="width:78px">严重度</th><th style="width:66px">状态</th></tr></thead>
+  <tbody>
+    <tr class="hi">
+      <td>1</td>
+      <td><b>距离地图.csv 是旧快照</b><br><span style="font-size:12px;color:var(--mut)">53 行里 34 行与实际不符（64%）</span></td>
+      <td style="font-size:12px">母亲 142→16,336 · 笑一 600→6,303 · 文件传输助手 3,903→6,463 · 导师 3,348→7,262</td>
+      <td>🔴 致命</td><td class="ok">已修</td>
+    </tr>
+    <tr class="hi">
+      <td>2</td>
+      <td><b>29 人补标结果从未进 CSV</b><br><span style="font-size:12px;color:var(--mut)">只活在 markdown 里，机器读不到</span></td>
+      <td style="font-size:12px">`补标_29人距离表.csv` 有完整裁定（24 远 / 5 中），但 `距离地图.csv` 里一个人都没有</td>
+      <td>🔴 致命</td><td class="ok">已修</td>
+    </tr>
+    <tr class="hi">
+      <td>3</td>
+      <td><b>没有单一真相源</b><br><span style="font-size:12px;color:var(--mut)">同一个数字有 2–3 个版本</span></td>
+      <td style="font-size:12px">母亲：`距离地图.csv` 说 142 / `04` 说 12,784 / 实际 16,336</td>
+      <td>🔴 致命</td><td class="ok">已建</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td><b>SKILL.md 头部数字过期</b></td>
+      <td style="font-size:12px">388,366→388,705 · 54 人→82 人 · 596 篇→606 篇 · 「19 条裁定」→ 已到三·补·35</td>
+      <td>🟠 高</td><td class="ok">已修</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td><b>弃用脚本仍在目录里</b></td>
+      <td style="font-size:12px">`build_distance_map.py` 只读 53 人锚点、不读实时库 → 一跑就把新地图覆盖回旧的</td>
+      <td>🟡 中</td><td class="ok">已标注</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td><b>事件层亲属关键词逻辑错</b></td>
+      <td style="font-size:12px">`FAMILY_KW` 把「奶奶」判为<b>零距离</b>，但奶奶不同住（奶奶线 144 条 / 他发 116）</td>
+      <td>🟡 中</td><td class="no">待修</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td><b>Obsidian 事件库只有 6 篇</b><br><span style="font-size:12px;color:var(--mut)">工作区已有 34 份 HTML</span></td>
+      <td style="font-size:12px">大量报告没有对应的笔记入口 → 只能靠 `_附件` 找</td>
+      <td>🟡 中</td><td class="no">待办</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2><span class="n">02</span>已修的四件事</h2>
+
+<div class="g">
+  <h3><span class="tag r">修 1</span>距离地图重建：53 → 82 人，未匹配归零<span class="cf">rebuild_distance_map.py</span></h3>
+  <p>原则：<b>人工标注（关系/备注/距离档）原样保留，所有数字从实时索引重算。</b></p>
+  <div class="evd">
+    <div class="lb">新增字段</div>
+    <ul>
+      <li><b>我发占比</b> —— 他在这个关系里的供给强度</li>
+      <li><b>距今天</b> —— 这个关系「还活着吗」</li>
+      <li><b>首次 / 末次</b> —— 关系的生命周期</li>
+      <li><b>来源</b> —— 锚点53 / 补标29（可追溯）</li>
+    </ul>
+  </div>
+  <p style="margin-top:12px">距离分布：零 <b>3</b> · 近 <b>17</b> · 中 <b>27</b> · 远 <b>34</b> · 自己 1。<br>
+  另产出 <code>距离地图_全库.csv</code>（<b>1,792 行</b>，全部会话带特征），供人工复核。</p>
+</div>
+
+<div class="g">
+  <h3><span class="tag r">修 2</span>29 人补标并入地图 —— 直接提升事件标定率</h3>
+  <p><code>补标_29人距离表.csv</code> 里 29 个人的距离档是 <b>2026-10-04 你本人裁定的</b>，
+  但一直没进机器可读的地图，所以事件层根本用不上。</p>
+  <div class="evd">
+    <div class="lb">效果</div>
+    <ul>
+      <li>事件层「标注」命中：<b>890 → 1,075</b>（+185 条）</li>
+      <li>距离未标定：<b>1,632 → 1,447</b>（61% → 53.9%）</li>
+      <li>标定率：<b>39.2% → 46.1%</b></li>
+    </ul>
+  </div>
+</div>
+
+<div class="g">
+  <h3><span class="tag t">修 3</span>建立单一真相源 <code>00-真相源·数字基准.md</code></h3>
+  <p>九节：数据底座 / 距离地图 / 事件层 / 逐月基准 / 钱 / 关键人 / 悬空 / 复算脚本 / 维护协议。</p>
+  <p><b>硬规则</b>：任何文件与本文件冲突时以本文件为准；<b>每个数字必须带复算命令</b>，否则视为不可信；
+  `01`–`09` 里禁止再写「当前有 X 条」这类会过期的数字。</p>
+  <p>并写进加载协议第 ⓪ 位 —— <b>以后任何 AI 会话第一件事就是读它</b>。</p>
+</div>
+
+<div class="g">
+  <h3><span class="tag t">修 4</span>批量校正过期数字</h3>
+  <p>`SKILL.md` 12 处 · `04-人际地图.md` 2 处 · `07-事件档案.md` 1 处 · `05-纠偏层.md` 2 处 · `06-理解度自测.md` 1 处。</p>
+  <p>校正后全库检索「54 人 / 596 篇 / 388,366 / 2,687」<b>零残留</b>。</p>
+</div>
+
+<h2><span class="n">03</span>多层次交叉：五个新发现</h2>
+<div class="lead">把新数据（车线 / 家教线 / 48% 零发言 / 82 人地图）与旧结论逐层对撞。</div>
+
+<div class="g">
+  <h3><span class="tag r">发现 1</span>我发占比是一个<b>常数</b>，不是变量</h3>
+  <p>全库私聊 ≥150 条的 <b>137 人</b>：中位数 <b>60.6%</b> · 均值 59.4% · Q1 54.1% · Q3 65.5% · <b>76% 落在 50–70%</b>。</p>
+  <div class="bar hi2"><i>活 ≤7天</i><div class="tr"><u style="width:62.2%"></u></div><i>62.2%</i></div>
+  <div class="bar"><i>温 7-30天</i><div class="tr"><u style="width:59.7%"></u></div><i>59.7%</i></div>
+  <div class="bar"><i>凉 30-120天</i><div class="tr"><u style="width:60.9%"></u></div><i>60.9%</i></div>
+  <div class="bar"><i>冷 &gt;120天</i><div class="tr"><u style="width:60.6%"></u></div><i>60.6%</i></div>
+  <p style="margin-top:12px"><b>★★ 四组几乎完全一致 → 「他发多少」与「关系是否还活着」无关。</b></p>
+  <div class="stop">
+    <b>这条推翻了一个旧结论。</b><br>
+    旧说法：「他越把对方当『要维护的关系』，他发得越多；越是被对方当关系的人，他发得越少。」<br>
+    全库口径下<b>没有这个梯度</b> —— 他系统性地在任何私聊里都发 ~60%。<br>
+    <b>真正的变量是「对方是否持续主动」</b>：全库只有 <b>7 个人</b>的对方发得比他多（&lt;45%）。
+  </div>
+</div>
+
+<div class="g">
+  <h3><span class="tag r">发现 2</span>零距离内部是<b>分裂</b>的，母亲是唯一例外</h3>
+  <table>
+    <thead><tr><th>人</th><th class="r">条数</th><th class="r">他发占比</th><th class="r">对方发</th><th>读法</th></tr></thead>
+    <tbody>
+      <tr class="hi"><td><b>刘丽萍</b>（母亲）</td><td class="r">16,336</td><td class="r">45.4%</td><td class="r">54.0%</td><td>★ 唯一「对方说得比他多」</td></tr>
+      <tr><td>蔡峰峰（父亲）</td><td class="r">633</td><td class="r">71.4%</td><td class="r">28.1%</td><td>他供给</td></tr>
+      <tr><td>汪伊俊（研一室友）</td><td class="r">1,913</td><td class="r">67.0%</td><td class="r">32.5%</td><td>他供给</td></tr>
+    </tbody>
+  </table>
+  <p style="margin-top:12px"><b>★★ 母亲是他唯一「不需要主动供给」的关系。</b>
+  与「母亲没有备注」（零距离不需要盖子）完全互印 —— 一条来自备注，一条来自行为量，两条独立指向同一件事。</p>
+</div>
+
+<div class="g">
+  <h3><span class="tag t">发现 3</span>总量下降时，他的份额<b>反而上升</b></h3>
+  <table>
+    <thead><tr><th>月</th><th class="r">全库总量</th><th class="r">他发</th><th class="r">占比</th></tr></thead>
+    <tbody>
+      <tr><td>2026-04</td><td class="r">22,380</td><td class="r">3,655</td><td class="r">16.3%</td></tr>
+      <tr><td>2026-05</td><td class="r">22,289</td><td class="r">4,008</td><td class="r">18.0%</td></tr>
+      <tr class="hi"><td>2026-06</td><td class="r">17,869</td><td class="r">3,499</td><td class="r">19.6%</td></tr>
+      <tr><td>2026-07</td><td class="r">22,763</td><td class="r">4,368</td><td class="r">19.2%</td></tr>
+    </tbody>
+  </table>
+  <p style="margin-top:12px">2026-06 全库掉 <b>-19.8%</b>，但他发占比升到 <b>19.6%</b> ——
+  <b>是别人少了，他没少。</b>「变安静」的从来不是他。</p>
+</div>
+
+<div class="g">
+  <h3><span class="tag g">发现 4</span>2026-05/06 是<b>三条线同时转向</b>的月份</h3>
+  <ul class="evd" style="border:0;padding:0">
+    <li><b>2026-05-16</b>　提车 —— 首付 80,000 付出，家庭大额支出落地</li>
+    <li><b>2026-06-12</b>　向陈昶文「待会儿那你信息借网贷」—— 债务线最重的一条未解原文</li>
+    <li><b>2026-06</b>　全库低谷 + 家教群断崖 <b>1,235 → 366（-70%）</b>，远超全库 -20%</li>
+  </ul>
+  <p style="margin-top:12px">⚠️ <b>时序耦合，不是因果</b>。但三条线落在同一个 60 天窗口里，值得单独标记。</p>
+</div>
+
+<div class="g">
+  <h3><span class="tag g">发现 5</span>父母线 2025-08~10 双双归零 —— <b>数据层，不是关系</b></h3>
+  <p>母亲线逐月缺口：<b>2025-08 / 09 / 10 三个月全为 0</b>。父亲线：2025-06、08、10 各为 0。</p>
+  <p>而同期全库是<b>高峰</b>（15,524 / 23,229 / 23,420）—— <b>不可能两人同时断、而他本人消息量正常。</b></p>
+  <div class="stop"><b>结论：这是数据层问题（换机 / 分片），不得当关系事实引用。</b>这是第三次验证同一结论。</div>
+</div>
+
+<h2><span class="n">04</span>★★★★★ 一条此前完全没被串起来的链</h2>
+<div class="lead">父亲的心脏搭桥手术（2025-03）—— 它同时解释了债务线的起点、他和导师的关系、以及「母亲的车」冲突。</div>
+
+<div class="g">
+  <h3><span class="tag r">新链</span>2025-03 父亲开胸手术</h3>
+  <div class="evd">
+    <div class="lb">全部原文（此前从未汇总过）</div>
+    <ul>
+      <li><b>2025-03-10</b>　母亲「啊。5 棵。在安贞？」／同日母亲「<b>不还逾期了</b>」← 债务线最早记录日</li>
+      <li><b>2025-03-13</b>　母亲「浩文：你爸住院了？」／他「我爸突然说住院」／母亲「你爸说下周做手术，<b>我 15 号回北京行吗</b>？」「要不要向<b>云南德宏</b>方面请假。说你爸做手术」</li>
+      <li><b>2025-03-14</b>　母亲「你爸病历找到了。在<b>阜外</b>住院处。」</li>
+      <li><b>2025-03-20</b>　他 → 奶奶「<b>我爸明早做开胸手术</b>」「心脏搭桥」</li>
+      <li><b>2025-03-21</b>　母亲「我在四层手术患者等候区」</li>
+      <li><b>2025-03-23</b>　父亲 → 他「<b>儿子，我做心脏手术，上什么保险合适？</b>」<br>他 → 父亲：列了 4 种手术意外险（幸福 / 江泰 / 平安 / 众安）</li>
+      <li><b>2025-03-24</b>　他 → 奶奶「我爸下手术了完成手术」</li>
+      <li><b>2025-03-27</b>　他 → 权禹仙「最近老爹搭桥」</li>
+      <li><b>2025-04-09</b>　他 → 导师「<b>前两天父亲开胸手术糊涂没回老师，应该早点跟老师说，我也想去老师！</b>」</li>
+      <li><b>2025-04-18</b>　母亲「<b>手术我出的钱</b>」← ★★★</li>
+    </ul>
+  </div>
+</div>
+
+<div class="nx">
+  <div><b>它解释了债务线起点</b><p>债务线最早记录（2025-03-10）就落在父亲住院那几天。⚠️ 时序耦合，不是因果 —— 但它给了那条孤零零的「不还逾期了」一个生活现场。</p></div>
+  <div><b>它解释了父母的钱是分开的</b><p>母亲说「手术我出的钱」—— 她单独强调出资。这与 2026-07-02 父亲对「母亲的车」只能报警（无支配权）完全一致。</p></div>
+  <div><b>它解释了父亲怎么用他</b><p>手术前父亲问「上什么保险合适」—— 这是父亲<b>承认他的专业能力</b>的唯一一次。父亲线不是「薄」，是「只在有事时用」。</p></div>
+  <div><b>它解释了「母亲的车」冲突</b><p>母亲出钱给父亲做手术 → 母亲出钱给他买车。父亲的逻辑是「你妈的车没了，报警」—— 因为那车不属于他。</p></div>
+</div>
+
+<div class="g">
+  <h3><span class="tag">修正</span>「父亲线终止于 2026-07-02」需要改写</h3>
+  <p>把最后 33 天全量拉出来后，事件不是「关系终止」，是<b>一件具体的事</b>：</p>
+  <div class="q">2026-06-27 00:46　他 → 父亲：双裕东区21号楼4单元501 的门锁密码<br>
+  2026-07-02 15:48　爸「你妈的车，没了。可否报警？<b>5 分钟之内回答！</b>」<br>
+  16:03　他「又不是你车」「我暂时用一下」「你又不是没车用」<br>
+  16:04　爸「是你的？」／他「我跟我妈说了啊」／爸「<b>你妈不知道！</b>」<br>
+  16:05　爸「<b>你是贼？</b>」<br>
+  16:06　爸「<b>是你妈撒谎？</b>」<br>
+  16:10　他「<b>我在干活</b>」</div>
+  <p><b>★ 实质是：他开了母亲的车，父亲不知情，要报警。</b>核心是父母之间的信息差，他被夹在中间。</p>
+  <p><b>★ 另一个修正</b>：父亲线从来就是低频的 —— 月量中位 ~10 条，峰值 2025-04 的 260 条也是手术月。
+  「归零」在量上只是「低频」变「零」。<b>这条线的证据力在内容，不在量。</b></p>
+</div>
+
+<h2><span class="n">05</span>贯通后的架构</h2>
+<div class="lead">七层各自的位置，以及现在靠什么连起来。</div>
+
+<div class="flow">┌─ ⓪ 真相源·数字基准.md ◄─────────────── 所有数字的唯一出处
+│    （新建 · 加载协议第 0 位 · 每个数字带复算命令）
+│
+├─ ① 01-人格核心.md ──── 他为什么这样回（我执 / 三态 / 距离定律）
+├─ ② 05-纠偏层.md ────── 先读纠偏，再读数据（已到 三·补·35）
+├─ ③ 07-事件档案.md ──── 他经历过什么（5 阶段 / 9 链）
+├─ ④ 04-人际地图.md ──── 他对谁这样
+│      └──► 距离地图.csv（82 人）◄── rebuild_distance_map.py
+│             ├── 人工锚点 53（人际网络标注.csv）
+│             └── 补标 29（补标_29人距离表.csv）★ 2026-10-04 首次并入
+│                    └──► 距离地图_全库.csv（1,792 行，供复核）
+├─ ⑦ 事件库.csv（2,686）◄── build_event_layer.py ◄── 距离地图.csv
+├─ ⑨ 09-无人时档案.md ── 没有人在对面时
+│
+└─ 实时层  index.sqlite（388,705 / 1,802）◄── ChatTrace 三层管线
+
+体检闭环：tools\cross_layer_v2.py（五层交叉） + tools\check_vault_links.py（断链）
+</div>
+
+<h2><span class="n">06</span>这一轮改动的文件清单</h2>
+
+<table>
+  <thead><tr><th>文件</th><th>动作</th><th>说明</th></tr></thead>
+  <tbody>
+    <tr class="hi"><td><code>references\00-真相源·数字基准.md</code></td><td><b>新建</b></td><td>九节 · 单一真相源 · 加载协议第 ⓪ 位</td></tr>
+    <tr><td><code>scripts\rebuild_distance_map.py</code></td><td><b>新建</b></td><td>人工锚点 × 实时数据 · 支持 --write / dry-run</td></tr>
+    <tr class="hi"><td><code>references\距离地图.csv</code></td><td><b>重建</b></td><td>53 → <b>82 人</b> · 新增 5 列（我发占比/距今天/首次/末次/来源）</td></tr>
+    <tr><td><code>references\距离地图_全库.csv</code></td><td><b>新建</b></td><td>1,792 行 · 全库会话特征 · 供人工复核</td></tr>
+    <tr class="hi"><td><code>references\事件库.csv</code></td><td><b>重跑</b></td><td>标定率 39.2% → <b>46.1%</b> · 未标定 1,632 → 1,447</td></tr>
+    <tr><td><code>SKILL.md</code></td><td>改 12 处 + 加载协议</td><td>数字对齐 + 新增 ⓪ 位 + 新增距离地图.csv 行</td></tr>
+    <tr><td><code>references\04-人际地图.md</code></td><td>改 2 处</td><td>54 → 82 人 · 母亲 12,784 → 16,336</td></tr>
+    <tr><td><code>references\07-事件档案.md</code></td><td>改 1 处</td><td>未标定 1,632(61%) → 1,447(53.9%)</td></tr>
+    <tr><td><code>references\05-纠偏层.md</code></td><td>改 2 处 + 新增三·补·35</td><td>锚点口径 · 未标定数</td></tr>
+    <tr><td><code>references\06-理解度自测.md</code></td><td>改 1 处</td><td>留出集 53 → 82 人</td></tr>
+    <tr><td><code>tools\cross_layer_v2.py</code>（工作区）</td><td><b>新建</b></td><td>五层交叉体检 · 只读</td></tr>
+  </tbody>
+</table>
+
+<h2><span class="n">07</span>还剩下的（不追问，只登记）</h2>
+
+<div class="warn">
+  <b>三个待修（不需要你回答，我下次做）</b><br>
+  ① 事件层 `FAMILY_KW` 把「奶奶」判为零距离 → 应改为「中」，只有 `爸爸/妈妈` 才判「零」<br>
+  ② `build_distance_map.py` 应从 scripts 移走或改名 `_deprecated_`，防止误跑覆盖新地图<br>
+  ③ Obsidian `03_事件库` 只有 6 篇，工作区 34 份 HTML 没有笔记入口 → 建一份总索引
+</div>
+
+<div class="g">
+  <h3><span class="tag">唯一还需要你的</span>Q15+ 笑一定性</h3>
+  <p>「先玩玩 vs 女朋友」—— 这是<b>全库唯一剩下的待本人裁定</b>。其余 Q1–Q19 全部已裁定，本轮又把父亲手术线、
+  车线、家教线补齐。</p>
+  <p style="color:var(--mut);font-size:13px">其余悬空（澜沧、安奇、2025-03-10 主语、2026-08 敏感段、金钰失踪）都已登记进
+  `00-真相源·数字基准.md` 第七节，不再在别处重复问。</p>
+</div>
+
+<footer>
+  数据源：`index.sqlite`（388,705 条 / 1,802 会话）· 全程本地只读，无任何内容离开本机。<br>
+  报告：`总贯通_全层打通_2026-10-04.html`　生成于 2026-10-04　⚠️ 含真人姓名与金额，不得外传
+</footer>
+
+</div>
+</body>
+</html>

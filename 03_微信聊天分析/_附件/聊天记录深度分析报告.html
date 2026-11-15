@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>微信聊天记录深度分析 · 笑一</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  :root{
+    --bg:#f7f8fa; --panel:#ffffff; --ink:#1c1f23; --ink2:#5a6472; --ink3:#8b95a3;
+    --line:#e6e9ee; --accent:#d94a68; --accent2:#2f7fd6; --warn:#e08b1f; --good:#2f9e6e;
+    --me:#d94a68; --her:#2f7fd6;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+    line-height:1.7;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1080px;margin:0 auto;padding:48px 28px 90px}
+  header{border-bottom:3px solid var(--ink);padding-bottom:22px;margin-bottom:14px}
+  h1{margin:0 0 6px;font-size:30px;letter-spacing:-.4px}
+  .sub{color:var(--ink2);font-size:14px}
+  .pill{display:inline-block;background:var(--ink);color:#fff;font-size:12px;
+    padding:3px 10px;border-radius:20px;margin-right:8px;vertical-align:middle}
+  h2{font-size:19px;margin:44px 0 6px;padding-left:12px;border-left:4px solid var(--accent)}
+  h2 .n{color:var(--ink3);font-weight:600;font-size:14px;margin-right:6px}
+  h3{font-size:15px;margin:26px 0 6px;color:var(--ink2)}
+  p{margin:9px 0}
+  grid{display:block}
+  .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:18px 0}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:15px 16px}
+  .card .k{font-size:12px;color:var(--ink3);letter-spacing:.3px}
+  .card .v{font-size:25px;font-weight:700;margin:5px 0 2px;font-variant-numeric:tabular-nums}
+  .card .d{font-size:12px;color:var(--ink3)}
+  .me{color:var(--me)} .her{color:var(--her)}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;
+    padding:20px 22px;margin:16px 0}
+  .chartbox{position:relative;height:300px;margin:10px 0}
+  .chartbox.tall{height:360px}
+  table{width:100%;border-collapse:collapse;font-size:13.5px;margin:10px 0}
+  th,td{padding:8px 10px;text-align:left;border-bottom:1px solid var(--line)}
+  th{color:var(--ink3);font-weight:600;font-size:12px;background:#fafbfc}
+  td.num{font-variant-numeric:tabular-nums;text-align:right}
+  .verdict{background:linear-gradient(135deg,#fff5f7,#fff);border:1px solid #f3d3dc;
+    border-left:4px solid var(--accent);border-radius:12px;padding:18px 22px;margin:18px 0}
+  .verdict h3{margin-top:0;color:var(--accent)}
+  .tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:5px;
+    background:#eef2f7;color:var(--ink2);margin-right:5px}
+  .tag.hot{background:#fde8ed;color:var(--accent)}
+  .tag.risk{background:#fdf4e3;color:var(--warn)}
+  .tag.ok{background:#e8f6f0;color:var(--good)}
+  ul{margin:8px 0;padding-left:22px}
+  li{margin:5px 0}
+  .quote{background:#f4f6f9;border-left:3px solid var(--ink3);padding:8px 14px;
+    margin:8px 0;border-radius:0 8px 8px 0;font-size:13.5px;color:var(--ink2)}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .foot{margin-top:50px;padding-top:16px;border-top:1px solid var(--line);
+    color:var(--ink3);font-size:12px}
+  @media(max-width:760px){.cards{grid-template-columns:repeat(2,1fr)}.grid2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>微信聊天记录深度分析</h1>
+  <div class="sub">
+    <span class="pill">对象：笑一</span>
+    2026-05-08 ~ 2026-08-16 · 跨度 100 天 · 2880 条消息 · 本地脱机分析
+  </div>
+</header>
+
+<div class="cards">
+  <div class="card"><div class="k">总消息 / 天数</div><div class="v">2880</div><div class="d">100 天，日均 28.8 条</div></div>
+  <div class="card"><div class="k">我 : 她（条数）</div><div class="v">1.15<span style="font-size:15px;color:#8b95a3"> : 1</span></div><div class="d">1543 : 1337</div></div>
+  <div class="card"><div class="k">我 : 她（字数）</div><div class="v" style="color:#d94a68">3.43<span style="font-size:15px;color:#8b95a3"> : 1</span></div><div class="d">51551 : 15018 字</div></div>
+  <div class="card"><div class="k">响应中位延迟</div><div class="v">9<span style="font-size:15px;color:#8b95a3"> 秒</span></div><div class="d">双方几乎持平</div></div>
+</div>
+
+<h2><span class="n">01</span>关系发展时间线</h2>
+<p>100 天里并不是匀速升温，而是典型的 <b>「断崖 → 复活 → 断崖 → 升温」</b> 多段式曲线。关键转折点全部由沉默期划分。</p>
+
+<div class="panel">
+  <div class="chartbox tall"><canvas id="timeline"></canvas></div>
+</div>
+
+<table>
+  <thead><tr><th>阶段</th><th>区间</th><th class="num">消息</th><th class="num">日均</th><th class="num">我亲昵/百条</th><th class="num">她亲昵/百条</th><th>状态</th></tr></thead>
+  <tbody>
+    <tr><td>S1 初识期</td><td>05-08 ~ 05-11</td><td class="num">300</td><td class="num">75.0</td><td class="num">1</td><td class="num">1</td><td><span class="tag">礼貌期</span></td></tr>
+    <tr><td>S2 长断期</td><td>05-12 ~ 06-21</td><td class="num">76</td><td class="num">1.9</td><td class="num">0</td><td class="num">0</td><td><span class="tag">41天冰封</span></td></tr>
+    <tr><td>S3 复活期</td><td>06-22 ~ 06-23</td><td class="num">221</td><td class="num">110.5</td><td class="num">0</td><td class="num">0</td><td><span class="tag">试探重启</span></td></tr>
+    <tr><td>S4 二次断</td><td>06-24 ~ 07-02</td><td class="num">0</td><td class="num">0</td><td class="num">—</td><td class="num">—</td><td><span class="tag">9天静默</span></td></tr>
+    <tr><td>S5 升温期</td><td>07-03 ~ 07-10</td><td class="num">240</td><td class="num">30.0</td><td class="num">2</td><td class="num">2</td><td><span class="tag">开始有亲昵</span></td></tr>
+    <tr><td>S6 断档</td><td>07-11 ~ 07-15</td><td class="num">0</td><td class="num">0</td><td class="num">—</td><td class="num">—</td><td><span class="tag">5天静默</span></td></tr>
+    <tr><td>S7 高频期</td><td>07-16 ~ 07-21</td><td class="num">153</td><td class="num">25.5</td><td class="num">23</td><td class="num">3</td><td><span class="tag hot">我加速</span></td></tr>
+    <tr><td>S8 断档</td><td>07-22 ~ 07-24</td><td class="num">0</td><td class="num">0</td><td class="num">—</td><td class="num">—</td><td><span class="tag">3天静默</span></td></tr>
+    <tr><td>S9 高峰相恋期</td><td>07-25 ~ 08-10</td><td class="num">1480</td><td class="num">87.1</td><td class="num">57</td><td class="num">22</td><td><span class="tag hot">甜蜜高峰</span></td></tr>
+    <tr><td>S10 低能量期</td><td>08-11 ~ 08-16</td><td class="num">410</td><td class="num">68.3</td><td class="num">58</td><td class="num">20</td><td><span class="tag risk">她转疲</span></td></tr>
+  </tbody>
+</table>
+
+<div class="verdict">
+  <h3>核心发现：0 → 1 的临界点是 7/25</h3>
+  <p>7/25 之前 78 天，双方亲昵词加总不到 <b>30 次</b>；7/25 之后 22 天，这个数字是 <b>600+ 次</b>。这不是渐变，是<b>相变</b>。7/26、7/27、8/02、8/03、8/10 五天的单日亲昵词合计都超过 100 次 —— 关系在这几天实质确认并进入热恋状态。</p>
+</div>
+
+<h2><span class="n">02</span>互动时间分布：你们是什么作息</h2>
+<div class="grid2">
+  <div class="panel">
+    <h3>24 小时活跃度</h3>
+    <div class="chartbox"><canvas id="hourly"></canvas></div>
+  </div>
+  <div class="panel">
+    <h3>关键作息读数</h3>
+    <ul>
+      <li><b>双峰结构</b>：下午 16-19 点 + 夜间 20-23 点，是主战场</li>
+      <li><b>深夜 0-1 点</b>：我 72 条 / 她 72 条 —— 几乎完全对称，说明<b>深夜是双方自愿陪聊</b>，不是单方纠缠</li>
+      <li><b>22 点是全天最高峰</b>（我 250 / 她 218），睡前的"亲密窗口"</li>
+      <li><b>上午 8-10 点几乎空白</b> —— 双方白天各自忙，不打扰，边界健康</li>
+    </ul>
+  </div>
+</div>
+
+<h2><span class="n">03</span>谁在追谁：不对称度量化</h2>
+<div class="panel">
+  <div class="chartbox"><canvas id="asym"></canvas></div>
+</div>
+
+<div class="grid2">
+  <div class="panel">
+    <h3>软性投入（条数、发起）— 均衡</h3>
+    <ul>
+      <li>条数比 <b>1.15 : 1</b>，几乎持平</li>
+      <li>主动发起 <b>我 40 次 / 她 44 次</b> —— <b>她反而更多</b></li>
+      <li>响应中位延迟 我 10s / 她 9s —— 一样快</li>
+    </ul>
+    <p style="color:#2f9e6e;font-size:13.5px">→ 在"愿不愿意理你"这个层面，<b>她是投入的，甚至更主动</b>。</p>
+  </div>
+  <div class="panel">
+    <h3>硬性投入（字数、亲昵）— 严重倾斜</h3>
+    <ul>
+      <li>字数比 <b>3.43 : 1</b> —— 你写 51551 字，她写 15018 字</li>
+      <li>单条均长 我 <b>33.4 字</b> / 她 <b>11.2 字</b> —— 差 3 倍</li>
+      <li>亲昵词 我 662 次（42.9/百条） / 她 254 次（19.0/百条）</li>
+      <li>连发：我 <b>400 轮</b>、最长 11 条连发；她 338 轮、最长 6 条</li>
+    </ul>
+    <p style="color:#e08b1f;font-size:13.5px">→ 在"表达浓度"上，你显著高于她。<b>她回得勤，但回得短。</b></p>
+  </div>
+</div>
+
+<div class="verdict">
+  <h3>这不是"她冷"，是"你热"</h3>
+  <p>很多人在这种数据面前会得出"她是不是不感兴趣"的结论 —— <b>数据不支持这个结论</b>。她主动发起更多、回消息一样快、深夜陪你聊。真正的差异是：<b>你用长文和密集亲昵词表达，她用短句和"嗯呐/好啊"表达</b>。这是<b>表达风格差异</b>，不是<b>投入度差异</b>。</p>
+  <p style="margin-bottom:0">但有一个需要警惕的点：<b>你的连发次数（400 轮）和最长 11 条连发</b>，说明你在焦虑时会短消息轰炸。她 11 字/条的回复，可能正是在承接这种轰炸时的"降级应对"。</p>
+</div>
+
+<h2><span class="n">04</span>消息类型：她的情感藏在哪</h2>
+<div class="panel">
+  <div class="chartbox"><canvas id="types"></canvas></div>
+</div>
+<table>
+  <thead><tr><th>类型</th><th class="num">我</th><th class="num">她</th><th>解读</th></tr></thead>
+  <tbody>
+    <tr><td>文字</td><td class="num">1450</td><td class="num">1185</td><td>主体</td></tr>
+    <tr><td>表情（贴图）</td><td class="num">40</td><td class="num">57</td><td><span class="tag ok">她更多</span> 用表情软化语气</td></tr>
+    <tr><td>图片</td><td class="num">26</td><td class="num">28</td><td>基本持平</td></tr>
+    <tr><td>视频</td><td class="num">2</td><td class="num">10</td><td><span class="tag ok">她 5 倍</span> 愿意分享生活片段</td></tr>
+    <tr><td>语音</td><td class="num">1</td><td class="num">8</td><td><span class="tag ok">她 8 倍</span> 愿意让你听见声音</td></tr>
+    <tr><td>通话</td><td class="num">8</td><td class="num">5</td><td>我发起为主</td></tr>
+  </tbody>
+</table>
+<div class="verdict">
+  <h3>反向证据：她比你更"敞开心扉"</h3>
+  <p style="margin-bottom:0"><b>视频 10 : 2、语音 8 : 1、表情 57 : 40</b> —— 在需要"真实暴露"的媒体类型上，她全面领先。语音和视频是无法伪装的，一个不愿意投入的人不会发语音。这进一步推翻了"她不在乎"的判断。</p>
+</div>
+
+<h2><span class="n">05</span>沉默期分析：谁在维系这段关系</h2>
+<div class="panel">
+  <div class="chartbox"><canvas id="silence"></canvas></div>
+</div>
+<table>
+  <thead><tr><th>时长</th><th>起止</th><th>打破沉默的是谁</th></tr></thead>
+  <tbody>
+    <tr><td class="num">989 h（41天）</td><td>05-11 → 06-21</td><td><b class="me">我</b>（关系存亡一线）</td></tr>
+    <tr><td class="num">232 h</td><td>06-23 → 07-03</td><td><b class="her">她</b></td></tr>
+    <tr><td class="num">137 h</td><td>07-10 → 07-16</td><td><b class="me">我</b></td></tr>
+    <tr><td class="num">102 h</td><td>07-21 → 07-25</td><td><b class="me">我</b></td></tr>
+    <tr><td class="num">61 h</td><td>07-04 → 07-07</td><td><b class="me">我</b></td></tr>
+    <tr><td class="num">52 h</td><td>06-21 → 06-23</td><td><b class="her">她</b></td></tr>
+    <tr><td class="num">41 h</td><td>07-30 → 08-01</td><td><b class="her">她</b></td></tr>
+  </tbody>
+</table>
+<div class="verdict">
+  <h3>格局反转：早期你救场，近期她维系</h3>
+  <p style="margin-bottom:0">所有 60 小时以上的长沉默，打破者几乎全是<b>你</b>（S2 的 41 天是你扛过来的）。但注意 <b>7/30 之后</b>的沉默 —— <b>打破者变成了她</b>（41h、39h、31h 三次都是她主动）。这个反转很重要：<b>关系进入 8 月后，主动权已经交到了她手上</b>，她开始主动维系。</p>
+</div>
+
+<h2><span class="n">06</span>语言指纹：你们各自在说什么</h2>
+<div class="grid2">
+  <div class="panel">
+    <h3 class="me">我的高频词 TOP12</h3>
+    <div style="font-size:13.5px;line-height:2.1">
+      <span class="tag hot">哈哈哈(18)</span><span class="tag hot">亲亲宝贝(11)</span><span class="tag">旺柴(9)</span>
+      <span class="tag hot">宝贝(9)</span><span class="tag">哈哈(8)</span><span class="tag">速写(7)</span>
+      <span class="tag hot">亲亲宝(7)</span><span class="tag">好啊(7)</span><span class="tag">色彩(6)</span>
+      <span class="tag">捂脸(6)</span><span class="tag">几何形体(4)</span><span class="tag">清华附中(4)</span>
+    </div>
+    <p style="font-size:13px;color:#5a6472;margin-top:12px">特征：<b>亲昵词 + 专业术语混用</b>。你一边叫"亲亲宝贝"，一边在讲素描、色彩、几何形体 —— 你在把她拉进你的世界，也在用专业身份建立吸引力（清华附中、年考题）。</p>
+  </div>
+  <div class="panel">
+    <h3 class="her">她的高频词 TOP12</h3>
+    <div style="font-size:13.5px;line-height:2.1">
+      <span class="tag">嗯呐(48)</span><span class="tag">嗯嗯(47)</span><span class="tag">哈哈(20)</span>
+      <span class="tag">哈哈哈哈(16)</span><span class="tag">嘿嘿(15)</span><span class="tag">好啊(14)</span>
+      <span class="tag hot">亲亲(12)</span><span class="tag hot">宝贝(11)</span><span class="tag">捂脸(8)</span>
+      <span class="tag">好呀(8)</span><span class="tag">我也是(8)</span><span class="tag hot">爱你(5)</span>
+    </div>
+    <p style="font-size:13px;color:#5a6472;margin-top:12px">特征：<b>大量语气助词 + 认可型回应</b>。"嗯呐/嗯嗯"合计 95 次，是典型的<b>"顺势承接"</b>型说话者 —— 她不太主动开话题，但你说什么她都接。这既可以是温柔，也可以是<b>不投入的礼貌</b>。结合她视频/语音发得多，判断为<b>前者偏多，但存在后者的成分</b>。</p>
+  </div>
+</div>
+
+<h2><span class="n">07</span>情绪与深夜：风险信号</h2>
+<div class="grid2">
+  <div class="panel">
+    <h3>情绪词对比</h3>
+    <table>
+      <thead><tr><th></th><th class="num">负向</th><th class="num">正向</th><th class="num">负/正</th></tr></thead>
+      <tbody>
+        <tr><td class="me">我</td><td class="num">36</td><td class="num">103</td><td class="num">0.35</td></tr>
+        <tr><td class="her">她</td><td class="num">28</td><td class="num">129</td><td class="num">0.22</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:13px;color:#5a6472">她的负/正比<b>比你还低</b>（0.22 vs 0.35）。表面看她的情绪更正向 —— 但结合 8/10 "我又哭了"、8/16 "太闲了反而累"、以及 8 月后她把字数大幅收缩（8/11 仅 78 字 / 8/12 仅 24 字），这更像 <b>"压抑型正向"</b>：习惯用"嗯呐""好啊"把情绪盖住，而不是没有情绪。</p>
+  </div>
+  <div class="panel">
+    <h3>深夜（0-5 点）</h3>
+    <div class="chartbox" style="height:200px"><canvas id="night"></canvas></div>
+    <p style="font-size:13px;color:#5a6472">我 74 条 / 她 72 条 —— 高度对称。深夜陪聊是<b>双向自愿</b>，这是关系深度的正面指标，但也提示<b>睡眠边界模糊</b>，长期看会累积疲惫（与 S10 她"累"的信号吻合）。</p>
+  </div>
+</div>
+
+<h2><span class="n">08</span>综合诊断</h2>
+
+<div class="verdict">
+  <h3>一、关系的真实状态：比你感觉的好</h3>
+  <p style="margin-bottom:0">7/25 之后进入热恋期并持续到 8/16。她主动发起次数（44）≥ 你（40），响应速度与你持平，视频/语音发送量是你的 5-8 倍，8 月后多次由她打破沉默。<b>没有任何数据显示她在退出。</b></p>
+</div>
+
+<div class="verdict" style="border-left-color:#e08b1f;background:linear-gradient(135deg,#fffaf0,#fff);border-color:#f0e0c0">
+  <h3 style="color:#e08b1f">二、真正的风险：你的表达浓度是她的 3 倍</h3>
+  <ul style="margin-bottom:0">
+    <li><b>字数 3.43 : 1，单条 33 字 vs 11 字</b> —— 你说话像写小作文，她像发弹幕</li>
+    <li><b>400 轮连发，最长 11 条</b> —— 焦虑时会连续短消息轰炸</li>
+    <li><b>亲昵词 42.9/百条 vs 19.0/百条</b> —— 你比她"油"了一倍多</li>
+  </ul>
+</div>
+
+<div class="verdict" style="border-left-color:#2f9e6e;background:linear-gradient(135deg,#f2fbf7,#fff);border-color:#cdeadf">
+  <h3 style="color:#2f9e6e">三、8 月的真实转折：不是她冷了，是她累了</h3>
+  <p>逐日数据出现清晰的 <b>"字数塌陷"</b>：</p>
+  <div class="quote">
+    8/10 我 9373 字 / 她 3774 字 → 8/11 我 7523 字 / <b>她 78 字</b> → 8/12 我 4 字 / <b>她 24 字</b>
+  </div>
+  <p style="margin-bottom:0">注意 <b>8/11 你发了 7500 多字</b> —— 这是全样本单日最高投入，而她的回应从 3774 字暴跌到 78 字。<b>这是一个典型的"用力过猛撞上对方低电量"的瞬间。</b>后续 8/13-8/16 虽有回稳，但她的字数始终远低于 8 月上旬水平。</p>
+</div>
+
+<div class="verdict" style="border-left-color:#d94a68">
+  <h3>四、给当下（8/16 之后）的三个具体动作</h3>
+  <ol style="margin-bottom:0">
+    <li><b>把单条消息缩短一半。</b>目标：单条均长从 33 字降到 20 字以内，把"小作文"拆成正常对话。你当前的密度给了她"必须认真回复"的压力，而她 11 字/条的风格说明她承受不了这个压力。</li>
+    <li><b>连发上限设为 2 条。</b>你最长连发 11 条 —— 当她回复变慢（疲惫信号）时，你必须停止补发。她的慢回复往往不是冷，是累。</li>
+    <li><b>接住 8/16 那句"我要是累就不给你打卡了"。</b>这是她在给你划边界。正确回应是<b>奖赏这个边界</b>（"那就别打了，你累了我更心疼"），而不是追问"是不是我给你压力了"。前者让她安全，后者让她内疚。</li>
+  </ol>
+</div>
+
+<h2><span class="n">09</span>附：分析口径说明</h2>
+<div class="panel" style="font-size:13.5px;color:#5a6472">
+  <p><b>数据源</b>：<code>C:/Users/wardc/Documents/ChatArchive/00_raw/2026/笑一聊天记录_20260815/笑一-聊天记录.json</code>（2880 条，本地脱机处理，未上传任何第三方服务器）</p>
+  <p><b>响应延迟</b>：定义为"对方发完一条后，本方发出的下一条"的时间差，仅统计 12 小时内的有效响应。</p>
+  <p><b>主动发起</b>：会话空档超过 1 小时后的第一条消息。</p>
+  <p><b>连发</b>：同一方在 3 分钟内连续发送 ≥ 2 条。</p>
+  <p><b>亲昵词表</b>：宝贝/宝/亲爱的/想你/喜欢/爱你/么么/抱抱/亲亲/晚安/早安。</p>
+  <p style="margin-bottom:0"><b>局限</b>：情绪分析为词典匹配，非语义模型；"负向/正向"仅作趋势参考，不代表真实心理状态。语音/图片内容未转写（WeFlow 已具备 SenseVoice 模型，可另行转写后加入分析）。</p>
+</div>
+
+<div class="foot">
+  生成于 2026-09-26 · 分析脚本与原始指标存于工作区 <code>wechat-analysis/</code>（analyze.py / deep.py / metrics.json）<br>
+  本报告为数据解读，不构成情感建议；亲密关系请以真实现场沟通为准。
+</div>
+
+</div>
+
+<script>
+const C = {me:'#d94a68', her:'#2f7fd6', meSoft:'rgba(217,74,104,.55)', herSoft:'rgba(47,127,214,.55)',
+  grid:'#e6e9ee', tick:'#8b95a3'};
+Chart.defaults.color = C.tick;
+Chart.defaults.font.family = '-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif';
+Chart.defaults.font.size = 11.5;
+
+const daily = [
+ ["05-08",196,93,2,1],["05-09",1,5,0,0],["05-11",2,3,0,0],["06-21",49,27,0,0],
+ ["06-23",128,93,0,0],["07-03",13,20,0,0],["07-04",35,42,0,0],["07-07",23,27,0,0],
+ ["07-08",3,4,0,0],["07-09",26,25,1,1],["07-10",9,13,1,2],["07-16",34,32,1,0],
+ ["07-17",16,15,5,0],["07-18",6,3,1,0],["07-19",3,4,2,2],["07-20",16,8,8,0],
+ ["07-21",6,10,2,0],["07-25",12,12,4,1],["07-26",52,52,13,11],["07-27",123,129,35,25],
+ ["07-28",33,22,11,6],["07-29",3,0,0,0],["07-30",19,19,14,4],["08-01",2,5,3,2],
+ ["08-02",112,94,81,31],["08-03",58,71,40,20],["08-04",12,18,5,5],["08-05",10,12,7,3],
+ ["08-06",32,36,17,6],["08-07",64,63,81,8],["08-08",34,31,28,7],["08-09",0,2,0,2],
+ ["08-10",186,162,86,32],["08-11",18,16,16,3],["08-12",1,5,0,0],["08-13",119,81,67,9],
+ ["08-14",36,28,32,7],["08-15",21,22,11,5],["08-16",30,33,5,13]
+];
+const labels = daily.map(d=>d[0]);
+
+// 1. 时间线：条数 + 亲昵
+new Chart(document.getElementById('timeline'), {
+  data:{
+    labels,
+    datasets:[
+      {type:'bar', label:'我·条数', data:daily.map(d=>d[1]), backgroundColor:C.meSoft, stack:'s', yAxisID:'y'},
+      {type:'bar', label:'她·条数', data:daily.map(d=>d[2]), backgroundColor:C.herSoft, stack:'s', yAxisID:'y'},
+      {type:'line', label:'我·亲昵词', data:daily.map(d=>d[3]), borderColor:C.me, borderWidth:2.4,
+        pointRadius:2.5, tension:.32, yAxisID:'y1'},
+      {type:'line', label:'她·亲昵词', data:daily.map(d=>d[4]), borderColor:C.her, borderWidth:2.4,
+        pointRadius:2.5, tension:.32, yAxisID:'y1'}
+    ]
+  },
+  options:{responsive:true,maintainAspectRatio:false,interaction:{mode:'index',intersect:false},
+    plugins:{legend:{labels:{boxWidth:11,boxHeight:11}}},
+    scales:{
+      y:{stacked:true,position:'left',grid:{color:C.grid},title:{display:true,text:'消息条数'}},
+      y1:{position:'right',grid:{drawOnChartArea:false},title:{display:true,text:'亲昵词次数'}},
+      x:{grid:{display:false},ticks:{maxRotation:60,minRotation:45}}
+    }}
+});
+
+// 2. 24小时
+const hourlyMe=[26,46,0,0,2,8,0,3,0,1,0,39,40,51,48,32,121,92,154,128,216,97,250,189];
+const hourlyHer=[38,34,0,0,0,0,0,1,0,1,0,34,56,57,58,36,134,106,100,113,135,59,218,157];
+new Chart(document.getElementById('hourly'), {
+  type:'line',
+  data:{labels:Array.from({length:24},(_,i)=>i+'时'),
+    datasets:[
+      {label:'我',data:hourlyMe,borderColor:C.me,backgroundColor:'rgba(217,74,104,.10)',fill:true,tension:.4,pointRadius:2},
+      {label:'她',data:hourlyHer,borderColor:C.her,backgroundColor:'rgba(47,127,214,.10)',fill:true,tension:.4,pointRadius:2}
+    ]},
+  options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{boxWidth:11,boxHeight:11}}},
+    scales:{y:{grid:{color:C.grid},title:{display:true,text:'消息数'}},x:{grid:{display:false}}}}
+});
+
+// 3. 不对称度（雷达）
+new Chart(document.getElementById('asym'), {
+  type:'radar',
+  data:{labels:['消息条数','字数投入','单条均长','亲昵词','连发轮次','主动发起'],
+    datasets:[
+      {label:'我',data:[100,100,100,100,100,91],borderColor:C.me,backgroundColor:'rgba(217,74,104,.18)',pointBackgroundColor:C.me,borderWidth:2},
+      {label:'她',data:[87,29,34,38,85,100],borderColor:C.her,backgroundColor:'rgba(47,127,214,.16)',pointBackgroundColor:C.her,borderWidth:2}
+    ]},
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{labels:{boxWidth:11,boxHeight:11}},
+      tooltip:{callbacks:{label:c=>c.dataset.label+': '+c.parsed.r+' / 100'}}},
+    scales:{r:{min:0,max:100,grid:{color:C.grid},angleLines:{color:C.grid},
+      pointLabels:{font:{size:12}},ticks:{display:false}}}}
+});
+
+// 4. 消息类型
+new Chart(document.getElementById('types'), {
+  type:'bar',
+  data:{labels:['文字','表情','图片','视频','语音','通话'],
+    datasets:[
+      {label:'我',data:[1450,40,26,2,1,8],backgroundColor:C.meSoft,borderRadius:4},
+      {label:'她',data:[1185,57,28,10,8,5],backgroundColor:C.herSoft,borderRadius:4}
+    ]},
+  options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{labels:{boxWidth:11,boxHeight:11}}},
+    scales:{x:{type:'logarithmic',grid:{color:C.grid},title:{display:true,text:'条数（对数轴）'}},y:{grid:{display:false}}}}
+});
+
+// 5. 沉默期
+new Chart(document.getElementById('silence'), {
+  type:'bar',
+  data:{labels:['05-11→06-21','06-23→07-03','07-10→07-16','07-21→07-25','07-04→07-07','06-21→06-23','07-30→08-01'],
+    datasets:[{label:'沉默时长（小时）',data:[989,232,137,102,61,52,42],
+      backgroundColor:['#d94a68','#2f7fd6','#d94a68','#d94a68','#d94a68','#2f7fd6','#2f7fd6'],borderRadius:5}]},
+  options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:false},
+      tooltip:{callbacks:{afterLabel:(c)=>['05-11→06-21','07-10→07-16','07-21→07-25','07-04→07-07'].includes(c.label)?'打破者：我':'打破者：她'}}},
+    scales:{x:{grid:{color:C.grid},title:{display:true,text:'小时'}},y:{grid:{display:false}}}}
+});
+
+// 6. 深夜
+new Chart(document.getElementById('night'), {
+  type:'doughnut',
+  data:{labels:['我·深夜','她·深夜'],
+    datasets:[{data:[74,72],backgroundColor:['rgba(217,74,104,.75)','rgba(47,127,214,.75)'],borderWidth:0}]},
+  options:{responsive:true,maintainAspectRatio:false,cutout:'62%',
+    plugins:{legend:{position:'bottom',labels:{boxWidth:11,boxHeight:11}}}}
+});
+</script>
+</body>
+</html>

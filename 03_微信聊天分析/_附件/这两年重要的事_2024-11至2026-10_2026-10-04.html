@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>这两年 · 2024-11 → 2026-10</title>
+<style>
+  :root{
+    --bg:#FBFAF7; --card:#FFFFFF; --ink:#1C1C1C; --ink2:#3D3A36; --mut:#7A736A;
+    --line:#E7E2D9; --line2:#F2EEE7;
+    --red:#9E2B25; --red-bg:#FBF1EF;
+    --teal:#2F5D62; --teal-bg:#EFF5F4;
+    --gold:#8A6D3B; --gold-bg:#FAF5EA;
+    --gray-bg:#F4F2ED;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    background:var(--bg); color:var(--ink);
+    font-family:"Microsoft YaHei","PingFang SC","Hiragino Sans GB",sans-serif;
+    font-size:15px; line-height:1.85; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1060px;margin:0 auto;padding:0 32px 96px}
+
+  /* ── 封面 ── */
+  header{padding:72px 0 40px;border-bottom:2px solid var(--ink)}
+  .kicker{font-size:12px;letter-spacing:.32em;color:var(--red);font-weight:700;margin-bottom:18px}
+  h1{font-family:"Songti SC","SimSun",serif;font-size:44px;line-height:1.25;font-weight:700;letter-spacing:-.5px}
+  h1 em{font-style:normal;color:var(--red)}
+  .sub{margin-top:20px;font-size:16px;color:var(--ink2);max-width:760px}
+  .meta{margin-top:26px;font-size:12.5px;color:var(--mut);letter-spacing:.06em}
+  .meta span{display:inline-block;margin-right:20px}
+
+  /* ── 数字条 ── */
+  .strip{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);margin:44px 0 8px;border:1px solid var(--line)}
+  .strip div{background:var(--card);padding:22px 20px}
+  .strip b{display:block;font-family:"Songti SC",serif;font-size:30px;line-height:1.1;color:var(--ink)}
+  .strip b small{font-size:14px;font-weight:400;color:var(--mut);margin-left:3px}
+  .strip p{font-size:12px;color:var(--mut);margin-top:8px;letter-spacing:.04em}
+
+  /* ── 章 ── */
+  h2{font-family:"Songti SC","SimSun",serif;font-size:24px;margin:64px 0 8px;padding-bottom:12px;border-bottom:1px solid var(--ink);letter-spacing:.02em}
+  h2 .n{color:var(--red);font-size:15px;font-family:inherit;margin-right:10px;letter-spacing:.1em}
+  .lead{color:var(--mut);font-size:13.5px;margin:12px 0 28px;line-height:1.8}
+
+  /* ── 阶段时间轴 ── */
+  .phase{position:relative;padding:0 0 0 34px;margin-bottom:26px;border-left:2px solid var(--line)}
+  .phase::before{content:"";position:absolute;left:-8px;top:8px;width:14px;height:14px;border-radius:50%;background:var(--card);border:3px solid var(--red)}
+  .phase.t2::before{border-color:var(--teal)}
+  .phase.t3::before{border-color:var(--gold)}
+  .ph-h{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+  .ph-h b{font-family:"Songti SC",serif;font-size:19px}
+  .ph-h .dt{font-size:12px;color:var(--red);letter-spacing:.08em;font-weight:700}
+  .phase.t2 .ph-h .dt{color:var(--teal)}
+  .phase.t3 .ph-h .dt{color:var(--gold)}
+  .ph-h .tag{margin-left:auto;font-size:11.5px;color:var(--mut);background:var(--gray-bg);padding:3px 10px;border-radius:2px}
+  .phase p{font-size:14px;color:var(--ink2);margin-top:8px}
+  .bars{margin-top:12px;display:flex;flex-direction:column;gap:5px}
+  .bar{display:grid;grid-template-columns:66px 1fr 62px;align-items:center;gap:10px;font-size:11.5px;color:var(--mut)}
+  .bar i{font-style:normal;font-variant-numeric:tabular-nums}
+  .bar .track{height:8px;background:var(--line2);position:relative;overflow:hidden}
+  .bar .track u{position:absolute;left:0;top:0;bottom:0;background:var(--red);text-decoration:none;opacity:.85}
+  .phase.t2 .bar .track u{background:var(--teal)}
+  .phase.t3 .bar .track u{background:var(--gold)}
+
+  /* ── 事件卡 ── */
+  .ev{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--red);padding:20px 24px;margin-bottom:14px}
+  .ev.b{border-left-color:var(--teal)}
+  .ev.c{border-left-color:var(--gold)}
+  .ev.d{border-left-color:#8C8378}
+  .ev-h{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap}
+  .ev-h .no{font-family:"Songti SC",serif;font-size:22px;color:var(--red);line-height:1}
+  .ev.b .ev-h .no{color:var(--teal)}
+  .ev.c .ev-h .no{color:var(--gold)}
+  .ev.d .ev-h .no{color:#8C8378}
+  .ev-h b{font-size:16.5px;font-weight:700}
+  .ev-h .date{margin-left:auto;font-size:12px;color:var(--mut);letter-spacing:.05em;font-variant-numeric:tabular-nums}
+  .ev p{font-size:13.8px;color:var(--ink2);margin-top:9px}
+  .ev .q{font-family:"Songti SC",serif;font-size:13.5px;color:var(--ink);background:var(--gray-bg);border-left:2px solid var(--line);padding:9px 14px;margin-top:11px;line-height:1.75}
+  .ev .rd{font-size:13.5px;margin-top:11px;padding-top:11px;border-top:1px dashed var(--line)}
+  .ev .rd b{color:var(--red);font-weight:700}
+  .ev.b .rd b{color:var(--teal)}
+  .ev.c .rd b{color:var(--gold)}
+
+  /* ── 表格 ── */
+  table{width:100%;border-collapse:collapse;font-size:13px;margin:6px 0 10px}
+  th{text-align:left;font-weight:700;font-size:11.5px;letter-spacing:.06em;color:var(--mut);padding:9px 10px;border-bottom:2px solid var(--ink)}
+  td{padding:9px 10px;border-bottom:1px solid var(--line2);vertical-align:top}
+  tbody tr:hover{background:var(--card)}
+  td.num{font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap}
+  .sp{font-family:"Songti SC",serif;color:var(--red);font-weight:700}
+  .st{font-family:"Songti SC",serif;color:var(--teal);font-weight:700}
+  .chip{display:inline-block;font-size:11px;padding:2px 8px;border-radius:2px;background:var(--gray-bg);color:var(--mut);margin:1px 3px 1px 0;white-space:nowrap}
+  .chip.r{background:var(--red-bg);color:var(--red)}
+  .chip.t{background:var(--teal-bg);color:var(--teal)}
+  .chip.g{background:var(--gold-bg);color:var(--gold)}
+
+  /* ── 发现 ── */
+  .fin{background:var(--card);border:1px solid var(--line);padding:18px 22px;margin-bottom:12px}
+  .fin h4{font-size:15px;margin-bottom:7px;display:flex;align-items:baseline;gap:9px}
+  .fin h4 .f{font-size:11px;font-weight:700;color:#fff;background:var(--red);padding:2px 7px;letter-spacing:.06em}
+  .fin h4 .f.n{background:var(--teal)}
+  .fin h4 .f.w{background:var(--gold)}
+  .fin p{font-size:13.6px;color:var(--ink2)}
+  .fin .proof{font-size:12.5px;color:var(--mut);margin-top:8px;font-variant-numeric:tabular-nums;line-height:1.8}
+
+  .note{background:var(--red-bg);border:1px solid #EBD5D1;padding:16px 20px;font-size:13.4px;color:var(--ink2);margin:22px 0}
+  .note b{color:var(--red)}
+  .warn{background:var(--gold-bg);border:1px solid #EADFC5;padding:16px 20px;font-size:13.4px;color:var(--ink2);margin:22px 0}
+  .warn b{color:var(--gold)}
+
+  ol.pk{padding-left:0;list-style:none;counter-reset:p}
+  ol.pk li{counter-increment:p;position:relative;padding:11px 0 11px 40px;border-bottom:1px solid var(--line2);font-size:13.8px}
+  ol.pk li::before{content:counter(p);position:absolute;left:0;top:11px;width:24px;height:24px;line-height:24px;text-align:center;font-size:12px;font-weight:700;color:#fff;background:var(--ink);border-radius:50%}
+  ol.pk li b{color:var(--ink)}
+
+  footer{margin-top:72px;padding-top:22px;border-top:1px solid var(--line);font-size:12px;color:var(--mut);line-height:1.9}
+  @media(max-width:720px){
+    .wrap{padding:0 18px 64px}
+    h1{font-size:30px}
+    .strip{grid-template-columns:repeat(2,1fr)}
+    .bar{grid-template-columns:56px 1fr 54px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="kicker">LOCAL ONLY · 不外传</div>
+  <h1>这两年<br><em>2024-11 → 2026-10</em></h1>
+  <p class="sub">全库 388,550 条消息 / 1,802 个会话，按「月度总量 → 月度主力 → 新进与退场 → 关键词」四层交叉，把两年压成一条线。结论是：<b>只有 6 个阶段，拐点只有 4 个</b>。</p>
+  <div class="meta">
+    <span>数据源 · 本地索引库（只读）</span>
+    <span>窗口 · 2024-11-10 → 2026-10-04</span>
+    <span>生成 · 2026-10-04</span>
+  </div>
+</header>
+
+<div class="strip">
+  <div><b>388,550<small>条</small></b><p>两年消息总量</p></div>
+  <div><b>4<small>个</small></b><p>真实拐点</p></div>
+  <div><b>6<small>段</small></b><p>可辨认阶段</p></div>
+  <div><b>106<small>天</small></b><p>最长关系空白（母亲）</p></div>
+</div>
+
+<!-- ══════════ 一 ══════════ -->
+<h2><span class="n">一</span>一句话结论</h2>
+<p class="lead">这两年不是「连续的两年」，是<b>三段截然不同的人生被硬接在一起</b>：格拉斯哥的尾巴（2024-11~2025-07）→ 央美入学带来的结构性跃迁（2025-08~09）→ 研一完整学年及其尾部转折（2025-10~2026-10）。<br>
+消息量从每月 8,000 条涨到 22,000 条，<b>不是因为人变忙了，是因为会话数从 110 个涨到 615 个</b>——他的社交面在 2025 年 8 月被一次性放大 4 倍，此后再没缩回去。</p>
+
+<!-- ══════════ 二 ══════════ -->
+<h2><span class="n">二</span>六个阶段</h2>
+<p class="lead">按「月度总量 + 月度主力会话 + 会话数」三段数据共同划分。会话数是这里最干净的指标——它不会被刷屏群污染。</p>
+
+<div class="phase">
+  <div class="ph-h"><b>格拉斯哥的尾巴</b><span class="dt">2024-11 → 2025-01</span><span class="tag">会话 109 → 164</span></div>
+  <p>人在英国，主线是「远程家教 + 天文社 + 柴披萨 + Eloise」。Eloise 连续三个月进 TOP2（392 → 1,013 → 1,000），是这两年里<b>最早出现、也最晚还在（2026-09）</b>的关系。刘丽萍 2024-12-30 首次进库，此后两年再没离开。</p>
+  <div class="bars">
+    <div class="bar"><i>2024-11</i><span class="track"><u style="width:30%"></u></span><i>7,354</i></div>
+    <div class="bar"><i>2024-12</i><span class="track"><u style="width:43%"></u></span><i>10,528</i></div>
+    <div class="bar"><i>2025-01</i><span class="track"><u style="width:43%"></u></span><i>10,657</i></div>
+  </div>
+</div>
+
+<div class="phase">
+  <div class="ph-h"><b>甘泉期 · 两月烧完</b><span class="dt">2025-02 → 2025-05</span><span class="tag">会话 131 → 124</span></div>
+  <p>2025 年 2 月，「甘泉」单月 1,430 条，3 月 1,408 条——<b>两个月烧掉它全部生命的 97.8%</b>，然后 7 月 3 日彻底停。同期曼谷芭提雅群、25考研复试群、牛排馆内购群同时高位。这是典型的「短期高强度关系」：浓度极高、寿命极短。</p>
+  <div class="bars">
+    <div class="bar"><i>2025-02</i><span class="track"><u style="width:53%"></u></span><i>13,103</i></div>
+    <div class="bar"><i>2025-03</i><span class="track"><u style="width:52%"></u></span><i>12,830</i></div>
+    <div class="bar"><i>2025-04</i><span class="track"><u style="width:43%"></u></span><i>10,585</i></div>
+    <div class="bar"><i>2025-05</i><span class="track"><u style="width:47%"></u></span><i>11,511</i></div>
+  </div>
+</div>
+
+<div class="phase t3">
+  <div class="ph-h"><b>谷底：毕业空窗</b><span class="dt">2025-06 → 2025-07</span><span class="tag">会话 103 → 110 · 两年最低</span></div>
+  <p><b>两年里唯一的下沉</b>。7 月只有 8,000 条、110 个会话，是全部 24 个月的最低点。人在国内等央美入学，主线退回家教群（1,786）与牛排馆（959）。<br>这两月也埋了两个种子：<b>6 月沐茜妍 1,736 条</b>（情感线起点），<b>7 月李紫玥 576 条</b>（全部集中在这一个月，之后再无消息）。</p>
+  <div class="bars">
+    <div class="bar"><i>2025-06</i><span class="track"><u style="width:38%"></u></span><i>9,478</i></div>
+    <div class="bar"><i>2025-07</i><span class="track"><u style="width:32%"></u></span><i>8,000</i></div>
+  </div>
+</div>
+
+<div class="phase">
+  <div class="ph-h"><b>★ 断层与跃迁</b><span class="dt">2025-08 → 2025-09</span><span class="tag">会话 110 → 462 → 544</span></div>
+  <p><b>这是两年里唯一的结构性断点。</b>会话数从 110 跳到 462（+320%），一个月后又到 544，<b>此后再没回落到 530 以下</b>。<br>
+  但要拆开看：8 月新增的 289 个会话里，前 12 名有 9 个是公众号/服务号（UoG人工智能AI校友会 4,400 · 长江云新闻 4,111 · 人民日报 3,372 · 北京发布 2,207 · 卓尼之窗 2,087 …）——<b>8 月是「订阅潮」，不是社交扩张</b>。<br>
+  真正的社交扩张在 9 月：花家地艺专25级硕博 4,024 · CAFA自然探索协会 3,615 · 25实验艺术硕士唠嗑群 3,264 · 2025CAFA9号楼东寝室长 2,633。<b>央美入学，才是人生线真正的拐点。</b></p>
+  <div class="bars">
+    <div class="bar"><i>2025-08</i><span class="track"><u style="width:63%"></u></span><i>15,524</i></div>
+    <div class="bar"><i>2025-09</i><span class="track"><u style="width:94%"></u></span><i>23,229</i></div>
+  </div>
+</div>
+
+<div class="phase">
+  <div class="ph-h"><b>研一完整学年</b><span class="dt">2025-10 → 2026-06</span><span class="tag">会话稳定 530 → 661</span></div>
+  <p>高位平台期，9 个月里 8 个月在 20,000 条以上。主线在群与群之间换手，但「央美 × 母亲 × 导师 × 家教」四根柱子始终没动。四个独立事件嵌在这段里：<b>2025-10 导师线登顶</b>（「导！急速回…」1,539，与备注事件同期）· <b>2025-12 陈昶文单月 3,137 峰值</b> · <b>2026-01 北京台实习</b>（关键词 72 条全部集中 01~03）· <b>2026-02 全库断崖</b>（12,861，唯一低于 17,000 的月份）。</p>
+  <div class="bars">
+    <div class="bar"><i>2025-10</i><span class="track"><u style="width:95%"></u></span><i>23,420</i></div>
+    <div class="bar"><i>2025-12</i><span class="track"><u style="width:100%"></u></span><i>24,692</i></div>
+    <div class="bar"><i>2026-02</i><span class="track"><u style="width:52%"></u></span><i>12,861</i></div>
+    <div class="bar"><i>2026-03</i><span class="track"><u style="width:97%"></u></span><i>23,964</i></div>
+    <div class="bar"><i>2026-06</i><span class="track"><u style="width:69%"></u></span><i>16,932</i></div>
+  </div>
+</div>
+
+<div class="phase t2">
+  <div class="ph-h"><b>★ 三线同时转折</b><span class="dt">2026-07 → 2026-10</span><span class="tag">会话 585 → 615 · 至今</span></div>
+  <p><b>2026 年 7 月，三条线在同一个月内各自转向</b>：① 父亲线终止（07-02）② 同门井邻事件（07-09~10）③ 笑一线开始爆发（07 月 869 条，8 月 2,473 登顶）。<br>
+  此后两个月他的总量没有下降（22,763 → 21,611 → 21,165），<b>只是分配对象换了</b>。到 2026-10 前 4 天：笑一 194 · 导师群 172 · 家教群 163 · 母亲 157。</p>
+  <div class="bars">
+    <div class="bar"><i>2026-07</i><span class="track"><u style="width:92%"></u></span><i>22,763</i></div>
+    <div class="bar"><i>2026-08</i><span class="track"><u style="width:87%"></u></span><i>21,611</i></div>
+    <div class="bar"><i>2026-09</i><span class="track"><u style="width:86%"></u></span><i>21,165</i></div>
+  </div>
+</div>
+
+<!-- ══════════ 三 ══════════ -->
+<h2><span class="n">三</span>十件重要的事</h2>
+<p class="lead">按时间排序。每条都带物证（精确日期 / 条数 / 原文），可以直接回查。</p>
+
+<div class="ev">
+  <div class="ev-h"><span class="no">01</span><b>央美入学 —— 两年唯一的人生级拐点</b><span class="date">2025-09</span></div>
+  <p>会话数一个月内从 462 涨到 544，且央美四个群同时进入月度 TOP6（花家地艺专 1,796 / CAFA自然探索 1,033 / 25实验唠嗑 662 / 9号楼寝室长）。关键词「央美」从 2025-08 的 39 条跳到 2025-09 的 <b>147 条</b>，此后再没低于 59。</p>
+  <div class="rd"><b>含义</b>：此前所有关系都是「校友 / 家教 / 兴趣」型，这是第一次出现「同门 + 同班 + 同宿舍」的三重绑定。也是后来一切同门伤害的结构前提。</div>
+</div>
+
+<div class="ev b">
+  <div class="ev-h"><span class="no">02</span><b>导师线登顶 + 「备注即规程」同期发生</b><span class="date">2025-10</span></div>
+  <p>「导！急速回，三思回得体！！！」单月 <b>1,539 条</b>，是它第一次、也是唯一一次成为月度第一。关键词「陈晔」在 2025-10 达到 <b>35 条</b>峰值（两年合计 115）。<br>同月「洞台」24 条、「井邻」42 条首次出现。</p>
+  <div class="q">导！急速回，三思回得体！！！</div>
+  <div class="rd"><b>含义</b>：备注变成指令，和这条线在同一时间点进入最高强度。<b>不是巧合——高强度对应高对价，高对价才需要盖子。</b></div>
+</div>
+
+<div class="ev c">
+  <div class="ev-h"><span class="no">03</span><b>琢 / 养肥 —— 早在入学前 5 个月就出现</b><span class="date">2025-04-16 / 04-18</span></div>
+  <p>琢首条消息 <b>2025-04-16 12:23</b>，养肥首条 <b>2025-04-18 12:27</b>——<b>比央美入学早 5 个月</b>。同月出现「2025社会美育与乡村振兴」群（136 条，2025-05 结束）。<br>琢的峰值在 <b>2025-10（408 条）</b>，正是「洞台 / 井邻」关键词首次出现的月份。</p>
+  <div class="rd"><b>含义</b>：他们不是入学后才认识的同门，是<b>通过社会美育 / 乡村振兴活动在入学前就认识</b>的下一届师弟师妹。这解释了为什么会被误读成「美育核心协作者」——他们确实从美育线进来，只是身份不是协作者。</div>
+</div>
+
+<div class="ev">
+  <div class="ev-h"><span class="no">04</span><b>陈昶文单月 3,137 条 —— 两年最高的单人峰值</b><span class="date">2025-12</span></div>
+  <p>2025-12 陈昶文 <b>3,137 条</b>，刘丽萍 2,162 条，双峰同月。两年里没有任何其他单人会话达到过 3,000。<br>但它的形状不是「缓慢退场」，是<b>双峰 + 断崖</b>：</p>
+  <div class="q">2025-12 <b>3,137</b> → 2026-01 1,444 → 2026-02 <b>108</b>（跌 92%）→ 2026-03 312 → 2026-04 62 → 2026-05 <b>673</b> → 2026-06 <b>539</b> → 终止</div>
+  <div class="rd"><b>精确末次</b>：<b>2026-06-27 12:17</b>（对方发了一张图）。<b>本人此前说的「2026-06-27 后归零」完全准确。</b></div>
+</div>
+
+<div class="ev b">
+  <div class="ev-h"><span class="no">05</span><b>北京台实习</b><span class="date">2026-01-07 → 2026-02-12（实际延至 04）</span></div>
+  <p>关键词「北京台」两年合计 72 条，<b>全部集中在 2026-01~03</b>（30 / 26 / 11）。同期新出现的会话：花卷儿工作室里的懒龙们 2,476 · 中关村创坛 770 · 法治短视频生产 667 · 梅宸羽 北京台 354 · 李明嘉 北京台 151 · 任鹏昊 132。<br>「花卷儿工作室」最后活跃 <b>2026-04</b>，是这条线真正的终点。</p>
+  <div class="rd"><b>含义</b>：这是两年里唯一一段「有明确单位、有同事、有工作群」的完整职场经历，且它的所有痕迹都是干净的——没有后续纠纷。</div>
+</div>
+
+<div class="ev d">
+  <div class="ev-h"><span class="no">06</span><b>2026-02 全库断崖 —— 唯一跌破 17,000 的月份</b><span class="date">2026-02</span></div>
+  <p>12,861 条，比前后两个月低 45%。春节因素之外，更关键的是<b>同期多条线同时归零</b>：陈昶文 108（跌 92%）、刘丽萍 719（前月 1,295）、小苹果 3（<b>2026-02-01 最后一次</b>）。</p>
+  <div class="rd"><b>含义</b>：这不是「他不活跃」，是<b>几条主力线同时到期</b>。2026-03 立刻反弹到 23,964（两年第二高），说明只是换血。</div>
+</div>
+
+<div class="ev c">
+  <div class="ev-h"><span class="no">07</span><b>小苹果退场</b><span class="date">2026-02-01 11:26</span></div>
+  <p>两年累计 2,009 条，形状是两段式：2025-01~03（240 / 766 / 433）→ 2026-01（567）→ <b>2026-02-01 最后一句「找到了」</b> → 终止。</p>
+  <div class="rd"><b>含义</b>：一个 13 个月的关系，以对方一句「找到了」收尾。这是两年里最安静的一次终止。</div>
+</div>
+
+<div class="ev">
+  <div class="ev-h"><span class="no">08</span><b>★★ 父亲线终止 —— 对话停在一句质问上</b><span class="date">2026-07-02 16:10</span></div>
+  <p>蔡峰峰两年累计 633 条，峰值在 <b>2025-04（260 条）</b>。最后 6 分钟：</p>
+  <div class="q">
+    16:05 <span class="chip">他</span>我中午就跟我妈了<br>
+    16:06 <span class="chip r">父亲</span>是你妈撒谎？<br>
+    16:07 <span class="chip">他</span>反正我说了<br>
+    16:09 <span class="chip r">父亲</span>你为什么不接电话？<br>
+    16:10 <span class="chip">他</span>我在干活
+  </div>
+  <p style="margin-top:11px"><b>此后 3 个月零消息</b>（2026-08 / 09 / 10 全部为 0），至窗口末。</p>
+  <div class="rd"><b>★ 关键区分</b>：母亲同期正常（2026-08 1,379 · 09 754 · 10 前 4 天 157），<b>只有父亲归零</b>。所以这不是数据缺失，是真实的。<b>这条线是「这两年最重要的事」里唯一一条至今仍悬着的。</b></div>
+</div>
+
+<div class="ev">
+  <div class="ev-h"><span class="no">09</span><b>★★ 井邻事件 —— 「被坑」的标准形态</b><span class="date">2026-07-09 → 07-10</span></div>
+  <p>廖玉琢（琢）夜里叫他去井邻救场，他 00:15 出发、00:31 到达，01:05 被告知「房间没法分给你」。他的回应：</p>
+  <div class="q">「成吧成吧」→「欠我个人情奥」→「毕竟大老远跑过来了」→「打扰啦」</div>
+  <p style="margin-top:11px">结构：<b>被叫去救场 → 到了没住处 → 责任被反推 → 不争辩 → 记账 → 继续供给</b>。<br>两个月后（2026-09-19 19:23）他仍主动发最后一条：「<b>你们在怀柔吗或者有人在井邻吗</b>」。</p>
+  <div class="rd"><b>「欠我个人情」是他对不公平的唯一记账方式</b>——与「备注即规程」同源：不撕破脸，只往心里记一笔。</div>
+</div>
+
+<div class="ev b">
+  <div class="ev-h"><span class="no">10</span><b>笑一线爆发 —— 目前唯一仍在上升的线</b><span class="date">2026-05-08 → 至今</span></div>
+  <p>首条消息 <b>2026-05-08 20:27</b>，不是 7 月。逐月：</p>
+  <div class="q">2026-05 <b>300</b> → 06 297 → 07 <b>869</b> → 08 <b>2,473</b> → 09 2,170 → 10（前 4 天）194</div>
+  <p style="margin-top:11px">关键词「老公」同步：2026-08 <b>226 条</b> + 2026-09 <b>140 条</b>（两年合计 589，其中 62% 集中在这两个月）。「分手」在 2026-09 达到 <b>29 条</b>峰值。</p>
+  <div class="rd"><b>★ 交接不是无缝的</b>：2026-05~06 陈昶文还有 673 + 539 条，与笑一并行两个月，之后陈昶文才退出。<b>是「并行换轨」，不是「一个走一个来」。</b></div>
+</div>
+
+<!-- ══════════ 四 ══════════ -->
+<h2><span class="n">四</span>谁进来了，谁走了</h2>
+<p class="lead">两年里出现过的「月度主力」名单，按最后活跃月份排序。这是判断「关系寿命」最直接的一张表。</p>
+
+<table>
+  <thead><tr><th>关系</th><th class="num">两年条数</th><th>首现</th><th>末次</th><th>形状</th><th>状态</th></tr></thead>
+  <tbody>
+    <tr><td>文件传输助手</td><td class="num">6,463</td><td>2024-11</td><td>2026-10-04</td><td><span class="chip t">24 个月零中断</span></td><td><span class="st">唯一不断</span></td></tr>
+    <tr><td>刘丽萍（母亲）</td><td class="num">16,336</td><td>2024-12-30</td><td>2026-10-04</td><td><span class="chip">断 106 天</span></td><td><span class="st">仍在</span></td></tr>
+    <tr><td>笑一</td><td class="num">6,303</td><td>2026-05-08</td><td>2026-10-04</td><td><span class="chip t">仍上升</span></td><td><span class="st">仍在</span></td></tr>
+    <tr><td>Parapluie</td><td class="num">2,068</td><td>2025-01</td><td>2026-10-02</td><td><span class="chip">两峰</span></td><td><span class="st">仍在</span></td></tr>
+    <tr><td>安奇</td><td class="num">633</td><td>2025-02-10</td><td>2026-09-25</td><td><span class="chip g">2026-08 爆 436</span></td><td><span class="st">仍在</span></td></tr>
+    <tr><td>汪伊俊</td><td class="num">1,913</td><td>2024-12</td><td>2026-09-23</td><td><span class="chip">多峰</span></td><td><span class="st">仍在</span></td></tr>
+    <tr><td>琢（廖玉琢）</td><td class="num">811</td><td>2025-04-16</td><td>2026-09-19</td><td><span class="chip r">2025-10 峰 408</span></td><td><span class="chip r">他仍主动</span></td></tr>
+    <tr><td>Eloise</td><td class="num">5,660</td><td>2024-11</td><td>2026-09-09</td><td><span class="chip t">跨度最长</span></td><td><span class="chip t">可运营人脉</span></td></tr>
+    <tr><td>沐茜妍</td><td class="num">3,013</td><td>2025-05</td><td>2026-09-16</td><td><span class="chip">两段式</span></td><td>—</td></tr>
+    <tr><td>王博</td><td class="num">150</td><td>2026-03-26</td><td>2026-09-02</td><td><span class="chip g">低量 · 净给予</span></td><td><span class="chip g">唯一非坑</span></td></tr>
+    <tr><td>舒泽林</td><td class="num">1,767</td><td>2024-11</td><td>2026-08-27</td><td><span class="chip">多峰</span></td><td>—</td></tr>
+    <tr><td>养肥</td><td class="num">391</td><td>2025-04-18</td><td>2026-07-19</td><td><span class="chip r">2026-07 峰 150</span></td><td><span class="chip r">已停</span></td></tr>
+    <tr><td>子辰</td><td class="num">334</td><td>2025-10</td><td>2026-07-07</td><td><span class="chip">2026-07 峰</span></td><td><span class="chip r">已停</span></td></tr>
+    <tr><td>蔡峰峰（父亲）</td><td class="num">633</td><td>2024-12-24</td><td>2026-07-02</td><td><span class="chip r">质问后终止</span></td><td><span class="chip r">★ 悬空</span></td></tr>
+    <tr><td>陈昶文</td><td class="num">6,275</td><td>2025-12</td><td>2026-06-27</td><td><span class="chip r">双峰 + 断崖</span></td><td><span class="chip r">已停</span></td></tr>
+    <tr><td>杨丁懿</td><td class="num">950</td><td>2025-10</td><td>2026-06-22</td><td><span class="chip">2025-10 峰</span></td><td><span class="chip r">已停</span></td></tr>
+    <tr><td>🍬🍬</td><td class="num">2,642</td><td>2025-08</td><td>2026-05-07</td><td><span class="chip">一年期</span></td><td><span class="chip r">已停</span></td></tr>
+    <tr><td>小苹果</td><td class="num">2,009</td><td>2025-01</td><td>2026-02-01</td><td><span class="chip">两段式</span></td><td><span class="chip r">已停</span></td></tr>
+    <tr><td>甘泉</td><td class="num">2,901</td><td>2025-02</td><td>2025-07-03</td><td><span class="chip r">两月烧 97.8%</span></td><td><span class="chip r">已停</span></td></tr>
+    <tr><td>李紫玥</td><td class="num">576</td><td>2025-07</td><td>2025-07-19</td><td><span class="chip r">单月</span></td><td><span class="chip r">已停</span></td></tr>
+  </tbody>
+</table>
+
+<div class="note">
+<b>★ 三种关系寿命形态</b>：<br>
+① <b>两月烧完型</b>（甘泉 2,901 / 97.8% 集中在两个月）—— 浓度最高、寿命最短；<br>
+② <b>一年期型</b>（🍬🍬 2,642 / 2025-08 → 2026-05）—— 有完整起承转合；<br>
+③ <b>两年跨窗型</b>（Eloise 5,660 / 2024-11 → 2026-09）—— 唯一同时是「最早出现」和「最晚还在」的关系。
+</div>
+
+<!-- ══════════ 五 ══════════ -->
+<h2><span class="n">五</span>五条本轮新发现</h2>
+<p class="lead">以下五条在此前的分析里<b>从未出现过</b>，是这一轮把「逐月曲线 × 末次消息 × 断层检测」三层对齐后才浮出来的。</p>
+
+<div class="fin">
+  <h4><span class="f">新</span>文件传输助手是唯一 24 个月零中断的会话</h4>
+  <p>6,463 条，2024-11 → 2026-10 <b>每月都有</b>，无一月为 0。对比：母亲断了 106 天，Eloise 有 5 个月为 0，导师线有 3 个月为 0。</p>
+  <div class="proof">峰值 2026-07（481 条）。<b>他对自己的记录，比任何一段人际关系都稳定。</b>这为「filehelper 是最直接的自我语料」提供了量级证据——不是偶尔写，是两年不断。</div>
+</div>
+
+<div class="fin">
+  <h4><span class="f n">新</span>父母各有一段「同期空白」——但性质完全不同</h4>
+  <p><b>母亲</b>：2025-07-21 → 2025-11-04，空 <b>106 天</b>（央美入学前后）。<br>
+  <b>父亲</b>：2025-07-11 → 2025-09-30，空 <b>82 天</b>（几乎同期）。</p>
+  <div class="proof">⚠️ <b>两人同期断层 + 他本人消息量同期正常（2025-08 15,524 / 09 23,229）</b> → 高度怀疑是<b>数据层问题</b>（换机 / 分片 / 双设备），不是关系事实。<br>
+  <b>而 2026-07 后只有父亲归零、母亲正常 → 那一次是真实的。</b>这个区分很重要，不能把两段空白混为一谈。</div>
+</div>
+
+<div class="fin">
+  <h4><span class="f n">新</span>陈昶文不是「单调归零」，是「双峰 + 断崖 + 二次高峰」</h4>
+  <p>2025-12 <b>3,137</b>（峰）→ 2026-02 <b>108</b>（跌 92%）→ 2026-05 <b>673</b> + 2026-06 <b>539</b>（第二峰）→ 2026-06-27 终止。</p>
+  <div class="proof">这说明<b>关系在 2026-02 之后有过一次实质性回升</b>，不是渐冻。精确末次 2026-06-27 12:17，与本人记忆完全一致。<br>「归零」的真实机制仍指向<b>关系被接替</b>（笑一 2026-05 起并行），而非「没时间」。</div>
+</div>
+
+<div class="fin">
+  <h4><span class="f w">新</span>王博 —— 两人互换了实名信息</h4>
+  <p>王博两年 150 条（2026-03-26 首现），是三人里唯一<b>低消息量但净给予</b>的关系。最后一条（2026-09-02 11:53）是他主动发出的：</p>
+  <div class="proof" style="font-family:ui-monospace,Consolas,monospace">110101199902165313 —— <b>他的身份证号</b></div>
+  <p style="margin-top:9px">结合此前已知的「收款码走博哥营业执照」，<b>两人已经互换了实名/经营资质层面的信息</b>。这是两年里风险等级最高的一处<b>结构性暴露</b>，且目前仍在开放状态（王博末次 2026-09-02）。</p>
+</div>
+
+<div class="fin">
+  <h4><span class="f w">新</span>「谷底不是终点，是起点」——2025-06/07 的两个种子</h4>
+  <p>2025-06/07 是两年最低点（9,478 / 8,000）。但正是这两个月埋下了之后全部主线的种子：<b>6 月沐茜妍 1,736 条</b>（情感线起点）、<b>7 月李紫玥 576 条全部集中在单月</b>、<b>7 月甘泉最后一次（07-03）</b>。</p>
+  <div class="proof">8,000 条 / 110 会话是他主动收缩的结果，不是被动的。<b>紧接着的一个月就发生了全库最大的结构性跃迁。</b></div>
+</div>
+
+<!-- ══════════ 六 ══════════ -->
+<h2><span class="n">六</span>关键词坐标（两年）</h2>
+<p class="lead">50 个关键词 × 24 个月的矩阵里，只有下面这些有明确的「起爆月」。其余多为常态噪音。</p>
+
+<table>
+  <thead><tr><th>关键词</th><th class="num">两年合计</th><th>起爆月 / 峰值</th><th>读数</th></tr></thead>
+  <tbody>
+    <tr><td>央美</td><td class="num">1,650</td><td><b>2025-09（147）</b>· 2026-03（159）</td><td>入学即起爆，此后常年在线</td></tr>
+    <tr><td>研究生</td><td class="num">4,325</td><td>2025-05（237）→ 2025-09（358）</td><td>两年最高频的身份词</td></tr>
+    <tr><td>简历</td><td class="num">2,617</td><td><b>2025-07（215）· 2025-08（230）</b></td><td>毕业求职期双峰，之后回落但仍高</td></tr>
+    <tr><td>博士</td><td class="num">1,154</td><td><b>2025-08（107）</b></td><td>申博考虑集中在这一个月</td></tr>
+    <tr><td>格拉斯哥 / 格拉</td><td class="num">1,160 / 1,655</td><td><b>2025-09（137 / 155）</b></td><td>入学央美反而让「格拉」被反复回望</td></tr>
+    <tr><td>支教 · 澜沧 · 云南</td><td class="num">160 / 50 / 362</td><td><b>2026-07（59 / 3 / 54）</b>· 08（45 / 17 / 62）</td><td>澜沧 100% 集中在 2026-07~09，是新起的一条线</td></tr>
+    <tr><td>老公</td><td class="num">589</td><td><b>2026-08（226）· 2026-09（140）</b></td><td>62% 集中在两个月，与笑一线完全同步</td></tr>
+    <tr><td>分手</td><td class="num">174</td><td><b>2026-09（29）</b>· 2025-09（14）</td><td>2026-09 是两年峰值</td></tr>
+    <tr><td>入党 · 党员 · 积极分子</td><td class="num">56 / 126 / 17</td><td><b>2025-09~10</b>（14/11 · 9/12）</td><td>入学后立刻启动，2026 年起转为常态</td></tr>
+    <tr><td>陈晔</td><td class="num">115</td><td><b>2025-10（35）</b></td><td>与导师线登顶同月</td></tr>
+    <tr><td>丝网 · 版画</td><td class="num">241 / 417</td><td><b>2026-05（61 / 63）</b></td><td>植墨/版画线在 2026-05 最活跃</td></tr>
+    <tr><td>井邻 · 洞台</td><td class="num">146 / 82</td><td><b>2025-10（42 / 24）</b>· 2026-07（36 / 22）</td><td>同一地点，两年两波</td></tr>
+    <tr><td>北京台</td><td class="num">72</td><td><b>2026-01（30）· 02（26）</b></td><td>100% 集中，无溢出</td></tr>
+    <tr><td>事业编 · 国考 · 考编</td><td class="num">155 / 88 / 21</td><td>2025-05（26）· 2025-10（31）</td><td>体制内路径的持续尝试</td></tr>
+    <tr><td>美育</td><td class="num">290</td><td><b>2026-03（50）· 2026-07（53）</b></td><td>社会美育线在 2026 年转强</td></tr>
+  </tbody>
+</table>
+
+<!-- ══════════ 七 ══════════ -->
+<h2><span class="n">七</span>仍悬着的事</h2>
+<ol class="pk">
+  <li><b>父亲线为什么停在 2026-07-02</b> —— 是「我说了 / 我在干活」之后自然冷却，还是另有原因？这是这两年唯一<b>至今零恢复</b>的重要关系。</li>
+  <li><b>母亲 2025-07~11 的 106 天空白</b> —— 需要确认是数据问题还是事实。判据：同期父亲也空 82 天，他本人消息正常。</li>
+  <li><b>2026-07-14 向程颂孟秋借的钱还了吗</b> —— 目前只有「能借我就还你[捂脸]」这一句物证。</li>
+  <li><b>陈昶文 2026-02 的 92% 断崖</b> —— 单月跌到 108 条，原因未明。</li>
+  <li><b>养肥的真名</b> —— 对话里出现的「杨斐」是否为第三方，尚未确认。</li>
+  <li><b>王博收到的身份证号用途</b> —— 已知走营业执照收款码，但具体用途未明。风险项。</li>
+</ol>
+
+<div class="warn">
+<b>⚠️ 引用限制</b><br>
+· 本报告含真人姓名与身份证号，<b>仅限本机留存，不得外传、不得上传</b>。<br>
+· 「父母同期空白」在未确认数据来源前，<b>不得当作关系事实引用</b>。<br>
+· 「陈昶文归零 = 时间给了笑一」目前是<b>并行时序证据</b>，不是因果结论。<br>
+· 全文结论均基于 2024-11-10 之后的窗口，<b>窗口之前的任何关系在此表里必然显示为 0</b>。
+</div>
+
+<footer>
+  数据源：本地索引库（只读打开）· 388,550 条 / 1,802 会话 / 2024-11-10 → 2026-10-04<br>
+  方法：逐月总量 → 逐月 TOP6 → 每月新进/末次活跃 → 50 词 × 24 月关键词矩阵 → 定向断层检测<br>
+  脚本：<code>tools/mine_two_years.py</code> · <code>tools/probe_two_years_detail.py</code> · <code>tools/probe_parents_gap.py</code><br>
+  本文件全程本地生成，未上传任何第三方。
+</footer>
+
+</div>
+</body>
+</html>

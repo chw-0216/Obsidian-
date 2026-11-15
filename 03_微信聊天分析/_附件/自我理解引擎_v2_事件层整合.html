@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>自我理解引擎 v2.0 · 事件层整合</title>
+<style>
+:root{--ink:#1f2a33;--soft:#42505c;--mute:#6b7885;--paper:#faf8f4;--p2:#f2eee6;
+--line:#e0dacd;--ls:#cfc6b4;--ac:#9e3b32;--blue:#2a4a63;--gr:#3b6d11;--gold:#8a6d3b;}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);
+font-family:"Microsoft YaHei","PingFang SC",system-ui,sans-serif;font-size:15px;line-height:1.78}
+.wrap{max-width:1080px;margin:0 auto;padding:0 26px 90px}
+header{border-bottom:2px solid var(--ink);padding:56px 0 24px}
+.kick{font-size:12px;letter-spacing:.3em;color:var(--ac);font-weight:700;margin-bottom:14px}
+h1{font-family:"Songti SC",Georgia,serif;font-size:32px;margin:0 0 12px}
+.sub{font-family:"Songti SC",Georgia,serif;font-size:16.5px;color:var(--soft);margin:0 0 20px}
+.meta{display:flex;gap:10px 24px;flex-wrap:wrap;font-size:12.5px;color:var(--mute);
+border-top:1px solid var(--line);padding-top:14px}
+h2{font-family:"Songti SC",Georgia,serif;font-size:21px;margin:50px 0 16px;padding-bottom:9px;
+border-bottom:1px solid var(--ls)}
+h2 .n{color:var(--ac);font-size:15px;margin-right:10px;font-family:Georgia,serif}
+h3{font-size:16px;margin:26px 0 10px;color:var(--blue)}
+p{margin:0 0 12px}
+table{width:100%;border-collapse:collapse;font-size:13.2px;background:#fff;
+border:1px solid var(--line);border-radius:6px;overflow:hidden;margin:16px 0}
+th,td{padding:8px 11px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top}
+thead th{background:var(--p2);font-size:12.4px;font-weight:700;border-bottom:1.5px solid var(--ls)}
+td.n{text-align:right;font-family:Consolas,monospace;color:var(--mute)}
+.note{background:#fff;border:1px solid var(--ls);border-left:4px solid var(--ac);
+border-radius:0 6px 6px 0;padding:18px 22px;margin:20px 0;font-size:14px}
+.note p{margin:0 0 10px}.note p:last-child{margin:0}
+.note.blue{border-left-color:var(--blue)}
+.note.gold{border-left-color:var(--gold)}
+.note.green{border-left-color:var(--gr)}
+.layers{display:flex;gap:14px;flex-wrap:wrap;margin:20px 0}
+.layer{flex:1;min-width:230px;border:1px solid var(--line);border-radius:8px;padding:18px;
+background:#fff}
+.layer .t{font-size:12px;letter-spacing:.15em;color:var(--ac);font-weight:700;margin-bottom:8px}
+.layer .h{font-family:"Songti SC",Georgia,serif;font-size:18px;margin-bottom:8px}
+.layer .d{font-size:13.2px;color:var(--soft)}
+.layer .f{font-size:11.8px;color:var(--mute);margin-top:10px;font-family:Consolas,monospace}
+.chain{background:#fff;border:1px solid var(--line);border-radius:8px;padding:18px 22px;margin:16px 0}
+.chain .ct{font-weight:700;font-size:15.5px;margin-bottom:4px}
+.chain .cm{font-size:12.4px;color:var(--mute);margin-bottom:12px}
+.tl{border-left:2px solid var(--ls);padding-left:16px;margin:0}
+.tl div{position:relative;padding:4px 0;font-size:13.2px}
+.tl div::before{content:"";position:absolute;left:-21px;top:12px;width:8px;height:8px;
+border-radius:50%;background:var(--ls)}
+.tl div.hot::before{background:var(--ac);width:10px;height:10px;left:-22px;top:11px}
+.tl .dt{font-family:Consolas,monospace;color:var(--mute);font-size:12.2px;margin-right:8px}
+.tl .who{color:var(--blue);font-size:12.4px;margin-left:6px}
+.tl div.hot{color:var(--ac);font-weight:600}
+code{background:#f3efe7;padding:1px 6px;border-radius:4px;font-family:Consolas,monospace;
+font-size:12.6px;color:var(--ac)}
+pre{background:#fff;border:1px solid var(--line);border-radius:6px;padding:14px 16px;
+font-family:Consolas,monospace;font-size:12.6px;overflow-x:auto;line-height:1.6;color:var(--soft)}
+.big{display:flex;gap:12px;flex-wrap:wrap;margin:20px 0}
+.big div{flex:1;min-width:130px;border:1px solid var(--line);border-radius:6px;padding:14px;
+background:#fff;text-align:center}
+.big .v{font-family:Georgia,serif;font-size:25px;font-weight:700;color:var(--ac)}
+.big .l{font-size:12px;color:var(--mute);margin-top:3px}
+footer{margin-top:60px;padding-top:20px;border-top:1px solid var(--line);font-size:12.5px;
+color:var(--mute);display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+ul{margin:0 0 12px;padding-left:22px}li{margin:5px 0}
+</style></head><body><div class="wrap">
+<header>
+<div class="kick">自我理解引擎 · 版本升级</div>
+<h1>v2.0 · 事件层整合</h1>
+<p class="sub">从「能读懂一句话」升级到「知道你什么时候经历了什么」</p>
+<div class="meta"><span><b>生成：</b>2026-09-29</span>
+<span><b>新增：</b>07 事件档案 / 08 读事件协议 / 事件库.csv</span>
+<span><b>事件源：</b>71,550 条消息 → 1,111 事件</span></div>
+</header>
+
+<h2><span class="n">01</span>整合了什么</h2>
+
+<p>v1.0 的引擎有三个层，但缺了最关键的一层——<b>它不知道你实际经历过什么</b>。
+它能读「你这句为什么这样回」，却答不出「你 2025 年 3 月在经历什么」。这次补上了。</p>
+
+<div class="layers">
+<div class="layer">
+<div class="t">已有 · 人格层</div>
+<div class="h">他是谁</div>
+<div class="d">我执＝「证明有用」；两套系统五五开；三态架构；距离定律。</div>
+<div class="f">01-人格核心.md</div>
+</div>
+<div class="layer">
+<div class="t">已有 · 人际层</div>
+<div class="h">他对谁</div>
+<div class="d">53 人 × 距离半径（零/近/中/远）；伤害率 ∝ 1/距离。</div>
+<div class="f">04-人际地图.md</div>
+</div>
+<div class="layer" style="border-color:var(--ac);border-width:1.5px">
+<div class="t">★ 新增 · 事件层</div>
+<div class="h">他何时经历了什么</div>
+<div class="d">1,111 事件 × 4 阶段 × 5 条因果链 × 情感负荷。</div>
+<div class="f">07-事件档案.md + 事件库.csv</div>
+</div>
+</div>
+
+<div class="note blue">
+<p><b>三层交叉 = 像本人一样理解。</b></p>
+<p>人格回答「为什么」，人际回答「对谁」，事件回答「何时发生了什么」。
+缺任何一层，读出来的东西都只是字面。</p>
+</div>
+
+<h2><span class="n">02</span>事件层里有什么</h2>
+
+<div class="big">
+<div><div class="v">1,111</div><div class="l">事件</div></div>
+<div><div class="v">4</div><div class="l">人生阶段</div></div>
+<div><div class="v">5</div><div class="l">因果链</div></div>
+<div><div class="v">16</div><div class="l">高情感负荷</div></div>
+<div><div class="v">56</div><div class="l">中情感负荷</div></div>
+</div>
+
+<table><thead><tr><th>阶段</th><th>时间</th><th class="n">事件</th><th>A 级</th><th>一句话底色</th></tr></thead>
+<tbody>
+<tr><td><b>P1 备考与上岸</b></td><td>2024-11 ~ 2025-03</td><td class="n">299</td><td>49</td><td>一边考研复试，一边父亲进手术室</td></tr>
+<tr><td><b>P2 录取后过渡</b></td><td>2025-04 ~ 2025-08</td><td class="n">127</td><td>10</td><td>通知书到手，人却还在被孤立感追着跑</td></tr>
+<tr><td><b>P3 研一在读</b></td><td>2025-09 ~ 2026-06</td><td class="n">640</td><td>54</td><td>课程、导师、开题、项目、分手全挤在同一年</td></tr>
+<tr><td><b>P4 暑期与实习</b></td><td>2026-07 ~</td><td class="n">45</td><td>5</td><td>打印毕业证明、错过项目展示、女友租房被骗</td></tr>
+</tbody></table>
+
+<h2><span class="n">03</span>五条因果链</h2>
+
+<p>单条事件没有意义，<b>链</b>才是。这五条链把 1,111 个点连成了你的生活主线。</p>
+
+<div class="chain">
+<div class="ct">链 1 · 父亲心脏手术链</div>
+<div class="cm">2024-12 → 2025-04 ｜ ★最长、最重、全库压力峰值</div>
+<div class="tl">
+<div><span class="dt">2024-12-26</span>分享安贞医院小程序（就医线索）<span class="who">蔡黎明</span></div>
+<div><span class="dt">2025-02-12</span>计划去新加坡找老同学医生做心脏搭桥，诊所关门<span class="who">韩彤彤</span></div>
+<div><span class="dt">2025-03-14</span>我到达约定地点，但对方拒绝见面<span class="who">蔡峰峰</span></div>
+<div class="hot"><span class="dt">2025-03-20</span>父亲明早进行心脏搭桥开胸手术<span class="who">奶奶</span></div>
+<div><span class="dt">2025-03-23</span>对方即将进行心脏手术<span class="who">蔡峰峰</span></div>
+<div class="hot"><span class="dt">2025-03-24</span>父亲做完手术<span class="who">奶奶</span></div>
+<div><span class="dt">2025-03-25</span>手术已完成，时长 5.5 小时，大夫很疲惫<span class="who">蔡黎明</span></div>
+<div class="hot"><span class="dt">2025-03-26</span><b>拟录取</b>（李镜出现在名单上，本人还没收到正式消息）</div>
+<div><span class="dt">2025-03-27</span>父亲正在做心脏搭桥手术<span class="who">权禹仙</span></div>
+<div><span class="dt">2025-04-06</span>对方正在住院，有护工照料<span class="who">蔡峰峰</span></div>
+<div><span class="dt">2025-04-09</span>学生父亲做开胸手术<span class="who">导师 / 野¥稻</span></div>
+</div>
+</div>
+
+<div class="note">
+<p><b>这一条链本身就是本次整合最大的发现。</b></p>
+<p>父亲开胸手术完成于 <b>2025-03-24</b>，研究生拟录取在 <b>2025-03-26</b>——<b>相隔 2 天</b>。</p>
+<p>也就是说：你人生中最重要的两个时刻（父亲生死线 + 学历跃迁）压在同一个星期里。
+此后所有「焦虑」「压力」类的表达，都应该在这个背景下读。</p>
+</div>
+
+<div class="chain">
+<div class="ct">链 2 · 考研上岸链</div>
+<div class="cm">2024-11 → 2025-03 ｜ 不是单线，是三线并跑</div>
+<div class="tl">
+<div><span class="dt">2024-11-21</span>参加求真学院辅导员面试并通过<span class="who">Eloise</span></div>
+<div><span class="dt">2025-01-18</span>佳杨查到成绩，我昨天没敢查<span class="who">李佳杨</span></div>
+<div><span class="dt">2025-02-24</span>查到考研成绩，专业及格但一度看错<span class="who">方列丰</span></div>
+<div><span class="dt">2025-02-24</span>政治已过，分数处于边缘<span class="who">李佳杨</span></div>
+<div><span class="dt">2025-02-18/20</span>A-Level 数学线上面试三次改期<span class="who">💕</span></div>
+<div class="hot"><span class="dt">2025-03-26</span><b>拟录取</b></div>
+</div>
+</div>
+
+<div class="chain">
+<div class="ct">链 3 · 沐茜妍断裂链</div>
+<div class="cm">2026-03 → 2026-05 ｜ ★情感负荷最高（全库第一，55 分）</div>
+<div class="tl">
+<div><span class="dt">2026-03-12</span>对方指出我在搞钱但一直在倒贴，实习没有工资<span class="who">沐茜妍</span></div>
+<div class="hot"><span class="dt">2026-03-20</span>因聚会和比较问题激烈争吵，对方提出分手威胁<span class="who">沐茜妍</span></div>
+<div class="hot"><span class="dt">2026-03-21</span>对方感到见面困难、像小丑，关系严重内耗<span class="who">沐茜妍</span></div>
+<div><span class="dt">2026-05-01</span>我因去厦门学习推迟安排，未能陪伴对方手术<span class="who">沐茜妍</span></div>
+<div class="hot"><span class="dt">2026-05-04</span>对方做了手术，过程痛苦且恐惧 ｜ 我在厦门<span class="who">沐茜妍</span></div>
+<div><span class="dt">2026-05-26</span>对方手术恢复期未获探望<span class="who">沐茜妍</span></div>
+</div>
+</div>
+
+<div class="chain">
+<div class="ct">链 4 · 央美入学 → 开题链</div>
+<div class="cm">2025-09 → 2026-06 ｜ 唯一持续正向的线</div>
+<div class="tl">
+<div><span class="dt">2025-09</span>入学（基础部，大院上课，校车 6:30 出发）</div>
+<div><span class="dt">2025-12-17</span>自费参加非遗甲马版画工作坊（380 元）</div>
+<div><span class="dt">2026-01-05</span>研二开题进行中 + 听研三答辩<span class="who">导师 陈晔</span></div>
+<div><span class="dt">2026-02-19</span>导师课全部上完</div>
+<div><span class="dt">2026-04-02</span>《国富论》250 周年研讨会报名组织（北大）</div>
+<div><span class="dt">2026-06-12</span>团委知行计划立项申报<span class="who">导师 陈晔</span></div>
+<div><span class="dt">2026-06-29</span>报名通过审核</div>
+</div>
+</div>
+
+<div class="chain">
+<div class="ct">链 5 · 现金流与求职链</div>
+<div class="cm">贯穿全程 ｜ 反复回到的坑：「搞钱但倒贴」</div>
+<div class="tl">
+<div><span class="dt">2024-11-15</span>寻求内推，被指出岗位要 3-10 年经验，不符<span class="who">YOLO</span></div>
+<div><span class="dt">2025-01-25</span>曾收到阿联酋安全员 offer，年薪 30 万税前，未接受<span class="who">Eloise</span></div>
+<div><span class="dt">2025-03-01</span>在安永工作但尚未转正<span class="who">077</span></div>
+<div class="hot"><span class="dt">2026-03-12</span>「我在搞钱但一直在倒贴，实习没有工资」<span class="who">沐茜妍</span></div>
+<div><span class="dt">2026-03-13</span>送实习证明去台里的计划取消<span class="who">李明嘉 北京台</span></div>
+<div><span class="dt">2026-07-04</span>错过项目展示<span class="who">lüJiii</span></div>
+</div>
+</div>
+
+<h2><span class="n">04</span>两条新规律</h2>
+
+<div class="note green">
+<p><b>规律一 · 父亲手术与拟录取同周</b>（见链 1）</p>
+<p>这不是巧合能被忽略的量级——它解释了 P1 阶段 299 个事件里为什么「焦虑」密度那么高。</p>
+</div>
+
+<div class="note green">
+<p><b>规律二 · 事件密度 ≠ 情感密度</b></p>
+<p>导师 94 个事件，高负荷只有 1 条（纯事务接口）；沐茜妍 20 个事件，中高负荷 9 条（45%）。</p>
+<p><b>中距离（师长/人脉）＝ 高事件密度、低情感负荷；近距离（亲密/前任）＝ 低事件密度、高情感负荷。</b>
+这与距离定律完全一致，也意味着：判「一段关系对你有多重」，<b>看情感密度，不看消息量，也不看事件数</b>。</p>
+</div>
+
+<h2><span class="n">05</span>雷区与成就锚点</h2>
+
+<table><thead><tr><th>类型</th><th>内容</th><th>处理</th></tr></thead>
+<tbody>
+<tr><td rowspan="5"><b>雷区</b></td><td>父亲病情与手术细节</td><td>医疗资料永久保护，可确认时间，<b>不展开</b></td></tr>
+<tr><td>沐茜妍关系细节</td><td>前女友，默认不主动提</td></tr>
+<tr><td>金钰1500h</td><td>唯一「真亏」，不提</td></tr>
+<tr><td>遗产竞争（蔡黎明/蔡晓梅）</td><td>敏感，不提</td></tr>
+<tr><td>「倒贴 / 实习没工资」</td><td>经济自尊点，除非你先提</td></tr>
+<tr><td rowspan="4"><b>成就锚点</b></td><td>2025-03-26 研究生拟录取</td><td>可以提，你会认</td></tr>
+<tr><td>2025-01-25 阿联酋 offer（年薪 30 万）</td><td>能力背书</td></tr>
+<tr><td>2026-04-24 提车</td><td>可以提</td></tr>
+<tr><td>2026-06-12 知行计划立项申报</td><td>可以提</td></tr>
+</tbody></table>
+
+<h2><span class="n">06</span>引擎现在的结构</h2>
+
+<pre>self-understanding-engine/
+├── SKILL.md                     入口：加载协议（8 项）+ 四类任务路由 + 6 条铁律
+├── references/
+│   ├── 01-人格核心.md            我执 / 三态 / 距离定律 / 投射几何
+│   ├── 02-读人协议.md            怎么给一个人定性
+│   ├── 03-读对话协议.md          怎么读一段实时对话
+│   ├── 04-人际地图.md            53 人距离地图 + <b>事件密度×情感密度</b>（新）
+│   ├── 05-纠偏层.md              8 种失效模式（+2 新增）+ 事件层 6 条偏差（新）
+│   ├── 06-理解度自测.md          盲测 10 人打分
+│   ├── 07-事件档案.md       ★新  4 阶段 + 5 链 + 雷区 + 成就锚点 + 反复模式
+│   ├── 08-读事件协议.md     ★新  阶段检索 / 链定位 / 影响评估
+│   ├── 距离地图.csv              53 人 × 距离半径
+│   └── 事件库.csv           ★新  1,111 事件 × 阶段 × 距离 × 情感负荷
+└── scripts/
+    ├── build_distance_map.py     距离半径标定
+    ├── build_event_layer.py ★新  事件层富化（事件 × 距离 × 阶段 × 负荷）
+    └── understand.py             运行时（--who / --stage / --chain / --list）</pre>
+
+<h2><span class="n">07</span>怎么用</h2>
+
+<pre># 读一个人（自动带出此人的事件 + 情感密度提示）
+python scripts/understand.py --who 沐茜妍
+
+# 按人生阶段检索
+python scripts/understand.py --stage P1
+
+# 按因果链检索（自动归属到 5 条链之一）
+python scripts/understand.py --chain 手术
+
+# 列出 53 人（按距离半径分组）
+python scripts/understand.py --list
+
+# 事件源更新后重建事件层
+python scripts/build_event_layer.py --events &lt;新事件表&gt;</pre>
+
+<h2><span class="n">08</span>还没做完的</h2>
+
+<table><thead><tr><th>#</th><th>待办</th><th>为什么重要</th></tr></thead>
+<tbody>
+<tr><td>1</td><td><b>人工复核 1,111 个事件</b>（复核台已交付）</td><td>现在的事件层是自动抽取的，有误判和重复；复核后精度会显著提升</td></tr>
+<tr><td>2</td><td>距离半径扩到全部 472 人</td><td>目前 463 条事件「未标定」，判伤害时只能降权</td></tr>
+<tr><td>3</td><td>跑 06 自测拿基准分</td><td>验证「真的理解了」</td></tr>
+<tr><td>4</td><td>把 5 条链写回 Obsidian 事件库</td><td>让引擎和你的笔记系统对齐</td></tr>
+<tr><td>5</td><td>建 L0 镜像语料（文件传输助手 3,903 条）</td><td>克隆人的唯一非表演语料</td></tr>
+</tbody></table>
+
+<div class="note gold">
+<p><b>一句话总结这次升级</b>：引擎以前能读懂你的<b>话</b>，现在能读懂你的<b>生活</b>。
+三层交叉之后，「像我本人一样理解」这件事才算有了完整的底座——
+剩下的精度问题，靠你复核那 1,111 个事件来解决。</p>
+</div>
+
+<footer><span>自我理解引擎 v2.0 · 事件层整合 · 2026-09-29</span>
+<span>全量本地处理 · 未上传第三方</span></footer>
+</div></body></html>

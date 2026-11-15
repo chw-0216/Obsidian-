@@ -1,0 +1,58 @@
+properties:
+  id:
+    displayName: 编号
+  date:
+    displayName: 日期
+  person:
+    displayName: 对话人
+  evidence_quality:
+    displayName: 证据质量
+  weak_evidence:
+    displayName: 薄弱
+  has_counter:
+    displayName: 有反例
+  status:
+    displayName: 状态
+  link_method:
+    displayName: 依据
+  evidence_events:
+    displayName: 支持事件
+views:
+  - type: table
+    name: 证据薄弱的事件（A 级）
+    order:
+      - file.name
+      - date
+      - person
+      - evidence_quality
+      - nature
+    filters:
+      and:
+        - 'type == "事件"'
+        - 'weak_evidence == true'
+    sort:
+      - property: date
+        direction: DESC
+  - type: table
+    name: 带反例 / 红线的结论
+    filters:
+      and:
+        - 'type == "结论"'
+        - 'has_counter == true'
+    order:
+      - file.name
+      - id
+      - status
+      - source
+  - type: table
+    name: 结论 · 依据不是事件（本人自述 / 方法论）
+    filters:
+      and:
+        - 'type == "结论"'
+        - 'link_method != "auto-idf"'
+    order:
+      - file.name
+      - id
+      - link_method
+      - status
+      - source

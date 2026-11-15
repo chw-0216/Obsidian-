@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>支付流打通 · 微信支付 × 美团提醒 · 2026-10-04</title>
+<style>
+  :root{
+    --bg:#f7f8fa; --card:#ffffff; --ink:#1a1d24; --sub:#5b6270; --line:#e6e9ef;
+    --accent:#2f6fed; --warn:#c0392b; --ok:#1e8e5a; --amber:#b8860b;
+    --soft:#f2f5fb;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+       font-family:-apple-system,"Segoe UI","Microsoft YaHei",sans-serif;
+       line-height:1.75;font-size:15px}
+  .wrap{max-width:920px;margin:0 auto;padding:40px 26px 80px}
+  header{border-bottom:3px solid var(--ink);padding-bottom:22px;margin-bottom:34px}
+  h1{font-size:27px;margin:0 0 8px;letter-spacing:-.4px}
+  .meta{color:var(--sub);font-size:13px}
+  .tag{display:inline-block;background:var(--ink);color:#fff;font-size:11px;
+       padding:2px 9px;border-radius:10px;margin-right:6px;vertical-align:2px}
+  .tag.red{background:var(--warn)} .tag.ok{background:var(--ok)} .tag.blue{background:var(--accent)}
+  h2{font-size:19px;margin:44px 0 14px;padding-left:12px;border-left:5px solid var(--accent)}
+  h3{font-size:16px;margin:26px 0 10px;color:#242a35}
+  p{margin:10px 0}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;
+        padding:20px 22px;margin:16px 0}
+  .lead{background:var(--soft);border:1px solid #d8e2f7;border-left:5px solid var(--accent);
+        border-radius:10px;padding:18px 22px;margin:20px 0}
+  .lead b{color:var(--accent)}
+  .danger{background:#fdf3f2;border:1px solid #f3d6d2;border-left:5px solid var(--warn);
+          border-radius:10px;padding:16px 20px;margin:16px 0}
+  .ok{background:#f1faf5;border:1px solid #d3ecdf;border-left:5px solid var(--ok);
+      border-radius:10px;padding:16px 20px;margin:16px 0}
+  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:14px;
+        background:var(--card);border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  th{background:#eef2f9;text-align:left;padding:10px 12px;font-weight:600;font-size:13px;
+     color:#39404e;border-bottom:1px solid var(--line)}
+  td{padding:9px 12px;border-bottom:1px solid #f0f2f6;vertical-align:top}
+  tr:last-child td{border-bottom:none}
+  .num{text-align:right;font-variant-numeric:tabular-nums;font-family:ui-monospace,Consolas,monospace}
+  .hi{color:var(--warn);font-weight:700}
+  .mid{color:var(--amber);font-weight:600}
+  .good{color:var(--ok);font-weight:600}
+  code{background:#eef2f9;padding:1px 6px;border-radius:5px;font-size:13px;
+       font-family:ui-monospace,Consolas,monospace}
+  .quote{background:#fafbfd;border-left:3px solid #c9d4e8;padding:10px 16px;margin:12px 0;
+         font-size:14px;color:#333a47;border-radius:0 8px 8px 0}
+  ul,ol{padding-left:22px;margin:10px 0}
+  li{margin:6px 0}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px}
+  .kpi .v{font-size:22px;font-weight:700;letter-spacing:-.5px}
+  .kpi .l{font-size:12px;color:var(--sub);margin-top:2px}
+  .bar{height:8px;background:#e9eef7;border-radius:5px;overflow:hidden;margin-top:6px}
+  .bar i{display:block;height:100%;background:var(--accent);border-radius:5px}
+  .bar i.red{background:var(--warn)}
+  footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);
+         color:var(--sub);font-size:12.5px}
+  @media(max-width:640px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>支付流打通 · 微信支付 × 美团提醒</h1>
+  <div class="meta">
+    <span class="tag blue">能跑</span><span class="tag ok">已跑通</span><span class="tag red">仅本机</span><br>
+    生成于 2026-10-04 ｜ 数据源：微信内 5 个官方推送号 ｜ 全程本地只读
+  </div>
+</header>
+
+<div class="lead">
+  <b>结论先行：能跑到，而且已经跑通了。</b><br>
+  数据不用去外面找 —— 它就在你已经解密的索引库里，以「<b>微信支付</b>」「<b>美团钱包</b>」「<b>美团</b>」「<b>美团金融服务</b>」「<b>支付宝</b>」五个官方推送号的形式存在，
+  合计 <b>2,207 条</b>，时间 <b>2025-08-01 → 2026-10-04</b>。已提取成结构化流水表。
+</div>
+
+<h2>一、数据源盘点（全部已在库）</h2>
+<table>
+  <tr><th>推送号</th><th class="num">条数</th><th>时间范围</th><th>能提供什么</th></tr>
+  <tr><td><b>微信支付</b></td><td class="num">1,506</td><td>2025-08-01 → 2026-10-04</td><td>付款凭证、退款到账、零钱提现、转账/收款、先享后付、高速通行费</td></tr>
+  <tr><td><b>美团钱包</b></td><td class="num">385</td><td>2025-08-19 → 2026-10-04</td><td>支付成功（单号+金额+支付方式）、退款、月付账单提醒</td></tr>
+  <tr><td><b>美团</b></td><td class="num">147</td><td>2026-08-05 → 2026-10-04</td><td>还款提醒、扣款失败、订单取消、支付返利</td></tr>
+  <tr><td><b>美团金融服务</b></td><td class="num">63</td><td>2025-08-11 → 2026-10-04</td><td><b>交易成功（含商户名）</b>、月付额度变动、还款成功</td></tr>
+  <tr><td><b>支付宝</b></td><td class="num">106</td><td>2025-08-02 → 2026-09-30</td><td>支付宝侧通知</td></tr>
+</table>
+
+<div class="grid">
+  <div class="kpi"><div class="v">2,207</div><div class="l">结构化流水条数</div></div>
+  <div class="kpi"><div class="v">1,175</div><div class="l">可解析金额的支出笔</div></div>
+  <div class="kpi"><div class="v">¥79,846</div><div class="l">支出消息金额合计（含重复推送）</div></div>
+  <div class="kpi"><div class="v">15 个月</div><div class="l">覆盖 2025-08 → 2026-10</div></div>
+</div>
+
+<h2>二、两个边界（必须先说清楚，否则数字会被误读）</h2>
+
+<div class="danger">
+  <b>边界 1：起点是 2025-08-01，不是更早。</b><br>
+  公众号历史在微信侧只保留到 2025-08。2025-08 之前<b>没有</b>支付推送 —— 这不是「他没花钱」，是「数据不存在」。
+  和索引库「只有 2 年」是同一个原因，别重复踩。
+</div>
+
+<div class="danger">
+  <b>边界 2：微信支付推送 ≠ 完整账单。</b><br>
+  微信支付公众号只推<b>特定场景</b>：转账、收款、退款、部分商户支付。<br>
+  <b>扫码付款给个体户、线下小额、部分 App 内支付，多数不推。</b>
+  所以 1,175 笔不是「他的全部消费」，只是「被推送的那部分」。<br>
+  <span style="color:var(--sub)">另注：同一笔消费常被「微信支付」和「美团钱包」<b>各推一次</b>，所以金额合计是<b>消息金额之和</b>，不等于净支出。</span>
+</div>
+
+<h2>三、★ 四个此前完全空白的新发现</h2>
+
+<h3>发现 1｜美团月付债务线 —— 一条全新的负债轴</h3>
+<div class="quote">
+  <b>2026-08-25</b> 还款提醒：应还 <b>¥4,597.30</b> → 当天只还了 <b>¥1,500</b><br>
+  <b>2026-09-25 → 10-03</b> 连续 <b>6 天</b>还款提醒：应还 <b>¥2,311.99</b><br>
+  <b class="hi">2026-10-04 08:55 扣款失败提醒：「余额不足或其他未知原因」</b>
+</div>
+<p><b>额度轨迹</b>（美团月付授信额度，2026-09 一个月内提了 6 次）：</p>
+<table>
+  <tr><th>生效日</th><th class="num">变动前</th><th class="num">变动后</th></tr>
+  <tr><td>2026-09-03</td><td class="num">3,000</td><td class="num">3,400</td></tr>
+  <tr><td>2026-09-03</td><td class="num">3,400</td><td class="num">3,800</td></tr>
+  <tr><td>2026-09-04</td><td class="num">3,800</td><td class="num">4,200</td></tr>
+  <tr><td>2026-09-04</td><td class="num">4,200</td><td class="num">4,600</td></tr>
+  <tr><td>2026-09-07</td><td class="num">4,600</td><td class="num">5,100</td></tr>
+  <tr><td>2026-09-19</td><td class="num">5,100</td><td class="num"><b>5,500</b></td></tr>
+</table>
+<p class="hi">⚠️ 一个月内 6 次提额 + 还款只还三分之一 + 扣款失败「余额不足」 —— 这是「以贷养贷」的典型形态。
+这条线此前完全不在引擎里。</p>
+
+<h3>发现 2｜2026-08 支出暴增的真相 = 央美学费 ¥20,000</h3>
+<div class="quote">
+  <b>2026-08-27 17:55</b> filehelper：<code>2026年中央美术学院在校生缴费通知.pdf</code><br>
+  <b>2026-08-27 21:47</b> filehelper：<code>http://pay.cafa.edu.cn/payment/</code><br>
+  <b>2026-08-28 11:27</b> 母亲 → 他：<b>微信转账 ¥20,000</b><br>
+  <b>2026-08-28 11:28</b> 微信支付：<b>已支付 ¥20,000.00（零钱支付）</b><br>
+  <b>2026-08-28 11:46</b> 母亲「你有卡吗？」→ 12:10「你拿我卡去买吧」
+</div>
+<p>2026-08 支出 <b class="hi">¥28,417.66</b>，是月均（≈¥3,800）的 <b>7.5 倍</b>，其中这笔 2 万占 <b>70%</b>。</p>
+<div class="bar"><i class="red" style="width:70%"></i></div>
+<p style="font-size:13px;color:var(--sub)">2026-08 支出构成：央美学费 ¥20,000（70%）+ 美团月付还款 ¥1,500 + 其余零散 171 笔</p>
+<p><b>意义</b>：母亲两年转账 <b>389 笔 / ¥347,550</b> 里最大的一笔就是这笔学费。
+之前只知道「母亲给钱」，现在知道<b>钱去哪了</b> —— 而且这条链有 PDF 缴费通知 + 缴费网址做铁证。</p>
+
+<h3>发现 3｜云南线铁证 —— 他 9 月初真的去了云南</h3>
+<div class="quote">
+  <b>2026-09-04</b> 美团月付交易：<b>普洱站 → 昆明南站 ¥172.00</b><br>
+  <b>2026-09-04</b> 美团月付交易：<b>昆明站 → 石家庄站 ¥293.50</b>
+</div>
+<p>普洱 = <b>澜沧</b>所在市。这直接回答了此前悬空的问题「<b>云南澜沧是「想去」还是「被要求」</b>」——
+<b class="good">他确实去了</b>（2026-09-04 从普洱返程）。这是行程层面的硬证据，不再是推测。</p>
+
+<h3>发现 4｜车证线 —— 车在真实使用中</h3>
+<div class="quote">
+  <b>2026-08-22 16:55</b> 微信支付：<code>已扣费¥88.00 扣费项目微信支付高速通行费 车牌号码京ACP0263</code>
+</div>
+<p>与车定案（极狐 αT5 · <b>京 A·CP0263</b>）完全对齐 —— 这是「车归他开」的<b>第三方物证</b>，
+比聊天里的话更硬。可继续用「高速通行费 + 车牌」拉出他的行车轨迹。</p>
+
+<h2>四、逐月支出（消息金额，含重复推送）</h2>
+<table>
+  <tr><th>月份</th><th class="num">条数</th><th class="num">支出金额</th><th>说明</th></tr>
+  <tr><td>2025-08</td><td class="num">65</td><td class="num">¥582.88</td><td>起点月（只覆盖月末）</td></tr>
+  <tr><td>2025-09</td><td class="num">101</td><td class="num">¥4,493.70</td><td></td></tr>
+  <tr><td>2025-10</td><td class="num">133</td><td class="num">¥8,610.58</td><td>含单笔 ¥4,000 + ¥1,000</td></tr>
+  <tr><td>2025-11</td><td class="num">96</td><td class="num">¥3,470.54</td><td></td></tr>
+  <tr><td>2025-12</td><td class="num">144</td><td class="num">¥2,199.75</td><td>买车方案定型月</td></tr>
+  <tr><td>2026-01</td><td class="num">115</td><td class="num">¥2,336.14</td><td></td></tr>
+  <tr><td>2026-02</td><td class="num">76</td><td class="num">¥1,256.89</td><td>最低月</td></tr>
+  <tr><td>2026-03</td><td class="num">150</td><td class="num">¥6,340.01</td><td>含单笔 ¥3,726.65</td></tr>
+  <tr><td>2026-04</td><td class="num">139</td><td class="num">¥1,849.44</td><td></td></tr>
+  <tr><td>2026-05</td><td class="num">229</td><td class="num">¥5,958.04</td><td>提车月</td></tr>
+  <tr><td>2026-06</td><td class="num">107</td><td class="num">¥1,501.53</td><td></td></tr>
+  <tr><td>2026-07</td><td class="num">147</td><td class="num">¥2,142.36</td><td></td></tr>
+  <tr><td><b>2026-08</b></td><td class="num">295</td><td class="num hi">¥28,417.66</td><td><b>峰值 · 央美学费 ¥20,000</b></td></tr>
+  <tr><td>2026-09</td><td class="num">363</td><td class="num">¥7,182.15</td><td>条数最高（云南行 + 月付）</td></tr>
+  <tr><td>2026-10</td><td class="num">47</td><td class="num">¥3,504.43</td><td>截至 10-04</td></tr>
+</table>
+
+<h2>五、怎么把缺口补上（完整账单）</h2>
+<p>微信内推送只是子集。<b>要完整账单，需要你自己在手机里导出一次</b>，我再解析：</p>
+
+<div class="card">
+  <h3 style="margin-top:0">① 微信支付账单（最重要 · 含每笔商户名）</h3>
+  <ol>
+    <li>微信 → <b>我</b> → <b>服务</b> → <b>钱包</b> → 右上角 <b>账单</b></li>
+    <li>右上角 <b>常见问题</b> → <b>下载账单</b> → <b>用于个人对账</b></li>
+    <li>选时间范围（最长可选 1 年，建议分两次：2024-11~2025-10、2025-10~2026-10）</li>
+    <li>填一个邮箱 → 微信会发一封<b>带解压密码</b>的通知，压缩包发到邮箱</li>
+    <li>把解压出的 <code>.csv</code> 放到桌面文件夹，告诉我路径 → 我解析并入事件库</li>
+  </ol>
+  <p style="color:var(--sub);font-size:13px;margin-bottom:0">
+  产出字段：交易时间 / 交易类型 / 交易对方 / 商品 / 收/支 / 金额 / 支付方式 / 当前状态 —— <b>这是真正的全量</b>。</p>
+</div>
+
+<div class="card">
+  <h3 style="margin-top:0">② 美团账单</h3>
+  <ol>
+    <li>美团 App → <b>我的</b> → <b>钱包</b>（或「美团月付」）→ <b>账单</b> → 右上角<b>账单导出</b></li>
+    <li>或「美团月付」→ 账单详情 → 可逐月截图/导出</li>
+    <li>导出文件给我 → 我并进来</li>
+  </ol>
+</div>
+
+<div class="card">
+  <h3 style="margin-top:0">③ 支付宝账单</h3>
+  <ol>
+    <li>支付宝 → <b>我的</b> → <b>账单</b> → 右上角 <b>…</b> → <b>开具交易流水证明</b> → 用于个人对账</li>
+    <li>邮箱收加密压缩包（密码在支付宝通知里）</li>
+  </ol>
+</div>
+
+<div class="ok">
+  <b>为什么值得做：</b>微信推送只有 2,207 条且缺商户名；微信账单导出是<b>全量 + 每笔商户名</b>，
+  能把「消费结构」（吃/交通/购物/学习/人情）真正跑出来 —— 这是目前事件库里<b>唯一还缺的一块</b>。
+</div>
+
+<h2>六、已落盘</h2>
+<table>
+  <tr><th>产出</th><th>路径</th></tr>
+  <tr><td>结构化流水 CSV</td><td><code>_tmp\payment_flow.csv</code>（2,207 条 · 8 列）</td></tr>
+  <tr><td>统计摘要</td><td><code>_tmp\payment_flow_stats.txt</code></td></tr>
+  <tr><td>提取脚本（只读）</td><td><code>tools\extract_payment_flow.py</code></td></tr>
+  <tr><td>本报告</td><td><code>支付流打通_微信支付与美团_2026-10-04.html</code></td></tr>
+</table>
+
+<div class="danger">
+  <b>红线</b>：本报告含真人姓名与金额，<b>仅本机留存，不得外传</b>。
+  所有数据库访问均为 <code>mode=ro</code>（只读），未修改任何原始数据。
+</div>
+
+<footer>
+  数据源：微信本地索引库（全本地解密）｜ 5 个官方推送号 ｜ 只读提取<br>
+  生成：2026-10-04 ｜ 本页含敏感信息，仅本机
+</footer>
+
+</div>
+</body>
+</html>

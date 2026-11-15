@@ -1,0 +1,51 @@
+---
+type: 事件
+id: "EVT-UNDATED-014"
+date: 
+level: "A"
+nature: "已发生"
+person: "程大事"
+review_status: "待核实"
+load_self: ""
+evidence_quality: "无"
+need_confirm: true
+weak_evidence: true
+action: false
+historical_plan: false
+support_review: 待核验
+source_audit: "无消息定位:1"
+msg_count: 1
+source: "B·画像事件"
+updated: ""
+tags:
+  - 分析/事件
+---
+# EVT-UNDATED-014 · 日期不明
+
+**事件**：程大事报名聚会，但名额已满，我方告知并建议下次活动
+
+| 项 | 值 |
+|---|---|
+| 层级 | A |
+| 性质 | 已发生 |
+| 对话人 | 程大事 |
+| 距离 / 关系 | 未标定 / — |
+| 涉及人 | — |
+| 条数 | 1 |
+| 规则评分 | 低（8）　← 机器规则，非本人感受 |
+| 来源 | B·画像事件 |
+| 原文定位等级（旧 evidence_quality） | **无**；不等于论断已获支持 |
+| 来源审计 | 无消息定位:1；语义支持仍需复核 |
+
+**影响**：中性
+
+## 我的批注（在 frontmatter 里改，别改上面的机器字段）
+
+| 项 | 当前值 | 可填 |
+|---|---|---|
+| `review_status` | 待核实 | 待核实 / 已核实 / 已修正 / 已撤回 |
+| `load_self` | — | 自由文本（你当时的真实感受） |
+
+---
+
+回查：`python tools\trace.py EVT-UNDATED-014`　｜　run_id `REBUILD-20261013`

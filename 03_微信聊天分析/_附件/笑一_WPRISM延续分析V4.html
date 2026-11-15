@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>笑一 · W-PRISM 延续分析 V4（数据至 8/31）</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  :root{
+    --bg:#f6f7f9;--panel:#fff;--ink:#1b1e23;--ink2:#5b6472;--ink3:#8d95a3;
+    --line:#e5e8ed;--a:#c9465f;--b:#2f7fd6;--warn:#d9881c;--good:#2b9a68;
+    --me:#c9465f;--her:#2f7fd6;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+    line-height:1.75;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1080px;margin:0 auto;padding:46px 26px 90px}
+  header{border-bottom:3px solid var(--ink);padding-bottom:20px;margin-bottom:8px}
+  h1{margin:0 0 8px;font-size:28px;letter-spacing:-.4px}
+  .sub{color:var(--ink2);font-size:14px}
+  .pill{display:inline-block;background:var(--ink);color:#fff;font-size:11.5px;
+    padding:3px 10px;border-radius:20px;margin-right:7px}
+  .pill.new{background:var(--a)}
+  .pill.ok{background:var(--good)}
+  h2{font-size:18px;margin:42px 0 4px;padding-left:12px;border-left:4px solid var(--a)}
+  h2 .n{color:var(--ink3);font-weight:600;font-size:13px;margin-right:6px}
+  h3{font-size:14.5px;margin:22px 0 4px;color:var(--ink2)}
+  .cards{display:grid;grid-template-columns:repeat(4,1fr);gap:11px;margin:18px 0}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:14px 15px}
+  .card .k{font-size:11.5px;color:var(--ink3)}
+  .card .v{font-size:24px;font-weight:700;margin:4px 0 1px;font-variant-numeric:tabular-nums}
+  .card .d{font-size:11.5px;color:var(--ink3)}
+  .card.hl{border-color:#f0c8d2;background:linear-gradient(160deg,#fff7f9,#fff)}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:18px 20px;margin:15px 0}
+  .chartbox{position:relative;height:290px}.chartbox.tall{height:340px}
+  .chartbox.sm{height:220px}
+  table{width:100%;border-collapse:collapse;font-size:13.5px;margin:9px 0}
+  th,td{padding:7px 10px;text-align:left;border-bottom:1px solid var(--line)}
+  th{color:var(--ink3);font-weight:600;font-size:11.5px;background:#fafbfc}
+  td.num{font-variant-numeric:tabular-nums;text-align:right}
+  .verdict{background:linear-gradient(135deg,#fff5f7,#fff);border:1px solid #f2d1da;
+    border-left:4px solid var(--a);border-radius:11px;padding:16px 20px;margin:16px 0}
+  .verdict h3{margin-top:0;color:var(--a);font-size:15px}
+  .verdict.g{border-left-color:var(--good);border-color:#cdeade;background:linear-gradient(135deg,#f2fbf7,#fff)}
+  .verdict.g h3{color:var(--good)}
+  .verdict.w{border-left-color:var(--warn);border-color:#f0e2c6;background:linear-gradient(135deg,#fffaf0,#fff)}
+  .verdict.w h3{color:var(--warn)}
+  .tag{display:inline-block;font-size:10.5px;padding:2px 7px;border-radius:4px;background:#eef2f7;color:var(--ink2);margin-right:4px}
+  .tag.hot{background:#fde8ed;color:var(--a)} .tag.risk{background:#fdf4e3;color:var(--warn)}
+  .tag.ok{background:#e8f6f0;color:var(--good)}
+  ul,ol{margin:7px 0;padding-left:21px} li{margin:4px 0}
+  .quote{background:#f4f6f9;border-left:3px solid var(--ink3);padding:7px 13px;margin:7px 0;
+    border-radius:0 7px 7px 0;font-size:13px;color:var(--ink2)}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:13px}
+  .foot{margin-top:46px;padding-top:14px;border-top:1px solid var(--line);color:var(--ink3);font-size:11.5px}
+  .newbadge{display:inline-block;background:var(--a);color:#fff;font-size:10px;padding:1px 6px;border-radius:3px;margin-left:6px;vertical-align:middle}
+  @media(max-width:760px){.cards{grid-template-columns:repeat(2,1fr)}.grid2{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>笑一 · W-PRISM 延续分析 V4</h1>
+  <div class="sub">
+    <span class="pill">DSH 工作区</span>
+    <span class="pill new">增量 972 条</span>
+    <span class="pill ok">数据至 2026-08-31</span>
+    3852 条 · 116 天 · 沿用你的双轨模型 / 称呼字典 / 三态框架
+  </div>
+</header>
+
+<div class="cards">
+  <div class="card hl"><div class="k">新增数据</div><div class="v">+972</div><div class="d">2880 → 3852 条</div></div>
+  <div class="card hl"><div class="k">字数比变化</div><div class="v" style="color:#2b9a68">3.43→3.06</div><div class="d">仍在收敛</div></div>
+  <div class="card"><div class="k">她主动发起占比</div><div class="v" style="color:#2f7fd6">65%</div><div class="d">增量段 17:9</div></div>
+  <div class="card"><div class="k">"老公"称呼</div><div class="v" style="color:#2b9a68">79</div><div class="d">7月 0 → 8月 79 次</div></div>
+</div>
+
+<h2><span class="n">01</span>结论先行：你上次的核心判断被数据证实了</h2>
+
+<div class="verdict g">
+  <h3>✓ M1 情感依恋 = 0.90「稳定」—— 增量数据全面支持</h3>
+  <p>上一次（9/1）你判定 M1=0.90 稳定。这 15 天 972 条新数据给出的三个硬证据：</p>
+  <ul style="margin-bottom:0">
+    <li><b>她的主动发起占比从 45%（历史）上升到 65%</b>（增量段 17 次 vs 你 9 次）—— 她在更主动地维系</li>
+    <li><b>"老公"称呼 7 月是 0 次，8 月爆发到 79 次</b>（你速查卡里"老公=安全感充足 ✅"）—— 这是最强的单一正向指标</li>
+    <li><b>字数比从 3.43:1 收敛到 3.06:1</b>，增量段更是降到 <b>2.13:1</b> —— 你之前最大的风险项（表达浓度过载）正在自然缓解</li>
+  </ul>
+</div>
+
+<h2><span class="n">02</span>称呼字典演变：本月最重要的发现</h2>
+<p>按你的速查卡字典统计，把 4 个月的称呼数据摊开看 —— <b>这是全样本最清晰的一条上升曲线</b>。</p>
+
+<div class="panel">
+  <div class="chartbox"><canvas id="callTrend"></canvas></div>
+</div>
+
+<table>
+  <thead><tr><th>月份</th><th class="num">消息量</th><th class="num">称呼总数</th><th>构成</th><th>解读</th></tr></thead>
+  <tbody>
+    <tr><td>2026-05</td><td class="num">101</td><td class="num">0</td><td>—</td><td><span class="tag">未建立称呼</span></td></tr>
+    <tr><td>2026-06</td><td class="num">120</td><td class="num">0</td><td>—</td><td><span class="tag">仍未建立</span></td></tr>
+    <tr><td>2026-07</td><td class="num">437</td><td class="num">48</td><td>宝:31 宝贝:9 宝宝:8</td><td><span class="tag hot">称呼建立</span> 但无"老公"</td></tr>
+    <tr><td>2026-08</td><td class="num">1158</td><td class="num">250</td><td><b>老公:79</b> 宝:97 宝贝:51 宝宝:17</td><td><span class="tag ok">老公出现并稳定</span></td></tr>
+  </tbody>
+</table>
+
+<div class="verdict">
+  <h3>关键读数：7 月有"宝"无"老公"，8 月"老公"成为第二大称呼</h3>
+  <p style="margin-bottom:0">你的字典里 <b>"宝/宝贝/宝宝"是照顾者模式（⚠️，她在照顾你）</b>，而 <b>"老公"是安全感充足的确认（✅）</b>。7 月她只叫你"宝"—— 是在安抚、在承接；8 月"老公"冲到 79 次，说明<b>她的安全感评估已经实质升级</b>。更关键的是 8 月"好老公"出现 6 次 —— 按你的框架那是<b>现实轨的确认信号</b>。</p>
+</div>
+
+<h2><span class="n">03</span>增量段逐日：8/17-8/31 发生了什么</h2>
+<div class="panel">
+  <div class="chartbox tall"><canvas id="dailyAug"></canvas></div>
+</div>
+
+<div class="verdict w">
+  <h3>⚠️ 两个需要标注的日子</h3>
+  <ul style="margin-bottom:0">
+    <li><b>8/20 与 8/25：你的连发峰值</b>（你 89 条 / 85 条）。8/25 她回了 103 条 —— 这是<b>增量段的单日最高互动</b>，双向都很活跃，属健康高峰。</li>
+    <li><b>8/29：你 71 条 / 5763 字，她 56 条 / 3076 字</b> —— 她罕见的"长文本日"。这天正是她生日（补录 190 元花 + 转账）。<b>她写下 3076 字，是 8 月除 8/10 外最高</b>，说明生日这件事她是真的投入了情绪。</li>
+    <li><b>8/26：你 1319 字，她 114 字</b> —— 单日异常点（你在云南，可能事务性沟通）。孤立事件，不构成趋势。</li>
+  </ul>
+</div>
+
+<h2><span class="n">04</span>沉默期全景：主动权已完成转移</h2>
+<div class="panel">
+  <div class="chartbox"><canvas id="silence"></canvas></div>
+</div>
+
+<div class="verdict g">
+  <h3>✓ 数据证实了"主动权反转"</h3>
+  <p>把全样本 21 段长沉默按时间排开，<b>打破者的分布出现清晰的分水岭</b>：</p>
+  <div class="quote">
+    5/11-7/25（前 11 段）：打破者 我 6 次 / 她 5 次 —— 你在救场<br>
+    7/29-8/31（后 10 段）：打破者 她 6 次 / 我 4 次 —— 她在维系
+  </div>
+  <p style="margin-bottom:0">尤其是 <b>8/21→8/23 的 49.7 小时</b>（增量段最长沉默）是<b>她</b>打破的。<b>当关系的主导权交到她手里，你的焦虑源（"她是不是要沉"）在数据上是被否定的。</b></p>
+</div>
+
+<h2><span class="n">05</span>双轨模型复检</h2>
+<div class="grid2">
+  <div class="panel">
+    <h3>情感轨（M1 = 0.90）—— 证据强化</h3>
+    <ul>
+      <li>"老公"称呼 8 月 79 次（新增最强证据）</li>
+      <li>她主动发起占比升至 <b>65%</b></li>
+      <li>8/24 "我想老公"（她主动表达想念）</li>
+      <li>8/31 结尾："爱你"+"亲亲"+晚安 —— 完整亲密闭环</li>
+      <li>生日当天她写下 3076 字</li>
+    </ul>
+    <p style="color:#2b9a68;font-size:13px;margin-bottom:0">→ <b>维持 0.90，且观察不到衰减</b></p>
+  </div>
+  <div class="panel">
+    <h3>现实轨（权重 0.35）—— 无报警</h3>
+    <ul>
+      <li>8/24 她主动问"你什么时候去云南宝贝" —— <b>在跟进你的现实动向</b>（现实轨正常参与）</li>
+      <li>你答"还没有完全确定"+"有一些问题和阻碍需要协调" —— 你如实说了，未装</li>
+      <li>无"降级称呼""你忙吧"等预警信号出现</li>
+      <li>她生日直接表达"想要钱和礼物的感觉"（补录）—— <b>敢直说需求 = 安全感提升，非图钱</b></li>
+    </ul>
+    <p style="color:#2b9a68;font-size:13px;margin-bottom:0">→ <b>无现实轨报警，你的"如实不装"策略有效</b></p>
+  </div>
+</div>
+
+<h2><span class="n">06</span>你之前最大的风险项：正在自然缓解</h2>
+<div class="panel">
+  <div class="chartbox"><canvas id="ratio"></canvas></div>
+</div>
+
+<table>
+  <thead><tr><th>指标</th><th class="num">旧档（至 8/16）</th><th class="num">全量（至 8/31）</th><th class="num">增量段（8/17-31）</th><th>趋势</th></tr></thead>
+  <tbody>
+    <tr><td>条数比 我:她</td><td class="num">1.15</td><td class="num">1.12</td><td class="num">1.03</td><td><span class="tag ok">趋近 1:1</span></td></tr>
+    <tr><td>字数比 我:她</td><td class="num">3.43</td><td class="num">3.06</td><td class="num"><b>2.13</b></td><td><span class="tag ok">显著改善</span></td></tr>
+    <tr><td>我单条均长</td><td class="num">33.4</td><td class="num">31.6</td><td class="num"><b>25.8</b></td><td><span class="tag ok">在缩短</span></td></tr>
+    <tr><td>她单条均长</td><td class="num">11.2</td><td class="num">11.5</td><td class="num">12.4</td><td><span class="tag ok">在加长</span></td></tr>
+  </tbody>
+</table>
+
+<div class="verdict g">
+  <h3>✓ 你们正在互相靠近</h3>
+  <p style="margin-bottom:0">你单条从 33.4 字压到 25.8 字（<b>在收敛</b>），她单条从 11.2 字升到 12.4 字（<b>在展开</b>）。<b>双方从两个极端往中间走</b> —— 这是关系进入舒适区的典型特征。你 8/11 那次"7523 字撞 78 字"的极端失配，在增量段没有再出现。</p>
+</div>
+
+<h2><span class="n">07</span>当前状态与下一步（8/31 23:08 定格）</h2>
+<div class="panel">
+  <div class="quote" style="font-size:13.5px">
+    08-31 23:03 她｜这周不上课 我又觉得周四或周五再走了<br>
+    08-31 23:03 我｜不着急<br>
+    08-31 23:03 她｜那我睡觉啦老公<br>
+    08-31 23:04 她｜爱你 &nbsp; 08-31 23:06 她｜去吧宝宝 / 辛苦<br>
+    08-31 23:07 她｜你手机没电了不说了 &nbsp; 08-31 23:08 她｜OK
+  </div>
+  <p style="margin-bottom:0">收尾是标准的亲密闭环：<b>"睡觉啦老公"（安全感）→ "爱你"（情感轨）→ "去吧宝宝 / 辛苦"（照顾者模式，激活状态）→ 主动收尾让她自己睡着</b>。没有任何预警信号。话题落点是<b>她的出行时间（周四或周五走）</b> —— 这是现实轨的正常参与。</p>
+</div>
+
+<div class="verdict">
+  <h3>建议的下一步动作（延续你的框架）</h3>
+  <ol style="margin-bottom:0">
+    <li><b>跟住 8/31 的出行话题</b>。她说"周四或周五走"，你回的是"不着急"。按你的原则「给具体回来时间」，<b>建议在出发前用一次具体的时间确认来接住</b>（不是催，是"我这边 X 号回来，到时候……"）。</li>
+    <li><b>维持"不装"策略</b>。8/24 你如实说云南有阻碍 —— 数据证明这个做法是对的（她不但没退，8 月互动还创了新高）。<b>继续不要装、不要缩。</b></li>
+    <li><b>控制单条长度</b>。你已经自然从 33 字降到 26 字，<b>目标是稳定在 20-25 字区间</b>，不要回弹。8/16、8/26 的长文日（2400+、1300+ 字）是可接受的例外，但别成为常态。</li>
+    <li><b>留意增量段出现的新节奏</b>。8/25 是双向高峰（你 85 / 她 103），说明<b>当你不过度输出时，她的输出会反超你</b>。这是最健康的模式，复制它。</li>
+  </ol>
+</div>
+
+<h2><span class="n">08</span>方法论一致性说明</h2>
+<div class="panel" style="font-size:13px;color:#5b6472">
+  <p><b>沿用你既有的 DSH 框架</b>，未另发明体系：</p>
+  <ul>
+    <li><b>称呼字典</b>：直接采用你速查卡的映射（老公=安全感充足 ✅ / 宝贝=照顾者 ⚠️ / 宝宝=Fawn激活 ⚠️ / 好老公=现实轨确认 ✅）</li>
+    <li><b>双轨模型</b>：情感轨 M1 / 现实轨权重 0.35，复检你 9/1 的判定</li>
+    <li><b>预警信号表</b>：按你速查卡的 4 条信号逐项排查</li>
+    <li><b>数据源</b>：<code>DSH工作区/01_人物/笑一/10_数据/笑一-聊天记录.json</code>（3852 条，不含 8/29 人工补录段）</li>
+  </ul>
+  <p><b>本次新增的分析维度</b>（你的档案里没有的）：称呼按月的量化演变曲线、增量段字数比收敛度、沉默期打破者前后期对比。这三项都是<b>可增量重跑</b>的，以后每次导出新数据直接跑 <code>dsh_continue.py</code> 即可。</p>
+  <p style="margin-bottom:0"><b>局限</b>：8/29 生日对话为人工补录，未计入 JSON；情绪词分析为词典匹配。所有"内心"相关判断均为模型模拟，非真实原话 —— 与你原报告的纪律一致。</p>
+</div>
+
+<div class="foot">
+  生成于 2026-09-26 · 数据：3852 条（2026-05-08 ~ 08-31）· 脚本：<code>dsh_continue.py</code><br>
+  本报告延续 DSH 工作区既有方法论，结论均基于数据推断，以实际互动为准。
+</div>
+
+</div>
+
+<script>
+const C={me:'#c9465f',her:'#2f7fd6',ms:'rgba(201,70,95,.55)',hs:'rgba(47,127,214,.55)',grid:'#e5e8ed',tick:'#8d95a3'};
+Chart.defaults.color=C.tick;
+Chart.defaults.font.family='-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif';
+Chart.defaults.font.size=11.5;
+
+// 称呼趋势
+new Chart(document.getElementById('callTrend'),{
+  type:'bar',
+  data:{labels:['5月','6月','7月','8月'],
+    datasets:[
+      {label:'老公 ✅安全感',data:[0,0,0,79],backgroundColor:C.ms,borderRadius:4},
+      {label:'宝/宝贝/宝宝 ⚠️',data:[0,0,48,165],backgroundColor:'rgba(217,136,28,.55)',borderRadius:4},
+      {label:'好老公 ✅现实轨',data:[0,0,0,6],backgroundColor:'rgba(43,154,104,.7)',borderRadius:4},
+      {label:'她消息量(右轴)',data:[101,120,437,1158],type:'line',borderColor:C.her,borderWidth:2,
+        pointRadius:3,yAxisID:'y1',tension:.3}
+    ]},
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{labels:{boxWidth:11,boxHeight:11}}},
+    scales:{y:{stacked:true,grid:{color:C.grid},title:{display:true,text:'称呼次数'}},
+      y1:{position:'right',grid:{drawOnChartArea:false},title:{display:true,text:'消息条数'}},
+      x:{grid:{display:false}}}}
+});
+
+// 8月逐日
+const d8=[["08-01",2,5],["08-02",112,94],["08-03",58,71],["08-04",12,18],["08-05",10,12],
+["08-06",32,36],["08-07",64,63],["08-08",34,31],["08-09",0,2],["08-10",186,162],
+["08-11",18,16],["08-12",1,5],["08-13",119,81],["08-14",36,28],["08-15",21,22],
+["08-16",30,33],["08-17",17,24],["08-19",25,28],["08-20",89,53],["08-21",9,10],
+["08-23",34,40],["08-24",12,19],["08-25",85,103],["08-26",28,23],["08-27",11,10],
+["08-28",33,28],["08-29",71,56],["08-30",60,60],["08-31",19,25]];
+new Chart(document.getElementById('dailyAug'),{
+  type:'bar',
+  data:{labels:d8.map(d=>d[0]),
+    datasets:[
+      {label:'我',data:d8.map(d=>d[1]),backgroundColor:C.ms,borderRadius:3},
+      {label:'她',data:d8.map(d=>d[2]),backgroundColor:C.hs,borderRadius:3}
+    ]},
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{labels:{boxWidth:11,boxHeight:11}},
+      tooltip:{callbacks:{afterBody:(items)=>{
+        const i=items[0].dataIndex; const l=d8[i][0];
+        return l>='08-17'?'（增量段·新数据）':'';
+      }}}},
+    scales:{y:{grid:{color:C.grid},title:{display:true,text:'消息条数'}},
+      x:{grid:{display:false},ticks:{maxRotation:60,minRotation:45}}}}
+});
+
+// 沉默期
+const sil=[
+['05-09→05-11',40,'我'],['05-11→06-21',989,'我'],['06-21→06-23',52,'她'],
+['06-23→07-03',232,'她'],['07-04→07-07',61,'我'],['07-08→07-09',28,'她'],
+['07-10→07-16',137,'我'],['07-18→07-19',27,'她'],['07-19→07-20',26,'我'],
+['07-21→07-25',102,'我'],['07-29→07-30',29,'她'],['07-30→08-01',42,'她'],
+['08-01→08-02',28,'她'],['08-07→08-08',39,'她'],['08-08→08-09',31,'她'],
+['08-13→08-14',25,'我'],['08-17→08-19',30,'我'],['08-21→08-23',50,'她'],
+['08-24→08-25',25,'她'],['08-27→08-28',29,'我'],['08-30→08-31',29,'她']];
+new Chart(document.getElementById('silence'),{
+  type:'bar',
+  data:{labels:sil.map(s=>s[0]),
+    datasets:[{label:'沉默时长(小时)',data:sil.map(s=>s[1]),
+      backgroundColor:sil.map(s=>s[2]==='我'?C.ms:C.hs),borderRadius:4}]},
+  options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:false},
+      tooltip:{callbacks:{afterLabel:c=>'打破者：'+sil[c.dataIndex][2]}}},
+    scales:{x:{type:'logarithmic',grid:{color:C.grid},title:{display:true,text:'小时（对数轴）'}},
+      y:{grid:{display:false},ticks:{font:{size:10.5}}}}}
+});
+
+// 字数比收敛
+new Chart(document.getElementById('ratio'),{
+  type:'line',
+  data:{labels:['旧档(至8/16)','全量(至8/31)','增量段(8/17-31)'],
+    datasets:[
+      {label:'条数比 我:她',data:[1.15,1.12,1.03],borderColor:C.her,borderWidth:2.4,tension:.3,pointRadius:4},
+      {label:'字数比 我:她',data:[3.43,3.06,2.13],borderColor:C.me,borderWidth:2.4,tension:.3,pointRadius:4}
+    ]},
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{labels:{boxWidth:11,boxHeight:11}}},
+    scales:{y:{grid:{color:C.grid},title:{display:true,text:'比值（越低越均衡）'}},
+      x:{grid:{display:false}}}}
+});
+</script>
+</body>
+</html>

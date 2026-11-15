@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>渠道与场景逆推 · 你是怎么加到这些人的 · 2026-10-04</title>
+<style>
+  :root{
+    --bg:#f7f8f7; --card:#ffffff; --line:#e3e6e3; --line2:#eef0ee;
+    --ink:#1c201d; --ink2:#5a625c; --ink3:#8b938d;
+    --teal:#1D9E75; --teal-bg:#eaf6f1;
+    --red:#c0392b; --red-bg:#fdeceb;
+    --amber:#b8860b; --amber-bg:#fdf6e3;
+    --blue:#2b4a9b; --blue-bg:#e8eefc;
+    --mono:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    font-size:15px; line-height:1.72; -webkit-font-smoothing:antialiased;}
+  .wrap{max-width:1000px; margin:0 auto; padding:56px 28px 96px}
+  header{border-bottom:2px solid var(--ink); padding-bottom:22px; margin-bottom:36px}
+  .kicker{font-size:12px; letter-spacing:.16em; color:var(--ink3); text-transform:uppercase; margin-bottom:10px}
+  h1{font-size:28px; line-height:1.3; margin:0 0 12px; font-weight:700; letter-spacing:-.01em}
+  .sub{color:var(--ink2); font-size:14px; margin:0}
+  h2{font-size:19px; margin:48px 0 16px; padding-left:12px; border-left:4px solid var(--teal); font-weight:700}
+  h3{font-size:15.5px; margin:26px 0 10px; font-weight:700}
+  p{margin:0 0 14px}
+  ul,ol{margin:0 0 14px; padding-left:22px}
+  li{margin:6px 0}
+  code{font-family:var(--mono); font-size:13px; background:#eef1ef; padding:1.5px 6px; border-radius:4px; color:#2c3a31}
+  .card{background:var(--card); border:1px solid var(--line); border-radius:10px; padding:22px 24px; margin:0 0 18px}
+  .verdict{background:var(--teal-bg); border:1px solid #bfe4d6; border-radius:10px; padding:22px 24px; margin:0 0 26px}
+  .verdict h3{margin-top:0; color:#116b4f}
+  .note{background:var(--amber-bg); border:1px solid #f0dfae; border-radius:10px; padding:18px 22px; margin:0 0 18px}
+  .note h4{margin-top:0; color:#8a6508}
+  .blue{background:var(--blue-bg); border:1px solid #c5d2f2; border-radius:10px; padding:18px 22px; margin:0 0 18px}
+  .blue h4{margin-top:0; color:#1f3a7d}
+  .red{background:var(--red-bg); border:1px solid #f2c9c4; border-radius:10px; padding:18px 22px; margin:0 0 18px}
+  .red h4{margin-top:0; color:#a93226}
+  table{width:100%; border-collapse:collapse; font-size:13px; margin:0 0 16px}
+  th,td{padding:8px 10px; border-bottom:1px solid var(--line2); text-align:left; vertical-align:top}
+  th{background:#f1f3f1; font-weight:600; font-size:12px; color:var(--ink2)}
+  td.n{text-align:center; font-variant-numeric:tabular-nums; font-family:var(--mono); font-size:12.5px; color:var(--ink3); width:32px}
+  td.num{text-align:right; font-variant-numeric:tabular-nums; font-family:var(--mono); font-size:12.5px}
+  .tag{display:inline-block; font-size:11px; padding:1px 7px; border-radius:20px; font-weight:600; white-space:nowrap}
+  .t-y{background:#fdeceb; color:#a93226}
+  .t-z{background:#fdf6e3; color:#8a6508}
+  .t-j{background:#e2f3ec; color:#116b4f}
+  .t-b{background:#e8eefc; color:#1f3a7d}
+  .t-g{background:#eef0ee; color:#5a625c}
+  .grid{display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin:0 0 24px}
+  .stat{background:var(--card); border:1px solid var(--line); border-radius:10px; padding:16px 18px; text-align:center}
+  .stat b{display:block; font-size:26px; font-weight:700; line-height:1.2; font-variant-numeric:tabular-nums}
+  .stat span{font-size:12.5px; color:var(--ink2)}
+  footer{margin-top:64px; padding-top:20px; border-top:1px solid var(--line); font-size:12.5px; color:var(--ink3)}
+  .q{font-family:var(--mono); font-size:11.5px; color:var(--ink3)}
+  .quote{background:#fafbfa; border-left:3px solid var(--line); padding:10px 14px; margin:8px 0; font-size:13.5px; color:#3a423c}
+  .flow{display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin:0 0 14px; font-size:13px}
+  .flow .node{background:#fff; border:1px solid var(--line); border-radius:6px; padding:5px 11px}
+  .flow .arw{color:var(--ink3)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="kicker">自我理解引擎 · 渠道与场景逆推</div>
+  <h1>你是怎么加到这些人的</h1>
+  <p class="sub">2026-10-04 · 群 = 渠道，群名 = 场景 · 1,004 私聊 ← 283 群 · 338 人可溯源</p>
+</header>
+
+<div class="verdict">
+  <h3>结论先行</h3>
+  <ol style="margin-bottom:0">
+    <li><b>你的关系有 1/3 能溯源到群</b>（338 / 1,004）。剩下的不是没渠道，是<b>没在群里发过言</b>或非群渠道。</li>
+    <li><b>你同时在 6 条人生赛道的群里</b>：考研 · 考编 · 留学/校友会 · 家教 · 求职 · 创业。
+      这不叫社交，叫<b>「多线下注」</b> —— 每条线都留着入口。</li>
+    <li><b>格拉斯哥校友会是你最大的人脉基础设施</b> —— 校友会 1–7 分群 + 活动群，Eloise / 🍬🍬 / Sīrius R / Darwin <b>全部</b>来自这里。</li>
+    <li><b>你最活跃的群不是学业群，是家教群</b>（Q&amp;L北京29家教老师群，<b>21,978 条</b>）—— 与「没有稳定收入」正好对上：<b>家教是你的现金流，不是你的兴趣</b>。</li>
+  </ol>
+</div>
+
+<div class="grid">
+  <div class="stat"><b>283</b><span>群</span></div>
+  <div class="stat"><b>338</b><span>可溯源私聊</span></div>
+  <div class="stat"><b>33.7%</b><span>溯源率</span></div>
+  <div class="stat"><b>6</b><span>并行人生赛道</span></div>
+</div>
+
+<h2>一、方法与你必须知道的三个限制</h2>
+
+<table>
+  <thead><tr><th>限制</th><th>说明</th></tr></thead>
+  <tbody>
+    <tr><td><b>只查得到「在群里发过言」的人</b></td><td>私聊对象的 wxid 要在群消息 sender 里出现才能匹配 → <b>查不到 ≠ 不是群渠道</b></td></tr>
+    <tr><td><b>「2024-11-10」是数据边界，不是入群日</b></td><td>大量群都显示从 2024-11-10 开始 —— 这是<b>导出起点</b>，<b>不得</b>读成「那天集中加了 30 个群」</td></tr>
+    <tr><td><b>群名 ≠ 群内容</b></td><td>群名是场景线索，但群里的实际关系仍需结合消息判断</td></tr>
+  </tbody>
+</table>
+
+<div class="note">
+  <h4>匹配口径</h4>
+  <p style="margin-bottom:0">群聊消息的 <code>sender</code> 是 wxid（124,694 / 180,921 条含 wxid，69%），
+  可与私聊 <code>talker</code> 直接匹配。1,004 个私聊中 <b>338 人</b>（33.7%）能在群里找到发言记录；
+  其中 <b>183 人只有 1 个共同群</b>，最多的一位有 <b>13 个共同群</b>。</p>
+</div>
+
+<h2>二、★ 渠道全景：六条人生赛道</h2>
+
+<p>把 283 个群按「事情」归堆，你的社交不是一张网，是<b>六条平行的赛道</b>：</p>
+
+<table>
+  <thead><tr><th>赛道</th><th>代表群（消息量）</th><th>活跃期</th><th>产出的人</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><b>① 家教 · 现金流</b></td>
+      <td><b>Q&amp;L北京29家教老师群</b>（21,978）· 载望升学吕品老师高报师特训7营（842）</td>
+      <td>2024-11 → <b>至今</b></td>
+      <td>家教同行 / 家长</td>
+    </tr>
+    <tr>
+      <td><b>② 考研 → 考编</b></td>
+      <td>25考研｜初试复试-A组（880）· 25考研｜人文素养 · <b>2025北京事业编备考群②</b>（827）</td>
+      <td>2024-11 → 2025-03<br>2025-05 → 2026-06</td>
+      <td>汪伊俊 · 舒泽林 · 王若彤</td>
+    </tr>
+    <tr>
+      <td><b>③ 格拉斯哥校友会</b></td>
+      <td>UoG休闲娱乐圈（9,479）· 格拉二手群❹（7,080）· UoG人工智能AI校友会（4,400）· 北京校友会 1–7</td>
+      <td>2024-11 → <b>至今</b></td>
+      <td><b>Eloise · 🍬🍬 · Sīrius R · Darwin</b></td>
+    </tr>
+    <tr>
+      <td><b>④ 央美研一 · 学业</b></td>
+      <td>花家地艺专25级硕博讨论群（4,024）· 25实验艺术硕士唠嗑群（3,264）· 9号楼东寝室长工作群（2,633）</td>
+      <td>2025-09 → 至今</td>
+      <td><b>薛伟东 · 李紫懿 · 笑一 · 陈昶文</b></td>
+    </tr>
+    <tr>
+      <td><b>⑤ 社会美育项目</b></td>
+      <td>科技美学筹备会务组（960）· 美乡实验 · 乡村美育工作日志 · 洞台村装置计划 · 长城乡村美育实验室</td>
+      <td>2025-09 → 至今</td>
+      <td>导师陈晔 + 项目伙伴</td>
+    </tr>
+    <tr>
+      <td><b>⑥ 入党 · 组织</b></td>
+      <td><b>2025-2026积极分子</b>（13 人产出）· 实验共青团总支（6）</td>
+      <td>2025-09 → 至今</td>
+      <td>陈昶文 · 汪伊俊（<b>＝票仓</b>）</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="blue">
+  <h4>★ 另有三条「生活侧」的赛道（同样在跑）</h4>
+  <ul style="margin-bottom:0">
+    <li><b>兴趣/泡妹</b>：2025灰斑马推理社（2,638 · 剧本杀）· <b>高颜高知引力圈2群</b>（2,262）· 星愿天文社（12,158）· 央美雪协</li>
+    <li><b>商业/搞钱</b>：吃一头内购粉丝49群牛排馆筹备（9,593）· Chái Pizza 柴披萨（5,891）· 中关村创坛（770）</li>
+    <li><b>家庭</b>：锦溪一家亲（3,565）· 0双榆树 · <b>蔡浩文 后续进展群</b> · 白露东21号楼—003网格</li>
+  </ul>
+</div>
+
+<h2>三、★ 群 → 私聊：哪些群真的「产出」了关系</h2>
+
+<p>按「该群里有多少个有实质互动（≥30 条）的私聊对象」排序：</p>
+
+<table>
+  <thead><tr><th class="n">#</th><th>群</th><th class="num">产出</th><th>性质</th></tr></thead>
+  <tbody>
+    <tr><td class="n">1</td><td><b>花家地艺专25级硕博讨论群</b></td><td class="num">32</td><td>央美研一主渠道</td></tr>
+    <tr><td class="n">2</td><td><b>2025级研究生实验艺术与科技艺术学</b></td><td class="num">31</td><td>本班官方群</td></tr>
+    <tr><td class="n">3</td><td>25实验艺术硕士唠嗑群</td><td class="num">26</td><td>同班非正式群</td></tr>
+    <tr><td class="n">4</td><td>2025研一工作坊</td><td class="num">23</td><td>课程</td></tr>
+    <tr><td class="n">5</td><td>SAE｜央美校友群</td><td class="num">19</td><td>学院校友</td></tr>
+    <tr><td class="n">6</td><td>2025年10月陈晔老师专业课群</td><td class="num">18</td><td><b>导师门下</b></td></tr>
+    <tr><td class="n">7</td><td>2025研一王郁洋课程群</td><td class="num">17</td><td>课程</td></tr>
+    <tr><td class="n">8</td><td><b>2025-2026积极分子</b></td><td class="num">13</td><td><b>入党票仓</b></td></tr>
+    <tr><td class="n">9</td><td>25考研｜人文素养 / 25考研｜初试复试-A组</td><td class="num">11 / 11</td><td>考研同期</td></tr>
+    <tr><td class="n">10</td><td>美乡实验 / 2025-2026学年艺术与文化</td><td class="num">9 / 9</td><td>美育项目</td></tr>
+    <tr><td class="n">11</td><td><b>格拉斯哥大学北京校友会 7 / 6</b></td><td class="num">8 / 8</td><td>校友会</td></tr>
+    <tr><td class="n">12</td><td><b>3.13晚7点七十六餐厅[慕田峪]包间</b></td><td class="num">8</td><td><b>线下聚餐</b></td></tr>
+    <tr><td class="n">13</td><td>3.20格拉北京校友</td><td class="num">8</td><td>线下活动</td></tr>
+    <tr><td class="n">14</td><td>锦溪一家亲</td><td class="num">6</td><td><b>家庭</b></td></tr>
+    <tr><td class="n">15</td><td>实验共青团总支</td><td class="num">6</td><td>组织</td></tr>
+  </tbody>
+</table>
+
+<div class="note">
+  <h4>★ 一个被忽略的渠道：线下聚餐群</h4>
+  <p style="margin-bottom:0">「<b>3.13晚7点七十六餐厅[慕田峪]包间</b>」（8 人）·「3.28周六晚7点同源斋【皎月】」（6）·
+  「4.7晚格大校友活动」（6）·「27日乔波活动群」（6）——
+  这类<b>用「日期 + 餐厅 + 包间」命名的群</b>，是<b>线下见面的临时群</b>。
+  它们产出关系的能力被严重低估：<b>一次饭局 ≈ 8 个私聊</b>。</p>
+</div>
+
+<h2>四、★ 四个具体场景的还原</h2>
+
+<h3>场景 A：格拉斯哥校友会 —— 你最大的人脉基础设施</h3>
+
+<div class="flow">
+  <span class="node">格拉斯哥大学北京校友会 1–7（7 个分群）</span><span class="arw">+</span>
+  <span class="node">2026 群 / GUBJ宣转群</span><span class="arw">+</span>
+  <span class="node">活动群（3.20 / 4.7 / 4.25舞会 / 高地运动会）</span><span class="arw">→</span>
+  <span class="node"><b>Eloise · 🍬🍬 · Sīrius R · Darwin</b></span>
+</div>
+
+<p>四人全部来自这个网络，且<b>共同群高度重叠</b>：
+<b>🍬🍬</b> 13 个共同群、<b>Sīrius R</b> 18 个、<b>Darwin</b> 20+ 个。
+这是一个<b>有组织、有活动、有宣发</b>的完整体系 —— 你不是「加了几个人」，你是<b>进入了一个组织</b>。</p>
+
+<div class="blue">
+  <h4>但注意：这条线的价值正在贬值</h4>
+  <p style="margin-bottom:0">Eloise 掉 96%（4099→156）· 🍬🍬 已断 150 天 · Darwin 2026-08 闹翻。
+  <b>四个人里，三个已经不在增长。</b> 校友会网络你还在（群还活跃到 2026-10），但<b>人没在维护</b>。</p>
+</div>
+
+<h3>场景 B：g4人小圈子 —— 舒泽林与王若彤的共同群完全一致</h3>
+
+<table>
+  <thead><tr><th>人</th><th>共同群</th></tr></thead>
+  <tbody>
+    <tr><td><b>舒泽林</b></td><td rowspan="2" style="vertical-align:middle"><code>一切顺利！</code> · <code>51644238531@chatroom</code> · <code>gay学现场</code></td></tr>
+    <tr><td><b>王若彤</b></td></tr>
+  </tbody>
+</table>
+
+<p>两人的共同群<b>一字不差</b> —— 这就是标签里「<b>g4人</b>」的实际载体。
+加上「二爷」这个称呼（舒泽林首句「二爷二爷」、王若彤问「二爷到哪儿了」）——
+<b>这是你唯一一个「有绰号」的圈子</b>。⚠️ 但王若彤已断 215 天。</p>
+
+<h3>场景 C：央美研一 —— 产出最多，但几乎不产生资产</h3>
+
+<p>花家地（32 人）+ 实验艺术（31）+ 唠嗑群（26）+ 工作坊（23）= <b>一个班的人几乎都在你私聊里</b>。</p>
+<p>但对照「29 人标定」的结论：<b>研一同学里「近」＝ 0，全部是「远」，关系功能是入党票仓</b>。
+→ <b>渠道密度 ≠ 关系深度。</b> 这是你人际结构里最典型的一个「高连接、低转化」区。</p>
+
+<h3>场景 D：家教群 —— 你最活跃的群，却是最不像「社交」的</h3>
+
+<p><b>Q&amp;L北京29家教老师群：21,978 条</b>，全库第一，从 2024-11 一直活跃到<b>今天</b>。</p>
+<p>结合「没有稳定收入」：家教是你<b>唯一的现金流来源</b>。
+你在这个群里花的时间，远超央美任何学业群 —— 但它<b>不产出人脉，只产出课时费</b>。</p>
+
+<h2>五、★ 五个新发现</h2>
+
+<table>
+  <thead><tr><th>发现</th><th>内容</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><b>1. 「多线下注」结构</b></td>
+      <td>你同时保留 <b>考研 / 考编 / 留学 / 家教 / 求职 / 创业</b> 六条赛道的群入口。
+        考编群一直活到 2026-06、求职群 2026-07 才建 —— <b>主赛道（央美）之外，你一直在铺退路</b>。</td>
+    </tr>
+    <tr>
+      <td><b>2. 线下聚餐群被低估</b></td>
+      <td>「日期+餐厅+包间」命名的临时群，一次饭局产出 ~8 个私聊。你的关系有相当一部分是<b>吃饭吃出来的</b>。</td>
+    </tr>
+    <tr>
+      <td><b>3. 家庭群的完整样貌</b></td>
+      <td>锦溪一家亲（3,565）· 0双榆树 · 白露东21号楼—003网格 · <b>「蔡浩文 后续进展群」</b>。
+        ⚠️ 最后这个群名值得注意 —— 是家人<b>为「你的事」专建的群</b>。<b>待你确认是什么事</b>。</td>
+    </tr>
+    <tr>
+      <td><b>4. 兴趣群全是「入口型」</b></td>
+      <td>剧本杀（灰斑马推理社）· 交友（高颜高知引力圈）· 滑雪（央美雪协）· 天文（星愿 12,158 条）——
+        与「剧本杀＝泡妹渠道」一致，<b>这些群的共同功能是「认识人」</b>。</td>
+    </tr>
+    <tr>
+      <td><b>5. 你的群名里有「规程」</b></td>
+      <td>延续既有结论：<code>四周内尽力恢复年纪前十，冲刺更好</code> 是唯一一条可执行自我指令。
+        本轮的群名里<b>没有再出现第二例</b> —— 进一步坐实它的唯一性。</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>六、待你确认的 4 个点</h2>
+
+<div class="red">
+  <h4>⚠️ 需要你裁定</h4>
+  <ol style="margin-bottom:0">
+    <li><b>「蔡浩文 后续进展群」</b>是什么事？（家人专为你建的群）</li>
+    <li><b>「一切顺利！」/「gay学现场」</b>—— g4人圈子的实际性质是什么？（是否就是高中同学圈）</li>
+    <li><b>考编（2025北京事业编备考群②）</b>你考过吗？还是只是备着？（关系到「多线下注」的判断）</li>
+    <li><b>「高颜高知引力圈2群」</b>是交友/相亲渠道吗？</li>
+  </ol>
+</div>
+
+<h2>七、落盘</h2>
+
+<table>
+  <thead><tr><th>文件</th><th>内容</th></tr></thead>
+  <tbody>
+    <tr><td><code>_tmp/group_channel.txt</code></td><td>338 人的「私聊 ↔ 共同群」明细 + 群产出排行</td></tr>
+    <tr><td><code>_tmp/group_span.txt</code></td><td>283 个群的消息量与活跃期</td></tr>
+    <tr><td><code>tools/probe_group_channel.py</code></td><td>渠道逆推脚本（只读索引库）</td></tr>
+  </tbody>
+</table>
+
+<footer>
+  自我理解引擎 · 渠道与场景逆推 ｜ 2026-10-04 ｜ 只覆盖「已核对会话」<br>
+  ⚠️ 数据边界 2024-11-10（导出起点，非入群日）｜ 全程本地，未出本机 ｜ 本报告含真人姓名与群名，<b>不得外传</b>
+</footer>
+
+</div>
+</body>
+</html>

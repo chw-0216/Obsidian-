@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>多轮交叉分析 · 八个源全跑通 · 2026-10-04</title>
+<style>
+  :root{
+    --bg:#f6f7f9; --card:#ffffff; --ink:#1c2530; --ink2:#4a5768; --ink3:#8a94a3;
+    --line:#e3e7ed; --accent:#1f4e79; --accent2:#2f7d6e; --warn:#b45309; --hot:#a33a3a;
+    --chip:#eef2f7;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+       font-family:"Microsoft YaHei","PingFang SC","Hiragino Sans GB",-apple-system,"Segoe UI",sans-serif;
+       line-height:1.72;font-size:15px}
+  .wrap{max-width:1080px;margin:0 auto;padding:40px 28px 80px}
+  header{border-bottom:2px solid var(--accent);padding-bottom:22px;margin-bottom:34px}
+  h1{font-size:27px;margin:0 0 10px;letter-spacing:-.3px}
+  .sub{color:var(--ink3);font-size:13.5px}
+  h2{font-size:20px;margin:44px 0 14px;padding-left:12px;border-left:4px solid var(--accent);line-height:1.3}
+  h3{font-size:16px;margin:26px 0 10px;color:var(--accent)}
+  p{margin:9px 0}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:20px 22px;margin:16px 0;
+        box-shadow:0 1px 2px rgba(20,30,50,.04)}
+  .lead{background:linear-gradient(180deg,#fbfcfd,#f3f6fa);border-left:4px solid var(--accent)}
+  table{width:100%;border-collapse:collapse;font-size:13.5px;margin:12px 0}
+  th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+  th{background:#f0f3f8;color:var(--ink2);font-weight:600;white-space:nowrap}
+  td.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+  tr:hover td{background:#fafbfd}
+  .k{font-weight:700;color:var(--accent)}
+  .hot{color:var(--hot);font-weight:700}
+  .warn{color:var(--warn);font-weight:700}
+  .ok{color:var(--accent2);font-weight:700}
+  .chip{display:inline-block;background:var(--chip);border-radius:20px;padding:2px 10px;font-size:12.5px;
+        color:var(--ink2);margin:2px 4px 2px 0}
+  .chip.r{background:#fdeaea;color:#a33a3a}
+  .chip.g{background:#e8f4f0;color:#2f7d6e}
+  .chip.b{background:#e9f0f8;color:#1f4e79}
+  ul{margin:8px 0 8px 4px;padding-left:20px}
+  li{margin:5px 0}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin:16px 0}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:9px;padding:14px 16px}
+  .stat .v{font-size:23px;font-weight:700;color:var(--accent);font-variant-numeric:tabular-nums}
+  .stat .l{font-size:12.5px;color:var(--ink3);margin-top:3px}
+  .note{font-size:12.5px;color:var(--ink3);margin-top:6px}
+  .divider{height:1px;background:var(--line);margin:34px 0}
+  .quote{border-left:3px solid #cbd5e1;padding-left:12px;color:var(--ink2);font-size:13.5px;margin:10px 0}
+  footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink3)}
+  .bar{display:inline-block;height:9px;background:var(--accent);border-radius:2px;vertical-align:middle}
+  .bar.g{background:var(--accent2)} .bar.h{background:var(--hot)} .bar.w{background:var(--warn)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>多轮交叉分析 · 八个源全跑通</h1>
+  <div class="sub">数据范围 2024-11-10 → 2026-10-04 ｜ 索引 388,550 条 / 1,802 会话 ｜ 本地只读，未出本机 ｜ 2026-10-04</div>
+</header>
+
+<div class="card lead">
+  <h3 style="margin-top:0">结论先行：七条贯通点</h3>
+  <ol style="margin:6px 0 0;padding-left:22px">
+    <li><b>八个源能对齐到同一个人身上</b> —— 建出 42,717 人 × 18 列的交叉主表。同时命中 6 个源只有 2 人：<b>刘丽萍、舒泽林</b>。</li>
+    <li><b class="hot">「消息 0 条」不等于没关系</b> —— 朋友圈互动 115 人里，<b>65 人（57%）在消息库里是空的</b>；朋友圈动态 954 人里 <b>501 人（53%）消息为 0</b>。</li>
+    <li><b class="hot">机制找到了：索引库只有两年</b>（2024-11-10 起）。任何早于此的关系，消息量<b>必然被压为 0</b> —— 这就是「距离档推不出来」的第二重原因：<b>时间窗偏置</b>。</li>
+    <li><b>「桥」不等于强关系</b> —— 横跨 36 群的王钰，消息 0 条、朋友圈互动 0 次。106 个「桥」里绝大多数是首经贸本科同学院同学，只是「同群路过」。</li>
+    <li><b>赛道转化率差异极大</b> —— 入党群 19 人产出 16 个真人私聊（84%）；家教群 530 人只产出 <b>3 个真人私聊</b>（0.57%）、<b>0 个全维节点</b>。</li>
+    <li><b>朋友圈是独立的第二关系层</b> —— 朋友圈互动量与消息量<b>几乎正交</b>：刘丽萍 16,336 条 / 圈互 5，王雪纯 0 条 / 圈互 6。</li>
+    <li><b>「加我」31 条里唯一的真人 = 沐茜妍</b>，时间正是他 9-16 说「别联系了」的<b>次日 9-17 00:23</b>。</li>
+  </ol>
+</div>
+
+<h2>〇 · 方法：八个源对齐到一人一行</h2>
+<div class="card">
+  <p>把此前分散的 8 个数据源按 <code>wxid</code> / <code>contact.id</code> 对齐，合成一张主表。</p>
+  <table>
+    <tr><th>源</th><th>表</th><th>覆盖人数</th><th>说明</th></tr>
+    <tr><td>消息</td><td>index.sqlite · messages</td><td class="num">1,801</td><td>会话级统计：条数 / 活跃天 / 跨度 / 我发占比 / 最后消息</td></tr>
+    <tr><td>身份</td><td>contact.db · contact</td><td class="num">42,708</td><td>备注 / 昵称 / local_type</td></tr>
+    <tr><td>社交拓扑</td><td>contact.db · chatroom_member</td><td class="num">37,377</td><td>共同群数（SELF = id 3641，横跨 702 群）</td></tr>
+    <tr><td>好友申请</td><td>general.db · FMessageTable</td><td class="num">31</td><td>谁加他</td></tr>
+    <tr><td>金钱</td><td>general.db · transferTable</td><td class="num">17</td><td>77 笔转账的对手方</td></tr>
+    <tr><td>语音</td><td>media_0.db · VoiceInfo</td><td class="num">222</td><td>2,486 条语音按会话聚合</td></tr>
+    <tr><td>朋友圈互动</td><td>sns.db · SnsMessage_tmp3</td><td class="num">115</td><td>谁给他点赞 / 评论（252 条）</td></tr>
+    <tr><td>朋友圈动态</td><td>sns.db · SnsTopItem_1</td><td class="num">954</td><td>他刷到的动态来源（7,436 条）</td></tr>
+  </table>
+  <div class="grid">
+    <div class="stat"><div class="v">42,717</div><div class="l">交叉主表人数</div></div>
+    <div class="stat"><div class="v">2</div><div class="l">命中 6 个源</div></div>
+    <div class="stat"><div class="v">12</div><div class="l">命中 5 个源</div></div>
+    <div class="stat"><div class="v">74</div><div class="l">命中 4 个源</div></div>
+    <div class="stat"><div class="v">37,737</div><div class="l">只命中 1 个源</div></div>
+  </div>
+  <p class="note">注：标签（52 个定义）只有定义表，<b>映射表不在解密库中</b>，本轮无法并入。群成员「并集人数」≠「他认识的人」，仅用于比较赛道。</p>
+</div>
+
+<h2>一 · 九条赛道：人越少越「任务化」，转化率越高</h2>
+<div class="card">
+  <p><b>转化率 = 真人私聊人数 ÷ 该赛道群成员并集人数</b>。这是本轮最锋利的指标。</p>
+  <table>
+    <tr><th>赛道</th><th class="num">群成员并集</th><th class="num">真人私聊</th><th class="num">转化率</th><th class="num">全维节点(≥4源)</th><th>代表群</th></tr>
+    <tr><td>⑥ 入党·组织</td><td class="num">19</td><td class="num">16</td><td class="num ok">84.2%</td><td class="num">7</td><td>2025-2026积极分子</td></tr>
+    <tr><td>家庭</td><td class="num">38</td><td class="num">11</td><td class="num ok">28.9%</td><td class="num">3</td><td>锦溪一家亲</td></tr>
+    <tr><td>② 考研→考编</td><td class="num">116</td><td class="num">19</td><td class="num">16.4%</td><td class="num">7</td><td>2025北京事业编备考群②</td></tr>
+    <tr><td>④ 央美研一·学业</td><td class="num">1,680</td><td class="num">110</td><td class="num">6.5%</td><td class="num hot">39</td><td>花家地艺专25级硕博讨论群</td></tr>
+    <tr><td>⑤ 社会美育</td><td class="num">591</td><td class="num">21</td><td class="num">3.6%</td><td class="num">11</td><td>美乡实验 / 洞台村装置计划</td></tr>
+    <tr><td>商业·店</td><td class="num">1,045</td><td class="num">17</td><td class="num">1.6%</td><td class="num">1</td><td>吃一头牛排馆 / Chái Pizza</td></tr>
+    <tr><td>③ 格拉斯哥校友</td><td class="num">10,598</td><td class="num">134</td><td class="num">1.3%</td><td class="num">16</td><td>格拉斯哥北京校友会 1–7</td></tr>
+    <tr><td>兴趣·社交</td><td class="num">2,208</td><td class="num">23</td><td class="num">1.0%</td><td class="num">4</td><td>星愿天文社 / 灰斑马推理社</td></tr>
+    <tr><td>① 家教·现金流</td><td class="num">530</td><td class="num hot">3</td><td class="num hot">0.57%</td><td class="num hot">0</td><td>Q&amp;L北京29家教老师群（21,978 条）</td></tr>
+  </table>
+  <p><b class="hot">家教赛道：全库最活跃的群，最不像社交的场。</b> 530 个同群成员，只产出 3 个真人私聊，0 个全维节点 —— 它只产出课时费，不产出关系。</p>
+  <p><b>入党赛道反向印证</b>：19 个人的小群，产出 16 个真人私聊、7 个全维节点 —— 功能是「票仓 + 组织关系」。</p>
+</div>
+
+<h2>二 · 「桥」不等于强关系</h2>
+<div class="card">
+  <p>横跨共同群 ≥12 的共 <b>106 人</b>。若只看「横跨群数」，会以为他们是超级连接者 —— 但看另外两列就崩了。</p>
+  <table>
+    <tr><th>人</th><th class="num">共同群</th><th class="num">消息</th><th class="num">朋友圈互动</th><th class="num">命中源数</th></tr>
+    <tr><td>王钰</td><td class="num">36</td><td class="num hot">0</td><td class="num hot">0</td><td class="num">1</td></tr>
+    <tr><td>谭瑶</td><td class="num">32</td><td class="num hot">0</td><td class="num hot">0</td><td class="num">1</td></tr>
+    <tr><td>任绍铭</td><td class="num">29</td><td class="num hot">0</td><td class="num hot">0</td><td class="num">1</td></tr>
+    <tr><td>程颂孟秋</td><td class="num">29</td><td class="num">353</td><td class="num">0</td><td class="num">3</td></tr>
+    <tr><td>金丽娜</td><td class="num">29</td><td class="num hot">0</td><td class="num">4</td><td class="num">2</td></tr>
+    <tr><td>汪伊俊</td><td class="num">24</td><td class="num">1,913</td><td class="num">0</td><td class="num">3</td></tr>
+    <tr><td>Sīrius R</td><td class="num">22</td><td class="num">1,237</td><td class="num">0</td><td class="num">3</td></tr>
+  </table>
+  <p><b>「桥」的真实身份 = 首经贸本科同学院/同年级的同学</b>（城院 / 17区经 / 首经贸黑市群）。他们横跨几十个群，只是因为<b>本科院系的群本来就多</b>，不是因为他和每个人都熟。</p>
+  <div class="quote">对照：真正的强关系共同群数反而低 —— 笑一 5 群、陈昶文 5 群、舒泽林 3 群。<b>唯一例外是导师（16 群）</b>，见第五节。</div>
+</div>
+
+<h2>三 · ★ 隐形层：65 个「消息 0 条，但朋友圈在互动」的人</h2>
+<div class="card">
+  <p>朋友圈互动共 115 人，其中 <b class="hot">65 人在消息库里完全没有记录</b>。看他们的共同群，答案很整齐。</p>
+  <table>
+    <tr><th>人</th><th class="num">朋友圈互动</th><th class="num">消息</th><th class="num">共同群</th><th>共同群名</th></tr>
+    <tr><td>王雪纯</td><td class="num">6</td><td class="num hot">0</td><td class="num">23</td><td>🎓2021届城院毕业生通知群</td></tr>
+    <tr><td>王瑞霖</td><td class="num">6</td><td class="num hot">0</td><td class="num">3</td><td>—</td></tr>
+    <tr><td>崔敖</td><td class="num">5</td><td class="num hot">0</td><td class="num">17</td><td>2021届城院 / 首经贸黑市20群</td></tr>
+    <tr><td>蓝色🔹</td><td class="num">5</td><td class="num hot">0</td><td class="num">15</td><td>🎓2021届城院毕业生通知群</td></tr>
+    <tr><td>佳丽</td><td class="num">5</td><td class="num hot">0</td><td class="num">11</td><td>2021届城院 / 首经贸黑市20群</td></tr>
+    <tr><td>何晓京</td><td class="num">4</td><td class="num hot">0</td><td class="num">12</td><td>🎓2021届城院毕业生通知群</td></tr>
+    <tr><td>王婧喆</td><td class="num">4</td><td class="num hot">0</td><td class="num">14</td><td>2021届城院 / 铁板烧友互助群</td></tr>
+    <tr><td>金丽娜</td><td class="num">4</td><td class="num hot">0</td><td class="num">29</td><td>17区经2班 / 2021届城院</td></tr>
+    <tr><td>付悦悦</td><td class="num">3</td><td class="num hot">0</td><td class="num">20</td><td>17区经2班</td></tr>
+    <tr><td>邱凡峻</td><td class="num">3</td><td class="num hot">0</td><td class="num">14</td><td>经贸约球⚽️群</td></tr>
+  </table>
+  <p><b>这批人 = 首经贸城市学院 2017 级本科同学（2021 届）</b>。他们的关系<b>只活在朋友圈</b>：不聊天，但互相点赞。</p>
+  <div class="grid">
+    <div class="stat"><div class="v">115</div><div class="l">朋友圈互动总人数</div></div>
+    <div class="stat"><div class="v hot">65</div><div class="l">其中消息为 0（57%）</div></div>
+    <div class="stat"><div class="v hot">501</div><div class="l">有朋友圈动态但消息为 0</div></div>
+    <div class="stat"><div class="v">50</div><div class="l">有消息且有朋友圈互动（2.8%）</div></div>
+  </div>
+</div>
+
+<h2>四 · ★★ 机制解释：索引库只有两年，历史关系被压平</h2>
+<div class="card">
+  <p>这一条把前面所有「为什么」串起来了。</p>
+  <table>
+    <tr><th>指标</th><th>值</th></tr>
+    <tr><td>索引库消息时间范围</td><td><b class="hot">2024-11-10 → 2026-10-04（约 2 年）</b></td></tr>
+    <tr><td>按年消息量</td><td>2024 年 17,882 条 ｜ 2025 年 183,334 条 ｜ 2026 年 187,334 条</td></tr>
+    <tr><td>按年会话数</td><td>2024 年 158 ｜ 2025 年 1,135 ｜ 2026 年 1,327</td></tr>
+  </table>
+  <p><b>推论链</b>：</p>
+  <ul>
+    <li>2024-11 之前的关系（本科同学、早期实习同事）→ <b>消息量必然 = 0</b>，不是「没聊过」。</li>
+    <li>预标定只看近两年消息行为 → <b>系统性地把 2021 年前的关系判为「远」</b>。</li>
+    <li>所以「距离档推不出来」有<b>两重原因</b>：① 行为 ↛ 关系性质（此前已知）；② <b class="hot">数据窗口只有 2 年，历史关系被压平（本轮新增）</b>。</li>
+  </ul>
+  <p class="note">可证伪点：若你能确认「本科同学近两年确实没私聊过」，则本条成立；若你记得近两年聊过而库里没有，则是数据缺口而非时间窗偏置。</p>
+</div>
+
+<h2>五 · 朋友圈是独立的第二关系层</h2>
+<div class="card">
+  <p>把「消息量」和「朋友圈互动量」并排看，两者<b>几乎不相关</b>。</p>
+  <table>
+    <tr><th>人</th><th class="num">朋友圈互动</th><th class="num">消息</th><th>读法</th></tr>
+    <tr><td>王雪纯</td><td class="num">6</td><td class="num hot">0</td><td>只活在朋友圈</td></tr>
+    <tr><td>崔敖</td><td class="num">5</td><td class="num hot">0</td><td>只活在朋友圈</td></tr>
+    <tr><td>火山雪0号</td><td class="num hot">8</td><td class="num">62</td><td>互动最多，消息极少</td></tr>
+    <tr><td>李子轩</td><td class="num hot">8</td><td class="num">84</td><td>互动最多，消息极少</td></tr>
+    <tr><td>王博</td><td class="num">4</td><td class="num">150</td><td>美育项目协作者</td></tr>
+    <tr><td>陈昶文</td><td class="num">5</td><td class="num">6,275</td><td>双高</td></tr>
+    <tr><td>刘丽萍</td><td class="num">5</td><td class="num">16,336</td><td>双高</td></tr>
+  </table>
+  <p><b>朋友圈互动量 = 第二把尺子</b>，与消息量正交。此前所有基于消息量的判断，都缺这一维。</p>
+  <p class="note">限制：SnsMessage_tmp3 仅 252 条、时间集中在 2025-05 之后 —— 朋友圈互动数据本身也是「近窗口」，不能当全历史。</p>
+</div>
+
+<h2>六 · 央美 × 社会美育 = 同一批人；导师横跨全部项目线</h2>
+<div class="card">
+  <p>「琢」「养肥」「王博」三人<b>同时出现在 ④央美 与 ⑤社会美育</b>，且共同群几乎全是美育项目群。</p>
+  <table>
+    <tr><th>人</th><th class="num">消息</th><th class="num">共同群</th><th>共同群名（节选）</th></tr>
+    <tr><td>琢</td><td class="num">811</td><td class="num">12</td><td>美乡实验 / 洞台村装置计划 / 科技美学筹备会务组 / 乡村美育工作日志 / 26届星火颁奖大会</td></tr>
+    <tr><td>养肥</td><td class="num">391</td><td class="num">11</td><td>央美美育工作站 / 美乡实验 / 洞台村装置计划 / 美学研讨会志愿者群</td></tr>
+    <tr><td>王博</td><td class="num">150</td><td class="num">6</td><td>央美美育工作站 / 长城乡村美育实验室 / 美乡实验 / 洞台村装置计划</td></tr>
+  </table>
+  <p><b>导师（陈晔）横跨 16 个共同群</b>，覆盖全部项目线：美乡实验 · 央美美育工作站 · 实验艺术系-中拍云艺 · 美学研讨会志愿者 · 洞台井邻 · 科技美学筹备会务组 · 25材料思维 · 专业课群 · 长城乡村美育实验室 · 乡村美育工作日志 · 洞台村装置计划 · 2025级研究生实验艺术与科技艺术学 · 积极分子群。</p>
+  <p>对照：<b>笑一只有 5 个共同群</b>（花家地艺专 / 视觉文化专题 / CatPaw / 就业交流 / Tripothon）。</p>
+  <div class="quote">即：<b>导师是他唯一「群覆盖 ≈ 全部人生线」的人</b> —— 与「备注即规程」（全库唯一指令型备注）互相印证。</div>
+</div>
+
+<h2>七 · 2026 年 8 月的三重信号</h2>
+<div class="card">
+  <table>
+    <tr><th>信号</th><th>数据</th></tr>
+    <tr><td>母亲转账</td><td>2025-07 仅 2 笔 → <b class="hot">2026-08 起 19 笔 / 月</b>（09 月 18 笔、10 月 3 笔）</td></tr>
+    <tr><td>陌生人加他</td><td>31 条里 <b>29 条集中在 2026-08-15 → 10-03</b>；来源：扫码 12 / 手机号 8 / 微信号搜索 5</td></tr>
+    <tr><td>加他的人身份</td><td>网贷平台无责退息退费（09-12）· 北京正己律师事务所（09-14）· 闲鱼喷漆 · 网约车 · 快递 · 车险 · 链家</td></tr>
+  </table>
+  <p><b>2026-08 是现金流最紧的月份</b>：母亲资助从 0 变成每月近 20 笔，同时加他的陌生人从「生活服务」转向「债务 / 法律处理」。</p>
+  <p>「加我」31 条里<b>唯一的真人 = 沐茜妍</b>（消息 3,013 条），时间 <b class="hot">2026-09-17 00:23</b> —— 正是他 9-16 说「我有女朋友最近」「别联系了」的<b>次日凌晨</b>。</p>
+</div>
+
+<h2>八 · 自指：用你的规律解释这次分析</h2>
+<div class="card">
+  <p>你这次的要求是「多轮分析，希望能突然发现全都跑通了」。这句话本身是一个可读的信号。</p>
+  <ul>
+    <li><b>「全都跑通」= 追求闭合解释</b> —— 与「我执」的投射几何一致：希望每一块碎片都能连成一张完整的图。</li>
+    <li><b>但数据本身不支持完全闭合</b>：索引库只有两年，朋友圈数据只有 252 条，标签映射缺失。诚实的边界是：<b>能跑通的是「机制」，跑不通的是「全历史」</b>。</li>
+    <li>反过来，本次分析也验证了引擎的两条既有定律：<b>「备注即规程」</b>（导师备注是全库唯一指令型）与<b>「距离定律第二轴」</b>（给自己写的规程只出现在有对价的关系上）—— 导师 16 群 = 最高对价的具象化。</li>
+  </ul>
+</div>
+
+<h2>九 · 待你裁定（可证伪点）</h2>
+<div class="card">
+  <ol>
+    <li><b>本科同学的关系定性</b>：那 65 人（王雪纯 / 崔敖 / 金丽娜 / 付悦悦…）是否「只剩朋友圈点赞」？近两年确实没私聊过？</li>
+    <li><b>「琢 / 养肥 / 王博」</b>是不是社会美育项目的核心协作者？「养肥」「琢」的真名是什么？</li>
+    <li><b>「火山雪0号」「李子轩」</b>朋友圈互动 8 次并列第一 —— 他们分别是谁？为什么消息量极低？</li>
+    <li><b>「净」</b>（9-03 加他 + 当天转出 2 笔）是债务协商 / 退息服务方吗？</li>
+    <li><b>「王雪纯」</b>消息 0 但互动 6 次、横跨 23 群 —— 是什么关系？</li>
+    <li><b>「g4人」小圈子</b>（舒泽林 / 99hh 共处 <code>51644238531</code> + <code>一切顺利！</code> + <code>gay学现场</code>，活跃期 2025-01 → 2026-03）是什么？</li>
+    <li><b>「蔡浩文 后续进展群」</b>只有 1 条消息（2025-07-16）—— 是什么事？</li>
+    <li><b>陈昶文</b>消息 6,275 / 语音 218（全库第一）/ 圈互 5 —— 2026-06-27 之后归零，为什么？</li>
+  </ol>
+</div>
+
+<h2>十 · 落盘清单</h2>
+<div class="card">
+  <table>
+    <tr><th>文件</th><th>内容</th></tr>
+    <tr><td>交叉主表_2026-10-04.csv</td><td>42,717 人 × 18 列（消息 / 语音 / 群 / 朋友圈 / 加我 / 转账 / 预标档）</td></tr>
+    <tr><td>tools/cross_master.py</td><td>八源对齐主表构建（只读）</td></tr>
+    <tr><td>tools/cross_track.py</td><td>赛道 × 节点 × 预标档交叉（只读）</td></tr>
+    <tr><td>tools/cross_nodes.py</td><td>节点身份还原 + 隐形层（只读）</td></tr>
+    <tr><td>tools/probe_topo_sns.py / _2.py</td><td>社交拓扑 / 朋友圈 / 联系人分层探查（只读）</td></tr>
+    <tr><td>_tmp/cross_master.txt · cross_track.txt · cross_nodes.txt · topo_sns2.txt</td><td>中间产物</td></tr>
+  </table>
+  <p class="note">红线：本报告含真人姓名与关系推断，<b>仅本地留存，不得外传</b>。所有脚本使用 <code>file:...?mode=ro</code> 只读打开，未修改任何原始数据。</p>
+</div>
+
+<footer>
+  多轮交叉分析 · 八个源全跑通 ｜ 2026-10-04 ｜ 数据全程本地处理，未上传任何第三方<br>
+  交叉主表 42,717 人 × 18 列 ｜ 索引库 388,550 条 / 1,802 会话 ｜ 时间范围 2024-11-10 → 2026-10-04
+</footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,62 @@
+filters:
+  and:
+    - 'type == "清理批次"'
+properties:
+  batch:
+    displayName: 批次
+  status:
+    displayName: 状态
+  risk:
+    displayName: 风险
+  reclaim_gb:
+    displayName: 可回收 GB
+  reclaim_done_gb:
+    displayName: 已释放 GB
+  action:
+    displayName: 动作
+  blocker:
+    displayName: 卡在哪
+  evidence:
+    displayName: 依据
+views:
+  - type: table
+    name: 全部批次
+    order:
+      - file.name
+      - batch
+      - status
+      - risk
+      - reclaim_gb
+      - reclaim_done_gb
+      - blocker
+    sort:
+      - property: batch
+        direction: ASC
+  - type: table
+    name: 待你确认
+    filters:
+      and:
+        - 'need_confirm == true'
+    order:
+      - file.name
+      - batch
+      - risk
+      - reclaim_gb
+      - action
+      - blocker
+    sort:
+      - property: reclaim_gb
+        direction: DESC
+  - type: table
+    name: 已执行
+    filters:
+      and:
+        - 'status == "部分完成"'
+    order:
+      - file.name
+      - batch
+      - reclaim_done_gb
+      - action
+    sort:
+      - property: reclaim_done_gb
+        direction: DESC

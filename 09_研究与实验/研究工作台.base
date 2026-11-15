@@ -1,0 +1,75 @@
+filters:
+  and:
+    - "file.ext == \"md\""
+    -
+      or:
+        - "file.inFolder(\"09_研究与实验\")"
+        - "file.inFolder(\"04_工作台/行动\")"
+properties:
+  note.action_state:
+    displayName: "行动状态"
+  note.outcome_status:
+    displayName: "结果状态"
+  note.research_stage:
+    displayName: "研究核验"
+  note.verified_at:
+    displayName: "资料核验日"
+views:
+  -
+    type: "table"
+    name: "四个实验"
+    filters: "type == \"实验\""
+    order:
+      - "file.name"
+      - "note.id"
+      - "note.topic"
+      - "note.action_state"
+      - "note.outcome_status"
+  -
+    type: "table"
+    name: "待明确启动的行动"
+    filters:
+      and:
+        - "type == \"行动\""
+        - "action_state == \"待澄清\""
+    order:
+      - "file.name"
+      - "note.action_state"
+      - "note.due"
+  -
+    type: "table"
+    name: "研究方法"
+    filters: "type == \"研究\""
+    order:
+      - "file.name"
+      - "note.research_stage"
+      - "note.verified_at"
+  -
+    type: "table"
+    name: "已观察的实验"
+    filters:
+      and:
+        - "type == \"实验\""
+        - "outcome_status == \"已观察\""
+    order:
+      - "file.name"
+      - "note.actual_result"
+      - "note.updated"
+  -
+    type: "table"
+    name: "进行中的研究行动"
+    filters:
+      and:
+        - "type == \"行动\""
+        - "action_state == \"进行中\""
+    order:
+      - "file.name"
+      - "note.action_state"
+      - "note.updated"
+  -
+    type: "table"
+    name: "运行视图"
+    filters: "type == \"运行视图\""
+    order:
+      - "file.name"
+      - "note.as_of"

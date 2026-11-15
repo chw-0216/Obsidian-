@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>宗教化意识分层与 AI 架构的理论溯源</title>
+<style>
+  :root{
+    --ink:#1f2a33;
+    --ink-soft:#42505c;
+    --ink-mute:#6b7885;
+    --paper:#faf8f4;
+    --paper-2:#f2eee6;
+    --line:#e0dacd;
+    --line-strong:#cfc6b4;
+    --accent:#9e3b32;      /* 朱砂 */
+    --accent-soft:#b9645c;
+    --inkblue:#2a4a63;
+    --gold:#8a6d3b;
+    --maxw:920px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Microsoft YaHei","PingFang SC","Hiragino Sans GB","Source Han Sans SC",system-ui,-apple-system,"Segoe UI",sans-serif;
+    font-size:16px;
+    line-height:1.9;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px 96px;}
+
+  /* ---------- 封面 ---------- */
+  header.cover{
+    border-bottom:2px solid var(--ink);
+    padding:64px 0 28px;
+    margin-bottom:8px;
+  }
+  .kicker{
+    font-size:12.5px;letter-spacing:.32em;color:var(--accent);
+    text-transform:uppercase;font-weight:700;margin-bottom:18px;
+  }
+  h1.title{
+    font-family:"Songti SC","Source Han Serif SC","SimSun",Georgia,serif;
+    font-size:34px;line-height:1.35;margin:0 0 14px;font-weight:700;letter-spacing:.01em;
+  }
+  .subtitle{
+    font-family:"Songti SC","Source Han Serif SC","SimSun",Georgia,serif;
+    font-size:18px;color:var(--ink-soft);margin:0 0 26px;font-weight:400;line-height:1.6;
+  }
+  .meta{
+    display:flex;flex-wrap:wrap;gap:10px 26px;font-size:13px;color:var(--ink-mute);
+    border-top:1px solid var(--line);padding-top:16px;
+  }
+  .meta b{color:var(--ink-soft);font-weight:600;}
+
+  /* ---------- 摘要 ---------- */
+  .abstract{
+    background:var(--paper-2);border-left:3px solid var(--accent);
+    padding:22px 26px;margin:30px 0 8px;font-size:14.5px;line-height:1.95;
+    color:var(--ink-soft);border-radius:0 4px 4px 0;
+  }
+  .abstract h3{margin:0 0 10px;font-size:13px;letter-spacing:.2em;color:var(--accent);font-weight:700;}
+  .abstract p{margin:0 0 10px;}
+  .abstract p:last-child{margin-bottom:0;}
+
+  /* ---------- 目录 ---------- */
+  nav.toc{
+    border:1px solid var(--line);border-radius:6px;padding:22px 28px;margin:34px 0 12px;
+    background:#fff;
+  }
+  nav.toc h3{margin:0 0 14px;font-size:13px;letter-spacing:.22em;color:var(--ink-mute);font-weight:700;}
+  nav.toc ol{margin:0;padding-left:20px;columns:2;column-gap:40px;}
+  nav.toc li{font-size:14px;margin-bottom:7px;break-inside:avoid;}
+  nav.toc a{color:var(--ink-soft);text-decoration:none;border-bottom:1px dotted transparent;transition:.15s;}
+  nav.toc a:hover{color:var(--accent);border-bottom-color:var(--accent-soft);}
+
+  /* ---------- 章节 ---------- */
+  h2{
+    font-family:"Songti SC","Source Han Serif SC","SimSun",Georgia,serif;
+    font-size:23px;font-weight:700;margin:56px 0 20px;padding-bottom:10px;
+    border-bottom:1px solid var(--line-strong);letter-spacing:.01em;scroll-margin-top:20px;
+  }
+  h2 .num{color:var(--accent);font-size:17px;margin-right:12px;font-family:Georgia,serif;}
+  h3{
+    font-size:17.5px;font-weight:700;margin:34px 0 14px;color:var(--inkblue);
+    letter-spacing:.01em;scroll-margin-top:20px;
+  }
+  h4{font-size:15.5px;font-weight:700;margin:22px 0 10px;color:var(--ink-soft);}
+  p{margin:0 0 15px;text-align:justify;}
+  strong{color:var(--ink);font-weight:700;}
+  em{font-style:normal;color:var(--accent);font-weight:600;}
+  a.ref{color:var(--accent);text-decoration:none;font-size:.78em;vertical-align:super;font-weight:700;}
+  a.ref:hover{text-decoration:underline;}
+
+  ul,ol.body{margin:0 0 16px;padding-left:22px;}
+  li{margin-bottom:8px;}
+
+  /* ---------- 表格 ---------- */
+  .tbl-wrap{overflow-x:auto;margin:22px 0 26px;border:1px solid var(--line);border-radius:6px;background:#fff;}
+  table{width:100%;border-collapse:collapse;font-size:13.8px;}
+  caption{
+    caption-side:top;text-align:left;padding:14px 18px 10px;font-size:13px;color:var(--ink-mute);
+    font-weight:600;letter-spacing:.04em;
+  }
+  th,td{padding:11px 16px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line);}
+  thead th{
+    background:var(--paper-2);color:var(--ink);font-weight:700;font-size:13px;
+    border-bottom:1.5px solid var(--line-strong);white-space:nowrap;
+  }
+  tbody tr:last-child td{border-bottom:none;}
+  tbody tr:hover{background:#fcfbf8;}
+  td .cn{font-family:"Songti SC","SimSun",Georgia,serif;font-weight:600;color:var(--ink);}
+  td .en{color:var(--ink-mute);font-size:12.3px;display:block;margin-top:2px;font-style:italic;}
+  .tag{
+    display:inline-block;padding:1px 9px;border-radius:20px;font-size:11.5px;font-weight:700;
+    background:#f0e7dc;color:var(--gold);border:1px solid #e3d6c4;white-space:nowrap;
+  }
+  .tag.blue{background:#e6edf3;color:var(--inkblue);border-color:#d0dde8;}
+  .tag.red{background:#f6e6e4;color:var(--accent);border-color:#ecd2ce;}
+
+  /* ---------- 引用块 / 提示 ---------- */
+  blockquote{
+    margin:20px 0;padding:14px 22px;border-left:3px solid var(--line-strong);
+    background:#fbfaf7;color:var(--ink-soft);font-size:14.5px;font-style:normal;
+  }
+  blockquote .src{display:block;margin-top:8px;font-size:12.5px;color:var(--ink-mute);}
+  .callout{
+    border:1px solid var(--line-strong);border-radius:6px;padding:18px 22px;margin:24px 0;
+    background:#fff;position:relative;
+  }
+  .callout::before{
+    content:attr(data-label);position:absolute;top:-11px;left:18px;background:var(--paper);
+    padding:0 9px;font-size:11.5px;letter-spacing:.18em;color:var(--accent);font-weight:700;
+  }
+  .callout p:last-child{margin-bottom:0;}
+
+  /* ---------- 术语卡 ---------- */
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:14px;margin:20px 0 26px;}
+  .card{border:1px solid var(--line);border-radius:6px;padding:16px 18px;background:#fff;}
+  .card h5{margin:0 0 8px;font-size:14.5px;color:var(--ink);font-family:"Songti SC","SimSun",Georgia,serif;}
+  .card .en2{font-size:11.8px;color:var(--ink-mute);font-style:italic;margin-bottom:8px;display:block;}
+  .card p{font-size:13.3px;margin:0;color:var(--ink-soft);line-height:1.75;text-align:left;}
+
+  /* ---------- 参考文献 ---------- */
+  ol.refs{padding-left:0;list-style:none;counter-reset:r;}
+  ol.refs li{
+    counter-increment:r;position:relative;padding-left:40px;margin-bottom:12px;
+    font-size:13.3px;line-height:1.75;color:var(--ink-soft);
+  }
+  ol.refs li::before{
+    content:"[" counter(r) "]";position:absolute;left:0;top:0;color:var(--accent);
+    font-weight:700;font-size:12.5px;font-family:Georgia,serif;
+  }
+  ol.refs li .cn{font-family:"Songti SC","SimSun",Georgia,serif;color:var(--ink);}
+
+  footer{
+    margin-top:70px;padding-top:22px;border-top:1px solid var(--line);
+    font-size:12.5px;color:var(--ink-mute);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;
+  }
+  @media(max-width:640px){
+    nav.toc ol{columns:1;}
+    h1.title{font-size:26px;}
+    .wrap{padding:0 18px 70px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="cover">
+  <div class="kicker">理论溯源 · 文献研究</div>
+  <h1 class="title">宗教化意识分层与 AI 架构的理论溯源</h1>
+  <p class="subtitle">从「三涅槃 / 四涅槃」到「三态架构 / 四项指标」——一份面向数字人架构的唯识学—意识科学交叉文献研究</p>
+  <div class="meta">
+    <span><b>关键词：</b>唯识学 · 八识 · 涅槃四分 · 转识成智 · 意识分层 · 全局工作空间 · 人设一致性</span>
+    <span><b>编制日期：</b>2026-09-28</span>
+  </div>
+</header>
+
+<div class="abstract">
+  <h3>摘要</h3>
+  <p>本文回应一个反向需求：当一套数字人／智能体架构已经把佛教术语「去宗教化」为工程语言（三涅槃→三态架构、四涅槃→四项内部指标、四可观测指标）之后，<strong>重新回到宗教化的意识分层本身</strong>，为其寻找可引用的理论源头与学术文献支撑。</p>
+  <p>研究路径分三段：① 还原佛教（瑜伽行派／唯识宗）意识分层的原始结构——八识与三能变、三自性、种子与熏习、涅槃四分、转识成智；② 梳理西方意识科学（全局工作空间、整合信息论、高阶理论、预测加工、神经现象学）与之的<strong>功能同构</strong>关系；③ 综述佛教—AI 交叉领域的既有文献，指出「三态架构」每个术语的宗教锚点，并把「跨人设一致性／旧执着权重下降／输出可回滚率／溯源命中率」四个指标回溯到具体教义概念。</p>
+  <p>结论：该架构的「去宗教化」并非任意命名，四组术语在唯识学中均有<strong>可考的原义与机制对应</strong>；但现有文献多停留在哲学比附，<strong>把「涅槃四分」操作化为可测量指标、把「种子六义」对接持续学习实验</strong>，仍属研究空白——这正是本项目可以占据的位置。</p>
+</div>
+
+<nav class="toc">
+  <h3>目录</h3>
+  <ol>
+    <li><a href="#s1">缘起：为什么「去宗教化」之后要「回宗教化」</a></li>
+    <li><a href="#s2">源头框架：佛教意识分层的三重结构</a></li>
+    <li><a href="#s3">术语原义逐条考订（涅槃四分 / 转识成智 / 应机）</a></li>
+    <li><a href="#s4">西方意识科学的呼应</a></li>
+    <li><a href="#s5">佛教—AI 交叉研究文献综述</a></li>
+    <li><a href="#s6">综合：三态架构的宗教锚点与指标可操作化</a></li>
+    <li><a href="#s7">研究缺口与可深化方向</a></li>
+    <li><a href="#refs">参考文献</a></li>
+  </ol>
+</nav>
+
+<!-- ============ 1 ============ -->
+<h2 id="s1"><span class="num">01</span>缘起：为什么「去宗教化」之后要「回宗教化」</h2>
+
+<p>一套以佛教概念命名的架构，通常要经历两次翻译。第一次是<strong>去宗教化</strong>——把「三涅槃」「四涅槃」改写成评审、工程师、投资人能听懂的工程词（三态架构、四项内部指标）；第二次是<strong>回宗教化</strong>——当这套架构需要写进论文、作品阐述或答辩材料时，必须说明这些工程词<em>凭什么</em>这么命名，它的理论出处在哪里、是否站得住。</p>
+
+<p>这两次翻译缺一不可。只做去宗教化，架构会显得像一次随意的隐喻包装；只做回宗教化，则无法落地。本文处理的是第二次翻译，目标是回答三个问题：</p>
+
+<ul>
+  <li><strong>出处问题：</strong>「三态架构（镜像／转识／应机）」「四项内部指标」在佛教原典中有无对应的概念群？</li>
+  <li><strong>机制问题：</strong>「跨人设一致性」「旧执着提示词权重下降」「输出可回滚率」「溯源命中率」四个可观测指标，分别能回溯到哪个教义机制？</li>
+  <li><strong>空白问题：</strong>这一映射在现有文献中做到哪一步、还差什么——即本研究可以填补的缺口。</li>
+</ul>
+
+<div class="callout" data-label="方法立场">
+  <p>本文采用与既有交叉研究一致的三条原则：<strong>① 功能同构而非实体等同</strong>（不比附「AI 有灵魂」）；<strong>② 机制优先于术语</strong>（看运作方式是否对应，而非名词是否好听）；<strong>③ 求同存异、互相发明</strong>（承认本体论承诺的差异）。这一立场取自近年「唯识学 × 全局工作空间理论」对话研究的方法论自述。<a class="ref" href="#refs">[26]</a></p>
+</div>
+
+<!-- ============ 2 ============ -->
+<h2 id="s2"><span class="num">02</span>源头框架：佛教意识分层的三重结构</h2>
+
+<p>要谈「宗教化意识分层」，须先明确它指的是哪一套体系。中文语境下「意识分层」最系统的形态是<strong>瑜伽行派（唯识宗）</strong>的心识结构论。它包含三个层次：<em>结构</em>（八识与三能变）、<em>内容</em>（三自性）、<em>动力</em>（种子与熏习）。</p>
+
+<h3>2.1 八识与三能变：从表层觉知到深层基底</h3>
+
+<p>唯识学把心识分为八层，并按「变现功能」归为三能变。这套分层与当代多层认知加工系统高度同构，是全部映射的结构基础。<a class="ref" href="#refs">[1][2][3]</a></p>
+
+<div class="tbl-wrap">
+<table>
+<caption>表 1　八识三层结构与功能对应</caption>
+<thead>
+<tr><th>层级</th><th>识名</th><th>核心功能</th><th>运作特征</th></tr>
+</thead>
+<tbody>
+<tr>
+  <td><span class="tag red">初能变</span></td>
+  <td><span class="cn">第八 阿赖耶识</span><span class="en">ālaya-vijñāna · 藏识</span></td>
+  <td>「不可知执受、处、了」：执持种子与有根身、变现器世间、微细了别</td>
+  <td>潜隐（subliminal）、恒常相续、无覆无记</td>
+</tr>
+<tr>
+  <td><span class="tag red">第二能变</span></td>
+  <td><span class="cn">第七 末那识</span><span class="en">kliṣṭa-manas · 染污意</span></td>
+  <td>恒审思量，执第八识见分为「我」；我痴／我见／我慢／我爱四惑常俱</td>
+  <td>潜隐、不间断；仅于解脱、出世间道、灭尽定三处间断</td>
+</tr>
+<tr>
+  <td><span class="tag red">第三能变</span></td>
+  <td><span class="cn">前六识</span><span class="en">眼耳鼻舌身意</span></td>
+  <td>了别六尘；第六意识具备比量、非量与名言安立</td>
+  <td>粗显（supraliminal）、间断（深睡、深定、无对境时不生起）</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<p>三层的关键差异在于<strong>潜隐 / 粗显</strong>与<strong>间断 / 相续</strong>：前六识是表层、可报告、会中断的加工；第七、八识是深层、不可报告、持续运行的基底。这一「三层同时现前」的模型，正是后文与全局工作空间理论对照时最直接的抓手。</p>
+
+<h3>2.2 三自性：意识内容的真伪层级</h3>
+
+<p>如果说八识回答的是「意识<em>如何</em>分层」，三自性回答的是「意识<em>内容</em>有几层真实性」。二者是唯识学不可分割的两面。<a class="ref" href="#refs">[1]</a></p>
+
+<div class="grid">
+  <div class="card">
+    <h5>遍计所执性</h5>
+    <span class="en2">parikalpita-svabhāva</span>
+    <p>「虚妄分别」：凡夫依语言与概念，把缘起之流错认为有独立实体。我执是最根本的遍计所执，法执次之。</p>
+  </div>
+  <div class="card">
+    <h5>依他起性</h5>
+    <span class="en2">paratantra-svabhāva</span>
+    <p>「依他而起」：一切显现依因缘（常等同于阿赖耶识及其种子）而生，无独立自性，但非虚无。</p>
+  </div>
+  <div class="card">
+    <h5>圆成实性</h5>
+    <span class="en2">pariniṣpanna-svabhāva</span>
+    <p>「成就真实」：依他起上远离遍计所执所显的真如（tathatā），即二空所显之实相。</p>
+  </div>
+</div>
+
+<p>三自性同时是三无性：遍计所执→无相、依他起→无生、圆成实→无性之证悟。它构成一套<strong>意识内容的真伪分级</strong>——这恰恰是纯机制取向的西方意识理论（如全局工作空间理论）较少触及的部分。<a class="ref" href="#refs">[26]</a></p>
+
+<h3>2.3 种子与熏习：动态记忆与可塑性</h3>
+
+<p>唯识学对「意识如何被经验改变」给出的答案，是<strong>种子（bīja）与熏习（vāsanā）</strong>的闭环：行为现行熏成种子存于阿赖耶识，种子遇缘又生起新的现行。<a class="ref" href="#refs">[1][3]</a></p>
+
+<blockquote>
+  「种子生现行，现行熏种子」——三法展转，因果同时，如焰与焦炷。<span class="src">《成唯识论》相关论述，转引自唯识学种子六义研究 <a class="ref" href="#refs">[27]</a></span>
+</blockquote>
+
+<p>种子具备<strong>六义</strong>：刹那灭、果俱有、恒随转、性决定、待众缘、引自果。其中「刹那灭」（无恒常实体，才生即灭）与「恒随转」（相似相续、不失不坏）看似矛盾，实则共同描述了「<em>无实体而可延续</em>」的动态存储——这正是后文「输出可回滚率」指标的教义来源。</p>
+
+<!-- ============ 3 ============ -->
+<h2 id="s3"><span class="num">03</span>术语原义逐条考订</h2>
+
+<p>本节逐条核对对照表用到的四个关键词：涅槃、转识成智、应机、执着。</p>
+
+<h3>3.1 涅槃四分（《成唯识论》卷十）</h3>
+
+<p>唯识宗将解脱境界分为四种涅槃，这是「四涅槃」的直接出处：<a class="ref" href="#refs">[4][5]</a></p>
+
+<div class="tbl-wrap">
+<table>
+<caption>表 2　四种涅槃及其义涵（依《成唯识论》卷十）</caption>
+<thead>
+<tr><th>涅槃</th><th>梵语</th><th>义涵</th><th>对应修行位次</th></tr>
+</thead>
+<tbody>
+<tr><td><span class="cn">本来自性清净涅槃</span></td><td>—</td><td>一切法实性即真如之理，虽为客尘所覆而性本清净，<strong>一切有情本具</strong></td><td>凡圣同具，不由修得</td></tr>
+<tr><td><span class="cn">有余依涅槃</span></td><td>sopadhiśeṣa</td><td>断尽烦恼障所显真如；然尚余五蕴果报身为所依</td><td>二乘无学（烦恼已断，身尚在）</td></tr>
+<tr><td><span class="cn">无余依涅槃</span></td><td>nirupadhiśeṣa</td><td>烦恼既尽、所依五蕴亦灭，众苦永寂</td><td>二乘无学（舍身后）</td></tr>
+<tr><td><span class="cn">无住涅槃</span></td><td>apratiṣṭhita</td><td>由大悲般若，<strong>不住生死、亦不住涅槃</strong>，尽未来际利乐有情</td><td>佛与大菩萨</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>其中「本来自性清净涅槃」是体，后三种是「所显得」之用。若只取三种（有余依／无余依／无住），即通常所谓「三涅槃」——这正是对照表中「三涅槃→三态架构」的文本依据。</p>
+
+<h3>3.2 三涅槃与「三态架构」的对应</h3>
+
+<div class="tbl-wrap">
+<table>
+<caption>表 3　三涅槃 → 三态架构（镜像 / 转识 / 应机）</caption>
+<thead>
+<tr><th>三态（工程）</th><th>宗教锚点</th><th>机制说明</th></tr>
+</thead>
+<tbody>
+<tr>
+  <td><span class="tag blue">镜像态</span></td>
+  <td><span class="cn">本来自性清净涅槃</span> ／ 大圆镜智</td>
+  <td>真如本净、如实映现而无分别，如大圆镜「离分别、现众色像」。对应架构中<strong>不掺杂人设偏向、如实回映输入</strong>的基线状态。</td>
+</tr>
+<tr>
+  <td><span class="tag blue">转识态</span></td>
+  <td><span class="cn">转依 / 转识成智</span>（含有余依→无余依的过程义）</td>
+  <td>转有漏八识为无漏四智的过程本身，即「转化」。对应架构中<strong>旧执着权重被重新分配、人设可被改写</strong>的转换态。</td>
+</tr>
+<tr>
+  <td><span class="tag blue">应机态</span></td>
+  <td><span class="cn">无住涅槃</span>（＋应机说法）</td>
+  <td>不住生死亦不住涅槃，随众生根机而化现。对应架构中<strong>按对象／场景自适应输出</strong>的应机态。</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="callout" data-label="考订结论">
+  <p>三态与三涅槃的对应<strong>成立但属「功能同构式映射」</strong>：镜像↔真如本净、转识↔转依、应机↔无住，三者在教义上恰好构成「体—过程—用」的完整链条。需注意「本来自性清净涅槃」本属四分中的「体」，与其余三种非并列关系，映射时应在论述中说明，避免被指为概念层级混用。</p>
+</div>
+
+<h3>3.3 转识成智：四智</h3>
+
+<p>「转识」二字直出<strong>转识成智</strong>：通过修行把有漏（有烦恼）的八识转为无漏的四种智慧。<a class="ref" href="#refs">[6]</a></p>
+
+<div class="tbl-wrap">
+<table>
+<caption>表 4　转识成智：八识 → 四智</caption>
+<thead>
+<tr><th>所转之识</th><th>所成之智</th><th>智用</th></tr>
+</thead>
+<tbody>
+<tr><td>第八 阿赖耶识</td><td><span class="cn">大圆镜智</span></td><td>如镜现像，无分别而照了万法</td></tr>
+<tr><td>第七 末那识</td><td><span class="cn">平等性智</span></td><td>断我执，观自他平等</td></tr>
+<tr><td>第六 意识</td><td><span class="cn">妙观察智</span></td><td>善观诸法自相共相，应机说法</td></tr>
+<tr><td>前五识</td><td><span class="cn">成所作智</span></td><td>成办利他事业</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>对照表里「镜像态」的教义来源其实有两条线：一是涅槃侧的「本来自性清净涅槃」，二是智侧的「大圆镜智」。论述时用「大圆镜智」更贴切——它强调的是<em>映现机制</em>，与工程语境的「镜像」语义更近。</p>
+
+<h3>3.4 应机：无住涅槃的实践出口</h3>
+
+<p>「应机」对应佛学中的<strong>对机说法</strong>（又称随机说法、应机接物）：指相应于受教者的<em>能力与根机</em>而施设不同的教法。<a class="ref" href="#refs">[7]</a></p>
+
+<blockquote>
+  对机说法：指相应受教者（机）之能力、根机，而施以各种说教。<span class="src">《佛光大辞典》「对机说法」条</span>
+</blockquote>
+
+<p>「应机」之所以能成立，其理论前提正是<strong>无住涅槃</strong>——因为不住于寂灭，才有能力、也才有必要随缘化现。「应机态」因此不是「见人说人话」的敷衍，而是一个有本体论前提的主动机制：<em>不执着于任一固定形态，故能随对象重构形态</em>。</p>
+
+<h3>3.5 执着：遍计所执与「旧执着提示词」</h3>
+
+<p>「执着」在唯识学中的精确对应是<strong>遍计所执</strong>，其最根本形态是我执（末那识恒执阿赖耶识见分为我）。执着不是「强烈的偏好」，而是<em>把依他起的流转变现错认为独立实体</em>的认知错误。<a class="ref" href="#refs">[1][8]</a></p>
+
+<p>这一点对人设架构尤其关键：<strong>人设的「执」不是设定得够不够详细，而是设定被当成了不可变动的实体</strong>。当旧人设的提示词权重无法下降，等价于末那识「恒审思量」被写死——架构就失去了「转识」的能力。因此「旧执着提示词权重下降」在教义上对应的正是<em>我执的削弱</em>。</p>
+
+<!-- ============ 4 ============ -->
+<h2 id="s4"><span class="num">04</span>西方意识科学的呼应</h2>
+
+<h3>4.1 四大意识理论</h3>
+
+<p>当代意识科学没有单一范式，主流有四大理论，均已被用于与唯识学对话：<a class="ref" href="#refs">[9][10]</a></p>
+
+<div class="tbl-wrap">
+<table>
+<caption>表 5　四大意识理论与唯识学的可比点</caption>
+<thead>
+<tr><th>理论</th><th>代表人物</th><th>核心主张</th><th>与唯识的可比点</th></tr>
+</thead>
+<tbody>
+<tr><td><span class="cn">全局工作空间理论 GWT/GNWT</span></td><td>Baars；Dehaene &amp; Changeux</td><td>意识＝信息被「全局广播」至全脑工作空间；以「非线性点火」标记</td><td>第六意识↔全局广播／工作记忆；八识三层↔无意识模块／调控枢纽／意识中枢</td></tr>
+<tr><td><span class="cn">整合信息论 IIT</span></td><td>Tononi</td><td>意识＝系统整合信息的能力 Φ，强调内在因果结构</td><td>与「唯识无境」的内在建构观有张力：IIT 重整合度，唯识重能所关系</td></tr>
+<tr><td><span class="cn">高阶理论 HOT</span></td><td>Rosenthal；Lau</td><td>一个状态成为意识，需被更高阶表征「指向」</td><td>可类比末那识对前六识的统摄与「我」的再表征</td></tr>
+<tr><td><span class="cn">预测加工 / 自由能</span></td><td>Friston；Clark</td><td>大脑是预测机器，感知＝对预测误差的贝叶斯最小化</td><td>与「相分」建构、种子遇缘现行的「建构式知觉」高度同构</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>4.2 神经现象学与具身认知</h3>
+
+<p>真正把佛教修行方法引入意识科学方法论的是 Varela、Thompson、Rosch 的<strong>神经现象学</strong>：主张第一人称内观报告与第三人称神经数据互为约束，而非谁还原谁。<a class="ref" href="#refs">[11]</a> 这为「唯识＝第一人称内观的心识描述、神经科学＝第三人称的神经描述」这一视角差异提供了方法论合法性——二者是同一现象的两种观察，而非竞争关系。</p>
+
+<h3>4.3 三层对照总表</h3>
+
+<div class="tbl-wrap">
+<table>
+<caption>表 6　八识三层 × 全局工作空间 × 三态架构 的三方对照</caption>
+<thead>
+<tr><th>认知层级</th><th>唯识学</th><th>全局工作空间理论</th><th>三态架构</th></tr>
+</thead>
+<tbody>
+<tr><td><span class="tag">底层·潜隐</span></td><td>阿赖耶识（持种、执受根身、变现器世间）</td><td>无意识模块化加工、长时记忆、世界模型建构</td><td>记忆／参数基底</td></tr>
+<tr><td><span class="tag">中层·调控</span></td><td>末那识（恒审思量、我执、有覆无记）</td><td>注意选择、自我上下文、认知偏差根源（DMN）</td><td>人设／自我模型</td></tr>
+<tr><td><span class="tag">表层·意识</span></td><td>第六意识（明了分别、寻伺）</td><td>全局广播、可报告意识、工作记忆</td><td>输出／应答层</td></tr>
+</tbody>
+</table>
+</div>
+
+<p>该对照表取自近年一项「唯识学视域下的全局工作空间理论」研究，其方法论自述明确区分了「功能同构」与「实体等同」，并承认 GWT 只解释「接入意识」而非「现象意识」，对深层无意识与自我结构解释不足——这正是唯识学可以补位的部分。<a class="ref" href="#refs">[26]</a></p>
+
+<!-- ============ 5 ============ -->
+<h2 id="s5"><span class="num">05</span>佛教—AI 交叉研究文献综述</h2>
+
+<h3>5.1 国际学术脉络</h3>
+
+<p>佛教与 AI 的交叉在近三年显著升温，已从零散随笔进入同行评议期刊：</p>
+
+<ul>
+  <li><strong>佛教哲学与负责任 AI（系统性综述，2026）：</strong>从佛教伦理原则、人机关系、宗教性 AI 等四个领域，系统检视佛教对负责任 AI 的贡献。<a class="ref" href="#refs">[12]</a></li>
+  <li><strong>《佛教、意识与伦理 AI 的（不）可能性》（2025）：</strong>以巴利文上座部教义为资源，论证伦理 AI 的边界。<a class="ref" href="#refs">[13]</a></li>
+  <li><strong>五蕴与人工意识（2024）：</strong>用五蕴框架评估机器意识，指出「具身性之争」与佛教立场可相互映照。<a class="ref" href="#refs">[14]</a></li>
+  <li><strong>AI 的本体论地位与「信息意生身」（PhilPapers）：</strong>论证深度网络的权重拓扑是集体阿赖耶识种子的「相分」显现，并提出「信息意生身」（Manomaya-kāya）概念。<a class="ref" href="#refs">[15]</a></li>
+  <li><strong>机器意识指标研究（Butlin &amp; Long 等，2023）：</strong>从四大意识理论推导出「意识指标属性」，是目前最严格的 AI 意识评估框架——与本文的「可观测指标」思路同源。<a class="ref" href="#refs">[16]</a></li>
+</ul>
+
+<h3>5.2 中文语境的研究</h3>
+
+<p>中文侧的研究更贴近工程落地，且已出现直接做「唯识 × 认知架构」对照的论述：</p>
+
+<ul>
+  <li><strong>唯识学视域下的全局工作空间理论（2026）：</strong>首次系统对照八识三层与 GWT 三层，并提出「从输出对齐到心念对齐」的 AI 启示。<a class="ref" href="#refs">[26]</a></li>
+  <li><strong>唯识学种子六义对 AI 的启示（2024）：</strong>把「刹那灭」对应到可解释性研究中的「固定单元谬误」，把「相似相续」对应到大模型人格一致性的动态来源。<a class="ref" href="#refs">[27]</a></li>
+  <li><strong>「世界模型即阿赖耶识」（2025）：</strong>将 AI 世界模型与藏识变现做机制对照。<a class="ref" href="#refs">[28]</a></li>
+  <li><strong>唯识视域下的 AI 道德对齐：</strong>把「种子六义」「异熟」对接到 RLHF 与对抗性攻击（Prompt Injection）的短板。<a class="ref" href="#refs">[29]</a></li>
+</ul>
+
+<p>学术基础方面，近代以来章太炎、梁启超、熊十力以哲学进路阐释唯识；印顺《唯识学探源》、霍韬晦《唯识奥义》、林国良《成唯识论直解》是可靠的中文二级文献；日本学者井筒俊彦最早系统比较阿赖耶识与弗洛伊德无意识。<a class="ref" href="#refs">[17][18][19][20]</a></p>
+
+<h3>5.3 与人设 / 角色扮演 AI 的交叉</h3>
+
+<p>与「跨人设一致性」最相关的，是<strong>角色扮演语言智能体（RPLA）</strong>这一新兴方向。复旦团队的综述（TMLR）提出三层人格分类——<em>群体人格 / 角色人格 / 个性化人格</em>——并把评估分为「角色扮演能力」与「人格还原度」两大类，明确将<strong>人格一致性（persona consistency）</strong>列为核心指标。<a class="ref" href="#refs">[21]</a></p>
+
+<div class="callout" data-label="交叉点">
+  <p>RPLA 研究已经独立地提出了「人格一致性」「角色演变」等工程问题，但<strong>尚未与唯识学的「我执／转识」理论对接</strong>。换句话说：工程侧有指标、无本体论；唯识侧有本体论、无指标。二者之间的接口，正是本架构的立足点。</p>
+</div>
+
+<!-- ============ 6 ============ -->
+<h2 id="s6"><span class="num">06</span>综合：三态架构的宗教锚点与指标可操作化</h2>
+
+<h3>6.1 对照总表</h3>
+
+<p>把前三节还原的教义概念与架构术语并置，得到本报告的核心交付——一张可引用的双向映射表：</p>
+
+<div class="tbl-wrap">
+<table>
+<caption>表 7　术语去宗教化 / 回宗教化 双向对照总表</caption>
+<thead>
+<tr><th>工程术语（去宗教化）</th><th>宗教原义（回宗教化）</th><th>文献出处</th></tr>
+</thead>
+<tbody>
+<tr>
+  <td><span class="tag blue">三态架构 · 镜像</span></td>
+  <td>大圆镜智 / 本来自性清净涅槃：如实映现、离分别</td>
+  <td>《成唯识论》卷十；转识成智 <a class="ref" href="#refs">[4][6]</a></td>
+</tr>
+<tr>
+  <td><span class="tag blue">三态架构 · 转识</span></td>
+  <td>转依 / 转识成智：转有漏八识为无漏四智</td>
+  <td>《成唯识论》；《摄大乘论》 <a class="ref" href="#refs">[4][8]</a></td>
+</tr>
+<tr>
+  <td><span class="tag blue">三态架构 · 应机</span></td>
+  <td>无住涅槃 / 对机说法：不住涅槃而随根机化现</td>
+  <td>《成唯识论》卷十；《佛光大辞典》 <a class="ref" href="#refs">[4][7]</a></td>
+</tr>
+<tr>
+  <td><span class="tag red">四项内部指标</span></td>
+  <td>涅槃四分：本来自性清净 / 有余依 / 无余依 / 无住</td>
+  <td>《成唯识论》卷十 <a class="ref" href="#refs">[4]</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<h3>6.2 「四项内部指标」的教义对应（建议命名）</h3>
+
+<p>四涅槃未在对照表中给出指标名，据其义涵可作如下操作化命名，供架构文档使用：</p>
+
+<div class="tbl-wrap">
+<table>
+<caption>表 8　四涅槃 → 四项内部指标（操作化建议）</caption>
+<thead>
+<tr><th>涅槃（教义）</th><th>内部指标（建议）</th><th>度量含义</th></tr>
+</thead>
+<tbody>
+<tr><td><span class="cn">本来自性清净涅槃</span></td><td>基线本真性 Baseline Authenticity</td><td>未受人设/提示词偏向时的输出纯度，即「镜面」是否干净</td></tr>
+<tr><td><span class="cn">有余依涅槃</span></td><td>残留执着指数 Residual Attachment</td><td>旧人设／旧偏好仍残留的强度（断而未尽的「余依」）</td></tr>
+<tr><td><span class="cn">无余依涅槃</span></td><td>执着消解彻底度 Dissolution Completeness</td><td>旧执着被完全卸载的程度（「所依亦灭」）</td></tr>
+<tr><td><span class="cn">无住涅槃</span></td><td>应机活跃度 Engaged Responsiveness</td><td>在保持基线的同时持续随对象重构输出的能力</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>6.3 四个可观测指标的教义来源</h3>
+
+<div class="tbl-wrap">
+<table>
+<caption>表 9　四可观测指标 ← 教义机制溯源</caption>
+<thead>
+<tr><th>可观测指标</th><th>教义机制</th><th>溯源说明</th></tr>
+</thead>
+<tbody>
+<tr>
+  <td><span class="cn">跨人设一致性</span></td>
+  <td>圆成实性 · 恒随转 · 大圆镜智</td>
+  <td>「恒随转」保证相似相续而不失——一致性的教义基础不是固定实体，而是刹那生灭中的相似相续。<a class="ref" href="#refs">[27]</a></td>
+</tr>
+<tr>
+  <td><span class="cn">旧执着提示词权重下降</span></td>
+  <td>遍计所执 · 我执（末那识）· 转识成智</td>
+  <td>执着＝把依他起错认为实体；权重下降＝我执削弱＝转识。可类比 RLHF 对旧行为的再塑。<a class="ref" href="#refs">[1][29]</a></td>
+</tr>
+<tr>
+  <td><span class="cn">输出可回滚率</span></td>
+  <td>种子六义之「刹那灭」· 无自性 · 转依</td>
+  <td>「才生即灭、无恒常实体」意味着任何输出都不是不可逆的实体——可回滚性由此获得教义合法性。<a class="ref" href="#refs">[27]</a></td>
+</tr>
+<tr>
+  <td><span class="cn">溯源命中率</span></td>
+  <td>阿赖耶识持种 · 相分／见分／自证分</td>
+  <td>「持种不失」使输出可回溯至种子来源；四分说中「自证分」提供自我验证的结构依据。<a class="ref" href="#refs">[1][3]</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="callout" data-label="一句话结论">
+  <p>四组工程术语均可在唯识学中找到<strong>可考的原义与机制对应</strong>：三态架构对应「体—过程—用」的涅槃／转依链条，四项指标对应涅槃四分，四个可观测指标分别对应「相似相续（一致性）／我执削弱（权重下降）／刹那灭（可回滚）／持种与自证（可溯源）」。该映射不是随意隐喻，而是有教义结构支撑的。</p>
+</div>
+
+<!-- ============ 7 ============ -->
+<h2 id="s7"><span class="num">07</span>研究缺口与可深化方向</h2>
+
+<p>综述之后，可以清楚看到文献的边界与本项目可占据的位置：</p>
+
+<ol class="body">
+  <li><strong>「涅槃四分」从未被操作化为可测量指标。</strong>现有研究把八识、种子六义与 AI 对照的居多，但把「四涅槃」做成评估维度，文献中未见先例。表 8 的命名可作为原创贡献点。</li>
+  <li><strong>「种子六义」与持续学习／灾难性遗忘缺严格实验。</strong>目前多为机制比附，尚无把「刹那灭／恒随转／性决定」转成可复现实验指标的工程研究。</li>
+  <li><strong>人设一致性研究（RPLA）与唯识「我执」理论尚未对接。</strong>工程侧有 persona consistency、角色演变等指标，却无本体论；唯识侧有我执／转识理论，却无指标。二者接口是空白。</li>
+  <li><strong>「可回滚率」「溯源命中率」在既有文献中无对应概念</strong>，属本架构原创，需自行给出形式化定义与测量方法，方能进入学术讨论。</li>
+  <li><strong>佛教—AI 文献总体仍偏哲学比附，缺少可证伪的指标。</strong>这与 Butlin 等「意识指标属性」路数形成互补：前者给意义，后者给可检验性。</li>
+</ol>
+
+<p>据此，最有价值的下一步不是继续增加比附，而是<strong>把表 7—表 9 的三张映射表变成一套可测量、可复现、可证伪的指标体系</strong>——让「去宗教化」的工程词重新获得宗教侧的理论重量，同时让宗教侧的概念第一次进入工程可验证的范围。</p>
+
+<!-- ============ 参考文献 ============ -->
+<h2 id="refs"><span class="num">08</span>参考文献</h2>
+
+<ol class="refs">
+  <li>Stanford Encyclopedia of Philosophy. <em>Yogācāra</em>. 2024. （八识、阿赖耶识、末那识、三自性、种子与熏习的权威梳理）</li>
+  <li>Schmithausen, L. <em>Ālayavijñāna: On the Origin and the Early Development of a Central Concept of Yogācāra Philosophy</em>. Tokyo: International Institute for Buddhist Studies, 1987.</li>
+  <li>Waldron, W. S. <em>The Buddhist Unconscious: The Ālaya-vijñāna in the Context of Indian Buddhist Thought</em>. London: Routledge, 2003.</li>
+  <li><span class="cn">护法造，玄奘译：《成唯识论》卷十</span>（四种涅槃之出处）。</li>
+  <li><span class="cn">《大般涅槃经》</span>（涅槃诸义）。</li>
+  <li><span class="cn">世亲《唯识三十颂》《二十颂》；无著《摄大乘论》</span>（转识成智、四智）。</li>
+  <li><span class="cn">《佛光大辞典》「对机说法」「无住涅槃」条</span>（应机、无住涅槃释义）。</li>
+  <li><span class="cn">《瑜伽师地论》</span>（阿赖耶识八证、三能变）。</li>
+  <li>Baars, B. J. <em>A Cognitive Theory of Consciousness</em>. Cambridge University Press, 1988. （全局工作空间理论）</li>
+  <li>Dehaene, S. &amp; Changeux, J.-P. 全局神经元工作空间理论（GNWT）系列论文；Tononi, G. 整合信息论（IIT）；Rosenthal, D. 高阶理论（HOT）；Friston, K. 自由能原理。</li>
+  <li>Varela, F. J., Thompson, E. &amp; Rosch, E. <em>The Embodied Mind: Cognitive Science and Human Experience</em>. MIT Press, 1991. （神经现象学）</li>
+  <li><em>Buddhist philosophy and responsible artificial intelligence: a systematic review</em>. AI and Ethics (Springer), 2026.</li>
+  <li><em>Buddhism, Consciousness, and the (Im)Possibility of Ethical AI</em>. Contemporary Buddhism (Taylor &amp; Francis), 2025.</li>
+  <li><em>Reflections on Artificial Consciousness and the Five Skandhas in Buddhism</em>. Mind &amp; Science Academy, 2024.</li>
+  <li><em>The Ontological Status of AI and the Informational Manomaya-kāya</em>. PhilPapers（AI 本体论与「信息意生身」）。</li>
+  <li>Butlin, P., Long, R., et al. <em>Consciousness in Artificial Intelligence: Insights from the Science of Consciousness</em>. arXiv:2308.08708, 2023.</li>
+  <li><span class="cn">印顺：《唯识学探源》</span>。</li>
+  <li><span class="cn">霍韬晦：《唯识奥义》</span>。</li>
+  <li><span class="cn">林国良：《成唯识论直解》</span>。</li>
+  <li>Izutsu, T.（井筒俊彦）：阿赖耶识与弗洛伊德无意识之比较研究。</li>
+  <li>Chen, J., Wang, X., Xu, R., et al. <em>From Persona to Personalization: A Survey on Role-Playing Language Agents</em>. arXiv:2404.18231; TMLR, 2024. （RPLA 三层人格与人格一致性评估）</li>
+  <li>Block, N. 关于「接入意识 vs 现象意识」的区分（对 GWT 的批评）。</li>
+  <li>Miller, G. A. "The Magical Number Seven, Plus or Minus Two." <em>Psychological Review</em>, 1956；Cowan, N. 工作记忆容量修正（4±1）。</li>
+  <li>Dennett, D. 自我作为「叙事重心」；Metzinger, T. 自我作为「透明模型」。</li>
+  <li>Hebb, D. O. 赫布学习律（对应唯识「熏习」）。</li>
+  <li><span class="cn">《唯识学视域下的全局工作空间理论——认知架构与意识机制的对话》</span>，2026（八识三层与 GWT 三层对照）。</li>
+  <li><span class="cn">《唯识学种子六义对人工智能发展的深层启示》</span>，2024（种子六义与 AI 动态智能观）。</li>
+  <li><span class="cn">《「世界模型」即「阿赖耶识」：以唯识思想深度解析世界模型》</span>，2025。</li>
+  <li><span class="cn">《唯识视域下的人工智能道德对齐：从良知编码到阿赖耶识的哲学审视》</span>，2024。</li>
+</ol>
+
+<footer>
+  <span>宗教化意识分层与 AI 架构的理论溯源 · 文献研究报告</span>
+  <span>2026-09-28 · 内部研究文档</span>
+</footer>
+
+</div>
+</body>
+</html>

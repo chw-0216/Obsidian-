@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>微信聊天记录 · 全人物资产总览</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<style>
+  :root{--bg:#f6f7f9;--panel:#fff;--ink:#1b1e23;--ink2:#5b6472;--ink3:#8d95a3;
+    --line:#e5e8ed;--a:#3b6fd4;--b:#c9465f;--warn:#d9881c;--good:#2b9a68;--g:#7c5cd6;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+    line-height:1.7;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1140px;margin:0 auto;padding:46px 26px 90px}
+  header{border-bottom:3px solid var(--ink);padding-bottom:20px;margin-bottom:8px}
+  h1{margin:0 0 8px;font-size:28px;letter-spacing:-.4px}
+  .sub{color:var(--ink2);font-size:14px}
+  .pill{display:inline-block;background:var(--ink);color:#fff;font-size:11.5px;padding:3px 10px;border-radius:20px;margin-right:7px}
+  .pill.a{background:var(--a)} .pill.b{background:var(--b)} .pill.g{background:var(--good)}
+  h2{font-size:18px;margin:42px 0 4px;padding-left:12px;border-left:4px solid var(--a)}
+  h2 .n{color:var(--ink3);font-weight:600;font-size:13px;margin-right:6px}
+  h3{font-size:14.5px;margin:22px 0 4px;color:var(--ink2)}
+  .cards{display:grid;grid-template-columns:repeat(5,1fr);gap:11px;margin:18px 0}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:14px 15px}
+  .card .k{font-size:11.5px;color:var(--ink3)}
+  .card .v{font-size:23px;font-weight:700;margin:4px 0 1px;font-variant-numeric:tabular-nums}
+  .card .d{font-size:11.5px;color:var(--ink3)}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:18px 20px;margin:15px 0}
+  .chartbox{position:relative;height:300px}.chartbox.tall{height:440px}
+  table{width:100%;border-collapse:collapse;font-size:13px;margin:9px 0}
+  th,td{padding:7px 9px;text-align:left;border-bottom:1px solid var(--line)}
+  th{color:var(--ink3);font-weight:600;font-size:11.5px;background:#fafbfc;position:sticky;top:0}
+  td.num{font-variant-numeric:tabular-nums;text-align:right}
+  tr:hover td{background:#fafbfc}
+  .verdict{background:linear-gradient(135deg,#f5f8ff,#fff);border:1px solid #d6e2f7;
+    border-left:4px solid var(--a);border-radius:11px;padding:16px 20px;margin:16px 0}
+  .verdict h3{margin-top:0;color:var(--a);font-size:15px}
+  .verdict.r{border-left-color:var(--b);border-color:#f2d1da;background:linear-gradient(135deg,#fff5f7,#fff)}
+  .verdict.r h3{color:var(--b)}
+  .verdict.g{border-left-color:var(--good);border-color:#cdeade;background:linear-gradient(135deg,#f2fbf7,#fff)}
+  .verdict.g h3{color:var(--good)}
+  .verdict.w{border-left-color:var(--warn);border-color:#f0e2c6;background:linear-gradient(135deg,#fffaf0,#fff)}
+  .verdict.w h3{color:var(--warn)}
+  .tag{display:inline-block;font-size:10.5px;padding:2px 7px;border-radius:4px;background:#eef2f7;color:var(--ink2);margin-right:4px}
+  .tag.p{background:#e4ecfb;color:var(--a)} .tag.g{background:#e8f6f0;color:var(--good)}
+  .tag.w{background:#fdf4e3;color:var(--warn)} .tag.r{background:#fde8ed;color:var(--b)}
+  ul,ol{margin:7px 0;padding-left:21px} li{margin:4px 0}
+  .foot{margin-top:46px;padding-top:14px;border-top:1px solid var(--line);color:var(--ink3);font-size:11.5px}
+  .scroll{max-height:640px;overflow-y:auto;border:1px solid var(--line);border-radius:9px}
+  @media(max-width:820px){.cards{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>微信聊天记录 · 全人物资产总览</h1>
+  <div class="sub">
+    <span class="pill">29 个数据源</span>
+    <span class="pill a">去重后 25 会话</span>
+    <span class="pill b">46,427 条</span>
+    <span class="pill g">跨 2024-12 ~ 2026-09</span>
+    全盘扫描 · 本地脱机
+  </div>
+</header>
+
+<div class="cards">
+  <div class="card"><div class="k">原始文件总量</div><div class="v">63,039</div><div class="d">含多副本重复</div></div>
+  <div class="card"><div class="k">去重后</div><div class="v">46,427</div><div class="d">25 个独立会话</div></div>
+  <div class="card"><div class="k">最大数据集</div><div class="v">15,962</div><div class="d">刘丽萍老师</div></div>
+  <div class="card"><div class="k">时间跨度</div><div class="v">628<span style="font-size:14px">天</span></div><div class="d">刘丽萍老师</div></div>
+  <div class="card"><div class="k">群聊 / 私聊</div><div class="v">14 / 11</div><div class="d">独立会话中</div></div>
+</div>
+
+<h2><span class="n">01</span>数据规模排行</h2>
+<div class="panel">
+  <div class="chartbox tall"><canvas id="rank"></canvas></div>
+</div>
+
+<h2><span class="n">02</span>完整清单（按条数降序）</h2>
+<div class="scroll">
+<table>
+  <thead><tr><th>人物/会话</th><th class="num">条数</th><th class="num">我</th><th class="num">对方</th><th class="num">我字数</th><th class="num">对方字数</th><th>类型</th><th>时间区间</th><th class="num">跨度</th></tr></thead>
+  <tbody id="tb"></tbody>
+</table>
+</div>
+
+<h2><span class="n">03</span>三组数据的分野</h2>
+
+<div class="verdict">
+  <h3>▍第一梯队：工作/学术主线（万条级）</h3>
+  <table style="font-size:13px">
+    <thead><tr><th>对象</th><th class="num">条数</th><th>性质</th><th>说明</th></tr></thead>
+    <tbody>
+      <tr><td><b>刘丽萍老师</b></td><td class="num">15,962</td><td><span class="tag p">群聊(3人)</span></td><td>全样本最大，跨度 628 天（2024-12 起），对方发言 8698 条 / 230 万字，是最高产的对话者</td></tr>
+      <tr><td><b>导 / 陈晔导师</b></td><td class="num">7,026 / 6,925</td><td><span class="tag p">群聊(3人)</span></td><td>同一导师的两份导出（副本，时间截止不同）。从 2025-02 至今，是持续最久的工作关系</td></tr>
+      <tr><td><b>陈昶文</b></td><td class="num">6,275</td><td><span class="tag g">私聊</span></td><td>纯一对一，6 个月 6275 条，密度极高（日均 32 条）。你发 2811 条 / 她发 3464 条 —— <b>对方条数高于你</b></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="verdict r">
+  <h3>▍第二梯队：情感主线</h3>
+  <table style="font-size:13px">
+    <thead><tr><th>对象</th><th class="num">条数</th><th>最新导出</th><th>说明</th></tr></thead>
+    <tbody>
+      <tr><td><b>笑一</b></td><td class="num">5,625</td><td>2026-09-25</td><td>有 <b>4 个副本</b>（5625 最新 / 3852 / 3189 / 2880），我发 2950 条、对方 2675 条。字数 85357 : 39634，仍是 2.15:1</td></tr>
+    </tbody>
+  </table>
+  <p style="margin-bottom:0">⚠️ <b>笑一的数据散落在 4 个位置</b>，最新版在 `Desktop\笑一\01_最新聊天记录\`（5625 条，9/25 导出），比 DSH 工作区的 3852 条多了 <b>1773 条</b>。DSH 工作区那份已滞后近一个月。</p>
+</div>
+
+<div class="verdict w">
+  <h3>▍第三梯队：工作/项目/其他关系（千条级以下）</h3>
+  <p>这些多为特定场景，条数少但各有用途：</p>
+  <ul>
+    <li><b>项目类</b>：Movers立项2群(905)、Movers报名群3(266)、央美美育工作站群(428)、乡村美育工作日志群(171)、2026版画创作与实践群(256)、洞台村装置计划群(101)、石版技法初步_武宏老师群(139)</li>
+    <li><b>工作关系私聊</b>：关宇佳关总(539)、井邻张宝24H总管(159)、武宏老师(103)、姜涛老师(133)、王华青(99)、马慧楠(261)</li>
+    <li><b>亲友/其他</b>：郭师傅(39)、刘华赞(21)、米雪(17)、吴显(8)、华天雪(3)</li>
+  </ul>
+  <p style="margin-bottom:0">按你的项目归档：这些基本都归到 `中期汇报_2026-09`（毕设/井邻项目）和 `DSH工作区\02_项目`。</p>
+</div>
+
+<h2><span class="n">04</span>与你对话最多的人：双向字数对比</h2>
+<p>「谁字数多」能反映对话的主导方。很有意思的是 —— <b>不同人的格局完全相反</b>。</p>
+<div class="panel">
+  <div class="chartbox"><canvas id="balance"></canvas></div>
+</div>
+
+<div class="verdict">
+  <h3>观察：你在不同关系里的"输出姿态"完全不同</h3>
+  <ul style="margin-bottom:0">
+    <li><b>笑一</b>：你 85357 字 vs 她 39634 字 → <span class="tag r">2.15 : 1 你主导</span>（情感表达型）</li>
+    <li><b>陈昶文</b>：你 109601 字 vs 他 58767 字 → <span class="tag r">1.86 : 1 你主导</span></li>
+    <li><b>陈晔导师</b>：你 323181 字 vs 导师 357940 字 → <span class="tag g">0.90 : 1 对方主导</span>（你汇报，导师指导）</li>
+    <li><b>关宇佳关总</b>：你 2773 字 vs 对方 20990 字 → <span class="tag g">0.13 : 1 对方主导</span>（工作指派场景）</li>
+    <li><b>Movers立项2群</b>：你 0 字 vs 群 119 万字 → 纯围观群</li>
+  </ul>
+</div>
+
+<p style="margin-top:14px">→ <b>你和"工作关系"是接收方，和"情感关系"是输出方。</b>这个分野和笑一的 W-PRISM 分析结论一致：你在情感关系里的高输出，是你的模式，不是对方的问题。</p>
+
+<h2><span class="n">05</span>数据治理建议</h2>
+
+<div class="verdict w">
+  <h3>⚠️ 发现的问题</h3>
+  <ol style="margin-bottom:0">
+    <li><b>同一人物多副本，版本混乱</b>：笑一有 4 份（2880/3189/3852/5625）、关宇佳有 3 份（469/497/539）、陈晔/导有 2 份（6691/6925/7026）。<b>没有统一的"最新版"标记</b>，容易读到过期数据。</li>
+    <li><b>数据分散在 6+ 个位置</b>：`Desktop\笑一\`、`Desktop\DSH工作区\`、`Desktop\07_聊天记录分析\`、`Desktop\中期汇报_2026-09\`、`Desktop\10_个人资料与旧文件\工作日志\`、`Documents\ChatArchive\`。</li>
+    <li><b>两份格式不统一</b>：大部分是 `{displayName, messages:[...]}` 的 dict 格式，但也有一批是纯 list 格式（陈昶文、关宇佳、米雪、Movers 等）—— 导致很多现成脚本读不了。</li>
+    <li><b>ds_个人资料与旧文件\工作日志\ 目录下还混着 100+ 个 .CR2 相机原图</b>（每个 60MB+，总计可能数个 GB）—— 这个目录定位混乱。</li>
+  </ol>
+</div>
+
+<div class="verdict g">
+  <h3>✓ 建议的统一结构</h3>
+  <p>你已经有 `Documents\ChatArchive\` 的四层结构（00_raw / 01_index / 02_ai_workspace / 03_reviews），建议作为<b>唯一归档中心</b>：</p>
+  <pre style="background:#f4f6f9;padding:12px 14px;border-radius:8px;font-size:12.5px;overflow-x:auto;line-height:1.6">ChatArchive/
+├── 00_raw/                    # 原始导出，只读
+│   └── 2026/
+│       ├── 笑一_20260925/     # ← 从 Desktop\笑一 迁入（最新版）
+│       ├── 陈晔导师_20260915/
+│       ├── 陈昶文/
+│       └── ...
+├── 01_index/
+│   └── all_people_index.json  # ← 本次生成的统一索引
+├── 02_ai_workspace/           # 脱敏分析片段
+└── 03_reviews/                # 复盘成果</pre>
+  <p style="margin-bottom:0">好处：① 单一入口；② 每个记录带日期戳，天然区分版本；③ 所有分析脚本指向同一路径，不再有"读到过期数据"的问题。</p>
+</div>
+
+<div class="verdict r">
+  <h3>🔒 安全提醒（重复上次）</h3>
+  <p style="margin-bottom:0">`DSH工作区\03_技术\废弃_监控脚本\` 含<b>明文 token</b>，你自己的索引里标注了"勿启用，建议改密"。这次扫盘时确认它仍在。建议尽快：① 改掉那个 token 对应的密码；② 删除或加密该目录。</p>
+</div>
+
+<h2><span class="n">06</span>可复用的分析能力</h2>
+<div class="panel" style="font-size:13.5px;color:#5b6472">
+  <p>本次已产出的脚本，全部可对不同人物直接复用：</p>
+  <table style="font-size:13px">
+    <thead><tr><th>脚本</th><th>作用</th><th>适用</th></tr></thead>
+    <tbody>
+      <tr><td><code>all_people.py</code></td><td>全盘扫描，统一输出所有人物的条数/字数/跨度/类型</td><td>全部（自动兼容 dict 与 list 两种格式）</td></tr>
+      <tr><td><code>dsh_continue.py</code></td><td>W-PRISM 框架指标（称呼字典、双轨、沉默期打破者）</td><td>情感类（笑一）</td></tr>
+      <tr><td><code>analyze.py</code></td><td>10 维度通用分析（延迟/连发/亲昵词/情绪/深夜）</td><td>任意单人对聊天</td></tr>
+    </tbody>
+  </table>
+  <p style="margin-bottom:0"><b>下一步可做</b>：① 把陈昶文（6275 条私聊）用 analyze.py 跑一遍 —— 它是你第二大的私人对话，从未被分析过；② 把陈晔导师的 6925 条做「工作成果时间线」—— 你在中期汇报里已经需要这个；③ 统一归档结构后重跑全量。</p>
+</div>
+
+<div class="foot">
+  生成于 2026-09-26 · 扫描位置：Desktop 全盘 + Documents · 数据全程本地处理<br>
+  完整结构化索引：<code>wechat-analysis/all_people_index.json</code> ｜ 扫描脚本：<code>all_people.py</code>
+</div>
+
+</div>
+
+<script>
+const R=[
+["刘丽萍老师",15962,7264,8698,1151530,2295575,"群",628],
+["导(桌面副本)",7026,4605,2421,324918,370626,"群",579],
+["陈晔导师",6925,4538,2387,323181,357940,"群",568],
+["陈昶文",6275,2811,3464,109601,58767,"私",196],
+["笑一",5625,2950,2675,85357,39634,"群",140],
+["Movers立项2群",905,0,905,0,1199680,"群",56],
+["关宇佳(桌面)",539,314,225,3232,21059,"群",75],
+["央美美育工作站群",428,40,388,3204,30773,"群",107],
+["Movers报名群3",266,1,265,33,112677,"群",92],
+["马慧楠",261,162,99,4166,2600,"群",577],
+["2026版画创作与实践群",256,5,251,20,20790,"群",65],
+["乡村美育工作日志群",171,10,161,2526,35327,"群",174],
+["井邻张宝24H总管",159,107,52,1199,38362,"私",290],
+["石版技法初步_武宏老师群",139,2,137,6,14070,"群",37],
+["姜涛老师",133,81,52,9632,3278,"私",7],
+["武宏老师",103,61,42,1262,7855,"私",109],
+["洞台村装置计划群",101,1,100,4,47486,"群",182],
+["王华青",99,66,33,2165,8206,"私",42],
+["郭师傅",39,29,10,4397,1661,"私",24],
+["刘华赞(赞赞姐)",21,14,7,197,112,"私",605],
+["米雪",17,12,5,135,633,"私",21],
+["吴显(北京台网管)",8,6,2,4165,33,"私",24],
+["华天雪",3,2,1,77,38,"私",1]
+];
+
+Chart.defaults.color='#8d95a3';
+Chart.defaults.font.family='-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif';
+Chart.defaults.font.size=11.5;
+const GRID='#e5e8ed';
+
+// 排行
+new Chart(document.getElementById('rank'),{
+  type:'bar',
+  data:{labels:R.map(r=>r[0]),
+    datasets:[{label:'消息条数',data:R.map(r=>r[1]),
+      backgroundColor:R.map(r=> r[7]>=150?'#3b6fd4': r[7]>=70?'#7c5cd6':'#9aa7bb'),
+      borderRadius:4}]},
+  options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{display:false},
+      tooltip:{callbacks:{afterLabel:c=>{const r=R[c.dataIndex];return [`我 ${r[2]} / 对方 ${r[3]}`,`跨度 ${r[7]} 天 (${r[8]||''})`];}}}},
+    scales:{x:{type:'logarithmic',grid:{color:GRID},title:{display:true,text:'条数（对数轴）'}},
+      y:{grid:{display:false},ticks:{font:{size:11}}}}}
+});
+
+// 双向字数对比（取私聊/主要对话）
+const B=[
+["笑一",85357,39634],
+["陈昶文",109601,58767],
+["陈晔导师",323181,357940],
+["关宇佳关总",2773,20990],
+["马慧楠",4166,2600],
+["武宏老师",1262,7855],
+["姜涛老师",9632,3278],
+["井邻张宝",1199,38362],
+["王华青",2165,8206]
+];
+new Chart(document.getElementById('balance'),{
+  type:'bar',
+  data:{labels:B.map(b=>b[0]),
+    datasets:[
+      {label:'我的字数',data:B.map(b=>b[1]),backgroundColor:'rgba(201,70,95,.65)',borderRadius:4},
+      {label:'对方字数',data:B.map(b=>b[2]),backgroundColor:'rgba(59,111,212,.65)',borderRadius:4}
+    ]},
+  options:{responsive:true,maintainAspectRatio:false,
+    plugins:{legend:{labels:{boxWidth:11,boxHeight:11}},
+      tooltip:{callbacks:{afterBody:(it)=>{const b=B[it[0].dataIndex];
+        return '我:对方 = '+(b[1]/b[2]).toFixed(2)+' : 1';}}}},
+    scales:{x:{stacked:false,grid:{display:false},ticks:{maxRotation:45}},
+      y:{type:'logarithmic',grid:{color:GRID},title:{display:true,text:'字数（对数轴）'}}}}
+});
+
+// 表格
+const tagOf=(t)=>t==='私'?'<span class="tag g">私聊</span>':'<span class="tag p">群聊</span>';
+document.getElementById('tb').innerHTML=R.map(r=>{
+  const cls = r[1]>5000?'style="font-weight:600"':'';
+  return `<tr>
+    <td ${cls}>${r[0]}</td>
+    <td class="num">${r[1].toLocaleString()}</td>
+    <td class="num">${r[2].toLocaleString()}</td>
+    <td class="num">${r[3].toLocaleString()}</td>
+    <td class="num">${r[4].toLocaleString()}</td>
+    <td class="num">${r[5].toLocaleString()}</td>
+    <td>${tagOf(r[6])}</td>
+    <td style="font-size:12px">${r[8]||'—'}</td>
+    <td class="num">${r[7]}</td>
+  </tr>`;
+}).join('');
+</script>
+</body>
+</html>
