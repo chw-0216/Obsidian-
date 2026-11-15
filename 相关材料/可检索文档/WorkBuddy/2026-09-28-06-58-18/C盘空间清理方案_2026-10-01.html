@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>C 盘空间清理方案 · 2026-10-01</title>
+<style>
+  :root{
+    --ink:#1f1f1e; --ink2:#5f5e5a; --ink3:#888780;
+    --line:#e5e3dc; --line2:#d3d1c7;
+    --bg:#ffffff; --bg2:#faf9f6;
+    --acc:#993c1d; --acc-bg:#faece7;
+    --ok:#2f6b4f; --ok-bg:#eaf3ee;
+    --blue:#2c5f8a; --blue-bg:#eaf0f6;
+    --warnbg:#fff8e6; --warnbd:#e8d9a8;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    font-size:14px;line-height:1.7}
+  .wrap{max-width:980px;margin:0 auto;padding:48px 32px 80px}
+  header{border-bottom:2px solid var(--ink);padding-bottom:20px;margin-bottom:28px}
+  .kicker{font-size:12px;letter-spacing:.14em;color:var(--ink3);margin-bottom:10px}
+  h1{font-size:23px;font-weight:600;margin:0 0 8px;letter-spacing:-.01em}
+  .sub{font-size:13px;color:var(--ink2);margin:0}
+  h2{font-size:15px;font-weight:600;margin:42px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--line2)}
+  h3{font-size:13.5px;font-weight:600;margin:24px 0 8px}
+  p{margin:0 0 12px}
+  .danger{background:#fdf0ed;border:2px solid #d9534f;border-radius:6px;padding:16px 18px;margin:0 0 20px}
+  .danger .t{font-weight:700;color:#b03a35;margin-bottom:6px;font-size:14px}
+  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:13px}
+  th{text-align:left;font-weight:600;color:var(--ink2);padding:8px 10px;border-bottom:1px solid var(--line2);white-space:nowrap}
+  td{padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+  td.num{font-variant-numeric:tabular-nums;white-space:nowrap;text-align:right}
+  tbody tr:last-child td{border-bottom:none}
+  .hit{color:var(--acc);font-weight:600}
+  .dim{color:var(--ink3)}
+  .ok{color:var(--ok);font-weight:600}
+  code{background:var(--bg2);border:1px solid var(--line);border-radius:3px;padding:1px 5px;font-size:12px;word-break:break-all}
+  .note{border:1px solid var(--line2);border-radius:6px;padding:14px 16px;margin:14px 0;background:var(--bg2)}
+  .note .t{font-weight:600;margin-bottom:6px;font-size:13px}
+  .good{border-color:#c9dcd0;background:var(--ok-bg)} .good .t{color:var(--ok)}
+  .info{border-color:#c5d5e4;background:var(--blue-bg)} .info .t{color:var(--blue)}
+  .warn{border-color:var(--warnbd);background:var(--warnbg)} .warn .t{color:#8a6d1f}
+  ul{margin:8px 0 12px;padding-left:20px} li{margin-bottom:5px}
+  .pill{display:inline-block;font-size:11px;padding:1px 7px;border-radius:9px;border:1px solid var(--line2);color:var(--ink2);vertical-align:1px;white-space:nowrap}
+  .pill.k{border-color:#c9dcd0;background:var(--ok-bg);color:var(--ok)}
+  .pill.d{border-color:#e8c9c0;background:var(--acc-bg);color:var(--acc)}
+  .pill.q{border-color:#c5d5e4;background:var(--blue-bg);color:var(--blue)}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:18px 0}
+  .card{border:1px solid var(--line2);border-radius:8px;padding:16px;background:var(--bg2)}
+  .card .n{font-size:24px;font-weight:700;color:var(--acc);font-variant-numeric:tabular-nums;line-height:1.2}
+  .card .l{font-size:12px;color:var(--ink2);margin-top:4px}
+  .bar{display:grid;grid-template-columns:1fr 120px;gap:10px;align-items:center;margin-bottom:7px;font-size:13px}
+  .bar .track{height:16px;background:#f2efe8;border-radius:3px;overflow:hidden}
+  .bar .fill{height:100%;border-radius:3px}
+  footer{margin-top:56px;padding-top:20px;border-top:1px solid var(--line2);font-size:12px;color:var(--ink3)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="kicker">磁盘清理 · 只读扫描</div>
+  <h1>C 盘空间清理方案（2026-10-01）</h1>
+  <p class="sub">目标：释放约 <strong>20 GB</strong> · 扫描方式：<code>os.scandir</code> 递归，全程只读 · <strong>尚未删除任何文件</strong></p>
+</header>
+
+<div class="grid">
+  <div class="card"><div class="n">456 GB</div><div class="l">C 盘总容量</div></div>
+  <div class="card"><div class="n">447 GB</div><div class="l">已用（98%）</div></div>
+  <div class="card"><div class="n">9.0 GB</div><div class="l">剩余 ← 告急</div></div>
+</div>
+
+<div class="danger">
+  <div class="t">⚠️ 此操作非常危险，可能导致不可逆的数据丢失！</div>
+  <p style="margin:0 0 8px">下面所有删除动作<strong>默认走 Windows 回收站</strong>（可还原），<strong>不用 <code>rm</code> / <code>del /F</code> 直删</strong>。</p>
+  <p style="margin:0">分档执行，<strong>每档完成后核对剩余空间</strong>，再决定是否继续下一档。</p>
+</div>
+
+<h2>一、空间去哪了</h2>
+
+<div class="bar"><div>AppData（应用数据 + 缓存）</div><div><div class="track"><div class="fill" style="width:100%;background:#993c1d"></div></div></div></div>
+<div class="bar"><div>Documents（含 AI-archive 34GB）</div><div><div class="track"><div class="fill" style="width:87%;background:#b5533a"></div></div></div></div>
+<div class="bar"><div>Desktop（含聊天记录分析 31.8GB）</div><div><div class="track"><div class="fill" style="width:85%;background:#c96a4f"></div></div></div></div>
+<div class="bar"><div>xwechat_files（微信实时数据）</div><div><div class="track"><div class="fill" style="width:47%;background:#888780"></div></div></div></div>
+<div class="bar"><div>.ollama（本地大模型）</div><div><div class="track"><div class="fill" style="width:12%;background:#888780"></div></div></div></div>
+
+<table>
+  <thead><tr><th>目录</th><th class="num">大小</th><th>说明</th></tr></thead>
+  <tbody>
+    <tr><td><code>C:\Users\wardc\AppData</code></td><td class="num hit">66.8 GB</td><td>Local 43.7 + Roaming 22.8 —— <strong>缓存重灾区</strong></td></tr>
+    <tr><td><code>C:\Users\wardc\Documents</code></td><td class="num hit">58.4 GB</td><td><code>New project gpt</code> 35（AI-archive 34.4）· <code>Codex</code> 10</td></tr>
+    <tr><td><code>C:\Users\wardc\Desktop</code></td><td class="num hit">56.8 GB</td><td><code>07_聊天记录分析</code> 31.8 · <code>DSH工作区</code> 7.3 · <code>10_个人资料</code> 6.4</td></tr>
+    <tr><td><code>C:\Users\wardc\xwechat_files</code></td><td class="num">31.3 GB</td><td>微信实时数据 —— <strong>不能动</strong></td></tr>
+    <tr><td><code>C:\Users\wardc\.ollama</code></td><td class="num">7.8 GB</td><td>本地大模型 —— <strong>按需保留</strong></td></tr>
+  </tbody>
+</table>
+
+<h2>二、第一档 · 安全缓存（约 14.4 GB）</h2>
+
+<p class="dim">全部是「缓存 / 临时 / 安装包 / 日志」，删了程序会自己重建或不再需要。</p>
+
+<table>
+  <thead><tr><th>#</th><th>项目</th><th class="num">释放</th><th>为什么安全</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td><code>AppData\Local\Temp</code></td><td class="num hit">4.9 GB</td><td>系统临时文件；占用中的会自动跳过</td></tr>
+    <tr><td>2</td><td><code>…\Google\Chrome\User Data\OptGuideOnDeviceModel</code></td><td class="num hit">4.0 GB</td><td><strong>Chrome 的本地 AI 模型</strong>（Gemini Nano）—— 不用它就会一直白占；需要时 Chrome 会重下</td></tr>
+    <tr><td>3</td><td><code>AppData\Local\Microsoft\WinGet</code></td><td class="num">1.1 GB</td><td>包管理器下载缓存</td></tr>
+    <tr><td>4</td><td><code>AppData\Local\pip</code></td><td class="num">776 MB</td><td>pip 下载缓存（<code>pip cache purge</code> 即可）</td></tr>
+    <tr><td>5</td><td>桌面安装包 ×4<br><span class="dim">Antigravity IDE.exe · Antigravity-x64.exe · DiscordSetup.exe · GoogleDriveSetup.exe</span></td><td class="num">790 MB</td><td>装完即弃的安装程序</td></tr>
+    <tr><td>6</td><td><code>AppData\Local\0install.net</code></td><td class="num">718 MB</td><td>0install 包缓存</td></tr>
+    <tr><td>7</td><td><code>AppData\Local\@deepseek-aidsh-desktop-updater</code></td><td class="num">552 MB</td><td>更新包残留</td></tr>
+    <tr><td>8</td><td><code>AppData\Roaming\weflow\cache</code></td><td class="num">537 MB</td><td>WeFlow 浏览器缓存（非聊天数据）</td></tr>
+    <tr><td>9</td><td><code>AppData\Local\WeFlow_anchor_backups</code><br><span class="dim">保留最新 1 份</span></td><td class="num">474 MB</td><td>WeFlow 每次更新前的 Runtime/Security/State 快照，共 60+ 份</td></tr>
+    <tr><td>10</td><td>WeFlow 安装包 ×2<br><span class="dim">weflow-updater\installer.exe（8/8）· weflow-updater.bak\installer.exe（7/23）</span></td><td class="num">405 MB</td><td>旧安装程序</td></tr>
+    <tr><td>11</td><td><code>AppData\Roaming\Tencent\Logs</code></td><td class="num">131 MB</td><td>日志文件</td></tr>
+  </tbody>
+</table>
+
+<div class="note good">
+  <div class="t">第一档小计 ≈ 14.4 GB · 零信息损失</div>
+  <p style="margin:0">不含任何聊天记录、文档、照片。第 2 项需<strong>先关闭 Chrome</strong>。</p>
+</div>
+
+<h2>三、第二档 · 应用缓存（约 5.6 GB）</h2>
+
+<p class="dim">清掉后相关软件首次打开会稍慢，功能不受影响。</p>
+
+<table>
+  <thead><tr><th>#</th><th>项目</th><th class="num">释放</th><th>注意</th></tr></thead>
+  <tbody>
+    <tr><td>12</td><td>Chrome 各 Profile 的 <code>Cache</code> / <code>Code Cache</code> / <code>Service Worker</code></td><td class="num">~2.0 GB</td><td><span class="pill q">需关闭 Chrome</span> 只清缓存，不动书签/密码/历史</td></tr>
+    <tr><td>13</td><td><code>AppData\Local\Microsoft\Teams</code></td><td class="num">778 MB</td><td>Teams 缓存</td></tr>
+    <tr><td>14</td><td><code>AppData\Local\Microsoft\Edge</code></td><td class="num">504 MB</td><td>Edge 缓存</td></tr>
+    <tr><td>15</td><td><code>AppData\Roaming\LarkShell\update</code></td><td class="num">105 MB</td><td>飞书更新包</td></tr>
+    <tr><td>16</td><td><code>AppData\Local\Doubao\User Data</code></td><td class="num">829 MB</td><td><span class="pill q">需确认</span> 豆包缓存</td></tr>
+    <tr><td>17</td><td><code>AppData\Roaming\baidu\BaiduNetdisk</code> 缓存部分</td><td class="num">~1.4 GB</td><td><span class="pill q">需确认</span> 网盘缓存 vs 未上传文件</td></tr>
+  </tbody>
+</table>
+
+<div class="note info">
+  <div class="t">第一 + 第二档 ≈ 20 GB → 正好达标</div>
+</div>
+
+<h2>四、第三档 · 需你拍板（最大的一块）</h2>
+
+<h3>A. 微信原始数据备份 · 19.1 GB</h3>
+
+<p><code>桌面\07_聊天记录分析\微信聊天记录清理\07_WeFlow原始导出_2026-07-24\02_原始数据备份\</code></p>
+
+<table>
+  <thead><tr><th>内容</th><th>说明</th></tr></thead>
+  <tbody>
+    <tr><td><code>xwechat_files</code></td><td>新版微信客户端数据的<strong>只读副本</strong>（2026-07-24 时点）</td></tr>
+    <tr><td><code>WeChat Files_旧版</code></td><td>旧版微信数据副本</td></tr>
+  </tbody>
+</table>
+
+<div class="note warn">
+  <div class="t">⚠️ 源数据都还在，但有一个真实风险</div>
+  <ul style="margin:6px 0 0">
+    <li>✅ <code>C:\Users\wardc\xwechat_files</code>（31.3 GB）仍在</li>
+    <li>✅ <code>C:\Users\wardc\Documents\WeChat Files</code>（4.0 GB）仍在</li>
+    <li>⚠️ 但微信会<strong>自动清理</strong>超期的图片/视频 —— 备份里 7-24 之前的媒体，<strong>源目录里可能已经被清掉了</strong></li>
+  </ul>
+</div>
+
+<h3>B. 同类大件（备选）</h3>
+
+<table>
+  <thead><tr><th>项目</th><th class="num">大小</th><th>判断</th></tr></thead>
+  <tbody>
+    <tr><td><code>07_聊天记录分析\…\01_WeFlow可读导出</code></td><td class="num">12.0 GB</td><td>3,772 会话含媒体（658 个是公众号）—— <strong>文字可保、媒体可删</strong></td></tr>
+    <tr><td><code>Documents\Codex</code> 2026-07/08 旧日期</td><td class="num">~5 GB</td><td>按日期分目录的临时工作区，旧的可清</td></tr>
+    <tr><td><code>Documents\New project gpt\AI-archive</code></td><td class="num hit">34.4 GB</td><td><strong>你的 AI 会话库 —— 建议保留</strong></td></tr>
+    <tr><td><code>Desktop\10_个人资料与旧文件</code></td><td class="num">6.4 GB</td><td>需你本人过目</td></tr>
+    <tr><td><code>Desktop\DSH工作区</code></td><td class="num">7.3 GB</td><td>需你本人过目</td></tr>
+  </tbody>
+</table>
+
+<h2>五、明确「不能动」的</h2>
+
+<table>
+  <thead><tr><th>项目</th><th class="num">大小</th><th>原因</th></tr></thead>
+  <tbody>
+    <tr><td><code>AppData\Roaming\Adobe\Common\Motion Graphics Templates</code></td><td class="num">3.7 GB</td><td><strong>不是缓存，是 PR/AE 的模板素材库</strong> —— 删了就没模板</td></tr>
+    <tr><td><code>AppData\Local\JianyingPro\Apps\10.1.0.13849</code></td><td class="num">2.2 GB</td><td><strong>剪映程序本体</strong>（当前唯一版本）</td></tr>
+    <tr><td><code>Documents\WeFlow\models</code></td><td class="num">229 MB</td><td>语音识别等模型</td></tr>
+    <tr><td><code>xwechat_files</code></td><td class="num">31.3 GB</td><td>微信实时数据</td></tr>
+    <tr><td>Chrome <code>Profile 1</code> / <code>Profile 10</code> 等</td><td class="num">2.4 GB</td><td>书签 / 密码 / 历史 —— 只清里面的 Cache 子目录</td></tr>
+  </tbody>
+</table>
+
+<div class="note warn">
+  <div class="t">隐私等级：最高</div>
+  <p style="margin:0">本页含本机目录结构与个人文件清单。仅本地保存，不外传。</p>
+</div>
+
+<footer>
+  C 盘清理方案 · 2026-10-01 · 扫描工具 <code>tools\scan_disk_fast.py</code>（只读）<br>
+  执行方式：Windows 回收站 · 分档执行 · 每档后核对
+</footer>
+
+</div>
+</body>
+</html>

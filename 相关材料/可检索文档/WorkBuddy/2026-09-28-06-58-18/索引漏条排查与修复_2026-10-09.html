@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>索引漏条排查与修复 · 2026-10-09</title>
+<style>
+  :root{
+    --bg:#f7f8fa; --panel:#ffffff; --ink:#1b1f24; --ink2:#4a5361; --ink3:#8a94a3;
+    --line:#e3e7ed; --line2:#eef1f5;
+    --red:#c0392b; --redbg:#fdf1ef;
+    --amber:#9a6700; --amberbg:#fff8e6;
+    --green:#1f7a4d; --greenbg:#eefaf3;
+    --blue:#1a5fb4; --bluebg:#eef4fd;
+    --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Courier New",monospace;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    font-size:15px; line-height:1.75; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:920px;margin:0 auto;padding:48px 28px 72px}
+  header{border-bottom:2px solid var(--ink);padding-bottom:20px;margin-bottom:32px}
+  .kicker{font-size:12px;letter-spacing:.16em;color:var(--ink3);text-transform:uppercase;margin-bottom:10px}
+  h1{font-size:27px;line-height:1.35;margin:0 0 10px;font-weight:700;letter-spacing:-.01em}
+  .sub{color:var(--ink2);font-size:14px;margin:0}
+  h2{
+    font-size:19px;margin:44px 0 14px;padding-left:12px;
+    border-left:4px solid var(--ink);font-weight:700;letter-spacing:-.01em;
+  }
+  h3{font-size:15px;margin:26px 0 10px;color:var(--ink2);font-weight:600}
+  p{margin:10px 0}
+  ul,ol{margin:10px 0;padding-left:22px}
+  li{margin:5px 0}
+  code{font-family:var(--mono);font-size:13px;background:var(--line2);padding:1.5px 5px;border-radius:4px}
+  pre{
+    background:#1e2228;color:#e6e9ee;border-radius:8px;padding:14px 16px;overflow-x:auto;
+    font-family:var(--mono);font-size:12.5px;line-height:1.65;margin:14px 0;
+  }
+  pre code{background:none;padding:0;color:inherit;font-size:inherit}
+  table{width:100%;border-collapse:collapse;margin:16px 0;font-size:14px}
+  th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line)}
+  th{background:var(--line2);font-weight:600;color:var(--ink2);font-size:13px}
+  td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:22px 0}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px 18px}
+  .card .n{font-size:26px;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-.02em;line-height:1.2}
+  .card .l{font-size:12.5px;color:var(--ink3);margin-top:6px;line-height:1.5}
+  .callout{border-radius:8px;padding:13px 16px;margin:16px 0;font-size:14px;border:1px solid}
+  .callout p:first-child{margin-top:0}
+  .callout p:last-child{margin-bottom:0}
+  .c-red{background:var(--redbg);border-color:#f3cfc9;color:#7d2519}
+  .c-amber{background:var(--amberbg);border-color:#f0e0b4;color:#6b4a00}
+  .c-green{background:var(--greenbg);border-color:#c8ead8;color:#155c39}
+  .c-blue{background:var(--bluebg);border-color:#cfe0f7;color:#154a8a}
+  .tag{display:inline-block;font-size:11.5px;padding:2px 8px;border-radius:20px;font-weight:600;vertical-align:1px}
+  .t-fix{background:var(--greenbg);color:var(--green);border:1px solid #c8ead8}
+  .t-bad{background:var(--redbg);color:var(--red);border:1px solid #f3cfc9}
+  .t-wait{background:var(--amberbg);color:var(--amber);border:1px solid #f0e0b4}
+  .q{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--amber);border-radius:8px;padding:14px 18px;margin:14px 0}
+  .q .qh{font-weight:700;font-size:14px;margin-bottom:6px}
+  footer{margin-top:56px;padding-top:20px;border-top:1px solid var(--line);color:var(--ink3);font-size:12.5px}
+  .muted{color:var(--ink3)}
+  @media (max-width:720px){.cards{grid-template-columns:1fr}.wrap{padding:32px 18px 56px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="kicker">自我理解引擎 · 数据链路 · 排障记录</div>
+  <h1>索引漏条排查与修复</h1>
+  <p class="sub">2026-10-09 ｜ 触发：本人指出「<strong>有内容没进来</strong>」｜ 结论：索引器水位过滤会<strong>静默永久丢</strong>迟到消息</p>
+</header>
+
+<h2>一、结论速览</h2>
+
+<div class="cards">
+  <div class="card">
+    <div class="n">954,855</div>
+    <div class="l">源库（解密后）真实总行数</div>
+  </div>
+  <div class="card">
+    <div class="n">391,663</div>
+    <div class="l">索引库实际条数（<span class="muted">已排除两个刷单群 · 10-09 10:05 清理后</span>）</div>
+  </div>
+  <div class="card">
+    <div class="n" style="color:var(--red)">4</div>
+    <div class="l">本轮补回的真实漏条（含陈晔 2 行）</div>
+  </div>
+</div>
+
+<div class="callout c-green">
+  <p><strong>一句话结论：</strong>漏条是真的，根因是索引器的一条水位过滤语句。已修复，并把「两个刷单群」按你的裁定永久排除。</p>
+</div>
+
+<h2>二、怎么发现的</h2>
+
+<p>写了 <code>_tmp/recon_source_vs_index.py</code>，把<strong>解密源库的每一张 <code>Msg_</code> 表</strong>与<strong>索引库的每一个会话</strong>做逐行对账（行数 + <code>server_id</code> 差集 + <code>create_time</code> 差集）。</p>
+
+<table>
+  <thead><tr><th>源库文件</th><th class="num">表数</th><th class="num">行数</th></tr></thead>
+  <tbody>
+    <tr><td><code>message_0.db</code></td><td class="num">1,199</td><td class="num">850,840</td></tr>
+    <tr><td><code>message_1.db</code></td><td class="num">293</td><td class="num">87,397</td></tr>
+    <tr><td><code>biz_message_0.db</code></td><td class="num">461</td><td class="num">16,610</td></tr>
+    <tr><td><code>biz_message_2.db</code></td><td class="num">2</td><td class="num">8</td></tr>
+    <tr><td><strong>合计</strong></td><td class="num">1,955</td><td class="num"><strong>954,855</strong></td></tr>
+  </tbody>
+</table>
+
+<h2>三、漏了什么</h2>
+
+<h3>3.1 两个大群：整段历史没进索引</h3>
+
+<table>
+  <thead><tr><th>会话</th><th>是什么</th><th class="num">源库</th><th class="num">索引</th><th class="num">缺</th></tr></thead>
+  <tbody>
+    <tr><td><code>25410000808@chatroom</code></td><td>北京家教信息（刷单群）</td><td class="num">527,295</td><td class="num">3,724</td><td class="num" style="color:var(--red)"><strong>523,571</strong></td></tr>
+    <tr><td><code>18440588614@chatroom</code></td><td>2026泰语学习群（暗黑）</td><td class="num">88,493</td><td class="num">397</td><td class="num" style="color:var(--red)"><strong>88,096</strong></td></tr>
+  </tbody>
+</table>
+
+<p>索引里这两群<strong>只有 2026-10-04 10:0x 之后</strong>由增量带进来的部分；<strong>10-04 那次历史全量（388,264 条 / 1,800 会话）没有纳入它们</strong>。查过所有脚本，<strong>不存在排除名单</strong> —— 不是故意排除，是那次全量的漏。</p>
+
+<h3>3.2 五条零散消息：被永久丢掉（含陈晔）</h3>
+
+<table>
+  <thead><tr><th>会话</th><th>时间</th><th>内容</th></tr></thead>
+  <tbody>
+    <tr><td><code>deerluna</code>（陈晔）</td><td>2026-10-02 18:38</td><td><strong>语音/视频通话邀请 · 未应答</strong>（<code>local_type=50</code>，2 行同秒）</td></tr>
+    <tr><td><code>wxid_8368913688512</code></td><td>2026-10-03 15:31</td><td><strong>「我是🍉」</strong></td></tr>
+    <tr><td><code>wxid_1jx5zehp4f9u22</code></td><td>2026-10-03 15:43</td><td><strong>「我是高子宸」</strong></td></tr>
+    <tr><td><code>a26347050</code></td><td>2026-10-03 16:44</td><td><strong>「我是吴🌟曼曼」</strong></td></tr>
+  </tbody>
+</table>
+
+<div class="callout c-amber">
+  <p>后三条是<strong>新好友自我介绍</strong>（「我是XXX」）—— 社交拓扑里是有效信息，不是垃圾。陈晔那条是<strong>通话邀请</strong>。</p>
+</div>
+
+<h2>四、根因</h2>
+
+<p><code>index-incremental.py</code> 里这一行：</p>
+
+<pre><code>rows = con.execute(
+    f'SELECT ... FROM "{t}" WHERE create_time &gt; ?',
+    (before_max - 60,)).fetchall()</code></pre>
+
+<p><code>before_max</code> 是<strong>全库最大时间戳</strong>。于是：</p>
+
+<ul>
+  <li>凡「<strong>发送时间早于当时水位、后来才补到源库</strong>」的消息 —— 迟到投递、回补、首次全量遗漏 —— <strong>被永久跳过</strong>；</li>
+  <li>而且<strong>不报错、不计数</strong>，界面看起来完全正常。</li>
+</ul>
+
+<div class="callout c-red">
+  <p><strong>这与「第①层解密要跑两次」是同一类坑：看起来完全正常，静默丢数据。</strong></p>
+  <p>区别只在于：解密那层是「源库写入落在解密之后 15 秒」，索引这层是「消息时间早于水位」。</p>
+</div>
+
+<h2>五、已做的修复</h2>
+
+<table>
+  <thead><tr><th>#</th><th>动作</th><th>状态</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>三层同步重跑（源库 09:21/09:23 有新写入）→ <strong>395,740 → 395,772（+32）</strong></td><td><span class="tag t-fix">已完成</span></td></tr>
+    <tr><td>2</td><td>补回 4 条真实漏条 → <strong>395,772 → 395,776</strong>；<strong>陈晔回到 7,282 条</strong></td><td><span class="tag t-fix">已完成</span></td></tr>
+    <tr><td>3</td><td>索引器新增 <code>NOISE_SESSIONS</code>：两个刷单群<strong>默认排除</strong>，不再进索引</td><td><span class="tag t-fix">已落地</span></td></tr>
+    <tr><td>4</td><td>索引器新增 <code>--reconcile</code>（水位降 0 全量对账）· <code>--include-noise</code></td><td><span class="tag t-fix">已落地</span></td></tr>
+    <tr><td>5</td><td><code>--reconcile</code> 实测 <strong>18.8 秒 / +0</strong> —— 证明源库↔索引已一致</td><td><span class="tag t-fix">已验证</span></td></tr>
+    <tr><td>6</td><td>口径写入 <code>00-真相源·数字基准.md</code> §一（数字唯一出处）</td><td><span class="tag t-fix">已写入</span></td></tr>
+    <tr><td>7</td><td><strong>清理噪音群残留</strong>：先备份（<code>_tmp/noise_backup_20261009_100422/</code> · sha256 存档）再删 —— <code>messages</code> <strong>-4,121</strong> · <code>messages_fts</code> <strong>-4,124</strong> · <code>sessions</code> <strong>-2</strong>（1,806 → 1,804）· 耗时 4.4 秒</td><td><span class="tag t-fix">已完成</span></td></tr>
+    <tr><td>8</td><td>清理后复跑 <code>--reconcile</code> → <strong>0 新增</strong>（噪音群没回写）· 关键人未受影响（陈晔 7,282 / 笑一 6,646 / 母亲 16,497）</td><td><span class="tag t-fix">已验证</span></td></tr>
+    <tr><td>9</td><td><strong>VACUUM 收缩</strong>：949,657,600 → <strong>922,693,632 字节</strong>（省 <strong>25.7 MB</strong> · 24.3 秒）；收缩后行数复校全部一致</td><td><span class="tag t-fix">已完成</span></td></tr>
+  </tbody>
+</table>
+
+<h3>建议的日常用法</h3>
+
+<pre><code># 常规（每次更新，41 秒）
+cd Desktop\_im_tmp\chattrace
+python -m chattrace.cli data decrypt --account-dir "C:/Users/wardc/xwechat_files/wxid_zn4ozsnn8esr21_db45"
+   ★ 必须跑两次（源库写入若落在解密之后 15 秒，message_*.db 会被判 skip）
+
+cd Desktop\_im_tmp\wechat-mcp && python index-incremental.py
+cd Desktop\_im_tmp\wechat-mcp && python gen_live_json.py
+
+# 每周一次（全量对账，19 秒）
+cd Desktop\_im_tmp\wechat-mcp && python index-incremental.py --reconcile</code></pre>
+
+<h2>六、口径与遗留</h2>
+
+<div class="callout c-blue">
+  <p><strong>★ 数字口径（从此必须声明）：</strong></p>
+  <p>「索引库 <strong>391,663 条</strong>」＝<strong>已排除两个刷单群</strong>，<strong>不等于</strong>微信全量。<br>
+     微信全量（解密源库）＝ <strong>954,855 行（未去重）</strong>；索引侧已按 <code>server_id</code> 去重，<strong>两者口径不同、不能直接相减</strong>。</p>
+</div>
+
+<div class="callout c-green">
+  <p><strong>✅ 已清理（2026-10-09 10:05 · 你裁定「清理掉」）</strong></p>
+  <p>10-04 之后的增量曾把这两个群带进来 <strong>4,121 条</strong>（北京家教信息 3,724 + 泰语群 397），<strong>现已从索引删除</strong>。<br>
+     删除前先导出完整备份（<code>messages.jsonl</code> 7.97 MB + <code>sessions.json</code> + <code>manifest.json</code>，含 sha256），<strong>可逆</strong>。</p>
+  <p class="muted">落点：<code>_tmp/noise_backup_20261009_100422/</code> ｜ 清理后索引 <strong>391,663 条 / 1,804 会话</strong> · 零发言 861/180,130 = 46.0%。</p>
+</div>
+
+<footer>
+  生成于 2026-10-09 ｜ 对账脚本 <code>_tmp/recon_source_vs_index.py</code> · 补录脚本 <code>_tmp/backfill_index.py</code> · 清理脚本 <code>_tmp/noise_cleanup_1_backup.py</code> / <code>noise_cleanup_2_delete.py</code><br>
+  引擎落点：<code>00-真相源·数字基准.md</code> §一 · <code>05-纠偏层.md</code> · 记忆 <code>2026-10-09.md</code> §7
+</footer>
+
+</div>
+</body>
+</html>

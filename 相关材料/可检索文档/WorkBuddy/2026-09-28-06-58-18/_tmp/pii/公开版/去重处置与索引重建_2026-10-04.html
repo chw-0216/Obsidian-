@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>去重处置与索引重建报告 · 2026-10-04</title>
+<style>
+  :root{
+    --bg:#f7f8f7; --card:#ffffff; --line:#e3e6e3; --line2:#eef0ee;
+    --ink:#1c201d; --ink2:#5a625c; --ink3:#8b938d;
+    --teal:#1D9E75; --teal-bg:#eaf6f1;
+    --red:#c0392b; --red-bg:#fdeceb;
+    --amber:#b8860b; --amber-bg:#fdf6e3;
+    --mono:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    font-size:15px; line-height:1.72; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:920px; margin:0 auto; padding:56px 28px 96px}
+  header{border-bottom:2px solid var(--ink); padding-bottom:22px; margin-bottom:40px}
+  .kicker{font-size:12px; letter-spacing:.16em; color:var(--ink3); text-transform:uppercase; margin-bottom:10px}
+  h1{font-size:29px; line-height:1.3; margin:0 0 12px; font-weight:700; letter-spacing:-.01em}
+  .sub{color:var(--ink2); font-size:14px; margin:0}
+  h2{
+    font-size:19px; margin:52px 0 18px; padding-left:12px;
+    border-left:4px solid var(--teal); font-weight:700; letter-spacing:-.005em;
+  }
+  h3{font-size:15.5px; margin:28px 0 10px; font-weight:700; color:var(--ink)}
+  p{margin:0 0 14px}
+  ul,ol{margin:0 0 14px; padding-left:22px}
+  li{margin:6px 0}
+  code{font-family:var(--mono); font-size:13px; background:#eef1ef; padding:1.5px 6px; border-radius:4px; color:#2c3a31}
+  pre{
+    font-family:var(--mono); font-size:12.5px; line-height:1.65; background:#1e2421; color:#d8e2da;
+    padding:16px 18px; border-radius:8px; overflow-x:auto; margin:0 0 16px;
+  }
+  pre .c{color:#7f8f84}
+  pre .k{color:#7fd1ac}
+  .card{background:var(--card); border:1px solid var(--line); border-radius:10px; padding:22px 24px; margin:0 0 18px}
+  .verdict{background:var(--teal-bg); border:1px solid #bfe4d6; border-radius:10px; padding:22px 24px; margin:0 0 26px}
+  .verdict h3{margin-top:0; color:#116b4f}
+  .verdict ol{margin-bottom:0}
+  table{width:100%; border-collapse:collapse; font-size:14px; margin:0 0 8px}
+  th,td{padding:9px 12px; border-bottom:1px solid var(--line2); text-align:left}
+  th{background:#f1f3f1; font-weight:600; font-size:12.5px; color:var(--ink2); letter-spacing:.02em}
+  td.num{text-align:right; font-variant-numeric:tabular-nums; font-family:var(--mono); font-size:13px}
+  tr.total td{border-top:1.5px solid var(--line); font-weight:700}
+  .up{color:var(--teal); font-weight:600}
+  .down{color:var(--red); font-weight:600}
+  .flat{color:var(--ink3)}
+  .tag{display:inline-block; font-size:11.5px; padding:2px 9px; border-radius:99px; font-weight:600; letter-spacing:.02em}
+  .tag.ok{background:var(--teal-bg); color:#116b4f}
+  .tag.warn{background:var(--amber-bg); color:#8a6508}
+  .tag.bad{background:var(--red-bg); color:#96271b}
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:16px}
+  @media(max-width:720px){.grid2{grid-template-columns:1fr}}
+  .mini{font-size:13px; color:var(--ink2)}
+  .mini b{color:var(--ink)}
+  .note{border-left:3px solid var(--line); padding-left:14px; color:var(--ink2); font-size:13.5px; margin:16px 0}
+  .note.amber{border-color:#e0b93c}
+  .note.red{border-color:#d98b82}
+  footer{margin-top:64px; padding-top:20px; border-top:1px solid var(--line); font-size:12.5px; color:var(--ink3)}
+  .files{font-size:13px; font-family:var(--mono); line-height:2; color:var(--ink2)}
+  .files b{font-family:inherit; color:var(--ink); font-weight:600}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="kicker">自我理解引擎 · 数据管线</div>
+  <h1>去重处置与索引重建报告</h1>
+  <p class="sub">2026-10-04 ｜ 对象：<code>_im_tmp\wechat-mcp\index.sqlite</code> ｜ 全链路本地，未出本机 ｜ <span class="tag ok">已扶正并验收</span></p>
+</header>
+
+<div class="verdict">
+  <h3>结论先行</h3>
+  <ol>
+    <li><b>重复不是重点，根因才是。</b>重复 2,450 条（0.77%）对分析结论无影响；但产生它的 bug 不修，就会一直长。</li>
+    <li><b>根因已定位并修复。</b>增量索引脚本的去重键「预载 3 元组、检查 4 元组」，<code>key in seen</code> 永远为假 → 跨轮去重 100% 失效。已改为同形 4 元组。</li>
+    <li><b>索引已重建，真重复归零。</b>新库 <code>index_v2.sqlite</code>：335,681 条 / 1,741 会话 / server_id 精确去重丢弃 <b>0</b>；私聊 +5,382、群聊 +58,085、filehelper +655。</li>
+    <li><b>唯一代价：公众号历史。</b>旧库 68,184 条（2025-08-01 起）里，有 52,836 条来自 WeFlow 导出 JSON；解密库只留到 2026-08-04。源文件仍在磁盘，可随时回灌。</li>
+    <li><b>已扶正并验收通过。</b>新库接任 <code>index.sqlite</code>，旧库留作 <code>index.sqlite.bak-v1-20261004</code> 回滚点；日常工具、增量脚本、全文索引全部实测正常。</li>
+  </ol>
+</div>
+
+<h2>一、问题是什么</h2>
+
+<p>先分清两层。用户看到的是「重复」，实际存在两个独立问题：</p>
+
+<div class="grid2">
+  <div class="card">
+    <h3 style="margin-top:0">问题 A · 重复 2,450 条</h3>
+    <ul style="margin-bottom:0">
+      <li><b>源库 0 重复</b>（947,355 行，server_id 唯一）</li>
+      <li><b>100% 由索引层引入</b></li>
+      <li>集中在群聊（1,728 条）</li>
+      <li>影响：统计类指标虚高 0.77%</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3 style="margin-top:0">问题 B · 覆盖只有 34.3%</h3>
+    <ul style="margin-bottom:0">
+      <li>源库 947,355 vs 索引 324,588</li>
+      <li>缺口 96% 集中在 <b>2 个刷屏群</b>（家教派单）</li>
+      <li>剔除后覆盖 <b>92.5%</b></li>
+      <li>群聊长尾仍有 ~25,000 条没进来</li>
+    </ul>
+  </div>
+</div>
+
+<h3>根因：去重键类型不匹配</h3>
+<p><code>index-incremental.py</code> 里，预载已有消息时用 <b>3 元组</b>，检查新消息时用 <b>4 元组</b>：</p>
+
+<pre><span class="c"># 预载（旧，第 122-124 行）</span>
+for sk, ts, ct in idx.execute(
+        <span class="k">"SELECT session_key, ts, substr(content,1,80) FROM messages WHERE ts &gt;= ?"</span>, ...):
+    seen.add((sk, ts, ct))                    <span class="c"># ← 3 元组</span>
+
+<span class="c"># 检查（第 194 行）</span>
+key = (sid, ts, text[:80], sender)            <span class="c"># ← 4 元组</span>
+if key in seen:                               <span class="c"># ← 永远为 False</span>
+    continue</pre>
+
+<p>两个集合元素的<b>形状不同</b>，所以 <code>key in seen</code> 恒假 —— 跨轮去重从未生效过。其余脆弱点：预载只回溯 3 天、内容截断到 80 字、重读窗口仅 60 秒、<b>从不回填历史</b>。</p>
+
+<h2>二、改了什么</h2>
+
+<table>
+  <thead><tr><th style="width:34%">文件</th><th>改动</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><code>index-incremental.py</code></td>
+      <td>① 预载键改 4 元组 <code>(session_key, ts, content[:80], sender)</code>，与检查键同形<br>
+          ② 索引库若含 <code>server_id</code> 列，增量也写入该列（<code>INSERT OR IGNORE</code> 由唯一键兜底）；老库自动降级 7 列写入</td>
+    </tr>
+    <tr>
+      <td><code>tools\rebuild_index.py</code></td>
+      <td>新增 <code>--exclude=</code> 排除会话；<code>sessions</code> 表列结构与旧库<b>逐列对齐</b>（含 <code>is_channel</code>/<code>source_file</code>），保证增量脚本能继续 upsert</td>
+    </tr>
+    <tr>
+      <td><code>tools\export_all_sessions.py</code></td>
+      <td>读侧去重键由 <code>(ts, content)</code> 改为 <code>(ts, role, sender, typ, content)</code> —— 原键会误杀「群里两人同秒发同样的 <code>[视频]</code>」共 56 组</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>三、重建结果对照</h2>
+
+<p>重建方式：<b>用 <code>server_id</code> 建唯一索引做精确去重</b>（实测 100% 有值且全局唯一；<code>local_id</code> 会在分片间重启，不能当键），全量扫描、无时间窗，靠唯一键去重。耗时 107 秒。</p>
+
+<table>
+  <thead>
+    <tr><th>指标</th><th class="num">旧 index.sqlite</th><th class="num">新 index_v2.sqlite</th><th class="num">变化</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>messages 总条数</td><td class="num">324,588</td><td class="num">335,681</td><td class="num up">+11,093</td></tr>
+    <tr><td>真重复（server_id 去重丢弃）</td><td class="num">2,450</td><td class="num">0</td><td class="num up">清零</td></tr>
+    <tr><td>会话数</td><td class="num">1,829</td><td class="num">1,741</td><td class="num flat">−88</td></tr>
+    <tr><td>我发出的（role=me）</td><td class="num">81,208</td><td class="num">82,312</td><td class="num up">+1,104</td></tr>
+    <tr><td>库体积</td><td class="num">339 MB</td><td class="num">833 MB</td><td class="num flat">+494 MB</td></tr>
+  </tbody>
+</table>
+
+<h3>分类型明细</h3>
+<table>
+  <thead>
+    <tr><th>类型</th><th class="num">旧</th><th class="num">新</th><th class="num">变化</th><th class="num">时间范围（新）</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>私聊</td><td class="num">125,875</td><td class="num">131,257</td><td class="num up">+5,382</td><td class="num">2024-11-10 起</td></tr>
+    <tr><td>群聊</td><td class="num">122,622</td><td class="num">180,707</td><td class="num up">+58,085</td><td class="num">2024-11-10 起</td></tr>
+    <tr><td>filehelper（发给自己）</td><td class="num">5,802</td><td class="num">6,457</td><td class="num up">+655</td><td class="num">2024-11-14 起</td></tr>
+    <tr><td>企业微信</td><td class="num">2,105</td><td class="num">1,912</td><td class="num down">−193</td><td class="num">2024-11-12 起</td></tr>
+    <tr><td>公众号</td><td class="num">68,184</td><td class="num">15,348</td><td class="num down">−52,836</td><td class="num">2026-08-04 起</td></tr>
+    <tr class="total"><td>合计</td><td class="num">324,588</td><td class="num">335,681</td><td class="num up">+11,093</td><td class="num">—</td></tr>
+  </tbody>
+</table>
+
+<div class="note">
+  <b>覆盖率</b>：旧库对全部源库 34.3%；新库对「剔除 2 个刷屏群后的源库」<b>100%</b>。
+  被排除的 <code>25410000808@chatroom</code>（北京家教信息，523,578 行）与 <code>184****8614@chatroom</code>（88,096 行）合计 611,674 行，
+  在索引内他本人发言 <b>0 条</b> —— 纯派单刷屏，无分析价值。
+</div>
+
+<h2>四、唯一代价：公众号历史 <span class="tag ok" style="vertical-align:middle">已解决</span></h2>
+
+<div class="note" style="border-color:#bfe4d6;background:#f4fbf8;border-radius:8px;padding:14px 16px">
+  <b>✅ 已于同日回灌。</b>52,589 条公众号历史从 WeFlow 导出 JSON 补回，公众号恢复为 <b>67,950 条 / 515 个号 / 2025-08-01 起</b>。
+  详见 <b>《全量语料重跑与清理报告 · 2026-10-04》</b>。下文保留为当时的判断记录。
+</div>
+
+<p>旧库的 68,184 条公众号消息，<b>全部来自 WeFlow 导出 JSON</b>（<code>07_WeFlow原始导出_2026-07-24\01_WeFlow可读导出\公众号_*.json</code>），最早到 2025-08-01。解密库 <code>biz_message_0.db</code> 只保留到 2026-08-04。</p>
+
+<p>也就是说：<b>私聊、群聊、filehelper 一条没丢（还多了），只有公众号的历史缩到了近 2 个月。</b></p>
+
+<div class="note amber">
+  <b>要不要补？</b>公众号是订阅号推送（人民日报、共青团中央、各类营销号），不含他的任何发言，对「自我理解」分析价值接近零。
+  但里面有少数机构号可能带事件证据 —— 央美美术馆 / 教务处 / 财务处、UofG Alumni、CAFA 社团等。
+  源 JSON 还在磁盘上，随时可以写一个回灌脚本补回这 52,836 条。建议<b>按需再补</b>。
+</div>
+
+<h3>为什么 221 组「同秒同文」不是重复</h3>
+<p>新库按内容键仍能测出 221 组同秒同文，但它们的 <code>server_id</code> 各不相同 —— 是源库里真实存在的多条消息，典型如<b>多人同秒进群</b>（群系统消息 <code>xxx@chatroom:</code> 占位）、<code>进群语音</code>、撤回提示。这些<b>不能删</b>，删了才是数据损坏。</p>
+
+<h2>五、扶正执行记录</h2>
+
+<div class="card" style="border-color:#bfe4d6; background:#f4fbf8">
+  <p style="margin-top:0"><b>✅ 方案 A 已执行（2026-10-04）</b> —— 新库已接任，旧库留档可回滚。</p>
+  <table style="margin-bottom:0">
+    <thead><tr><th style="width:46%">文件</th><th>状态</th></tr></thead>
+    <tbody>
+      <tr><td><code>index.sqlite</code></td><td><span class="tag ok">新库</span> 335,681 条 / 1,741 会话（10:03 为重建时点）</td></tr>
+      <tr><td><code>index.sqlite.bak-v1-20261004</code></td><td><span class="tag warn">回滚点</span> 旧库 324,588 条，339 MB</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<h3>验收结果</h3>
+<table>
+  <thead><tr><th>检查项</th><th>结果</th></tr></thead>
+  <tbody>
+    <tr><td>索引库内容</td><td><span class="tag ok">通过</span> 335,681 条 / 1,741 会话，含 <code>server_id</code> / <code>local_id</code> 列</td></tr>
+    <tr><td>日常查询工具 <code>查最新消息.py</code></td><td><span class="tag ok">通过</span> 正常返回最新消息（无需改动任何路径）</td></tr>
+    <tr><td>增量脚本 <code>index-incremental.py</code></td><td><span class="tag ok">通过</span> 6.7 秒，新增 96 条，未报错 → 去重键修复 + schema 自适应均生效</td></tr>
+    <tr><td><code>messages</code> 与 <code>messages_fts</code> 一致性</td><td><span class="tag ok">通过</span> 335,777 = 335,777，差 0</td></tr>
+    <tr><td><code>server_id</code> 唯一性</td><td><span class="tag ok">通过</span> 重复组 0，唯一键正在生效</td></tr>
+  </tbody>
+</table>
+
+<div class="note">
+  <b>回滚方法</b>（若发现异常）：<br>
+  <code>cd "C:\Users\wardc\Desktop\_im_tmp\wechat-mcp"</code><br>
+  <code>mv index.sqlite index_v2.sqlite &amp;&amp; mv index.sqlite.bak-v1-20261004 index.sqlite</code>
+</div>
+
+<div class="note amber">
+  <b>可选清理</b>：目录里还躺着 4 个 10-01 的旧备份（<code>bak-20261001-202751</code>、<code>bak-before-repair-…</code>、<code>bak-dedupe-…</code>×2），合计约 <b>1.26 GB</b>。
+  既然已有了 v1 回滚点，这 4 个可以清掉。需要我处理时说一声 —— <b>未经确认我不会动它们</b>。
+</div>
+
+<h2>六、脚本与产物清单</h2>
+
+<div class="files">
+<b>新增 / 修改脚本</b><br>
+tools\rebuild_index.py　　　索引重建（--dry / --apply / --exclude=）<br>
+tools\verify_v2.py　　　　　新旧库对照验收<br>
+tools\range_compare.py　　　分类型时间范围 + FTS 可用性<br>
+tools\why_channel_drop.py　公众号落差溯源<br>
+tools\diagnose_dups.py　　　重复诊断（规模/来源/误杀风险）<br>
+tools\gap_by_session.py　　 按会话缺口分布<br>
+tools\coverage_check.py　　 覆盖率量化<br>
+_im_tmp\wechat-mcp\index-incremental.py　　★ 去重键修复<br>
+_im_tmp\wechat-mcp\index_v2.sqlite　　　　 ★ 新索引库<br>
+<br>
+<b>FTS 使用提醒</b><br>
+messages_fts 用 trigram 分词，<b>查询词必须 ≥3 个字</b>。<br>
+<code>MATCH '导师'</code>、<code>MATCH '陈晔'</code> 恒返回 0（2 字），不是 bug；<code>MATCH '美术馆'</code> 正常命中 357 条。
+</div>
+
+<footer>
+  自我理解引擎 · 数据管线维护记录 ｜ 2026-10-04 ｜ 全链路本地处理，原始聊天数据未离开本机
+</footer>
+
+</div>
+</body>
+</html>

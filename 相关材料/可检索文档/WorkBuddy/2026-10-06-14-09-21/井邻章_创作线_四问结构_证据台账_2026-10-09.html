@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>井邻章 · 创作线「四问结构」证据台账</title>
+<style>
+  :root{
+    --ink:#16181d; --ink2:#3c4148; --ink3:#6b7280; --ink4:#9aa1ab;
+    --line:#e3e6ea; --line2:#eef1f4;
+    --bg:#fff; --bg2:#f7f8fa; --bg3:#f2f4f7;
+    --red:#c0392b; --redbg:#fdf4f3; --redline:#f0d5d1;
+    --green:#1e7a5a; --greenbg:#f1f8f5; --greenline:#cfe6dd;
+    --blue:#1f4e79; --bluebg:#f2f6fa; --blueline:#d3e0ec;
+    --amber:#8a5a00; --amberbg:#fdf8ee; --amberline:#ecdcb8;
+    --purple:#5b3a86; --purplebg:#f7f4fb; --purpleline:#e0d6ee;
+    --mono:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg2);color:var(--ink);font-size:14px;line-height:1.75;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif}
+  .page{max-width:1080px;margin:0 auto;background:var(--bg);box-shadow:0 1px 3px rgba(16,24,40,.06),0 8px 32px rgba(16,24,40,.05)}
+
+  .hero{padding:46px 56px 38px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#fbfcfd,#fff)}
+  .kicker{font-size:11.5px;letter-spacing:.22em;color:var(--ink4);text-transform:uppercase;font-weight:600}
+  .hero h1{margin:14px 0 6px;font-size:30px;line-height:1.3;letter-spacing:-.02em;font-weight:700}
+  .hero h1 em{font-style:normal;color:var(--red)}
+  .hero .sub{color:var(--ink3);font-size:14.5px;margin-top:10px;max-width:800px}
+  .metarow{display:flex;flex-wrap:wrap;margin-top:26px;border-top:1px solid var(--line2);padding-top:20px}
+  .meta{flex:1 1 130px;padding-right:18px}
+  .meta .k{font-size:11px;color:var(--ink4);letter-spacing:.08em}
+  .meta .v{font-size:15px;font-weight:600;margin-top:3px;font-variant-numeric:tabular-nums}
+  .meta .v small{font-weight:400;color:var(--ink3);font-size:12px}
+
+  section{padding:38px 56px;border-bottom:1px solid var(--line2)}
+  section:last-child{border-bottom:none}
+  h2{font-size:19px;margin:0 0 4px;letter-spacing:-.01em;display:flex;align-items:baseline;gap:10px}
+  h2 .n{font-size:12px;color:var(--ink4);font-family:var(--mono);font-weight:600}
+  .h2sub{color:var(--ink3);font-size:13px;margin:0 0 22px}
+  h3{font-size:15.5px;margin:26px 0 10px}
+
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th{text-align:left;font-weight:600;color:var(--ink3);font-size:11.5px;letter-spacing:.05em;
+     padding:9px 10px;border-bottom:1.5px solid var(--line);background:var(--bg3);white-space:nowrap}
+  td{padding:10px;border-bottom:1px solid var(--line2);vertical-align:top}
+  tr:last-child td{border-bottom:none}
+  td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+  .tbl-wrap{border:1px solid var(--line);border-radius:8px;overflow:hidden}
+
+  .q4{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:6px}
+  .qc{border:1px solid var(--line);border-radius:10px;padding:15px 17px;background:var(--bg)}
+  .qc .qn{font-family:var(--mono);font-size:11px;color:var(--ink4);letter-spacing:.1em}
+  .qc .qt{font-weight:700;font-size:15px;margin:5px 0 7px}
+  .qc .qd{font-size:12.5px;color:var(--ink3);line-height:1.7}
+  .qc .qe{margin-top:10px;padding-top:9px;border-top:1px dashed var(--line2);font-size:11.5px;color:var(--ink3)}
+  .qc .qe b{color:var(--ink2);font-weight:600}
+
+  .tl{border-left:2px solid var(--line);margin:8px 0 0;padding:0 0 0 20px}
+  .tli{position:relative;padding:0 0 22px}
+  .tli:last-child{padding-bottom:0}
+  .tli::before{content:"";position:absolute;left:-26px;top:7px;width:9px;height:9px;border-radius:50%;
+    background:#fff;border:2px solid var(--ink4)}
+  .tli.hot::before{border-color:var(--red);background:var(--red)}
+  .tli .td{font-family:var(--mono);font-size:11.5px;color:var(--ink4);font-variant-numeric:tabular-nums}
+  .tli .tt{font-weight:650;font-size:14.5px;margin:2px 0 4px}
+  .tli .tb{font-size:13px;color:var(--ink2)}
+  .tli .tsrc{font-size:11.5px;color:var(--ink4);margin-top:5px;font-family:var(--mono)}
+
+  .quotes{border-left:2.5px solid var(--line);margin:8px 0 0;padding:0}
+  .q{display:grid;grid-template-columns:92px 1fr;gap:10px;padding:6px 0 6px 12px;border-bottom:1px dashed var(--line2);font-size:13px}
+  .q:last-child{border-bottom:none}
+  .q .ts{font-family:var(--mono);font-size:11.5px;color:var(--ink4);padding-top:2px;font-variant-numeric:tabular-nums}
+  .q .tx b{background:#fff6d9;padding:0 2px;border-radius:2px;font-weight:600}
+  .q .tx i{font-style:normal;color:var(--ink3)}
+
+  .flag{border:1px solid var(--redline);background:var(--redbg);border-radius:10px;padding:15px 18px;margin:0 0 14px}
+  .flag .fh{font-weight:700;font-size:14px;color:var(--red);display:flex;align-items:center;gap:8px;margin-bottom:7px}
+  .flag .fh .no{font-family:var(--mono);font-size:11px;background:var(--red);color:#fff;border-radius:5px;padding:1px 6px}
+  .flag .grid{display:grid;grid-template-columns:64px 1fr;gap:6px 10px;font-size:12.5px;line-height:1.7}
+  .flag .grid .k{color:var(--ink4);font-size:11.5px;padding-top:2px}
+  .flag .grid .wrong{color:var(--red)}
+  .flag .grid .right{color:var(--green);font-weight:600}
+
+  .ok{border:1px solid var(--greenline);background:var(--greenbg);border-radius:8px;padding:12px 16px;font-size:13px;color:var(--ink2)}
+
+  .pill{display:inline-block;font-size:10.5px;font-weight:600;padding:1.5px 7px;border-radius:20px;
+    border:1px solid var(--line);background:var(--bg3);color:var(--ink3);letter-spacing:.03em}
+  .pill.a{border-color:var(--blueline);background:var(--bluebg);color:var(--blue)}
+  .pill.b{border-color:var(--greenline);background:var(--greenbg);color:var(--green)}
+  .pill.c{border-color:var(--amberline);background:var(--amberbg);color:var(--amber)}
+
+  .script{background:var(--bg3);border:1px solid var(--line);border-radius:10px;padding:20px 24px;font-size:14px;line-height:1.95}
+  .script p{margin:0 0 14px}
+  .script p:last-child{margin-bottom:0}
+  .script .lead{font-weight:600}
+  .script .mk{color:var(--red);font-weight:600}
+
+  code{font-family:var(--mono);font-size:12px;background:var(--bg3);border:1px solid var(--line2);
+    border-radius:4px;padding:1px 5px;color:var(--ink2)}
+  .foot{padding:26px 56px;color:var(--ink4);font-size:12px;background:var(--bg2)}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="hero">
+    <div class="kicker">井邻章 · 中期汇报素材</div>
+    <h1>创作线：<em>让人参与印制</em>，让地方经验进入作品</h1>
+    <div class="sub">把 2026 年 7—10 月的分版、打印、制版、现场印制的记录，收敛成一条可讲、可查、可核的线。每个转折都标注原始出处；与记录不符处单列在第四段。</div>
+    <div class="metarow">
+      <div class="meta"><div class="k">时间跨度</div><div class="v">07-24 → 10-03 <small>72 天</small></div></div>
+      <div class="meta"><div class="k">关键批次</div><div class="v">5 <small>次分版→制版</small></div></div>
+      <div class="meta"><div class="k">一手出处</div><div class="v">2 <small>微信 + Codex 会话</small></div></div>
+      <div class="meta"><div class="k">待核修正</div><div class="v" style="color:var(--red)">4 <small>处</small></div></div>
+    </div>
+  </div>
+
+  <!-- 01 -->
+  <section>
+    <h2><span class="n">01</span>一条线的四个问题</h2>
+    <p class="h2sub">这不是"做过几件作品"，而是一条有内在顺序的实践方法。四个问题依次递进，每一问都有对应的批次与文件。</p>
+
+    <div class="q4">
+      <div class="qc">
+        <div class="qn">Q1</div>
+        <div class="qt">参与者如何被选择，从而进入作品？</div>
+        <div class="qd">用 MBTI 的四个维度各做两个选项，共 8 张网版。每位参与者按自己的四字母选 4 张，因此每张作品只印 4 次——选择权交回给参与者本人。</div>
+        <div class="qe"><b>对应批次</b>　07-24/25 工作站开业 · MBTI 八版制版系统</div>
+      </div>
+      <div class="qc">
+        <div class="qn">Q2</div>
+        <div class="qt">地方素材如何进入作品？</div>
+        <div class="qd">栗壳、栗林、怀柔、悲鸿字标、乡村美育工作站标识。地方不是背景，而是构成画面的元素本身；后期进一步讨论把栗子旷野的气味加入颜料，让"在地性"落到嗅觉。</div>
+        <div class="qe"><b>对应批次</b>　09-30 悲鸿为主整理 · 10-01 在地性讨论</div>
+      </div>
+      <div class="qc">
+        <div class="qn">Q3</div>
+        <div class="qt">身体如何参与？</div>
+        <div class="qd">刮印本身是身体动作。飞鸟模块把这一点推到更前面：同一只鸟的上翼、下翼两个姿态并排印出，剪开成两片，用绳子连起来快速翻动，产生动感。</div>
+        <div class="qe"><b>对应批次</b>　10-01 → 10-02 飞鸟两帧孔版（工作坊支线）</div>
+      </div>
+      <div class="qc">
+        <div class="qn">Q4</div>
+        <div class="qt">想法如何落到物质？</div>
+        <div class="qd">分色 → 出硫酸纸正片 → 曝光制版 → 现场印制。这条链是整套方法能落地的关键，也是"每次都提前一夜准备"的实际内容。</div>
+        <div class="qe"><b>对应批次</b>　07-24 · 08-15 · 08-19 · 10-02 四次制版夜</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 -->
+  <section>
+    <h2><span class="n">02</span>五次关键转折（含原始出处）</h2>
+    <p class="h2sub">每一次转折都能回查到具体时间戳。来源分两类：<span class="pill a">微信</span> 现场执行记录 · <span class="pill b">Codex</span> 设计决策原话。</p>
+
+    <div class="tl">
+      <div class="tli hot">
+        <div class="td">2026-07-24 07:31 · 09:28</div>
+        <div class="tt">第一次把"标"做成可印的版 —— 悲鸿四色小标</div>
+        <div class="tb">原始要求：<b>「把这个标也做个小标的版印刷在T恤衫上需要做成位图，方便做成小于a4纸大小，给我保存到桌面叫悲鸿文件夹名」</b>。产出 <code>悲鸿_小标_蓝/粉/黄/绿.png</code> 与 <code>悲鸿_小标_四版印刷排版.png</code>，300 DPI，单个约 7.6×6.4 cm。</div>
+        <div class="tsrc">来源：Codex 会话 rollout-2026-07-24T09-28-19</div>
+      </div>
+
+      <div class="tli hot">
+        <div class="td">2026-07-24 → 07-25</div>
+        <div class="tt">第一次把「分版 → 曝光 → 现场印制」连成完整流程 —— MBTI 八版</div>
+        <div class="tb">四个维度各两个选项：<b>E/I</b>（深海军蓝动势）、<b>S/N</b>（黄色纹理）、<b>T/F</b>（暖橙红或正红结构）、<b>J/P</b>（深蓝人物收边），合计 8 张网版。每位观众按四字母选 4 张、刮印 4 次。07-24 04:01–09:39 完成出图；09:05 到 LEHAUS 借曝光台与烘干箱；当晚完成制版。07-25 工作站开业。</div>
+        <div class="tsrc">来源：微信（马慧楠 09:05）· 文件 mtime · <code>制版/8版现场操作与套准说明.md</code></div>
+      </div>
+
+      <div class="tli">
+        <div class="td">2026-08-14 20:48 → 08-15 05:30</div>
+        <div class="tt">区委书记到访前，旧版重新曝光</div>
+        <div class="tb">20:48 我借版：「上次的版有还没洗的吗」「明天用一天我立马给送回来」；20:49 马慧楠「<b>上回寄回来我还没拆封呢</b>」；次日 05:30 马慧楠安排：<b>「让技师帮你看网版还能用么，不能用就让他给你重新做一下版」</b>。05:53 到场。08-16 归还。</div>
+        <div class="tsrc">来源：微信（马慧楠 08-14 20:48 / 08-15 05:30 / 08-16 19:46）</div>
+      </div>
+
+      <div class="tli hot">
+        <div class="td">2026-08-19 18:41 → 22:24</div>
+        <div class="tt">区长 + 市文旅局局长到访前，连夜制版</div>
+        <div class="tb">17:52 群通知次日到访；<b>18:41 我主动请缨</b>「今晚要不要先去把版制了，明天直接用」；19:50 发分色文件给利世隆；20:28 付款 12 元；21:27 取到硫酸纸；21:42 到制版工作室；22:24 完成。<b>从发文件到制版完成不足 2 小时 35 分钟。</b>次日途中剐蹭，08:49 仍按时到岗。</div>
+        <div class="tsrc">来源：微信（陈晔 18:41 · 利世隆 19:50–21:27 · 马慧楠 21:42）</div>
+      </div>
+
+      <div class="tli hot">
+        <div class="td">2026-09-30 → 10-02</div>
+        <div class="tt">悲鸿回到主导位置 → 收敛到单色 → 飞鸟作为工作坊支线</div>
+        <div class="tb">09-30 09:22「<b>主要是悲鸿主要是悲鸿这一版为主</b>」；10-01 12:58「<b>单色和双色对版难度要下降</b>」；10-01 13:06「<b>悲鸿要站主导位置</b>」；10-01 20:31「<b>结合当地特色</b>…栗子旷野的香味…<b>不要宣传井邻</b>」；10-02 03:26「<b>我要的是版画不是海报印刷…我要的是艺术品</b>」；10-02 11:32「<b>栗子改成单色制一下版</b>」。10-01 21:59 起做飞鸟两帧；10-02 12:24「<b>飞鸟要用绳子连起来快速翻动形成动感不宜过大</b>」。10-02 夜打印 4×A3 + 2×A4（26 元）并制版；10-03 周六视察。</div>
+        <div class="tsrc">来源：Codex 会话（10-01 / 10-02 用户指令）· 微信（利世隆 10-02 20:17–21:10）</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 -->
+  <section>
+    <h2><span class="n">03</span>你的原话（逐字，含时间戳）</h2>
+    <p class="h2sub">以下全部来自 Codex 会话的用户指令，不是微信。这解释了为什么在微信库里搜不到——它们本来就不在那儿。</p>
+
+    <div class="quotes">
+      <div class="q"><div class="ts">09-30 09:22</div><div class="tx">「<b>主要是悲鸿主要是悲鸿这一版为主</b>，今晚找一下，还有乡村美育工作站，其他的再搜集一下」</div></div>
+      <div class="q"><div class="ts">10-01 12:58</div><div class="tx">「尽量单色方案，设计的思路角度要符合文旅项目，是个专业的设计专家和正国级视察国家投资的文旅乡村振兴的一个项目」</div></div>
+      <div class="q"><div class="ts">10-01 12:58</div><div class="tx">「还有悲鸿也要结合一下，<b>单色和双色对版难度要下降</b>」</div></div>
+      <div class="q"><div class="ts">10-01 13:06</div><div class="tx">「<b>悲鸿要站主导位置</b>，不要太感觉是ai做的要参考重要艺术家设计参考风格」</div></div>
+      <div class="q"><div class="ts">10-01 20:31</div><div class="tx">「…还有一点的是<b>需要结合当地特色</b>，希望类似能做具身交互，例如<b>在颜料里面加入栗子旷野的香味以达到在地性</b>，结合这些特性设计视觉版画方案，<b>不要宣传井邻</b>，之前印刷版画的图案就不错，给我方案吧」</div></div>
+      <div class="q"><div class="ts">10-01 20:46</div><div class="tx">「<b>3号先不准备香料先介绍概念</b>，图片不要太强的ai感是要给高级领导介绍的符合政策的，之前版画和悲鸿标配合就还可以」</div></div>
+      <div class="q"><div class="ts">10-02 03:26</div><div class="tx">「<b>我要的是版画不是海报印刷</b>注意这一点<b>我要的是艺术品</b>」</div></div>
+      <div class="q"><div class="ts">10-02 10:45</div><div class="tx">「右上角的字替代成悲鸿的标和加上乡村美育工作站的标可以，<b>语言变成双色或者单色</b>，龚银一座村庄不要留」</div></div>
+      <div class="q"><div class="ts">10-02 11:32</div><div class="tx">「<b>栗子改成单色制一下版</b>」</div></div>
+      <div class="q"><div class="ts">10-02 12:24</div><div class="tx">「<b>飞鸟要用绳子连起来快速翻动形成动感不宜过大</b>」</div></div>
+      <div class="q"><div class="ts">10-03 02:32</div><div class="tx">「还是之前那个带标识的吧这个做的不好，待会儿投影到井邻的spacedesk上面去准备一下」<i>（视察日凌晨仍在准备投屏）</i></div></div>
+    </div>
+  </section>
+
+  <!-- 04 -->
+  <section>
+    <h2><span class="n">04</span>必须修正的 4 处</h2>
+    <p class="h2sub">按原始记录逐条核对后，你的叙述里有 4 处与记录不符。写进汇报前需要按右侧口径改。</p>
+
+    <div class="flag">
+      <div class="fh"><span class="no">01</span>8 月 19 日那晚的版，颜色组合不对</div>
+      <div class="grid">
+        <div class="k">你的叙述</div><div class="wrong">当晚开了四轮制版：黄版、群青版、黑色层和红版，每轮都印了两个版本</div>
+        <div class="k">记录实际</div><div class="right">CMYK 四色（青 C / 品红 M / 黄 Y / 黑 K）T恤丝印 + 悲鸿袖标 A4 原尺寸 + 怀柔竖排 A4 满版 CMYK 四色；微信原话「6 个版每个打两份」，共 12 元</div>
+        <div class="k">说明</div><div>「黄版 + 群青版」是 <b>8 月 29 日</b>那一批，而且属于<b>澜沧「绿墨护未」</b>项目的《第三种颜色》方案，不是井邻的。两晚的记忆被合并了。</div>
+      </div>
+    </div>
+
+    <div class="flag">
+      <div class="fh"><span class="no">02</span>悲鸿是「四种配色版本」，不是「四个色版」</div>
+      <div class="grid">
+        <div class="k">你的叙述</div><div class="wrong">原来有粉、黄、蓝、绿四个色版……落到黄、群青、红、黑四版</div>
+        <div class="k">记录实际</div><div class="right">悲鸿的蓝、粉、黄、绿是<b>四种配色版本</b>，每个都有独立字形稿，<b>不是四张要叠印的分色版</b>；同期只有乡村美育工作站是橙、黑两张真正的套印版</div>
+        <div class="k">说明</div><div>这是 2026-09-30 09:28 的核对结论。「黄、群青、红、黑四版」在全部记录中<b>没有任何出处</b>，建议删掉，或改写为「四种配色选款 → 现场按需单色印制」。</div>
+      </div>
+    </div>
+
+    <div class="flag">
+      <div class="fh"><span class="no">03</span>10 月 3 日带的版数：4 张 A3 + 2 张 A4</div>
+      <div class="grid">
+        <div class="k">你的叙述</div><div class="wrong">带了五张 A3、两张 A4 的晒版正片过去</div>
+        <div class="k">记录实际</div><div class="right">4 张 A3 + 2 张 A4（共 6 页）</div>
+        <div class="k">说明</div><div>微信 10-02 20:56 发出的文件是 <code>01_晒版正片_A3大图_A4飞鸟_6页.pdf</code>；21:09 高姐报价「A3 打印 5 元一张，A4 的 3 元」，4×5 + 2×3 = 26 元。目录名也是 <code>打印店专用_4张A3_2张A4_v35</code>。「五图」指的是 5 个画面，不是 5 张 A3。</div>
+      </div>
+    </div>
+
+    <div class="flag">
+      <div class="fh"><span class="no">04</span>飞鸟与「单色收敛」的日期：是 10 月 1—2 日，不是 10 月 5 日</div>
+      <div class="grid">
+        <div class="k">你的叙述</div><div class="wrong">10 月 5 日：我又做了一版，把飞鸟加进去……同时把正式作品降到单色和双色，降低对版难度</div>
+        <div class="k">记录实际</div><div class="right">「单色和双色对版难度要下降」= <b>10-01 12:58</b>；飞鸟两帧 = <b>10-01 21:59 起做，10-02 12:24 定「用绳子连起来快速翻动」</b></div>
+        <div class="k">说明</div><div>10 月 5 日的会话内容是邮箱与日历简报、GPT 续费，与井邻视觉<b>无关</b>。飞鸟文件 <code>v20</code> / <code>v21</code> 的落盘时间也是 10-02。</div>
+      </div>
+    </div>
+
+    <div class="ok"><b>经核对成立的部分</b>（可直接使用）：MBTI 八版「四个维度 × 两个选项」的设定完全准确；08-15 旧版重做成立；08-19 连夜制版成立；「悲鸿要站主导位置」「不是海报印刷」「结合当地特色」「3 号先不准备香料」四句原话逐字准确，仅日期需按上表钉死。</div>
+  </section>
+
+  <!-- 05 -->
+  <section>
+    <h2><span class="n">05</span>作品清单：正式作品 vs 工作坊支线</h2>
+    <p class="h2sub">汇报时这两类必须分开说，否则容易被追问"到底交付了什么"。</p>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>类别</th><th>作品 / 系统</th><th>日期</th><th>状态</th><th>文件位置</th></tr></thead>
+        <tbody>
+          <tr><td rowspan="6"><span class="pill b">正式作品</span></td>
+              <td><b>MBTI 八版制版系统</b></td><td class="num">07-24</td><td>已用于工作站开业现场</td><td><code>05_井邻项目_视觉与丝网印刷\制版\02-eight-plates</code></td></tr>
+          <tr><td><b>悲鸿 YOUNG 袖标</b>（四色小标 + A4 原尺寸稿）</td><td class="num">07-24 / 08-19</td><td>图案 75.69 × 64.09 mm</td><td><code>…\悲鸿\</code> · <code>01_悲鸿_今晚优先</code></td></tr>
+          <tr><td><b>偏移四型 CMYK 四色</b> A4 横版 / 竖版</td><td class="num">08-19</td><td>已出片制版</td><td><code>…\偏移四型*_原Codex主视觉_20260819\</code></td></tr>
+          <tr><td><b>怀柔竖排 A4 满版</b></td><td class="num">08-19</td><td>已出片</td><td><code>…\偏移四型A4满版竖构图_…\</code></td></tr>
+          <tr><td><b>乡村美育工作站标识分版</b>（橙黑双色 / RYB 三色 + 黑）</td><td class="num">10-01</td><td>套印版已分</td><td><code>06_…\井邻社会美育工作站\</code></td></tr>
+          <tr><td><b>五图晒版正片 v34</b> + <b>窗外栗蓬 单色 v31</b></td><td class="num">10-02</td><td>已打印制版，10-03 视察用</td><td><code>Codex\…\五图_晒版正片…_v34</code></td></tr>
+
+          <tr><td rowspan="3"><span class="pill c">工作坊支线</span></td>
+              <td><b>飞鸟两帧孔版 v20 / v21</b>（同鸟上下翼两姿态 + 绳子翻动）</td><td class="num">10-01 → 10-02</td><td>工作坊动手模块，<b>非正式作品</b></td><td><code>…\悲鸿YOUNG_飞鸟两帧_新增孔版_v20</code></td></tr>
+          <tr><td><b>绿墨护未 红黄网点版 / 黄群青实色版</b></td><td class="num">08-29</td><td><b>澜沧项目</b>，不在井邻线上</td><td><code>…\03_其他分版参考\07_绿墨护未_黄群青实色版</code></td></tr>
+          <tr><td>澜沧三中四课次课件 + 两块预制网版</td><td class="num">08 底–09 初</td><td>已结项</td><td><code>…\_m4c_final_delivery</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 06 -->
+  <section>
+    <h2><span class="n">06</span>口述底稿（已按记录校正）</h2>
+    <p class="h2sub">可直接照读。所有日期与内容已与原始记录对齐；<span class="mk">标红处</span>是相对你原稿的改动点。</p>
+
+    <div class="script">
+      <p class="lead">这条线其实一直在回答同一个问题：怎么让人参与印制，然后让地方经验进入作品，再通过身体操作被感受到。</p>
+
+      <p>2026 年 7 月，井邻工作站开业。我做了 MBTI 八版制版系统，四个维度各做两个选项，共 8 张网版；每位参与者按自己的四字母选 4 张，所以每张作品只印 4 次。<span class="mk">这是第一次把分版、曝光、现场印制连成一条完整流程。</span></p>
+
+      <p>8 月 15 日，区委书记到访前，版已经用旧了，我把版拿到小马那边，<span class="mk">技师检查后重新做了一次曝光</span>。</p>
+
+      <p>8 月 19 日，为了第二天区长和文旅局局长的到访，我连夜去小马那里制版。当天晚上从发文件到制版完成不足两个半小时：<span class="mk">CMYK 四色正片、悲鸿袖标、怀柔竖排满版，一共 6 个版每个打两份</span>，打印 12 元、制版 40 元。第二天路上发生了剐蹭，还是按时到了现场。</p>
+
+      <p><span class="mk">9 月 30 日，我把重点收回到悲鸿这一版</span>——它原有蓝、粉、黄、绿四种配色，是四个可以选用的版本，不是要叠印的四个色版。<span class="mk">10 月 1 日我提出单色和双色对版难度要下降，也提出悲鸿要站主导位置</span>，同时希望能结合当地特色，比如在颜料里加入栗子旷野的香味，让在地性落到嗅觉上——<span class="mk">但 10 月 3 日先不准备香料，先介绍概念，因为是要给高级领导介绍的，图片不能有太强的 AI 感。</span></p>
+
+      <p>10 月 2 日凌晨，我把方向又收了一次：<span class="mk">「我要的是版画不是海报印刷，我要的是艺术品。」</span>随后栗子改成单色制版，正式作品收敛到单色，降低现场对版难度。<span class="mk">同一天我另做了一版飞鸟，那是一条支线：同一只鸟印上下翼两个姿态，剪成两片、用绳子连起来快速翻动形成动感，是给孩子们在工作坊里动手做的部分，不是正式作品。</span></p>
+
+      <p>10 月 2 日夜里，我把晒版正片打印出来——<span class="mk">4 张 A3 加 2 张 A4，一共 6 页，26 元</span>；当晚完成制版。10 月 3 日周六视察，带着这套版到现场。</p>
+
+      <p class="lead">整条线从 7 月做到 10 月，最后收在一件单色的作品上。我想讲的不是做了多少件东西，而是这四步——参与者怎么被选进来、地方素材怎么进入画面、身体怎么参与、想法怎么落成实物——每一步都真的走通过一遍。</p>
+    </div>
+  </section>
+
+  <!-- 07 -->
+  <section>
+    <h2><span class="n">07</span>检索索引</h2>
+    <p class="h2sub">下次要回查某个点时，按这张表直接定位。</p>
+
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>要找什么</th><th>去哪查</th><th>标识 / 关键词</th></tr></thead>
+        <tbody>
+          <tr><td>设计决策原话（悲鸿主导、不是海报、香料、飞鸟绳子）</td><td>Codex 会话记录</td><td><code>C:\Users\wardc\.codex\sessions\2026\09|10\</code></td></tr>
+          <tr><td>现场执行时间戳（借版、打印、付款、取件）</td><td>微信索引库</td><td><code>C:\Users\wardc\Desktop\_im_tmp\wechat-mcp\index.sqlite</code></td></tr>
+          <tr><td>小马 · 马慧楠 LEHAUS 版画</td><td>微信</td><td><code>wxid_8081720817911</code>　关键词：制版 / 借版 / 曝光台 / 网板</td></tr>
+          <tr><td>利世隆大图复印 · 高姐</td><td>微信</td><td><code>wxid_hcj7u0b7rbnu12</code>　关键词：硫酸纸 / 打印 / 红包 / 电动车</td></tr>
+          <tr><td>导师陈晔（请缨、剐蹭、到岗）</td><td>微信</td><td><code>deerluna</code></td></tr>
+          <tr><td>领导到访通知与时间变动</td><td>微信</td><td>央美美育工作站群 <code>53074549232@chatroom</code></td></tr>
+          <tr><td>分版文件实体</td><td>桌面 + Codex</td><td><code>Desktop\05_井邻项目_视觉与丝网印刷\</code> · <code>Documents\Codex\2026-09-30\new-chat-6\outputs\</code></td></tr>
+          <tr><td>已打包的完整文件包</td><td>桌面</td><td><code>Desktop\井邻_制版打印链_文件包_2026-10-06\</code>（326 文件 / 260 MB）</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <div class="foot">
+    台账生成：2026-10-09　|　核验范围：微信全库 395,784 条（2024-11-10 → 2026-10-09）+ Codex 会话 2026-09/10 月 18,415 条消息<br>
+    口径原则：只写有原始时间戳可回查的内容；无出处的表述一律单列标注，不并入正文。
+  </div>
+
+</div>
+</body>
+</html>

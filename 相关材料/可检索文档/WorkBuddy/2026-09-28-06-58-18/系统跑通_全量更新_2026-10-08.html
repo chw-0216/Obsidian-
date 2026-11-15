@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>系统跑通 · 全量更新 · 2026-10-08</title>
+<style>
+  :root{
+    --bg:#f6f7f9; --card:#ffffff; --ink:#1c2024; --ink2:#4a535c; --ink3:#7b858e;
+    --line:#e3e7eb; --line2:#eef1f4;
+    --blue:#1f5fa8; --blue-bg:#eef4fb;
+    --green:#1f7a52; --green-bg:#ecf7f1;
+    --amber:#9a6410; --amber-bg:#fdf5e6;
+    --red:#b3261e; --red-bg:#fdeeed;
+    --purple:#6b3fa0; --purple-bg:#f4effb;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    font-size:15px; line-height:1.75; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:980px; margin:0 auto; padding:44px 26px 90px}
+  header{border-bottom:2px solid var(--ink); padding-bottom:22px; margin-bottom:34px}
+  .kicker{font-size:12.5px; letter-spacing:.18em; color:var(--ink3); text-transform:uppercase; margin-bottom:10px}
+  h1{margin:0 0 12px; font-size:30px; line-height:1.32; letter-spacing:-.01em}
+  .sub{color:var(--ink2); font-size:14.5px}
+  .sub b{color:var(--ink)}
+  h2{
+    font-size:20px; margin:46px 0 16px; padding-left:13px;
+    border-left:4px solid var(--blue); line-height:1.4;
+  }
+  h2 .n{color:var(--ink3); font-weight:600; margin-right:8px; font-size:16px}
+  h3{font-size:15.5px; margin:26px 0 10px; color:var(--ink)}
+  p{margin:10px 0}
+  ul,ol{margin:10px 0; padding-left:22px}
+  li{margin:6px 0}
+  code{
+    font-family:ui-monospace,SFMono-Regular,Consolas,"Liberation Mono",monospace;
+    background:#f0f2f5; padding:1.5px 5px; border-radius:4px; font-size:13px; color:#2b3038;
+  }
+  .card{background:var(--card); border:1px solid var(--line); border-radius:10px; padding:18px 20px; margin:14px 0}
+  .lead{background:var(--card); border:1px solid var(--line); border-left:4px solid var(--ink); border-radius:8px; padding:18px 22px; margin:18px 0}
+  .lead p{margin:6px 0}
+  table{width:100%; border-collapse:collapse; margin:14px 0; font-size:14px; background:var(--card)}
+  th,td{border:1px solid var(--line); padding:9px 12px; text-align:left; vertical-align:top}
+  th{background:#f2f4f7; font-weight:600; color:var(--ink2); white-space:nowrap}
+  td.num{text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap}
+  .tag{display:inline-block; font-size:12px; padding:2px 8px; border-radius:20px; font-weight:600; white-space:nowrap}
+  .t-blue{background:var(--blue-bg); color:var(--blue)}
+  .t-green{background:var(--green-bg); color:var(--green)}
+  .t-amber{background:var(--amber-bg); color:var(--amber)}
+  .t-red{background:var(--red-bg); color:var(--red)}
+  .t-purple{background:var(--purple-bg); color:var(--purple)}
+  .box{border-radius:8px; padding:15px 18px; margin:14px 0; border:1px solid}
+  .b-red{background:var(--red-bg); border-color:#f3c9c5; color:#7a1c17}
+  .b-amber{background:var(--amber-bg); border-color:#efd9ab; color:#6d470b}
+  .b-green{background:var(--green-bg); border-color:#bfe3d1; color:#14563a}
+  .b-blue{background:var(--blue-bg); border-color:#c6ddf5; color:#173f6f}
+  .box .h{font-weight:700; display:block; margin-bottom:6px}
+  .flow{display:flex; align-items:stretch; gap:0; margin:18px 0; flex-wrap:wrap}
+  .step{flex:1 1 150px; background:var(--card); border:1px solid var(--line); padding:14px 15px; position:relative; min-width:150px}
+  .step:not(:last-child){border-right:none}
+  .step:first-child{border-radius:8px 0 0 8px}
+  .step:last-child{border-radius:0 8px 8px 0}
+  .step .s-n{font-size:11.5px; letter-spacing:.14em; color:var(--ink3); font-weight:700}
+  .step .s-t{font-weight:600; margin:4px 0 5px; font-size:14px}
+  .step .s-d{font-size:12.5px; color:var(--ink2); line-height:1.6}
+  .kv{display:grid; grid-template-columns:auto 1fr; gap:5px 16px; font-size:14px; margin:10px 0}
+  .kv dt{color:var(--ink3); white-space:nowrap}
+  .kv dd{margin:0}
+  .quote{border-left:3px solid var(--line); padding:3px 0 3px 14px; color:var(--ink2); font-size:14px; margin:10px 0}
+  .quote b{color:var(--ink)}
+  .big{font-size:26px; font-weight:700; font-variant-numeric:tabular-nums; letter-spacing:-.02em}
+  .stats{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; margin:16px 0}
+  .stat{background:var(--card); border:1px solid var(--line); border-radius:8px; padding:14px 16px}
+  .stat .lbl{font-size:12.5px; color:var(--ink3); margin-bottom:5px}
+  .stat .val{font-size:21px; font-weight:700; font-variant-numeric:tabular-nums}
+  .stat .dlt{font-size:12.5px; color:var(--green); margin-top:3px}
+  footer{margin-top:60px; padding-top:20px; border-top:1px solid var(--line); color:var(--ink3); font-size:13px}
+  .chk{list-style:none; padding-left:0}
+  .chk li{padding-left:26px; position:relative}
+  .chk li::before{content:"⬜"; position:absolute; left:0; font-size:14px}
+  @media print{body{background:#fff} .card,.step,table{break-inside:avoid}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="kicker">自我理解引擎 · 全链路</div>
+  <h1>系统跑通 · 全量更新</h1>
+  <div class="sub">
+    2026-10-08 12:30 ｜ 微信数据 <b>394,173 条</b> ｜ 引擎 <b>2 份</b> · 台账 <b>6 张表</b> · 知识库 <b>2 份</b> · 记忆 <b>2 份</b> 全部回写
+  </div>
+</header>
+
+<div class="lead">
+  <p><b>一句话结论：</b>三层同步跑通（41 秒 · +61 条），六处下游全部回写。但本轮真正的收获不是数据增量，而是<b>发现引擎和知识库早就对不上</b>——「中传交互技术课旁听线」在 Obsidian 里已经写到很细，引擎四层却全是空的。已按维护协议以知识库为准并入引擎。</p>
+  <p><b>顺带修掉两个 bug</b>，其中一个是定时炸弹：构建脚本用「全删重建」写假设表，<b>每次重跑都会静默抹掉人工新增的内容</b>。</p>
+</div>
+
+<h2><span class="n">1</span>三层同步实测</h2>
+
+<div class="flow">
+  <div class="step">
+    <div class="s-n">第 ① 层</div>
+    <div class="s-t">解密</div>
+    <div class="s-d">8 更新 / 14 无变化 / <b>0 失败</b>（22 库）<br>message_1.db 109.9 MB</div>
+  </div>
+  <div class="step">
+    <div class="s-n">第 ② 层</div>
+    <div class="s-t">索引</div>
+    <div class="s-d">394,112 → <b>394,173</b><br>+61 条 · 18 会话 · 7.1 秒</div>
+  </div>
+  <div class="step">
+    <div class="s-n">第 ③ 层</div>
+    <div class="s-t">实时 JSON</div>
+    <div class="s-d">笑一 6,579 · 米雪 76<br>立项2群 922 · 水位已更新</div>
+  </div>
+</div>
+
+<div class="box b-amber">
+  <span class="h">★ +61 条的成色：52 条是刷单</span>
+  「北京家教信息」群今日 <b>291 条</b>，本次增量里 52 条来自它。真实人际增量只有 9 条（文件传输助手 + 陈晔 7 条 + yumilier 7 条）。
+  → <b>增量大 ≠ 信息多</b>，判断价值前必须先剔刷屏群。
+</div>
+
+<h2><span class="n">2</span>★★★ 本轮最大发现：引擎和知识库早就对不上</h2>
+
+<p>同步后出现一条从未入账的会话：<code>yumilier☔</code>（<code>a35599192</code>）。引擎侧四层全空，台账里它的备注只有 <code>n=51 last=2026-09-25</code>。</p>
+
+<p>但翻知识库发现——<b>Obsidian 里这条线早就写到很细了</b>：</p>
+
+<table>
+  <tr><th>知识库档案</th><th>内容</th></tr>
+  <tr><td><code>01_人物档案\王利敏.md</code></td><td>身份、工号、前史、母亲评价、红线 —— 完整</td></tr>
+  <tr><td><code>01_人物档案\海燕.md</code></td><td>授课老师 · 46 条 · 时间线 5 节点 —— 完整</td></tr>
+  <tr><td><code>01_个人信息\项目\中传交互技术课-旁听.md</code></td><td>课程、预约流程、学习资料、待办 —— 完整</td></tr>
+</table>
+
+<div class="box b-red">
+  <span class="h">★ 这就是「信息配合不起来」的第二次现形</span>
+  上一次是台账里 <code>persons</code> / <code>aliases</code> 是空表（数据库里根本没有「人」）；这一次是<b>同一个事实，知识库有、引擎没有</b>。
+  → 按引擎维护协议「知识库里发现的矛盾 → 回到引擎核对，不各写各的」，本轮<b>以 Obsidian 为准，把这条线正式并入引擎</b>。
+</div>
+
+<h3>这条线是什么</h3>
+
+<dl class="kv">
+  <dt>学校</dt><dd>中国传媒大学（朝阳区定福庄东街 1 号）</dd>
+  <dt>课程</dt><dd><b>交互技术（Arduino 硬件交互）</b> —— 是他们的<b>专业课</b>，不是公选课</dd>
+  <dt>授课</dt><dd><b>李老师</b>（微信昵称「海燕」· <code>guo647789</code> · 46 条）</dd>
+  <dt>引荐链</dt><dd><b>母亲刘丽萍 → 王利敏（中传老师 · 工号 1146）→ 李老师</b></dd>
+  <dt>起点</dt><dd><b>2026-05-15</b>（母亲托王利敏问课，她当天就回了）</dd>
+  <dt>时长时段</dt><dd>12 周（一学期）· 每周五上午（首讲早八点 · 201 教室）</dd>
+  <dt>他的身份</dt><dd><b>旁听生（无中传学籍）</b></dd>
+  <dt>会话实测</dt><dd>58 条（不是 53）· 2026-09-11 08:15 → <b>2026-10-08 10:19</b></dd>
+</dl>
+
+<h3>三个被解开的疑点</h3>
+
+<table>
+  <tr><th>疑点</th><th>答案</th></tr>
+  <tr>
+    <td>文件传输助手 10:01 那条孤零零的 <code>1146</code> 是什么？</td>
+    <td><b>王利敏的工号</b> —— 中传访客预约系统里「被访人」必填。不是验证码，也不是学号。</td>
+  </tr>
+  <tr>
+    <td>她 09:08 发的那条「实名认证」链接要干嘛？</td>
+    <td><code>apps.cuc.edu.cn/visitor/bind?target=/visitor/booking</code> —— <b>先实名绑定、再进预约页</b>。这是 <b>10 月新加的步骤</b>，9 月预约时不需要。</td>
+  </tr>
+  <tr>
+    <td>怎么判断「约没约上」？</td>
+    <td><b>别只看微信</b>。审批通知发在「<b>中国传媒大学信息门户</b>」公众号（<code>gh_71133962d203</code>）。10-09 那次已在 <b>10-08 10:15 审批通过</b>。</td>
+  </tr>
+</table>
+
+<h3>四条裁定</h3>
+
+<ol>
+  <li><b>性质＝旁听，不是学历。</b> <span class="tag t-red">红线</span> 绝对不得写成「在中传就读 / 有学籍 / 有学历」。与既有事实「中传仅获录取资格、未实际就读」<b>不冲突</b>——那是旧事，这是 2026 秋的新安排。</li>
+  <li><b>引荐链是三代人的：母亲 → 王利敏 → 李老师。</b> 这是「家庭关系网作为资源供给通道」的<b>第 4 次</b>使用（前三次：考央美兜底 / 安奇推荐信 / 母亲的车）。<b>但这次最干净</b>——前三次是兜底或交换，这次是纯粹的「给机会」。</li>
+  <li><b>姿态＝对「能给他资源的人」的应机态。</b> 对王利敏「收到小王阿姨！」「感谢小王阿姨！！！」（连用感叹号）；对李老师「李老师」；对陈晔「明白老师」。与「备注即规程」同源；区别是<b>陈晔的规程写进了备注（全库唯一一条），王/李的没写</b>——母亲转交的，不需要他维护。</li>
+  <li><b>家庭关系网的这一次使用没有对价。</b> 母亲没从中要什么，王利敏也没有。</li>
+</ol>
+
+<h2><span class="n">3</span>★★★ 连带修正：Q7「好面子」的表述被推翻</h2>
+
+<p>翻母亲会话时发现一句此前没被引用的原话（2026-09-11）：</p>
+
+<div class="quote">
+  「<b>你不要和他们说你是央美的</b>」「他们问你就说<b>动画学院</b>的」「<b>低调些</b>」
+</div>
+
+<div class="box b-blue">
+  <span class="h">这跟原来的裁定方向相反</span>
+  原裁定 Q7「学历口径＝好面子」是<b>对外抬高</b>（把格拉斯哥说成更高学位）。<br>
+  这一句是<b>主动压低</b>（央美 → 动画学院）。
+</div>
+
+<p><b>新表述：</b>不是「他爱面子」，而是<b>「他在身份上做风险管理，母亲是主要的风控人」</b>。</p>
+
+<p><b>读法：</b>在<b>技不如人的工科场合</b>（Arduino 课），央美身份会招来「你一个美术生来干嘛」的质疑；母亲的策略是<b>先消解对抗面</b>。这不是自卑，也不是母亲看不起他的学校——是两个人一起做的场合管理。</p>
+
+<h2><span class="n">4</span>两个 bug 修复（第二个是定时炸弹）</h2>
+
+<div class="box b-amber">
+  <span class="h">① 假设表有两列写反（3 条记录）</span>
+  <code>hypotheses</code> 表里 3 条的 <code>status</code> 存着「学业+创作+现金流」这类跨域串，<code>cross_domains</code> 里存着 <code>open</code>。<br>
+  <b>根因：</b>构建脚本的种子元组顺序是 <code>(…, cross_domains, status, source_doc)</code>，但 INSERT 的列清单写的是 <code>(…, status, cross_domains, source_doc)</code> —— <b>后三列整体错位一格</b>。<br>
+  <b>已修：</b>就地交换 3 行 + 改脚本列清单对齐。
+</div>
+
+<div class="box b-red">
+  <span class="h">② ★★ 更严重：构建脚本用「全删重建」写假设表</span>
+  <code>build_connective_tissue.py</code> 里原本是 <code>delete from hypotheses where hyp_id like 'hyp:%'</code> ——
+  <b>每次重跑都会把人工 / 增量写入的假设和决策一起删掉</b>。今天新增的 4 条本来会被下一次重跑静默清空。<br>
+  <b>已修：</b>改为<b>只删种子表里列出的 id</b>（<code>hypotheses</code> + <code>decisions</code> 两处），已通过语法校验。
+</div>
+
+<h2><span class="n">5</span>全量回写清单（六处）</h2>
+
+<table>
+  <tr><th>目标</th><th>动作</th></tr>
+  <tr>
+    <td><code>00-真相源·数字基准.md</code></td>
+    <td>数据底座 / 我发占比基准 / 逐月 / 关键人基准 <b>全刷新</b>；跑 <code>build_number_baseline.py</code> 重生自动区（17 项）</td>
+  </tr>
+  <tr>
+    <td><code>05-纠偏层.md</code></td>
+    <td><b>新增 <code>三·补·52</code></b>（4,378 → <b>4,492 行</b>）：本轮动作表 + 中传旁听线 + 母亲降级身份 + 台账修复 + 8 条红线</td>
+  </tr>
+  <tr>
+    <td><code>04-人际地图.md</code></td>
+    <td>近候选 16 人表刷新 · <b>新增「王利敏」「李老师」两条人物</b> + 中传旁听线整段（393 → <b>408 行</b>）</td>
+  </tr>
+  <tr>
+    <td><code>SKILL.md</code></td>
+    <td>索引库数字 388,705 → <b>394,173</b>（3 处）</td>
+  </tr>
+  <tr>
+    <td><code>analysis.sqlite</code></td>
+    <td>假设 16 → <b>19</b> · 决策 7 → <b>8</b> · 数据源 40 → <b>41</b> · 别名 3,207 → <b>3,209</b> · 程序记忆 6 → <b>7</b> · 6 条人物备注刷新</td>
+  </tr>
+  <tr>
+    <td>Obsidian</td>
+    <td><b>打通页新增 <code>三·补·52</code></b> · <code>王利敏.md</code> 53 → <b>58 条</b> + 并入说明</td>
+  </tr>
+</table>
+
+<h3>顺带校正的两个口径</h3>
+<p>逐月统计里有两个月跟旧记录对不上，已按实测校正：<b>2026-06</b> 旧记 17,869 → 实测 <b>16,932</b>；<b>2026-04</b> 旧记 22,380 → 实测 <b>21,834</b>。其余月份一致。</p>
+
+<h2><span class="n">6</span>系统当前状态</h2>
+
+<div class="stats">
+  <div class="stat"><div class="lbl">微信消息</div><div class="val">394,173</div><div class="dlt">+61（11:47 → 12:29）</div></div>
+  <div class="stat"><div class="lbl">会话总数</div><div class="val">1,805</div><div class="dlt">私聊 1,007 / 群 283 / 公众号 515</div></div>
+  <div class="stat"><div class="lbl">零发言会话</div><div class="val">46.4%</div><div class="dlt">862 个 / 183,075 条</div></div>
+  <div class="stat"><div class="lbl">我发占比中位</div><div class="val">60.4%</div><div class="dlt">140 人私聊基准</div></div>
+</div>
+
+<table>
+  <tr><th>层</th><th>规模</th><th>说明</th></tr>
+  <tr><td>事件层</td><td class="num">2,864</td><td>证据 5,463 · 结论 64（有效 41）</td></tr>
+  <tr><td>假设（hypotheses）</td><td class="num">19</td><td>open 14 / confirmed 4 / supported 1</td></tr>
+  <tr><td>决策（decisions）</td><td class="num">8</td><td>未决 7 / 已闭环 1</td></tr>
+  <tr><td>数据源（sources）</td><td class="num">41</td><td>陈旧 4（3 份读人协议类 + 1 份人工锚点 CSV）</td></tr>
+  <tr><td>人 / 别名</td><td class="num">1,876 / 3,209</td><td>0 重复 talker</td></tr>
+  <tr><td>程序记忆（procedures）</td><td class="num">7</td><td>本轮新增「每周中传入校预约」</td></tr>
+</table>
+
+<div class="box b-green">
+  <span class="h">知识库体检</span>
+  928 篇扫描 · <b>真·断链 1 条</b>（<code>[[三·补·34 车·家教·清理]]</code>，历史遗留）· 其余全部可达。
+</div>
+
+<h2><span class="n">7</span>接下来要做的</h2>
+
+<ul class="chk">
+  <li><b>明天（10-09）上午中传复课</b> —— 预约已通过，进门要<b>保存截图</b>。</li>
+  <li><b>每周三前</b>完成当周入校预约（实名认证 + 被访人填「王利敏」工号 1146）。已写成程序记忆，别再拖到周五早上。</li>
+  <li><b>10-11 前交版画工坊 2 分钟横屏视频</b> —— 陈晔线唯一死线。</li>
+  <li>今天给笑一一个<b>可被观察到的行动</b>（接她 + 当场把下次时间定死）。</li>
+  <li>问临汾落地赛<b>具体几号 / 我需要在场几天 / 群拉了吗</b>（唯一闸门）。</li>
+</ul>
+
+<footer>
+  数据源：<code>_im_tmp\wechat-mcp\index.sqlite</code> · 2026-10-08 12:29 刷新 ｜ 引擎 <code>05-纠偏层.md</code> 三·补·52<br>
+  本文件为「系统跑通」轮次交付物，与 <code>决策中枢_2026-10-08.html</code> · <code>激进构成_落地评估与临汾实例_2026-10-08.html</code> 同批。
+</footer>
+
+</div>
+</body>
+</html>

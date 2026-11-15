@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>债务全景与止血方案 · 2026-10-11</title>
+<style>
+  :root{
+    --bg:#f7f7f5; --panel:#ffffff; --ink:#1c1c1e; --ink2:#4a4a4f; --ink3:#8a8a90;
+    --line:#e3e3e0; --line2:#efefec;
+    --red:#b3261e; --redbg:#fdf2f1;
+    --amber:#8a5a00; --amberbg:#fdf8ec;
+    --green:#1f6b45; --greenbg:#f1f8f4;
+    --blue:#1b4a7a; --bluebg:#f1f5fa;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; padding:0 0 80px;
+    background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    font-size:15px; line-height:1.75;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:960px; margin:0 auto; padding:0 24px}
+  header{padding:52px 0 28px; border-bottom:2px solid var(--ink); margin-bottom:32px}
+  header .kicker{font-size:12.5px; letter-spacing:.16em; color:var(--ink3); text-transform:uppercase; margin-bottom:14px}
+  header h1{margin:0 0 12px; font-size:31px; line-height:1.3; letter-spacing:-.01em; font-weight:700}
+  header .meta{font-size:13px; color:var(--ink3)}
+  h2{font-size:20px; margin:44px 0 16px; padding-bottom:9px; border-bottom:1px solid var(--line); letter-spacing:-.005em}
+  h3{font-size:16px; margin:26px 0 10px; color:var(--ink)}
+  p{margin:10px 0}
+  ul,ol{margin:10px 0; padding-left:22px}
+  li{margin:6px 0}
+  .lede{background:var(--panel); border:1px solid var(--line); border-left:4px solid var(--ink); border-radius:3px; padding:20px 24px; margin:0 0 8px}
+  .lede ol{margin:0; padding-left:20px}
+  .lede li{margin:9px 0; font-size:15.5px}
+  .lede b{font-weight:700}
+  table{width:100%; border-collapse:collapse; margin:16px 0; font-size:13.5px; background:var(--panel)}
+  th,td{border:1px solid var(--line); padding:9px 11px; text-align:left; vertical-align:top}
+  th{background:#f2f2ef; font-weight:600; font-size:12.5px; letter-spacing:.02em; white-space:nowrap}
+  td.num{text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap}
+  tr.hl td{background:var(--redbg)}
+  .tag{display:inline-block; font-size:11.5px; padding:1px 7px; border-radius:3px; white-space:nowrap; font-weight:600}
+  .t-red{background:var(--redbg); color:var(--red); border:1px solid #f0cfcb}
+  .t-amber{background:var(--amberbg); color:var(--amber); border:1px solid #ecdcb8}
+  .t-green{background:var(--greenbg); color:var(--green); border:1px solid #cfe5d9}
+  .t-blue{background:var(--bluebg); color:var(--blue); border:1px solid #cfdcea}
+  .t-gray{background:#f2f2ef; color:var(--ink3); border:1px solid var(--line)}
+  .box{border:1px solid var(--line); border-radius:3px; padding:16px 20px; margin:16px 0; background:var(--panel)}
+  .box.warn{background:var(--amberbg); border-color:#ecdcb8}
+  .box.danger{background:var(--redbg); border-color:#f0cfcb}
+  .box.ok{background:var(--greenbg); border-color:#cfe5d9}
+  .box h3{margin-top:0}
+  .grid{display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:16px 0}
+  @media(max-width:720px){.grid{grid-template-columns:1fr}}
+  .card{background:var(--panel); border:1px solid var(--line); border-radius:3px; padding:16px 18px}
+  .card .big{font-size:26px; font-weight:700; letter-spacing:-.02em; font-variant-numeric:tabular-nums}
+  .card .lbl{font-size:12.5px; color:var(--ink3); margin-top:2px}
+  .src{font-size:12px; color:var(--ink3); font-style:normal}
+  .src code{background:#f2f2ef; padding:1px 5px; border-radius:2px; font-size:11.5px; font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+  blockquote{margin:14px 0; padding:10px 16px; border-left:3px solid var(--line); color:var(--ink2); font-size:14px; background:#fafaf8}
+  .step{display:flex; gap:14px; margin:14px 0; align-items:flex-start}
+  .step .n{flex:0 0 26px; height:26px; border-radius:50%; background:var(--ink); color:#fff; font-size:13px; font-weight:700; display:flex; align-items:center; justify-content:center; margin-top:2px}
+  .step .b{flex:1}
+  .step .b b{display:block; margin-bottom:2px}
+  footer{margin-top:56px; padding-top:20px; border-top:1px solid var(--line); font-size:12.5px; color:var(--ink3)}
+  .blank{display:inline-block; min-width:110px; border-bottom:1px dashed #bbb; height:1em}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="kicker">个人财务 · 内部文件 · 不外传</div>
+  <h1>债务全景与止血方案</h1>
+  <div class="meta">2026-10-11 · 数据源：微信索引库 393,107 条 / 转账核账 / 本人自述 · 覆盖 2024-11-10 → 2026-10-11</div>
+</header>
+
+<div class="lede">
+  <ol>
+    <li>你的问题不是「怎么不被发现」，是 <b>每月有三个固定日期在催你</b> —— 交行贷款 8 日、安逸花 8 日、美团月付 3 日。三条线全压在月初同一周。</li>
+    <li>你的现金流 <b>只有一条进水管：母亲</b>。2026 年 1–10 月她转来 <b>¥125,125</b>（去重 117 笔）。你自己的稳定收入是 <b>¥0</b>。</li>
+    <li>所以「偷」不是意外，是 <b>结构性缺口的必然出口</b>。不解决缺口，删记录只是把暴露时间往后推 —— 而 <b>删记录的成本，是你再也无法管理自己的债</b>。</li>
+  </ol>
+</div>
+
+<h2>一、债务全景（数据可查的部分）</h2>
+
+<p>下面每一条都有出处。没有出处的一律标「待你确认」，不猜。</p>
+
+<table>
+  <thead>
+    <tr><th>#</th><th>债权方</th><th>金额</th><th>还款日</th><th>当前状态</th><th>证据来源</th></tr>
+  </thead>
+  <tbody>
+    <tr class="hl">
+      <td>1</td>
+      <td><b>交通银行 · 贷款</b></td>
+      <td><b>¥2,898 / 月 × 12 期</b><br><span class="src">合计 <b>¥34,776</b></span></td>
+      <td><b>每月 8 日</b></td>
+      <td><span class="tag t-red">在还 · 主压力</span></td>
+      <td class="src">本人 2026-10-11 明确；交行储蓄卡(6912) 每月 8–9 日大额提现入账（08-08 ¥1,652.89 / 09-09 ¥4,968.75）</td>
+    </tr>
+    <tr class="hl">
+      <td>2</td>
+      <td><b>美团月付</b></td>
+      <td>9 月账单 <b>¥2,309.99</b><br><span class="src">8 月账单 ¥4,597.30</span></td>
+      <td>每月 3 日</td>
+      <td><span class="tag t-red">10-04 扣款失败</span><br><span class="src">余额不足</span></td>
+      <td class="src">美团还款提醒 ×9（09-25 起每天推）</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>安逸花（马上消费）</td>
+      <td class="num">¥189.11 / 月</td>
+      <td>每月 8 日</td>
+      <td><span class="tag t-green">10-04 已还</span></td>
+      <td class="src">公众号：08-08 还款失败→23:14 成功；10-04 12:04 成功</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>小贝借钱</td>
+      <td>备用金 <b>¥8,000</b><br><span class="src">授信 28,800–38,800</span></td>
+      <td>—</td>
+      <td><span class="tag t-amber">09-15、10-08 各到账一次</span></td>
+      <td class="src">公众号通知（10-08 正好落在 8–11 窗口内）</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>奇富借条（360 数科）</td>
+      <td>未说明</td>
+      <td>—</td>
+      <td><span class="tag t-red">2026-03-25 已逾期</span><br><span class="src">催收称将联系紧急联系人</span></td>
+      <td class="src">filehelper 催收短信原文</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>度小满</td>
+      <td>¥1,000</td>
+      <td>—</td>
+      <td><span class="tag t-gray">状态不明</span></td>
+      <td class="src">2026-03-10 本人：「我现在度小满借1000可以安排吗」</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>程颂孟秋（个人）</td>
+      <td>¥2,000</td>
+      <td>15 日</td>
+      <td><span class="tag t-amber">未还</span></td>
+      <td class="src">本人自述「就差 2000 元」；对方 07-23：「现在 500 都在逾期」</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>王逸伦（个人）</td>
+      <td>¥500</td>
+      <td>—</td>
+      <td><span class="tag t-amber">2026-08-11 借 · 已 56 天</span></td>
+      <td class="src">转账表交叉验证 + 饭局作战卡</td>
+    </tr>
+    <tr>
+      <td>9</td>
+      <td>英国那笔</td>
+      <td>未说明</td>
+      <td>—</td>
+      <td><span class="tag t-gray">暂不催</span></td>
+      <td class="src">本人自述：「英国欠的钱不着急找我要…他们都没音了」</td>
+    </tr>
+    <tr>
+      <td>10</td>
+      <td>中国银行信用卡 1919<br><span class="src">户名：母亲</span></td>
+      <td class="num">¥1,437.50</td>
+      <td>2026-07-06</td>
+      <td><span class="tag t-amber">家庭共同压力</span></td>
+      <td class="src">母亲 07-02 转发的中行短信原文</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="box danger">
+  <h3>这张表里最重的一条，不是钱</h3>
+  <p>2026-09-22 23:46，母亲在微信里问你：</p>
+  <blockquote>「老妈能要 250 块钱吗还一笔欠款[捂脸]」</blockquote>
+  <p>2026-08-18 23:19，她说：「<b>贷款有点逾期了我也</b>」。</p>
+  <p>意思是：<b>你以为的「兜底方」，自己也在缺钱。</b> 你从她那儿拿的每一笔，不是从「富余」里拿的，是从「她也紧着」里拿的。</p>
+</div>
+
+<h2>二、现金流：只有一条进水管</h2>
+
+<p>母亲转账（已按微信双行记账去重），单位：元。</p>
+
+<table>
+  <thead><tr><th>月份</th><th class="num">笔数</th><th class="num">金额</th><th>备注</th></tr></thead>
+  <tbody>
+    <tr><td>2025-01 ~ 04</td><td class="num">62</td><td class="num">33,550</td><td class="src">月均 ~8,400</td></tr>
+    <tr><td>2025-05 ~ 07</td><td class="num">9</td><td class="num">4,800</td><td class="src">低谷（英国在读）</td></tr>
+    <tr><td>2025-11 ~ 12</td><td class="num">12</td><td class="num">12,100</td><td class="src">—</td></tr>
+    <tr><td>2026-01</td><td class="num">2</td><td class="num">3,000</td><td class="src">—</td></tr>
+    <tr><td>2026-02</td><td class="num">5</td><td class="num">10,800</td><td class="src">—</td></tr>
+    <tr><td>2026-03</td><td class="num">12</td><td class="num">11,850</td><td class="src">—</td></tr>
+    <tr><td>2026-04</td><td class="num">9</td><td class="num">14,050</td><td class="src">购车（极狐）</td></tr>
+    <tr><td>2026-05</td><td class="num">8</td><td class="num">10,900</td><td class="src">—</td></tr>
+    <tr><td>2026-06</td><td class="num">15</td><td class="num">13,300</td><td class="src">—</td></tr>
+    <tr><td>2026-07</td><td class="num">18</td><td class="num">17,300</td><td class="src">—</td></tr>
+    <tr class="hl"><td><b>2026-08</b></td><td class="num"><b>21</b></td><td class="num"><b>30,450</b></td><td class="src"><b>峰值</b>：央美学费 ¥20,000 + 母亲转 ¥20,000 一笔</td></tr>
+    <tr><td>2026-09</td><td class="num">19</td><td class="num">9,300</td><td class="src">—</td></tr>
+    <tr><td>2026-10（至 11 日）</td><td class="num">8</td><td class="num">4,175</td><td class="src">—</td></tr>
+  </tbody>
+</table>
+
+<div class="grid">
+  <div class="card">
+    <div class="big">¥125,125</div>
+    <div class="lbl">2026 年 1–10 月母亲转入（去重 117 笔）</div>
+  </div>
+  <div class="card">
+    <div class="big">¥0</div>
+    <div class="lbl">同期你的稳定收入</div>
+  </div>
+</div>
+
+<p class="src">口径说明：微信转账在导出库里每笔记两行（role=them / role=me，内容相同、时间差中位数 27 秒），不去重会翻倍。<code>tools/transfer_dedup.py</code></p>
+
+<h2>三、「8 号到 11 号」的真相</h2>
+
+<p>你说每月 8–11 日干过两次。数据把原因指出来了 —— 这不是习惯，是 <b>交行贷款的扣款日</b>。</p>
+
+<table>
+  <thead><tr><th>日期</th><th>母亲转入（去重）</th><th>当日/次日动作</th><th>说明</th></tr></thead>
+  <tbody>
+    <tr><td>2026-06-08 21:39</td><td class="num">¥2,500</td><td>—</td><td class="src">—</td></tr>
+    <tr><td>2026-07-09 15:47</td><td class="num">¥6,000</td><td>—</td><td class="src">07-09 分两笔</td></tr>
+    <tr class="hl">
+      <td>2026-08-08 23:09</td><td class="num">¥1,600</td>
+      <td>23:10 <b>提现 ¥1,652.89 → 交行(6912)</b><br>23:14 安逸花还款 ¥189.11</td>
+      <td class="src">钱一进微信，<b>立刻整笔挪进交行卡</b></td>
+    </tr>
+    <tr class="hl">
+      <td>2026-09-09 00:01</td><td class="num">¥4,000</td>
+      <td>00:03 <b>提现 ¥4,968.75 → 交行(6912)</b></td>
+      <td class="src">凌晨 0 点，<b>抢在扣款前把卡填满</b></td>
+    </tr>
+    <tr>
+      <td>2026-10-06 / 10-09</td><td class="num">¥1,150</td>
+      <td>提现 ¥1,058.90 + ¥435.75 → 交行</td>
+      <td class="src">10-04 已用母亲 ¥2,500 补了美团月付</td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="box warn">
+  <h3>这个动作说明了什么</h3>
+  <p>「一收到钱就整笔提现到交行卡」—— 这是<b>被动补位</b>，不是主动还款。你不是在还债，你是在<b>每天担心扣款失败</b>。</p>
+  <p>这种状态下人只会做两件事：<b>找下一个口子</b>（小贝借钱 10-08 到账 ¥8,000），或者<b>从最近的地方拿</b>（母亲）。</p>
+</div>
+
+<h2>四、缺口测算</h2>
+
+<p>把已知的月供加起来：</p>
+
+<table>
+  <thead><tr><th>项目</th><th class="num">月供（低）</th><th class="num">月供（高）</th></tr></thead>
+  <tbody>
+    <tr><td>交通银行贷款</td><td class="num">2,898</td><td class="num">2,898</td></tr>
+    <tr><td>美团月付</td><td class="num">2,310</td><td class="num">4,597</td></tr>
+    <tr><td>安逸花</td><td class="num">189</td><td class="num">189</td></tr>
+    <tr><td>小贝借钱（8,000 分摊，按 6 期估）</td><td class="num">1,333</td><td class="num">1,333</td></tr>
+    <tr><td>度小满 / 奇富借条 / 个人欠款</td><td class="num">?</td><td class="num">?</td></tr>
+    <tr style="background:#f2f2ef;font-weight:700"><td>合计（不含第 5 行）</td><td class="num">≈ ¥6,730</td><td class="num">≈ ¥9,017</td></tr>
+  </tbody>
+</table>
+
+<div class="box danger">
+  <h3>结论：不是「没钱还」，是「钱被花掉了」</h3>
+  <p>母亲 2026 年月均转入 <b>¥12,513</b>，明显高于月供。所以缺口不在「总量不够」，而在 <b>钱的分配</b>。</p>
+  <p>你自己说过一句话，数据也对得上：</p>
+  <blockquote>「大头清了，程颂孟秋那笔还欠着就差 2000 元。但是我<b>之前泡妞花超了</b>，每个月有 3000 元左右贷款要还，手头一点钱都没有。」</blockquote>
+  <p>9 月的可查消费里就有：美团月付买了两程火车票（昆明→石家庄 ¥293.50、普洱→昆明南 ¥172.00）、新疆菜 ¥115、饭局、以及 08-11 借的 ¥500。</p>
+  <p><b>钱到了，先花，到还款日再去补 —— 这就是「偷」产生的完整机制。</b></p>
+</div>
+
+<h2>五、车辆事故线（钱的第二个出口）</h2>
+
+<p>你说祝雨辰那笔劳务费「**已经打到我卡上了**」——但紧接着：「**之前在京密路上跟人撞到了，已经赔给别人用了**」。</p>
+
+<p>也就是说，<b>那笔钱进来过，但没有留下来</b>。查了一遍，它不是孤例：</p>
+
+<table>
+  <thead><tr><th>日期</th><th>事件</th><th>金额 / 案号</th><th>出处</th></tr></thead>
+  <tbody>
+    <tr><td>2026-06-12</td><td>「在那边撞了一次车」<b>「把课时费全都赔出去了」</b></td><td class="num">课时费全赔光</td><td class="src">对 <code>wxid_00t3tjel7n4a22</code></td></tr>
+    <tr class="hl"><td><b>2026-07-02</b></td><td><b>出险报案</b>（母亲的车 <b>京ACP0263</b> · 与公交车剐蹭 · <b>全责</b>）</td><td class="src">太平洋 <b>C110106VEH26010697</b></td><td class="src">母亲 07-05 转发保险短信</td></tr>
+    <tr class="hl"><td><b>2026-07-18</b></td><td>与特斯拉车主冲突（砸玻璃）· 已签调解书</td><td class="num"><b>自付 ¥4,000</b></td><td class="src">对舒泽林；舒当天转来 ¥500</td></tr>
+    <tr><td>2026-08-20</td><td>出险（滨榆西路 · 树枝刮）</td><td class="src">太平洋 <b>C110106VEH26015129</b></td><td class="src">与保险值班对话</td></tr>
+    <tr><td>2026-09-08</td><td>出险</td><td class="src">太平洋 <b>C110106VEH26016840</b></td><td class="src">保险短信</td></tr>
+    <tr><td>2026-09-12</td><td>被追尾</td><td class="num">本人转出 ¥300 结案</td><td class="src">「一世情缘」</td></tr>
+    <tr><td>2026-09-26 / 09-30</td><td>「又有剐蹭了」「撞到门栅栏上了」</td><td>—</td><td class="src">对笑一</td></tr>
+    <tr><td>2026-10-03 / 10-07</td><td>「我出了点事故」「车又剐蹭了」</td><td>—</td><td class="src">对笑一</td></tr>
+  </tbody>
+</table>
+
+<div class="box warn">
+  <h3>4 个月：4 起保险报案 + 至少 4 起未报案剐蹭</h3>
+  <p><b>这条线有两个后果：</b></p>
+  <ol style="margin:6px 0">
+    <li><b>钱</b> —— 每次事故 = 自付 + 次年保费上浮。<b>这是「钱到了先花」之外，第二个漏口。</b></li>
+    <li><b>安全</b> —— 频率本身需要被看见。不是评价你的驾驶，是提醒：<b>京密路 + 这个频率</b>，值得单独盯一盯。</li>
+  </ol>
+</div>
+
+<div class="box">
+  <p style="margin:0"><b>⚠️ 一处需要你指认：</b>你说的是「<b>京密路</b>」，但聊天记录里<b>没有一起事故同时提到「京密路」</b>。上面 8 起里最可能是 <b>2026-07-02</b>（出险 · 全责 · 母亲的车）或 <b>2026-07-18</b>（¥4,000 自付）。<b>你说一声是哪起，我把金额坐实。</b></p>
+</div>
+
+<h2>六、止血：未来 30 天</h2>
+
+<div class="step"><div class="n">1</div><div class="b">
+  <b>今天 · 把 ¥3,500 还回去（如果还来得及）</b>
+  <p>不是去坦白，是止损。把「已经发生的第三次」变成「没发生」。窗口通常只有一两天 —— 母亲的账单日、对账、缴费，任何一个都会撞上。这一步能省掉的，是后面所有事。</p>
+</div></div>
+
+<div class="step"><div class="n">2</div><div class="b">
+  <b>本周 · 先把已经逾期的补上</b>
+  <p>美团月付 9 月账单 ¥2,309.99 在 10-04 扣款失败，现在<b>正在逾期计息</b>。这一笔是当前最贵的钱 —— 它每天都在涨。优先于其他任何支出。</p>
+</div></div>
+
+<div class="step"><div class="n">3</div><div class="b">
+  <b>10 月内 · 把总额算清（这是本文件要你填的部分）</b>
+  <p>见下面第七节。没有总额，就永远只能「每月救火」，永远算不出什么时候能结束。</p>
+</div></div>
+
+<div class="step"><div class="n">4</div><div class="b">
+  <b>11 月起 · 建两样东西</b>
+  <p><b>① 还款日日历</b>：把 3 日（美团）、8 日（交行 + 安逸花）、15 日（程颂孟秋）写进手机日历，提前 3 天提醒。<br>
+     <b>② 还款专用账户</b>：每月钱一到，先划走月供，剩下的才是可花的。<b>顺序反过来，就是现在的样子。</b></p>
+</div></div>
+
+<h2>七、三条红线</h2>
+
+<div class="box danger">
+  <ol style="margin:0">
+    <li><b>不再从母亲的账户取钱</b> —— 任何形式、任何金额。她已经到了要问你「能不能给 250 块」的程度。</li>
+    <li><b>不再新增借贷平台</b> —— 小贝借钱 10-08 到账的 ¥8,000，是这条线最新的一个口子。每开一个口子，月供就再涨一截。</li>
+    <li><b>不再删记录</b> —— 这是三条里最要命的一条。你删掉的那条支付宝转账和那条银行短信，<b>本身不能让你安全，但会让你失去唯一能看清自己债务的账本</b>。你在拆掉自己的仪表盘。</li>
+  </ol>
+</div>
+
+<h2>八、需要你确认的数字</h2>
+
+<p>下面几项我查不到（在银行侧，不在微信里）。你补上，我就能把「什么时候能还完」算出来。</p>
+
+<table>
+  <thead><tr><th>项目</th><th>需要的信息</th><th>怎么查</th></tr></thead>
+  <tbody>
+    <tr><td><b>交通银行贷款</b></td><td>已确认 <b>¥2,898/月 × 12 期 = ¥34,776</b><br>待补：剩余本金 · 已还期数 · <b>起算日</b>（若 2025-09 起算则 2026-09 应到期，但 10 月仍在还 → 需核对）</td><td class="src">交行手机银行 → 贷款 → 我的贷款</td></tr>
+    <tr><td>美团月付</td><td>当前欠款总额</td><td class="src">美团 → 我的 → 美团月付</td></tr>
+    <tr><td>小贝借钱</td><td>¥8,000 是否已支用？还款计划？</td><td class="src">小贝借钱 App</td></tr>
+    <tr><td>奇富借条</td><td>还欠多少？是否已处理？</td><td class="src">360 借条 App / 客服</td></tr>
+    <tr><td>度小满</td><td>¥1,000 是否已还</td><td class="src">度小满 App</td></tr>
+    <tr><td>英国那笔</td><td>金额 · 债权人 · 是否计息</td><td class="src">凭记忆</td></tr>
+    <tr><td>个人欠款</td><td>程颂孟秋 ¥2,000 · 王逸伦 ¥500 · 还有没有别人</td><td class="src">聊天记录可交叉验证</td></tr>
+  </tbody>
+</table>
+
+<div class="box ok">
+  <h3>补完之后能回答什么</h3>
+  <ul style="margin:0">
+    <li>总债务是多少（一次性看全）</li>
+    <li>按现在的月供，<b>几个月能清</b></li>
+    <li>哪几笔应该优先还（利率 × 逾期成本排序）</li>
+    <li>每月需要多少<b>真实收入</b>才能不再依赖母亲</li>
+  </ul>
+</div>
+
+<h2>九、最后一句</h2>
+
+<p>你现在缺的不是钱，是<b>一张能看见全貌的表</b>。过去两年你一直是「看不见 → 到了日子 → 临时找钱」的循环，所以每个月都在重演同一件事。</p>
+
+<p>这份文件是第一版。把第七节的空格填上，它就能变成第二版 —— 那一版才会告诉你<b>终点在哪</b>。</p>
+
+<footer>
+  生成于 2026-10-11 · 数据源：微信索引库（393,107 条 / 1,807 会话）、<code>tools/transfer_dedup.py</code> 转账核账、<code>analysis.sqlite</code> 结论库（CON-021 / CON-028 / CON-064）<br>
+  本文件仅存于本机，不对外传输。所有金额均标注出处；无出处项标「待确认」，不做推断。
+</footer>
+
+</div>
+</body>
+</html>

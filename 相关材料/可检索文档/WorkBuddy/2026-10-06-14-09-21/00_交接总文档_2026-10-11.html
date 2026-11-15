@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>中期汇报《在场与回应》· 交接总文档 2026-10-11</title>
+<style>
+:root{--paper:#F6F2E9;--ink:#202321;--red:#B5493A;--line:#d9d2c4;--soft:#6b6660;}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--paper);color:var(--ink);
+ font-family:"Source Han Sans SC","Microsoft YaHei","PingFang SC",system-ui,sans-serif;
+ font-size:15px;line-height:1.78;}
+.wrap{max-width:1000px;margin:0 auto;padding:48px 34px 90px;}
+header.top{border-bottom:3px double var(--ink);padding-bottom:22px;margin-bottom:8px;}
+header.top .kicker{font-size:12px;letter-spacing:.32em;color:var(--red);font-weight:700;}
+h1{font-size:30px;line-height:1.35;margin:14px 0 10px;letter-spacing:.01em;}
+header.top .meta{font-size:12.5px;color:var(--soft);line-height:1.9;}
+nav.toc{background:#fff;border:1px solid var(--line);border-left:4px solid var(--red);
+ padding:18px 22px;margin:26px 0 40px;border-radius:2px;}
+nav.toc b{display:block;font-size:12px;letter-spacing:.2em;color:var(--red);margin-bottom:10px;}
+nav.toc a{display:inline-block;color:var(--ink);text-decoration:none;font-size:13px;
+ margin:3px 14px 3px 0;padding:2px 0;border-bottom:1px solid transparent;}
+nav.toc a:hover{border-bottom-color:var(--red);color:var(--red);}
+h2{font-size:21px;margin:52px 0 16px;padding-bottom:9px;border-bottom:2px solid var(--ink);
+ letter-spacing:.01em;}
+h3{font-size:16.5px;margin:32px 0 12px;color:var(--red);}
+h4{font-size:14.5px;margin:22px 0 10px;}
+p{margin:11px 0;}
+b{font-weight:700;}
+code{background:#eae4d7;padding:1.5px 6px;border-radius:3px;font-size:12.8px;
+ font-family:"Cascadia Mono",Consolas,monospace;color:#7a3226;}
+pre{background:#232120;color:#efe9dd;padding:16px 18px;border-radius:3px;overflow-x:auto;
+ font-family:"Cascadia Mono",Consolas,monospace;font-size:12.6px;line-height:1.7;
+ border-left:4px solid var(--red);}
+pre code{background:none;color:inherit;padding:0;}
+blockquote{margin:16px 0;padding:14px 20px;background:#fff;border-left:4px solid var(--red);
+ border-radius:2px;color:#33302c;font-size:14.5px;}
+blockquote b{color:var(--red);}
+.tw{overflow-x:auto;margin:18px 0;}
+table{border-collapse:collapse;width:100%;background:#fff;font-size:13.3px;
+ border:1px solid var(--line);}
+th{background:#232120;color:#f2ede3;text-align:left;padding:9px 12px;font-weight:600;
+ font-size:12.5px;letter-spacing:.02em;white-space:nowrap;}
+td{padding:8px 12px;border-top:1px solid var(--line);vertical-align:top;line-height:1.66;}
+tr:nth-child(even) td{background:#faf7f0;}
+ul,ol{margin:11px 0;padding-left:24px;}
+li{margin:5px 0;}
+li.todo{list-style:none;margin-left:-20px;}
+hr{border:0;border-top:1px dashed var(--line);margin:40px 0;}
+i{color:var(--soft);}
+footer{margin-top:60px;padding-top:20px;border-top:1px solid var(--line);
+ font-size:12px;color:var(--soft);text-align:center;}
+@media print{body{background:#fff;}nav.toc{page-break-inside:avoid;}h2{page-break-after:avoid;}}
+</style></head><body><div class="wrap">
+<header class="top">
+<div class="kicker">HANDOVER · 唯一总入口</div>
+<h1>中期汇报《在场与回应》· 交接总文档</h1>
+<div class="meta">版本 2026-10-11 23:10 ｜ 取代 09-19/09-24 的 5 份旧交接文档<br>
+项目根目录：C:\Users\wardc\Desktop\中期汇报_2026-09\ ｜ 生成：WorkBuddy AI</div>
+</header>
+<nav class="toc"><b>目录</b><a href="#s1">0. 一句话任务</a><a href="#s2">1. 项目身份与背景</a><a href="#s3">2. 主线与全场结构</a><a href="#s7">3. 硬事实口径（已逐项核实，禁止翻盘）</a><a href="#s14">4. 口径红线（违反即失分）</a><a href="#s17">5. 已交付产物总清单（时间倒序）</a><a href="#s22">6. 文件地图（三级）</a><a href="#s26">7. 井邻章 22–24 页结构（成稿）</a><a href="#s27">8. 九次接待 × 素材到位（核查结论）</a><a href="#s32">9. 待办清单</a><a href="#s36">10. 等用户提供的东西（不要自己编）</a><a href="#s37">11. 可复用技术方法（取证附录）</a><a href="#s42">12. 接手第一步（建议顺序）</a><a href="#s43">附 A · 关键人物 wxid 对照（直接复用，勿再重查）</a><a href="#s44">附 B · 关键节点与地址</a></nav>
+<h1 id="s0">中期汇报《在场与回应》· 交接总文档</h1>
+<blockquote><b>版本</b>：2026-10-11 23:10 ｜ <b>性质</b>：唯一总入口，取代以下 5 份旧文档<br><code>00_交接文档_完整版.md</code>(09-19) · <code>00_交接清单.md</code>(09-19) · <code>00_交接文件_给WorkBuddy.md</code>(09-24) · <code>00_汇报信息汇总与文件位置.md</code>(09-24) · <code>00_v5全场改进意见总清单.md</code>(09-24)<br><b>项目根目录</b>：<code>C:\Users\wardc\Desktop\中期汇报_2026-09\</code><br><b>用途</b>：任何接手方（人 / AI 会话）读完这一份即可独立继续，无需再翻聊天记录。</blockquote>
+<hr>
+<h2 id="s1">0. 一句话任务</h2>
+<p>继续完善蔡浩文的<b>研究生中期汇报《在场与回应》</b>（15 分钟 · 浏览器演示 · 无固定模板）。 所有事实以<b>第 3 节硬口径</b>为准，<b>不得编造</b>；不确定的一律标【待用户确认】。 当前阶段：<b>井邻章 22–24 页内容稿已成稿</b>，等素材补齐与用户拍板。</p>
+<hr>
+<h2 id="s2">1. 项目身份与背景</h2>
+<div class="tw"><table><thead><tr><th>项</th><th>内容</th></tr></thead><tbody><tr><td>汇报人</td><td>蔡浩文 · 学号 <b>12250300012</b></td></tr><tr><td>院系</td><td>中央美术学院 实验艺术与科技艺术学院（研究生在读 · 班长）</td></tr><tr><td>导师</td><td><b>陈晔</b>（微信 <code>deerluna</code>，也显示为「奥特巫曼」）</td></tr><tr><td>研究方向</td><td>社会美育与乡村振兴</td></tr><tr><td>汇报形式</td><td><b>15 分钟</b> · 浏览器网页演示 · 无固定模板</td></tr><tr><td>学缘</td><td>首都经济贸易大学（区域经济学+金融学 学士）→ 格拉斯哥大学（发展经济学 硕士）→ 中央美术学院（实验艺术与科技 研究生）</td></tr><tr><td>⚠️ 关键背景</td><td><b>用户的研究生开题报告不存在</b>（全盘 344,143 文件扫描，证据指向开题尚未发生）→ 汇报里<b>不得假装有「既定开题目标」</b>，表述为「年度实践与研究方向落地」</td></tr><tr><td>用户特点</td><td>央美背景、极重<b>视觉完成度</b>；经济学出身；数字人线是<b>研究设想，成品未交付</b></td></tr></tbody></table></div>
+<hr>
+<h2 id="s3">2. 主线与全场结构</h2>
+<h3 id="s4">2.1 主线（定稿）</h3>
+<blockquote><b>「让参与发生，让回应继续」</b></blockquote>
+<p>一条问题贯穿全场：<b>参与如何发生，回应如何继续</b>。</p>
+<h3 id="s5">2.2 当前最新主档（v5 之后）</h3>
+<pre>C:\Users\wardc\Documents\New project gpt\AI-archive\outputs\在场与回应_全场24页_2026-09-30\
+    └─ 在场与回应_全场24页_全文与讲稿.md      ← 当前主线</pre>
+<ul><li><b>七部分</b>：澜沧 <b>3′30″</b> / 井邻 <b>5′00″</b>（重心）/ 其余为材料实验、北京台、数字人研究设想等</li><li>旧版谱系（<b>勿再改</b>）：v1–v5 在 <code>Documents\Codex\2026-09-22\ban\outputs\</code>；视觉母版 v8/v8.1 在 <code>…\在场与回应_视觉母版_2026-09-27\</code></li><li>浏览器版快捷键：<b>N</b> 讲稿与依据 / <b>F</b> 全屏 / <b>T</b> 15 分钟倒计时 / <b>H</b> 控制栏 / ←→ 翻页</li></ul>
+<h3 id="s6">2.3 评分逻辑（★ 诚实边界）</h3>
+<ul><li>本机全盘扫描已确认：<b>央美无公开的中期考核评分表、无汇报时长规定</b></li><li>用同类艺术院校《研究生学位论文中期检查实施细则》反推：六维度 = 思想政治表现（<b>一票否决</b>）/ 课程学习 / 科研能力 / 论文进展 / 艺术硕士毕业设计 / 健康状态；程序 = PPT 汇报（硕士 ≥10 分钟）→ <b>提问</b> → 修改意见 → 内部评定 → 宣布结果；结果分优秀/良好/合格/不合格，<b>两次不过退学</b></li><li>推论：<b>提问环节才是主战场</b>，PPT 只是引子</li></ul>
+<hr>
+<h2 id="s7">3. 硬事实口径（已逐项核实，<b>禁止翻盘</b>）</h2>
+<h3 id="s8">3.1 数字人线</h3>
+<div class="tw"><table><thead><tr><th>项</th><th>口径</th></tr></thead><tbody><tr><td>数据</td><td><b>71,550 条消息 / 6,303 片段 / 99.84% 标注覆盖 / 100 位联系人画像与排序</b>（数据库实测）</td></tr><tr><td>⚠️ 勿混用</td><td>旧的「4,494 会话 / 35,078 条 / 491 天」是 <b>2026-07 旧快照</b>，不要用</td></tr><tr><td>现状（三层）</td><td><b>数据层完成 / 架构层设想 / 成品层未交付</b></td></tr><tr><td>诚实标注</td><td>现仅 <b>2.1 秒视频</b> + 约 <b>4.3 KB 提示词草稿</b>，如实写</td></tr></tbody></table></div>
+<h3 id="s9">3.2 澜沧支教</h3>
+<ul><li><b>4 课次</b>（非 3 课时；或写「3 主线课 + 1 实践课」）</li><li>20 余名学生 ｜ <b>2026-08-31 — 09-04</b> ｜ <b>澜沧第三民族中学</b>（勿写「民族中学」或「沧澜」）</li><li>知行计划 Movers4Climate「绿墨护未」，<b>09-04 结项</b></li></ul>
+<h3 id="s10">3.3 井邻乡村美育工作站（核心）</h3>
+<div class="tw"><table><thead><tr><th>项</th><th>口径</th></tr></thead><tbody><tr><td>地址</td><td><b>北京市怀柔区渤海镇洞台村 78 号</b>（⚠️ 不是「浙江怀柔」；⚠️ 339 号是「植墨工坊」，<b>两个门牌号勿混</b>）</td></tr><tr><td>角色</td><td><b>丝网印刷 / 版画工作坊负责人 + 现场执行</b>（<b>不是</b>独立运营整个工作站）</td></tr><tr><td>驻村</td><td><b>33 个驻村工作日</b>（2026-05-29 — 08-20，日志逐日恰好 33 条）</td></tr><tr><td>问题闭环</td><td><b>8 项 = 7 项已解决 + 1 项跟进中</b>（供电与配电箱钥匙，<b>合并记一项</b>）→ <b>不得写「全解决」</b></td></tr><tr><td>★ 接待口径</td><td>日志原文 = 「现场接待 <b>6 批次</b>」+「另为科学城领导参观、区委书记到访<b>完成接待准备</b>」→ 对外写「<b>6 批次现场 + 2 批次准备</b>」，<b>不笼统写「8 批次接待」</b></td></tr><tr><td>开街</td><td><b>两次</b>：8/2 试运营开街、9/20 正式开街（更早还有 7/11 首印）</td></tr><tr><td>定价</td><td>村民免费 / 井邻客人 58 元 / 预约 68 元</td></tr><tr><td>制版口径</td><td><b>A·B·C·F 四次为井邻的完整制版</b>；D(8/29 黄版群青)属<b>澜沧</b>、E(9/30–10/1)是<b>纯文件整理</b> → <b>不写「六轮制版」</b></td></tr></tbody></table></div>
+<h3 id="s11">3.4 北京台实习</h3>
+<ul><li><b>2026.01 — 04</b>，约三个月（微信记录：「三个月」）</li><li>数字人口播上线「北京时间 / 法治」</li><li><b>没有可公开署名的成果文件</b> → 只写「<b>负责的环节</b>」：素材整理 → 智能体流程 → 口播生成 → 上线</li></ul>
+<h3 id="s12">3.5 不进正文的项（追问时才说）</h3>
+<ul><li><b>厦门授课</b> = C 级证据（全盘无记录）→ <b>不进正文</b></li><li><b>会务 / 国际交流 / 获奖资质</b> → 不进正文，作为追问备用页</li></ul>
+<h3 id="s13">3.6 已修正的事实（防误写）</h3>
+<div class="tw"><table><thead><tr><th>#</th><th>误</th><th>正</th></tr></thead><tbody><tr><td>1</td><td>浙江怀柔</td><td><b>北京市怀柔区渤海镇洞台村 78 号</b></td></tr><tr><td>2</td><td>刮板角度 45°(p6) vs 60°(p11)</td><td><b>待本人实测确认后统一</b></td></tr><tr><td>3</td><td>澜沧 3 课时</td><td><b>4 课次</b></td></tr><tr><td>4</td><td>驻村周期「2026.03—08」</td><td>拆成「项目周期 2026.03—08」+「日志覆盖 05.29—08.20 共 <b>33 个工作日</b>」</td></tr><tr><td>5</td><td>开街三处打架</td><td>定三段：<b>7/11 首印 → 8/2 试运营 → 9/20 正式</b></td></tr><tr><td>6</td><td>回声卡「19 份」与问卷「64 份」并列</td><td><b>需说明关系</b></td></tr><tr><td>7</td><td>MBTI 八版 = CMYK 四色</td><td><b>两回事</b>：MBTI 八版（井邻主线）≠ 偏移四型 CMYK 四色（前身方案）</td></tr><tr><td>8</td><td>8/19 那晚「黄版+群青版四轮制版」</td><td>实为 <b>CMYK 四色 T 恤丝印 + 悲鸿袖标 A4 + 怀柔竖排 A4</b>；「黄版+群青版」属 <b>8/29 且是澜沧项目</b></td></tr><tr><td>9</td><td>悲鸿「四个色版（粉黄蓝绿）」</td><td>是<b>四种「配色版本」</b>（选款用），<b>不是四张叠印分色版</b></td></tr><tr><td>10</td><td>10/3 带版「五张A3、两张A4」</td><td>实为 <b>4 张 A3 + 2 张 A4</b>（「五图」= 5 个画面 ≠ 5 张 A3）</td></tr></tbody></table></div>
+<hr>
+<h2 id="s14">4. 口径红线（违反即失分）</h2>
+<h3 id="s15">4.1 数字人三条红线</h3>
+<ol><li><b>不宣称「已完成数字人成品」</b>（只能写三层口径）</li><li><b>不用证量词</b>（开悟 / 加持 / 灌顶）→ 佛学名相一律用工程语言（「设计隐喻 / 设计转译」），出处标脚注</li><li><b>不展示未脱敏的聊天原文与姓名</b></li></ol>
+<h3 id="s16">4.2 井邻口径纪律</h3>
+<ol><li><b>商业信息不进对外材料</b>（导师已划界：08-05「井邻优惠不能写出来」· 10-02「你不需要给井邻做广告」）→ 只讲<b>机制设计</b>，不讲商业成绩/优惠/政府采购</li><li><b>试运行 ≠ 已证明复购</b>；<b>已设计的方案 ≠ 已验证的成效</b></li><li><b>不写 10-03 领导的级别与姓名</b>（详见 §8.3）</li><li><b>不写石总家庭背景</b>（属私事，且推不出、证不了、不合适）</li><li><b>团队成果不认领</b>：7 件装置作品（王子辰/廖玉琢/李晴/李彦樵/杨斐/杜清轩/王博）· 洞台村方案（郭静秋/齐家滨）</li><li>全打通报告含真人姓名与金额 → <b>不得外传</b></li></ol>
+<hr>
+<h2 id="s17">5. 已交付产物总清单（时间倒序）</h2>
+<h3 id="s18">5.1 2026-10-11（本日）</h3>
+<div class="tw"><table><thead><tr><th>产物</th><th>位置</th><th>体量</th></tr></thead><tbody><tr><td><b>井邻_事无巨细全档案_2026-10-11.html</b></td><td>工作区根 + <code>Desktop\中期汇报_2026-09\</code></td><td>166 KB · <b>17 节 67 表</b></td></tr><tr><td><b>井邻项目_全景总册_2026-10-11.html</b></td><td>同上</td><td>62.8 KB · 12 节 26 表</td></tr><tr><td><b>井邻章_22-24页内容完整稿_2026-10-11.html</b></td><td>同上</td><td>51.6 KB · <b>24 页 P01–P24</b></td></tr><tr><td><b>井邻_九次接待素材到位核查表_2026-10-11.html</b></td><td>同上</td><td>32.9 KB · 6 节 8 表</td></tr><tr><td><code>15_刘丽萍会话接待素材_2026-10-11\</code></td><td><code>Desktop\中期汇报_2026-09\</code></td><td>35 MB（4K 抽帧 37 张 + 3 素材）</td></tr><tr><td><code>14_10-11现场素材_未来科学城与文旅局\</code></td><td>同上</td><td>视频 + 10 帧 + 2 缩略图放大</td></tr><tr><td><code>井邻_现场素材_2026-10-11\</code></td><td><code>Desktop\</code></td><td><b>含 416 MB 4K50 帧原片</b></td></tr><tr><td><code>井邻_制版打印文件汇总_20261006\</code></td><td><code>Desktop\</code></td><td><b>499 文件 / 399.4 MiB · 制版唯一权威包</b></td></tr></tbody></table></div>
+<h3 id="s19">5.2 2026-10-09</h3>
+<div class="tw"><table><thead><tr><th>产物</th><th>体量</th></tr></thead><tbody><tr><td>井邻章_我的贡献与成果总账_2026-10-09.html</td><td>47.4 KB（<b>取代 10-06 版</b>）</td></tr><tr><td>井邻章_创作线_四问结构_证据台账_2026-10-09.html</td><td>27.6 KB</td></tr><tr><td>井邻_10-03到访_全部可查信息与可能性_2026-10-09.html</td><td>25.0 KB</td></tr><tr><td>井邻_10-03领导到访_核实清单_2026-10-09.html</td><td>20.6 KB</td></tr><tr><td>井邻章_中期汇报可用信息总表_2026-10-09.html</td><td>18.4 KB（<b>唯一入口</b>）</td></tr><tr><td><code>14_10-03现场与参与者回声_2026-10-09\</code></td><td>6 张（含 10-03 现场照 + 参与者回声）</td></tr></tbody></table></div>
+<h3 id="s20">5.3 2026-10-06</h3>
+<div class="tw"><table><thead><tr><th>产物</th><th>体量</th></tr></thead><tbody><tr><td>井邻章_接待与运营_微信证据台账_2026-10-06.html</td><td>52.5 KB</td></tr><tr><td>井邻章_接待前制版打印链_微信证据台账_2026-10-06.html</td><td>41.8 KB</td></tr><tr><td>井邻章_我的贡献与成果总账_2026-10-06.html</td><td>26.6 KB（已被 10-09 版取代）</td></tr><tr><td>中期汇报_拿高分作战手册_2026-10-06.html</td><td>25.7 KB</td></tr><tr><td><b>井邻章_7页_可编辑_2026-10-06.pptx</b></td><td>6.87 MB · 7 页</td></tr><tr><td>井邻章_7页_预览_2026-10-06\</td><td>7 张 PNG</td></tr><tr><td><code>井邻_制版打印链_文件包_2026-10-06\</code></td><td>326 文件 / 260 MB</td></tr></tbody></table></div>
+<h3 id="s21">5.4 2026-09（旧文档，已被本文件取代但仍有参考价值）</h3>
+<p><code>00_思路定稿_v3.md</code> · <code>00_交接清单.md</code> · <code>00_交接文档_完整版.md</code> · <code>00_汇报信息汇总与文件位置.md</code> · <code>00_WeFlow可用材料索引.md</code> · <code>00_全盘材料补充索引_第二批/第三批.md</code> · <code>00_v5全场改进意见总清单.md</code> · <code>00_交接文件_给WorkBuddy.md</code> · <code>06_PPT成品\</code>（两版 PPT）· <code>09_PPT用图\</code>（33 张）· <code>07_照片素材\</code>（986 张）· <code>11_档案材料\</code> · <code>12_聊天分析成果\</code>（13 文件）· <code>13_数字人_知津涅槃\13_评审与汇报口径.md</code></p>
+<hr>
+<h2 id="s22">6. 文件地图（三级）</h2>
+<h3 id="s23">6.1 一级入口（6 份井邻 HTML + 1 份 PPT）</h3>
+<pre>Desktop\中期汇报_2026-09\
+├─ 井邻_事无巨细全档案_2026-10-11.html        ← 最全（17 节 67 表）
+├─ 井邻项目_全景总册_2026-10-11.html           ← 全景（12 节）
+├─ 井邻章_22-24页内容完整稿_2026-10-11.html    ← 成稿（24 页）
+├─ 井邻_九次接待素材到位核查表_2026-10-11.html ← 素材核查
+├─ 井邻章_我的贡献与成果总账_2026-10-09.html   ← 成果总账
+├─ 井邻章_中期汇报可用信息总表_2026-10-09.html ← 口径总表
+└─ 井邻章_7页_可编辑_2026-10-06.pptx           ← 可编辑 PPT</pre>
+<h3 id="s24">6.2 二级材料（<code>Desktop\中期汇报_2026-09\</code> 内）</h3>
+<pre>07_照片素材\        986 张 / 11 子目录
+09_PPT用图\         33 张（语义命名，做 PPT 优先用）
+10_照片汇总_2026-10-06\   12 类分册 + 总台 HTML
+11_档案材料\        简历 / 实习证明 / 吴显聊天记录 / 项目表
+12_聊天分析成果\    13 个数字人成果文件
+13_数字人_知津涅槃\ 13_评审与汇报口径.md（答辩弹药 + 术语对照 + 三红线）
+14_10-03现场与参与者回声_2026-10-09\
+14_10-11现场素材_未来科学城与文旅局\
+15_刘丽萍会话接待素材_2026-10-11\</pre>
+<h3 id="s25">6.3 三级原始证据（项目外，关键）</h3>
+<div class="tw"><table><thead><tr><th>内容</th><th>位置</th></tr></thead><tbody><tr><td><b>驻村 33 天日志</b>（md/pdf/html）</td><td><code>Desktop\10_个人资料与旧文件\工作日志\蔡浩文_乡村美育驻村工作日志.md</code></td></tr><tr><td><b>制版唯一权威包</b>（499 文件 / 322 个 MD5 一致）</td><td><code>Desktop\井邻_制版打印文件汇总_20261006\</code></td></tr><tr><td>视觉原始库（MBTI 八版 / 悲鸿分版 / 飞鸟两帧 / 交互程序 / 项目全案.md）</td><td><code>Desktop\05_井邻项目_视觉与丝网印刷\</code></td></tr><tr><td>宣传页 2 版 + 乡村生活照 + 工作站标识</td><td><code>Desktop\06_井邻项目_宣传申报与合作\</code></td></tr><tr><td><b>澜沧支教全部材料总索引</b></td><td><code>Desktop\06_井邻项目_宣传申报与合作\知行计划\00_澜沧支教_全部文件总索引.md</code></td></tr><tr><td>数字人聊天分析数据库（行数可查）</td><td><code>Desktop\07_聊天记录分析\微信聊天记录清理\10_DeepSeek-v3分析工作区\data\scale\wechat-analysis-scale.sqlite3</code></td></tr><tr><td>北京台文件（0.44 GB）</td><td><code>Desktop\06_井邻项目_宣传申报与合作\北京台文件\</code></td></tr><tr><td>扫码 MBTI 活体原型（可演示）</td><td><code>Desktop\05_井邻项目_视觉与丝网印刷\交互文件与主视觉汇总\交互_05_MBTI丝网_活体原型\</code></td></tr><tr><td>微信数据根（4.x）</td><td><code>C:\Users\wardc\xwechat_files\wxid_zn4ozsnn8esr21_db45\</code></td></tr><tr><td>微信索引库</td><td><code>C:\Users\wardc\Desktop\_im_tmp\wechat-mcp\index.sqlite</code></td></tr><tr><td>Codex 会话（9–10 月原话唯一出处）</td><td><code>C:\Users\wardc\.codex\sessions\2026\&lt;MM&gt;\&lt;DD&gt;\rollout-*.jsonl</code></td></tr></tbody></table></div>
+<hr>
+<h2 id="s26">7. 井邻章 22–24 页结构（成稿）</h2>
+<p><b>文件</b>：<code>井邻章_22-24页内容完整稿_2026-10-11.html</code>（24 页 / 17 表）</p>
+<div class="tw"><table><thead><tr><th>部分</th><th>页</th><th>内容</th></tr></thead><tbody><tr><td><b>一 策划</b></td><td>P01–P02</td><td>P01 植墨与三间房（栗壳制纸墨 / 三间房三种时间 / 五感断点）· P02 偏移四型 vs MBTI 八版</td></tr><tr><td><b>二 建设</b></td><td>P03</td><td>三组条件（操作/展示/日常）+ 三方分工（陈晔推动 / 井邻落地 / 我执行）+ 33 工作日</td></tr><tr><td><b>三 接待</b></td><td>P04–P16</td><td>P04 7/29 政协 · P05 7/29 宣传部 · P06 7/31 组织部 · P07 8/2 开街 · P08 8/3 未来科学城 · P09–P10 8/15 区委书记 · P11–P12 8/16 科学家团队 · <b>P13–P14 8/20 梁区长+市文旅局 ★</b> · P15–P16 10/3 国庆</td></tr><tr><td><b>四 制版</b></td><td>P17–P19</td><td>P17 流程（闭环公式+2 外部节点）· P18 八版与四色 · P19 单色双色与身体动作</td></tr><tr><td><b>五 交互</b></td><td>P20–P22</td><td>P20 扫码与选择（8/5）· P21 手势与画面（6/22）· P22 双手成曲（9/30 + 10/3）</td></tr><tr><td><b>六 新创作</b></td><td>P23–P24</td><td>P23 三个问题 → 三项创作 · P24 近期重点 + 数字人场景铺垫</td></tr></tbody></table></div>
+<p><b>接待页统一四步</b>：需要准备什么 → 我完成哪些工作 → 现场怎样使用 → 后续有什么调整</p>
+<hr>
+<h2 id="s27">8. 九次接待 × 素材到位（核查结论）</h2>
+<h3 id="s28">8.1 结论表</h3>
+<div class="tw"><table><thead><tr><th>#</th><th>接待</th><th>微信图/我发</th><th>桌面可用实拍</th><th>判定</th></tr></thead><tbody><tr><td>1</td><td>7/29 政协主席（刘久刚）</td><td>32 / 13</td><td>黄欣然记者摄 2 张 + PPT 用图 2 张</td><td>✅ 可用</td></tr><tr><td>2</td><td>7/29 宣传部部长</td><td>同日</td><td>无</td><td>❌ 缺</td></tr><tr><td>3</td><td>7/31 组织部</td><td>50 / 21</td><td>目录 10 张均为空景</td><td>❌ 缺</td></tr><tr><td>4</td><td>8/2 开街</td><td>33 / 1</td><td><code>10_照片汇总/06_开街活动</code> 3 张 + PPT 41/42</td><td>✅ 可用</td></tr><tr><td>5</td><td>8/3 未来科学城</td><td>51 / 2</td><td>无（<code>016</code> 实为海报设计稿）</td><td>❌ 缺</td></tr><tr><td>6</td><td>8/15 区委书记（张强）</td><td>28 / 1</td><td>4 张（印制台全景/与老师交流/站内听取介绍/村口步行街），日期待确认</td><td>⚠️ 有条件</td></tr><tr><td>7</td><td>8/16 科学家团队</td><td>19 / 4</td><td><b>73 秒视频（含 4K50 帧原片）</b></td><td>✅ 可用</td></tr><tr><td>8</td><td>8/20 梁区长+市文旅局</td><td><b>56 / 24</b></td><td>目录 4 张<b>全非人物照</b>；10-11 缩略图 1 张待取原图</td><td>⚠️ 有条件</td></tr><tr><td>9</td><td>10/3 国庆</td><td>32 / 4</td><td>6 张（含 <code>16:11 全景</code>）+ 3 段视频</td><td>✅ 可用</td></tr></tbody></table></div>
+<h3 id="s29">8.2 ★ 两条重要方法论</h3>
+<ol><li><b>微信记录 ≠ 可用素材</b>：<code>07_照片素材\01_工作站与领导接待\</code>（115 文件）<b>目录名不可信</b>，混放海报设计稿/聊天截图/站外空景。核查口径 = 「<b>打开看过、确认为接待人物照</b>」才计数。</li><li><b>反直觉排序</b>：微信记录最多的 8/20（56 图）实体照片最不可用；记录较少的 8/16 反而拿到 73 秒视频原片。原因：8/20 我发的是<b>设计稿与截图</b>（协调物料）；8/16 我<b>在现场讲解</b>，视频是村摄影师顺手拍的。</li></ol>
+<h3 id="s30">8.3 ★ 10-03 到访：唯一推荐口径</h3>
+<p><b>不要写「副国级领导视察」</b>。理由：无姓名、无职务、无公开报道、无照片（用户自己写「不给照片」）；「副国级」仅为用户单方判断（第三方导师只说「大大领导」）；被追问即失分。</p>
+<blockquote><b>推荐写法</b>：「10 月 3 日国庆期间有领导到访工作站，我全程值守并做引导讲解」+ 实际动作（丝网版试印确认、设备检查、引导）。</blockquote>
+<p><b>接待窗口</b> = 16:00–17:14（约 1 小时 15 分钟）。<b>唯一可靠核实路径</b> = 直接问 <b>关宇佳（关总）</b> / <b>石晶（石总）</b> / 陈晔。</p>
+<h3 id="s31">8.4 ★ 73 秒视频归属（已定案）</h3>
+<p><b>归属 = 8/16 科学家团队</b>（文件名「未来科学城」是记忆偏差）。完整链条：</p>
+<pre>8/16 13:17  关总「大概客人 3 点到」
+8/16 18:05  我→陈晔「科学家来但没给分配行程」
+8/16 19:28  微信「AI摄影师」(wxid_118cc6pcsv5j22，洞台村摄影师) 街上偶遇
+8/16 19:30  他「你下载原视频就行，因为我拍的都是 4K50 帧的」／我「我中期汇报可以用」
+8/16 20:35  他发来原片
+8/16 20:36  我转发给刘丽萍 → 20:45 刘丽萍「挺好。英语不错」★ 英文讲解第三方佐证
+10-11 14:18 我重发至文件传输助手，配文「接待外国科学家」</pre>
+<hr>
+<h2 id="s32">9. 待办清单</h2>
+<h3 id="s33">9.1 素材缺口补齐优先级</h3>
+<div class="tw"><table><thead><tr><th>#</th><th>缺什么</th><th>补法</th></tr></thead><tbody><tr><td>1</td><td><b>8/20 高清人物照</b>（P13–P14 唯一重点案例，现无一张可用）</td><td>手机端点开 10-11 那条缩略图消息取原图 / 请刘丽萍导出 / 问关总王总</td></tr><tr><td>2</td><td><b>8/3 科学城照片</b></td><td>向<b>关总（Jason 关宇佳）</b>索取（现场第一见证人）</td></tr><tr><td>3</td><td>7/31 组织部</td><td>从微信 50 图（我发 21）按 12:00–13:30 区间筛</td></tr><tr><td>4</td><td>7/29 宣传部</td><td>从微信 32 图按 16:00 后筛</td></tr><tr><td>5</td><td>8/15 日期确认</td><td>问陈晔</td></tr><tr><td>6</td><td><b>参与者原话/文字回声</b></td><td>全案唯一还缺的素材类别</td></tr><tr><td>7</td><td>10/3 两条未下载视频（10:51:39 13s、10:53:39 8s）</td><td>手机端点开</td></tr><tr><td>8</td><td>7/29 16:02 那条 21 秒视频（无 <code>length</code> 字段 = 未下载）</td><td>手机端点开</td></tr></tbody></table></div>
+<h3 id="s34">9.2 内容与结构待办</h3>
+<ul><li class="todo">☐ <b>第 8 页做不做</b> —— 判断句已备：「从『让人参与印制』到『让地方经验进入作品，再通过身体操作被感受到』」（现有 7 页全部止于 8/20，缺收口到「创作方法」）</li><li class="todo">☐ <b>10-03 到访者姓名 + 职务</b> → 口径从零风险版升级为写实版</li><li class="todo">☐ <b>植墨五感线在汇报里的定位</b> —— 19 条创新点哪些进 PPT（注意不可写成已完成成果）</li><li class="todo">☐ 解陈晔会话 <code>_h.dat</code> 高清批（含 7.4 MB 那张）→ 补第 8 页配图</li><li class="todo">☐ 福建教学 5 项信息（单位全称/日期/课程/对象/本人角色）</li><li class="todo">☐ 北京台 1 张可公开成品截图 + 本人具体职责</li><li class="todo">☐ 刮板角度实测确认（45° vs 60°）</li><li class="todo">☐ 回声卡「19 份」与问卷「64 份」关系说明</li></ul>
+<h3 id="s35">9.3 P0–P3 改进优先级（承自 v5 改进清单）</h3>
+<div class="tw"><table><thead><tr><th>级别</th><th>改什么</th></tr></thead><tbody><tr><td><b>P0</b></td><td>① 数字人主视觉换「<b>版印肖像</b>」（肖像+CMYK 网点+错位套色；隐喻「<b>错位→套准 = 修正</b>」）② 4 课次 / 8 项口径修正 ③ 第 17 页补「错位→套准」场景示例</td></tr><tr><td><b>P1</b></td><td>④ 第 11 页用 12 秒关键帧讲「参与者完整经历」⑤ 第 18 页改「判断+实验设计」语气 ⑥ 北京台环节具体化 ⑦ 第 6/7 页作品与「学生回声」做大</td></tr><tr><td><b>P2</b></td><td>⑧ 全场上「<b>印痕</b>」视觉统一（纸白 <code>#F6F2E9</code> / 墨黑 <code>#202321</code> / 朱砂红 <code>#B5493A</code>；日志引用用宋体楷体；对版标记）⑨ 附录补齐（证书拍照）⑩ 下一阶段填真实日期</td></tr><tr><td><b>P3</b></td><td>⑪ 浏览器版加「错位→套准」交互小动画 ⑫ 讲稿走台校 15 分钟</td></tr></tbody></table></div>
+<hr>
+<h2 id="s36">10. 等用户提供的东西（<b>不要自己编</b>）</h2>
+<ol><li><b>问学校/导师三件事</b>：汇报时长（8/10/15 分钟）· 有无提问环节 · 开题时间</li><li>汇报日期与场地；下一阶段节点（问学校）</li><li>首单是否成交；9/20 开街细节</li><li>北京台实习证明盖章单位确认</li><li>获奖证书拍照（数学建模一等奖、一带一路奖、教资、语言成绩）→ 放 <code>10_待补材料\D_其他证明材料\</code></li><li>井邻照片：工作站建设前后同机位照 / 一场完整工作坊过程照 / 丝网菲林照 / 植物染照</li><li>⚠️ 澜沧总结视频：<code>澜沧支教_提交包\05_总结视频\</code> 是空的 —— 结项要求的「总结视频」在哪？</li></ol>
+<hr>
+<h2 id="s37">11. 可复用技术方法（取证附录）</h2>
+<h3 id="s38">11.1 微信 4.x 素材取证链</h3>
+<div class="tw"><table><thead><tr><th>项</th><th>值</th></tr></thead><tbody><tr><td>数据根</td><td><code>C:\Users\wardc\xwechat_files\wxid_zn4ozsnn8esr21_db45\</code></td></tr><tr><td>会话目录名</td><td><b>= md5(talker)</b>（实测验证）</td></tr><tr><td>图片</td><td><code>msg\attach\&lt;hash&gt;\YYYY-MM\Img\</code> —— <code>_t.dat</code> 缩略 / 无后缀 中图 / <code>_h.dat</code> 高清（<b>点开过才有</b>）</td></tr><tr><td>视频</td><td><code>msg\video\YYYY-MM\&lt;md5&gt;.mp4</code> + 同名 <code>.jpg</code>（首帧）+ <code>_thumb.jpg</code></td></tr><tr><td><b><code>.dat</code> V2 头 15 字节</b></td><td><code>0-5</code> magic <code>07 08 56 32 08 07</code>；<code>6-9</code> aes_size(uint32 LE)；<code>10-13</code> xor_size(uint32 LE)；<code>14</code> reserved</td></tr><tr><td><b>密钥</b></td><td><code>AES_KEY = md5(str(code)+wxid)[:16]</code> → 实测 <b><code>d24287c68e6e3244</code></b>（16 字节 <b>ASCII 字符串</b>，不是 hex！）· <code>XOR_KEY = code &amp; 0xFF</code> = <b><code>0xE1</code></b>（code = 2562432481）</td></tr><tr><td>解密</td><td>跳 15 字节 → AES-ECB 解 aes_size → 其余每字节 XOR 0xE1 → 拼接</td></tr></tbody></table></div>
+<p><b>⚠️ 三个坑</b>：</p>
+<ol><li><code>bytes.fromhex('d24287c68e6e3244')</code> 会报 "Incorrect AES key length" —— 密钥是 16 字节 ASCII</li><li>中图 <code>.dat</code> 是 <b>wxgf 容器</b>（头部 <code>77786766</code>，内嵌 HEVC），PIL 打不开；只有 <code>_t.dat</code> 是标准 JPEG</li><li><code>_h.dat</code> 可能仅<b>部分下载</b>（如 8/20 那张 IHDR 1284×2778 但仅 470 KB，无 IEND）→ 不可用</li></ol>
+<h3 id="s39">11.2 三层指纹匹配法（消息 ↔ 本地文件）</h3>
+<div class="tw"><table><thead><tr><th>XML 字段</th><th>对应本地文件</th><th>含义</th></tr></thead><tbody><tr><td><code>cdnthumblength</code></td><td><code>&lt;hash&gt;_t.dat</code></td><td>缩略图</td></tr><tr><td><code>length</code></td><td><code>&lt;hash&gt;.dat</code></td><td>中图（wxgf）</td></tr><tr><td><code>hdlength</code></td><td><code>&lt;hash&gt;_h.dat</code></td><td>高清（需点开过）</td></tr></tbody></table></div>
+<p><b>解密后字节数 = 文件大小 − 15（头）− 16（AES 填充）</b> = <code>aes_size + xor_size</code> → 可精确对上，<b>不受 mtime 不可靠影响</b>（<code>msg/attach</code> 的 mtime 常为批量同步时间）。</p>
+<h3 id="s40">11.3 视频 inode 硬链接比对法</h3>
+<p>微信转发同一视频<b>不复制文件</b>，而在目标月份 <code>msg\video\</code> 下建<b>硬链接</b>：</p>
+<pre>os.stat(p).st_ino    # 相同 = 同一物理文件
+os.stat(p).st_nlink  # 被转发几次</pre>
+<p>既能确认「某条消息是不是某个视频」，也能<b>反证</b>「某条消息不是某个视频」。</p>
+<h3 id="s41">11.4 其他</h3>
+<ul><li><b>全库内容哈希比对法</b>：批量解密所有 <code>_t.dat</code> → <code>md5(解密后字节)</code> → 分组。同一哈希出现在不同会话/月份 = 同一文件被转发</li><li><b>aeskey 相同 = 同一文件</b>（转发保留原 aeskey），比 md5 更快</li><li><b>MD5 溯源法</b>：拿到一张图 → 算 MD5 → 到 <code>messages.content</code> 正则匹配 <code>md5="([0-9a-f]{32})"</code> → 锁定会话+时间戳+发送人（比看文件名可靠）</li><li><b>CR2 拍摄时间</b>：<code>strings -a x.CR2 | grep -oE "20[0-9]{2}:[0-9]{2}:[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}"</code>（前 3 个即 DateTimeOriginal）</li><li><b>Codex 会话</b>：<code>C:\Users\wardc\.codex\sessions\2026\&lt;MM&gt;\&lt;DD&gt;\rollout-&lt;ISO&gt;-&lt;uuid&gt;.jsonl</code>（每行一 JSON，<code>payload.role</code> = user/assistant）—— <b>9–10 月的设计决策原话唯一出处</b></li><li><b>工具路径</b>：Python <code>C:/Users/wardc/AppData/Local/Programs/Python/Python312/python.exe</code>（pycryptodome / PIL / numpy / python-pptx）· ffmpeg <code>C:\Users\wardc\Documents\New project gpt\AI-archive\apps\FFmpeg\package\ffmpeg-n8.1-latest-win64-gpl-8.1\bin\</code></li></ul>
+<hr>
+<h2 id="s42">12. 接手第一步（建议顺序）</h2>
+<ol><li>读<b>本文件</b>（唯一总入口）</li><li>打开 <code>井邻_事无巨细全档案_2026-10-11.html</code>（最全）建立直观印象</li><li>读 <code>井邻章_22-24页内容完整稿_2026-10-11.html</code>（当前成稿）</li><li>按<b>第 9.1 素材缺口</b>催素材；按<b>第 9.3 P0</b>改内容</li><li>向用户汇报，确认后再铺开</li></ol>
+<p><b>工作约定</b>：</p>
+<ul><li>事实不得编造，一切数字以<b>第 3 节口径</b>为准；不确定就标【待用户确认】</li><li>改 v5 文件注意：<code>index.html</code> 与 <code>assets\</code> 必须同目录；pptx 可用 python-pptx 修改；<b>改前先备份</b>一份带日期的副本</li><li>不要把聊天原文、WeFlow Token、密钥写进任何交付文档</li><li>用户偏好：<b>先出「小样」再铺开</b>（先给一张效果图，确认后再改整套）</li></ul>
+<hr>
+<h2 id="s43">附 A · 关键人物 wxid 对照（<b>直接复用，勿再重查</b>）</h2>
+<div class="tw"><table><thead><tr><th>wxid / sender</th><th>人名</th><th>说明</th></tr></thead><tbody><tr><td><code>deerluna</code></td><td><b>陈晔</b></td><td>导师（也显示为「奥特巫曼」）</td></tr><tr><td><code>wxid_1wa75s1kze3o22</code></td><td><b>刘丽萍</b></td><td>母亲（中央美术学院版画系教授）</td></tr><tr><td><code>wxid_y8f0y4jfthgs21</code></td><td><b>关宇佳</b></td><td>Jason 关总 · 井邻方 · 现场对接人</td></tr><tr><td><code>wxid_51emsmp92iry12</code></td><td><b>石晶</b></td><td>石总 · 井邻方 · 项目主理人</td></tr><tr><td><code>wanghuaqing1982</code></td><td><b>王华青</b></td><td>王总 · 井邻方</td></tr><tr><td><code>wxid_cjuakjqqvw8112</code></td><td><b>王博</b></td><td>央美学生</td></tr><tr><td><code>wxid_zn4ozsnn8esr21</code></td><td><b>蔡浩文</b></td><td>本人</td></tr><tr><td><code>wxid_8081720817911</code></td><td><b>马慧楠</b></td><td>LE HAUS 版画工作室（曝光台+烘干箱）</td></tr><tr><td><code>wxid_hcj7u0b7rbnu12</code></td><td><b>高姐</b></td><td>利世隆大图复印（打硫酸纸正片）</td></tr><tr><td><code>wxid_118cc6pcsv5j22</code></td><td><b>AI摄影师</b></td><td>洞台村本地摄影师（73 秒视频拍摄者）</td></tr><tr><td><code>53074549232@chatroom</code></td><td><b>央美美育工作站群</b></td><td>关键通知都在这里</td></tr><tr><td><code>filehelper</code></td><td><b>文件传输助手</b></td><td>长文本方案全存这里</td></tr></tbody></table></div>
+<blockquote>⚠️ <code>index.sqlite</code> <b>没有 contacts 表</b>；群消息正文前 60 字常带发送者昵称，是解析人名的唯一线索。</blockquote>
+<h2 id="s44">附 B · 关键节点与地址</h2>
+<div class="tw"><table><thead><tr><th>节点</th><th>地址</th><th>坐标</th></tr></thead><tbody><tr><td><b>利世隆大图复印</b>（打印硫酸纸正片）</td><td>北京市通州区永顺澜花语岸 588 号（潞苑南大街 588 号底商）</td><td><code>39.928223, 116.672371</code></td></tr><tr><td><b>马慧楠 LEHAUS</b>（曝光制版）</td><td>北京市通州区焦王庄街尚东庭西区 38-104</td><td><code>39.939594, 116.676315</code></td></tr><tr><td><b>井邻乡村美育工作站</b>（主址）</td><td>北京市怀柔区渤海镇洞台村 <b>78 号</b></td><td>—</td></tr><tr><td><b>植墨工坊</b>（三间房）</td><td>北京市怀柔区渤海镇洞台村 <b>339 号</b></td><td>—</td></tr></tbody></table></div>
+<ul><li>两地直线约 <b>1.3 km</b>，开车几分钟 → 一趟跑完</li><li>报价：利世隆 <b>A3 5 元/张 · A4 3 元/张</b>；小马多次「不用费用」（本人 08-19 主动转 40 元）</li><li><b>利世隆是马慧楠 2026-07-24 连发两个定位引荐的</b></li><li>链的强度在<b>次数与时间点</b>：八批接待里<b>至少四批的版是前一晚赶出来的</b></li></ul>
+<hr>
+<p><i>本文件由 WorkBuddy AI 于 2026-10-11 23:10 生成，整合 2026-09-19 至 2026-10-11 全部工作产物与核查结论。</i></p>
+<footer>本文件整合 2026-09-19 至 2026-10-11 全部工作产物与核查结论 · 事实以正文第 3 节硬口径为准</footer>
+</div></body></html>

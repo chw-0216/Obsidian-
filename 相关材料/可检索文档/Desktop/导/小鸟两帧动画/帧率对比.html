@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>小鸟两帧动画 · 帧率对比</title>
+<style>
+  body { margin:0; padding:32px; background:#1a1a1a; color:#e8e4dc;
+         font-family:"Microsoft YaHei","PingFang SC",sans-serif; }
+  h1 { font-size:20px; font-weight:600; margin:0 0 6px; letter-spacing:.02em; }
+  .sub { font-size:13px; color:#8a8a8a; margin-bottom:28px; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:20px; }
+  .card { background:#242424; border-radius:10px; overflow:hidden;
+          border:1px solid #333; }
+  .card img { width:100%; display:block; }
+  .meta { padding:12px 14px; display:flex; justify-content:space-between;
+          align-items:baseline; }
+  .fps { font-size:17px; font-weight:700; color:#fff; }
+  .dur { font-size:12px; color:#8a8a8a; }
+  .tag { display:inline-block; font-size:11px; padding:2px 7px; border-radius:4px;
+         background:#3a2f1a; color:#d9a441; margin-left:8px; vertical-align:2px; }
+  .tag.rec { background:#1e3a2a; color:#5fbf7f; }
+  .note { margin-top:26px; padding:16px 18px; background:#242424; border-radius:10px;
+          font-size:13px; line-height:1.75; color:#b8b4ac; border-left:3px solid #d93a22; }
+  code { background:#333; padding:1px 5px; border-radius:3px; font-size:12px; }
+</style>
+</head>
+<body>
+
+<h1>小鸟两帧动画 · 帧率对比</h1>
+<div class="sub">只用 A、B 两张图硬切交替，未插任何中间帧 · 1200×960 · 80 个循环</div>
+
+<div class="grid">
+  <div class="card"><img src="小鸟两帧_6fps.gif" alt="6fps">
+    <div class="meta"><span class="fps">6 fps</span><span class="dur">26.7 秒</span></div></div>
+
+  <div class="card"><img src="小鸟两帧_8fps.gif" alt="8fps">
+    <div class="meta"><span class="fps">8 fps<span class="tag">稳</span></span><span class="dur">20.0 秒</span></div></div>
+
+  <div class="card"><img src="小鸟两帧_10fps.gif" alt="10fps">
+    <div class="meta"><span class="fps">10 fps<span class="tag rec">推荐</span></span><span class="dur">16.0 秒</span></div></div>
+
+  <div class="card"><img src="小鸟两帧_12fps.gif" alt="12fps">
+    <div class="meta"><span class="fps">12 fps</span><span class="dur">13.3 秒</span></div></div>
+
+  <div class="card"><img src="小鸟两帧_15fps.gif" alt="15fps">
+    <div class="meta"><span class="fps">15 fps</span><span class="dur">10.7 秒</span></div></div>
+</div>
+
+<div class="note">
+  <strong>怎么选：</strong><br>
+  · <strong>6 fps</strong> —— 看得出是两张图在换，纸片翻动的实感最强，但略闪<br>
+  · <strong>8 fps</strong> —— 临界点，能读出扇翅，仍保留手工感<br>
+  · <strong>10 fps</strong> —— 投屏最稳：动作读得清，又不糊成一团<br>
+  · <strong>12 fps</strong> —— 接近动画感，纸片感被削弱<br>
+  · <strong>15 fps</strong> —— 已接近视觉暂留融合，会显得鸟只在"抖"<br><br>
+  <strong>投工作站大屏</strong>用 <code>10fps.mp4</code>（H.264，无 GIF 色带）。<br>
+  <strong>发微信／做手机演示</strong>用 <code>10fps.gif</code>。<br>
+  <strong>现场纸片体验</strong>时把屏幕调 <code>6fps</code>，让观众看清"就是这两张在换"。
+</div>
+
+</body>
+</html>

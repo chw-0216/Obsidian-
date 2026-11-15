@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>数据源全景与深度分析路线图 · 2026-10-04</title>
+<style>
+  :root{
+    --bg:#f7f8f7; --card:#ffffff; --line:#e3e6e3; --line2:#eef0ee;
+    --ink:#1c201d; --ink2:#5a625c; --ink3:#8b938d;
+    --teal:#1D9E75; --teal-bg:#eaf6f1;
+    --red:#c0392b; --red-bg:#fdeceb;
+    --amber:#b8860b; --amber-bg:#fdf6e3;
+    --blue:#2b4a9b; --blue-bg:#e8eefc;
+    --mono:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    font-size:15px; line-height:1.72; -webkit-font-smoothing:antialiased;}
+  .wrap{max-width:1020px; margin:0 auto; padding:56px 28px 96px}
+  header{border-bottom:2px solid var(--ink); padding-bottom:22px; margin-bottom:36px}
+  .kicker{font-size:12px; letter-spacing:.16em; color:var(--ink3); text-transform:uppercase; margin-bottom:10px}
+  h1{font-size:28px; line-height:1.3; margin:0 0 12px; font-weight:700; letter-spacing:-.01em}
+  .sub{color:var(--ink2); font-size:14px; margin:0}
+  h2{font-size:19px; margin:48px 0 16px; padding-left:12px; border-left:4px solid var(--teal); font-weight:700}
+  h3{font-size:15.5px; margin:26px 0 10px; font-weight:700}
+  p{margin:0 0 14px}
+  ul,ol{margin:0 0 14px; padding-left:22px}
+  li{margin:6px 0}
+  code{font-family:var(--mono); font-size:13px; background:#eef1ef; padding:1.5px 6px; border-radius:4px; color:#2c3a31}
+  .card{background:var(--card); border:1px solid var(--line); border-radius:10px; padding:22px 24px; margin:0 0 18px}
+  .verdict{background:var(--teal-bg); border:1px solid #bfe4d6; border-radius:10px; padding:22px 24px; margin:0 0 26px}
+  .verdict h3{margin-top:0; color:#116b4f}
+  .note{background:var(--amber-bg); border:1px solid #f0dfae; border-radius:10px; padding:18px 22px; margin:0 0 18px}
+  .note h4{margin-top:0; color:#8a6508}
+  .blue{background:var(--blue-bg); border:1px solid #c5d2f2; border-radius:10px; padding:18px 22px; margin:0 0 18px}
+  .blue h4{margin-top:0; color:#1f3a7d}
+  .red{background:var(--red-bg); border:1px solid #f2c9c4; border-radius:10px; padding:18px 22px; margin:0 0 18px}
+  .red h4{margin-top:0; color:#a93226}
+  table{width:100%; border-collapse:collapse; font-size:13px; margin:0 0 16px}
+  th,td{padding:8px 10px; border-bottom:1px solid var(--line2); text-align:left; vertical-align:top}
+  th{background:#f1f3f1; font-weight:600; font-size:12px; color:var(--ink2)}
+  td.n{text-align:center; font-variant-numeric:tabular-nums; font-family:var(--mono); font-size:12.5px; color:var(--ink3); width:32px}
+  td.num{text-align:right; font-variant-numeric:tabular-nums; font-family:var(--mono); font-size:12.5px}
+  .tag{display:inline-block; font-size:11px; padding:1px 7px; border-radius:20px; font-weight:600; white-space:nowrap}
+  .t-y{background:#fdeceb; color:#a93226}
+  .t-z{background:#fdf6e3; color:#8a6508}
+  .t-j{background:#e2f3ec; color:#116b4f}
+  .t-b{background:#e8eefc; color:#1f3a7d}
+  .t-g{background:#eef0ee; color:#5a625c}
+  .grid{display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin:0 0 24px}
+  .stat{background:var(--card); border:1px solid var(--line); border-radius:10px; padding:16px 18px; text-align:center}
+  .stat b{display:block; font-size:26px; font-weight:700; line-height:1.2; font-variant-numeric:tabular-nums}
+  .stat span{font-size:12.5px; color:var(--ink2)}
+  footer{margin-top:64px; padding-top:20px; border-top:1px solid var(--line); font-size:12.5px; color:var(--ink3)}
+  .q{font-family:var(--mono); font-size:11.5px; color:var(--ink3)}
+  .bar{display:flex; height:22px; border-radius:5px; overflow:hidden; margin:0 0 8px; font-size:11px; color:#fff; font-weight:600}
+  .bar div{display:flex; align-items:center; justify-content:center}
+  .ladder{display:flex; flex-direction:column; gap:7px; margin:0 0 20px}
+  .rung{display:flex; align-items:center; gap:12px; background:var(--card); border:1px solid var(--line); border-radius:8px; padding:11px 15px}
+  .rung .k{font-family:var(--mono); font-size:12px; font-weight:700; color:var(--ink3); width:44px}
+  .rung .t{flex:1; font-size:13.5px}
+  .rung .v{font-family:var(--mono); font-weight:700; font-size:14px; color:var(--ink2)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="kicker">自我理解引擎 · 数据源盘点</div>
+  <h1>还有多少数据没用 · 分析路线图</h1>
+  <p class="sub">2026-10-04 · 12 个本地数据源，只用了 3 个 · 本轮新开 3 个，跑出 4 个推翻性发现</p>
+</header>
+
+<div class="verdict">
+  <h3>结论先行</h3>
+  <ol style="margin-bottom:0">
+    <li><b>你的数据源有 12 个，之前只用了 3 个</b>（消息索引 / 通讯录 CSV / 会话表）。
+      剩下 9 个里，有 4 个是金矿 —— <b>本轮已开 3 个</b>。</li>
+    <li><b>★ 上一轮我的结论错了</b>：我说「微信不记录别人加你」——
+      <b>其实记录在 <code>general.db</code> 的 <code>FMessageTable</code> 里</b>，共 32 条，<b>31 条是别人加你</b>。</li>
+    <li><b>★ 找到了现金流的硬证据</b>：<code>transferTable</code> 显示
+      <b>你母亲从 2026-08 起几乎每天给你转一笔</b>（41 笔），与「没有稳定收入」完全对上。</li>
+    <li><b>还剩 6 个批次可自动做</b> —— 社交拓扑（50,997 条群成员）· 朋友圈（7,436 条）·
+      收藏（230）· 语音（2,486）· 群公告（714）· 表情包。</li>
+  </ol>
+</div>
+
+<div class="grid">
+  <div class="stat"><b>12</b><span>本地数据源</span></div>
+  <div class="stat"><b style="color:#c0392b">9</b><span>此前未开发</span></div>
+  <div class="stat"><b style="color:#1D9E75">3</b><span>本轮新开</span></div>
+  <div class="stat"><b>6</b><span>剩余可做批次</span></div>
+</div>
+
+<h2>一、数据源全景（12 个，已用 3 个）</h2>
+
+<table>
+  <thead><tr><th>数据源</th><th>规模</th><th>状态</th><th>能回答什么</th></tr></thead>
+  <tbody>
+    <tr><td><code>message/*.db</code>（消息）</td><td>388,550 条</td><td><span class="tag t-j">已用</span></td><td>一切对话分析</td></tr>
+    <tr><td>通讯录 CSV</td><td>4,592 人</td><td><span class="tag t-j">已用</span></td><td>备注考古</td></tr>
+    <tr><td><code>sessions</code> 表</td><td>1,802 会话</td><td><span class="tag t-j">已用</span></td><td>会话分类</td></tr>
+    <tr><td><b><code>contact.db</code> → contact</b></td><td><b>42,708 人</b></td><td><span class="tag t-z">部分</span></td><td>完整联系人（含陌生人缓存）</td></tr>
+    <tr><td><b><code>contact.db</code> → chatroom_member</b></td><td><b>50,997 条</b></td><td><span class="tag t-y">未用</span></td><td><b>★ 完整社交拓扑：谁和谁同群</b></td></tr>
+    <tr><td><b><code>contact.db</code> → chat_room_info_detail</b></td><td>714 群公告</td><td><span class="tag t-y">未用</span></td><td>群的场景与规则</td></tr>
+    <tr><td><b><code>general.db</code> → FMessageTable</b></td><td><b>32 条</b></td><td><span class="tag t-j">本轮已开</span></td><td><b>★ 谁加你、从哪加、打招呼内容</b></td></tr>
+    <tr><td><b><code>general.db</code> → transferTable</b></td><td><b>77 条</b></td><td><span class="tag t-j">本轮已开</span></td><td><b>★ 金钱流向（现金流硬证据）</b></td></tr>
+    <tr><td><code>general.db</code> → redEnvelopeTable</td><td>13 条</td><td><span class="tag t-j">本轮已开</span></td><td>红包往来</td></tr>
+    <tr><td><b><code>sns.db</code> → SnsTopItem_1</b></td><td><b>7,436 条</b></td><td><span class="tag t-y">未用</span></td><td><b>★ 朋友圈：谁发了什么、你刷到什么</b></td></tr>
+    <tr><td><b><code>favorite.db</code></b></td><td>230 条</td><td><span class="tag t-y">未用</span></td><td><b>★ 你主动收藏什么</b></td></tr>
+    <tr><td><code>media_0.db</code> → VoiceInfo</td><td>2,486 条语音</td><td><span class="tag t-y">未用</span></td><td>语音消息元数据（含时长）</td></tr>
+    <tr><td><code>emoticon.db</code></td><td>240 收藏表情 + 29 包</td><td><span class="tag t-y">未用</span></td><td>表达风格</td></tr>
+    <tr><td><code>message_resource.db</code></td><td>51,855 + 135,383</td><td><span class="tag t-y">未用</span></td><td>媒体资源明细</td></tr>
+    <tr><td><code>head_image.db</code></td><td>4,386 张头像</td><td><span class="tag t-g">低优先</span></td><td>头像变化史</td></tr>
+    <tr><td><code>SearchRecent</code> / websearch</td><td>31 + 1</td><td><span class="tag t-z">量小</span></td><td>微信内搜索记录</td></tr>
+  </tbody>
+</table>
+
+<h2>二、★ 本轮新开：谁加你（32 条）</h2>
+
+<div class="red">
+  <h4>⚠️ 修正上一轮的结论</h4>
+  <p style="margin-bottom:0">上一轮我写「实测 <code>已添加你</code> 命中 0 条 → 微信不记录别人加你」。
+  <b>这是错的</b> —— 微信把它存在 <code>FMessageTable</code>，只是不在消息流里。
+  <b>32 条记录，31 条是别人加你，1 条是你发出。</b></p>
+</div>
+
+<h3>来源分布</h3>
+<div class="bar">
+  <div style="width:37.5%;background:#2b4a9b">扫码 12</div>
+  <div style="width:25%;background:#b8860b">手机号 8</div>
+  <div style="width:15.6%;background:#1D9E75">微信号搜索 5</div>
+  <div style="width:9.4%;background:#8b938d">通讯录 3</div>
+  <div style="width:12.5%;background:#5a625c">名片 2 · 群聊 2</div>
+</div>
+
+<h3>★ 两个时间特征</h3>
+<ul>
+  <li><b>高度集中在 2026-08-15 ~ 2026-10-03</b> —— 31 条里 <b>29 条</b>在这两个月</li>
+  <li><b>身份几乎全是商家 / 服务方</b>：网约车 · 链家 · 酒店 · 车险 · 广告 · 国际快递 · 闲鱼喷漆 · 律所 · <b>网贷退息</b></li>
+</ul>
+
+<table>
+  <thead><tr><th>时间</th><th>谁</th><th>来源</th><th>打招呼</th></tr></thead>
+  <tbody>
+    <tr><td>2026-09-24</td><td><b>Yisharlot🍬</b></td><td>名片推荐</td><td><b>「我是央美美术馆媒体部主任何一沙」</b> ← 实习关键人</td></tr>
+    <tr><td>2026-09-17</td><td>沐茜妍</td><td><b>群聊</b></td><td>「我是沐茜妍」</td></tr>
+    <tr><td>2026-09-14</td><td>A北京正己律师事务所～常艳</td><td>扫码</td><td>「我是A北京正己律师事务所～常艳」</td></tr>
+    <tr><td>2026-09-12</td><td>👑菲👑</td><td>扫码</td><td><b>「网贷平台无责退息退费」</b></td></tr>
+    <tr><td>2026-09-04</td><td>A赛瑞斯项目招商 张经理</td><td><b>群聊</b></td><td>「我是A赛瑞斯项目招商 张经理」</td></tr>
+    <tr><td>2026-09-04</td><td>小东-网约车</td><td>扫码</td><td>「我是小东-网约车」</td></tr>
+    <tr><td>2026-08-31</td><td>no one</td><td>通讯录</td><td><b>「我是"花家地艺专25级硕博讨论群"的蔡浩文」</b> ← <b>你唯一的加人模板</b></td></tr>
+    <tr><td>2026-08-23</td><td>链家栗晓静</td><td>扫码</td><td>「我是链家栗晓静 137****8520」</td></tr>
+    <tr><td>2026-08-18</td><td>泽.</td><td>通讯录</td><td>「做国际快递的，专业从中国寄物品到海外」</td></tr>
+    <tr><td>2026-08-15</td><td>北京平安车险高妍睿</td><td>扫码</td><td>「111」</td></tr>
+  </tbody>
+</table>
+
+<div class="blue">
+  <h4>★ 三个洞察</h4>
+  <ol style="margin-bottom:0">
+    <li><b>你加人的模板是「群名 + 姓名」</b> ——
+      <code>我是"花家地艺专25级硕博讨论群"的蔡浩文</code>。
+      <b>你用「群」做信用背书</b>，和开场白分档（尊称 / 那啥）是同一套逻辑。</li>
+    <li><b>2026-08 起「被加」激增，且全是商家</b> —— 说明你的微信号在这段时间<b>被大量暴露</b>，
+      或者你在<b>密集地找服务</b>（网约车 / 链家 / 酒店 / 车险 / 快递 / 喷漆 / 律所）。</li>
+    <li><b>「网贷平台无责退息退费」主动加你</b>（2026-09-12）—— 与 8-18 网贷线直接呼应。
+      ⚠️ 这类「退息退费」多为<b>二次收割中介</b>，<b>不得</b>建议他接触。</li>
+  </ol>
+</div>
+
+<h2>三、★ 本轮新开：金钱流向（77 笔）</h2>
+
+<table>
+  <thead><tr><th>方向</th><th>对象</th><th class="num">笔数</th><th>说明</th></tr></thead>
+  <tbody>
+    <tr><td rowspan="1"><span class="tag t-j">收到</span></td><td><b>刘丽萍（母亲）</b></td><td class="num"><b>41</b></td><td><b>2026-08 起几乎每天一笔</b></td></tr>
+    <tr><td rowspan="8"><span class="tag t-y">支出</span></td><td>Lovey</td><td class="num">3</td><td rowspan="8">多为小额服务 / 往来</td></tr>
+    <tr><td>星铂广告</td><td class="num">3</td></tr>
+    <tr><td><b>笑一</b></td><td class="num">2</td></tr>
+    <tr><td>净</td><td class="num">2</td></tr>
+    <tr><td>彭于晏 AI</td><td class="num">2</td></tr>
+    <tr><td>小东-网约车 / 马慧楠（版画）/ <b>舒泽林</b> / 发条车（群）</td><td class="num">各 1</td></tr>
+  </tbody>
+</table>
+
+<h3>★ 与母亲的转账，按月分布</h3>
+<table>
+  <thead><tr><th>月份</th><th class="num">笔数</th><th>可视化</th></tr></thead>
+  <tbody>
+    <tr><td>2025-07</td><td class="num">2</td><td>██</td></tr>
+    <tr><td><b>2026-08</b></td><td class="num"><b>19</b></td><td>███████████████████</td></tr>
+    <tr><td><b>2026-09</b></td><td class="num"><b>18</b></td><td>██████████████████</td></tr>
+    <tr><td>2026-10（4 天）</td><td class="num">3</td><td>███</td></tr>
+  </tbody>
+</table>
+
+<div class="note">
+  <h4>★ 这是「没有稳定收入」的硬证据</h4>
+  <p style="margin-bottom:0">母亲转账<b>从 2026-08 开始密集</b>（之前只有 2025-07 两笔）。
+  结合「8-18 网贷」「想搬出去搬不了」——
+  <b>你的现金流结构是：母亲按需转账 → 支付日常 → 偶发支出（服务/外包/人情）。</b><br>
+  ⚠️ 数据里<b>没有金额</b>（只有 transfer_id 与时间），所以<b>不得</b>推断具体数额。</p>
+</div>
+
+<h2>四、★ 剩余 6 个批次（按价值排序）</h2>
+
+<div class="ladder">
+  <div class="rung"><span class="k">B</span><span class="t"><b>社交拓扑</b> —— <code>chatroom_member</code> 50,997 条 + 714 群
+    → <b>谁和谁同群</b>：能算出「你的关系之间的关联度」「谁是你的桥」</span><span class="v">★★★</span></div>
+  <div class="rung"><span class="k">C</span><span class="t"><b>朋友圈</b> —— <code>SnsTopItem_1</code> 7,436 条
+    → <b>谁在什么时候发了什么、你刷到谁</b>（需先解析 packed_info）</span><span class="v">★★★</span></div>
+  <div class="rung"><span class="k">D</span><span class="t"><b>收藏</b> —— <code>favorite.db</code> 230 条
+    → <b>你主动保存了什么</b>（＝你最在意的东西，比「你说什么」更真）</span><span class="v">★★</span></div>
+  <div class="rung"><span class="k">E</span><span class="t"><b>群公告 + 群规则</b> —— 714 条
+    → 每个群的<b>场景与准入门槛</b>（如「高颜值高学历高净值」精英圈层群）</span><span class="v">★★</span></div>
+  <div class="rung"><span class="k">F</span><span class="t"><b>语音</b> —— <code>VoiceInfo</code> 2,486 条
+    → <b>语音时长分布</b>：谁和你用语音、什么关系才发语音</span><span class="v">★</span></div>
+  <div class="rung"><span class="k">G</span><span class="t"><b>表情包 + 媒体资源</b> —— 240 收藏 + 51,855 媒体
+    → 表达风格 / 图片视频往来密度</span><span class="v">★</span></div>
+</div>
+
+<h2>五、⚠️ 必须同步的红线与修正</h2>
+
+<div class="red">
+  <h4>修正与红线</h4>
+  <ol style="margin-bottom:0">
+    <li><b>修正</b>：引擎里「微信不记录别人加你」的结论 → 改为
+      「<b>记录在 <code>FMessageTable</code></b>，消息流里没有」。</li>
+    <li><b>不得</b>推断转账金额 —— 数据里只有 transfer_id 和时间，<b>没有金额字段</b>。</li>
+    <li><b>不得</b>建议他接触「网贷退息退费」类联系人（2026-09-12 主动加他的那位）。</li>
+    <li><b>不得</b>外传本报告（含真人姓名、手机号、商家名称）。</li>
+    <li><b>「债主」标签</b>（通讯录 52 个标签之一）—— ⚠️ <b>需要你确认是谁</b>，这是引擎里的新线索。</li>
+  </ol>
+</div>
+
+<h2>六、落盘</h2>
+
+<table>
+  <thead><tr><th>文件</th><th>内容</th></tr></thead>
+  <tbody>
+    <tr><td><code>_tmp/unused_sources.txt</code></td><td>12 个数据源的完整表结构盘点</td></tr>
+    <tr><td><code>_tmp/goldmine.txt</code></td><td>5 个高价值表的原始探查</td></tr>
+    <tr><td><code>_tmp/goldmine_A.txt</code></td><td><b>32 条好友申请全表 + 77 笔转账全表 + 红包 + 52 个标签定义</b></td></tr>
+    <tr><td><code>tools/probe_unused_sources.py</code> · <code>probe_goldmine.py</code> · <code>mine_goldmine_A.py</code></td><td>探查与挖掘脚本（全部只读）</td></tr>
+  </tbody>
+</table>
+
+<footer>
+  自我理解引擎 · 数据源盘点 ｜ 2026-10-04 ｜ 全程本地只读，未出本机<br>
+  ⚠️ 本报告含真人姓名 / 手机号 / 商家名称，<b>不得外传</b>
+</footer>
+
+</div>
+</body>
+</html>

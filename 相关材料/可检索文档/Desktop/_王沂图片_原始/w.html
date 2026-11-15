@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wang🌿</title>
+<style>
+  :root { color-scheme: dark; }
+  body { font-family: "Segoe UI", "Microsoft YaHei", system-ui, sans-serif; background:#121417; color:#e8eaed; margin:0; }
+  h1 { font-size: 20px; margin: 18px 16px 2px; }
+  .meta { color:#9aa0a6; font-size: 12px; margin: 0 16px 14px; }
+  #chat { display:flex; flex-direction:column; gap:10px; padding: 0 16px 20px; max-width: 860px; margin: 0 auto; }
+  .msg { display:flex; flex-direction:column; max-width: 72%; }
+  .msg.me { align-self: flex-end; align-items: flex-end; }
+  .msg.peer { align-self: flex-start; align-items: flex-start; }
+  .who { font-size: 12px; color:#9aa0a6; margin-bottom: 3px; padding: 0 4px; }
+  .bubble { background:#1e2329; border:1px solid #2b313a; border-radius: 12px; padding: 8px 12px;
+            word-break: break-word; white-space: pre-wrap; line-height: 1.5; }
+  .msg.me .bubble { background:#1f4e36; border-color:#2c6b4c; }
+  .tag { color:#e8c76a; font-size: 11px; margin-right: 6px; }
+  .time { font-size: 11px; color:#6b7280; margin-top: 2px; padding: 0 4px; }
+  .footer { text-align:center; color:#6b7280; font-size: 12px; padding: 8px 0 24px; }
+  .media-img { display:block; max-width: 320px; max-height: 320px; border-radius: 8px; margin-top: 8px; border:1px solid #333a44; }
+  /* ---- cards (M4) ---- */
+  .card { margin-top: 6px; }
+  .card.media { position: relative; }
+  .card.media img { display:block; max-width: 320px; max-height: 320px; border-radius: 8px; border:1px solid #333a44; }
+  .card.media img.thumb { max-width: 160px; max-height: 160px; }
+  .card.media video { display:block; max-width: 360px; border-radius: 8px; background:#000; }
+  .badge { position:absolute; right:6px; bottom:6px; background: rgba(0,0,0,.62); color:#dfe5ea; font-size:10px; padding:2px 6px; border-radius:5px; }
+  .card.stub, .card.app { display:flex; gap:9px; align-items:flex-start; background:#171c22; border:1px solid #2b333d;
+                           border-radius:10px; padding:8px 10px; min-width:190px; max-width:340px; }
+  .msg.me .card.stub, .msg.me .card.app { background:#1b3a2c; border-color:#2c6b4c; }
+  .card .ic { font-size:19px; line-height:1.1; }
+  .card .cbody { min-width:0; }
+  .card .ctitle { font-size:13px; font-weight:600; }
+  .card .csub { font-size:11px; color:#98a1ab; margin-top:2px; }
+  .card .cwhy { font-size:11px; color:#d9a05b; margin-top:3px; }
+  .card .curl { display:block; font-size:11px; color:#78c8a4; margin-top:3px; word-break:break-all; }
+  .card.voice { display:flex; align-items:center; gap:8px; }
+  .card.voice audio { height:34px; max-width:250px; }
+  .quote { font-size:11px; color:#9aa0a6; border-left:2px solid #4a5462; padding:2px 0 2px 7px; margin-top:4px; word-break:break-word; }
+  .sysmsg { align-self:center; max-width:82%; text-align:center; margin:6px 0; }
+  .sysbody { display:inline-block; background:#1a1e24; border:1px solid #262d36; color:#98a1ab; font-size:11.5px; padding:4px 10px; border-radius:10px; line-height:1.5; }
+  .sysmsg .time { font-size:10px; color:#5d6570; }
+  .media-img.thumb { max-width: 160px; max-height: 160px; }
+  .media-video { display:block; max-width: 380px; margin-top: 8px; border-radius: 8px; background:#000; }
+  .voice { color:#7fd0a0; font-weight:600; text-decoration:none; }
+  .media-note { font-size: 11px; color:#9aa0a6; margin-top: 4px; }
+  .media-note a, .voice a { color:#7fd0a0; }
+  .media-warn { color:#d9a05b; font-size: 12px; }
+</style>
+</head>
+<body>
+<h1>Wang🌿</h1>
+<div class="meta">username: wxid_0nhh6xnsh2h221 · media: on</div>
+<div id="chat">
+<div class="sysmsg"><div class="sysbody">以上是打招呼的消息</div><div class="time">2026-10-20 17:24:03</div></div>
+<div class="msg peer"><div class="who">Wang🌿</div><div class="bubble">我通过了你的朋友验证请求，现在我们可以开始聊天了</div><div class="time">2026-10-20 17:24:03</div></div>
+<div class="msg peer"><div class="who">Wang🌿</div><div class="bubble">哈喽👋</div><div class="time">2026-10-20 17:24:09</div></div>
+<div class="msg peer"><div class="who">Wang🌿</div><div class="bubble">浩文</div><div class="time">2026-10-20 17:24:20</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">老师好</div><div class="time">2026-10-20 17:24:29</div></div>
+<div class="msg peer"><div class="who">Wang🌿</div><div class="bubble">陈老师和我说了</div><div class="time">2026-10-20 17:24:38</div></div>
+<div class="msg peer"><div class="who">Wang🌿</div><div class="bubble">我这会儿正接孩子放学，我等到家后晚上给你发文件</div><div class="time">2026-10-20 17:24:49</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">收到老师随时</div><div class="time">2026-10-20 17:25:03</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">不着急先</div><div class="time">2026-10-20 17:25:06</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">老师先忙</div><div class="time">2026-10-20 17:25:10</div></div>
+<div class="msg peer"><div class="who">Wang🌿</div><div class="bubble"><div class="card media"><a href="11.jpg" target="_blank"><img loading="lazy" src="11.jpg" alt="图片"></a><div class="badge">81×120 · 904.5 KB</div></div></div><div class="time">2026-10-20 23:12:18</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">收到老师辛苦</div><div class="time">2026-10-20 23:12:46</div></div>
+<div class="msg peer"><div class="who">Wang🌿</div><div class="bubble">浩文，辛苦你看一下</div><div class="time">2026-10-20 23:14:23</div></div>
+<div class="msg peer"><div class="who">Wang🌿</div><div class="bubble">我明天会去学校</div><div class="time">2026-10-20 23:14:31</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">老师有什么要求吗</div><div class="time">2026-10-20 23:14:36</div></div>
+<div class="msg peer"><div class="who">Wang🌿</div><div class="bubble"><div class="card media"><a href="16.jpg" target="_blank"><img loading="lazy" src="16.jpg" alt="图片"></a><div class="badge">81×120 · 499.6 KB</div></div></div><div class="time">2026-10-20 23:14:37</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">老师我也在学校</div><div class="time">2026-10-20 23:14:44</div></div>
+<div class="msg peer"><div class="who">Wang🌿</div><div class="bubble">这个陈老师说要做成丝网印</div><div class="time">2026-10-20 23:14:50</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">没问题的老师</div><div class="time">2026-10-20 23:14:58</div></div>
+<div class="msg peer"><div class="who">Wang🌿</div><div class="bubble">最后应该是要印在白色衣服上</div><div class="time">2026-10-20 23:15:05</div></div>
+<div class="msg peer"><div class="who">Wang🌿</div><div class="bubble">你看下，这两个图效果更好</div><div class="time">2026-10-20 23:15:16</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">大概 45×60cm 网框上</div><div class="time">2026-10-20 23:15:21</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">老师我明天发给我导师陈晔老师</div><div class="time">2026-10-20 23:16:13</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">感觉效果都很好</div><div class="time">2026-10-20 23:16:23</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">要是加急一晚上就能做好</div><div class="time">2026-10-20 23:16:35</div></div>
+<div class="msg peer"><div class="who">Wang🌿</div><div class="bubble"><div class="card media"><a href="26.jpg" target="_blank"><img loading="lazy" src="26.jpg" alt="图片"></a><div class="badge">120×90 · 46.1 KB</div></div></div><div class="time">2026-10-20 23:16:37</div></div>
+<div class="msg peer"><div class="who">Wang🌿</div><div class="bubble">时间不着急</div><div class="time">2026-10-20 23:16:49</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">明白老师</div><div class="time">2026-10-20 23:17:38</div></div>
+<div class="msg peer"><div class="who">Wang🌿</div><div class="bubble">主要是能清楚地印出来就行，因为这个图像里面藏了一个AR，届时来宾先体验丝网印，然后再从这个丝网印的图像上扫描出AR</div><div class="time">2026-10-20 23:17:41</div></div>
+<div class="msg peer"><div class="who">Wang🌿</div><div class="bubble">这个尺寸你看着调整吧，看怎么效果最好</div><div class="time">2026-10-20 23:17:53</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">老师丝网套色的话可能会产生摩尔纹</div><div class="time">2026-10-20 23:18:13</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">因为颜色带网角但是一个颜色老师的这个没有问题老师</div><div class="time">2026-10-20 23:18:36</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">我印出来制好版交给老师审阅</div><div class="time">2026-10-20 23:18:54</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">尺寸要求都记录下了老师感谢老师</div><div class="time">2026-10-20 23:19:30</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">因为丝网制版的时候每个点会调一个网角每个点多少度角</div><div class="time">2026-10-20 23:20:14</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">应该没有问题老师</div><div class="time">2026-10-20 23:20:27</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">做好了交给老师审阅</div><div class="time">2026-10-20 23:20:37</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">感谢老师的耐心</div><div class="time">2026-10-20 23:20:42</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">应该没有问题老师</div><div class="time">2026-10-20 23:21:16</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">老师早些休息，有成果交给老师审阅</div><div class="time">2026-10-20 23:22:34</div></div>
+<div class="msg peer"><div class="who">Wang🌿</div><div class="bubble">好的，好的，辛苦你了，那就拜托了，早休息😴</div><div class="time">2026-10-20 23:23:40</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">老师辛苦，老师早些休息，感谢老师！</div><div class="time">2026-10-20 23:24:07</div></div>
+</div>
+<div class="footer">42 messages · 媒体附件目录: w_assets/（图片 3，语音 0，视频 0）</div>
+</body></html>

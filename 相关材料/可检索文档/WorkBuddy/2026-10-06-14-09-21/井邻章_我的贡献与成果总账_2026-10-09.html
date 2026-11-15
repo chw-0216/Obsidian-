@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>井邻章 · 我的贡献与成果总账 — 2026-10-09 更新版</title>
+<style>
+:root{
+  --bg:#f7f7f5; --card:#ffffff; --ink:#1c1c1e; --ink2:#4a4a4f; --ink3:#8a8a90;
+  --line:#e5e5e2; --red:#c0392b; --red-bg:#fdf2f0; --blue:#1f5c8b; --blue-bg:#eff5fa;
+  --green:#1e7a52; --green-bg:#eef7f2; --amber:#9a6b00; --amber-bg:#fdf6e6;
+  --purple:#5b4b8a; --purple-bg:#f2effa;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:15px/1.75 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif;}
+.wrap{max-width:1000px;margin:0 auto;padding:48px 28px 90px}
+h1{font-size:30px;line-height:1.3;margin:0 0 6px;letter-spacing:-.4px}
+.sub{color:var(--ink3);font-size:13.5px;margin-bottom:34px}
+h2{font-size:20px;margin:46px 0 14px;padding-bottom:9px;border-bottom:2px solid var(--ink);letter-spacing:-.2px}
+h3{font-size:15.5px;margin:26px 0 10px;color:var(--ink2)}
+p{margin:10px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:20px 22px;margin:16px 0}
+.lead{background:var(--card);border-left:4px solid var(--red);border-radius:0 10px 10px 0;padding:18px 22px;margin:20px 0 30px}
+.lead b{color:var(--red)}
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin:12px 0}
+th{text-align:left;background:#fafaf8;color:var(--ink2);font-weight:600;padding:9px 10px;border-bottom:2px solid var(--line);white-space:nowrap}
+td{padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:last-child td{border-bottom:none}
+.tag{display:inline-block;padding:1px 8px;border-radius:20px;font-size:11.5px;font-weight:600;white-space:nowrap}
+.t-me{background:var(--red-bg);color:var(--red)}
+.t-lead{background:var(--amber-bg);color:var(--amber)}
+.t-co{background:var(--blue-bg);color:var(--blue)}
+.t-tm{background:#f0f0ee;color:var(--ink3)}
+.t-ok{background:var(--green-bg);color:var(--green)}
+.quote{background:#fafaf8;border-left:3px solid var(--ink3);padding:10px 14px;margin:10px 0;font-size:13.5px;color:var(--ink2);border-radius:0 6px 6px 0}
+.quote b{color:var(--ink)}
+.q-red{border-left-color:var(--red);background:var(--red-bg)}
+.q-blue{border-left-color:var(--blue);background:var(--blue-bg)}
+.q-green{border-left-color:var(--green);background:var(--green-bg)}
+.q-amber{border-left-color:var(--amber);background:var(--amber-bg)}
+.warn{background:var(--amber-bg);border:1px solid #f0e0b0;border-radius:8px;padding:14px 18px;margin:14px 0;font-size:13.5px}
+.warn b{color:var(--amber)}
+.danger{background:var(--red-bg);border:1px solid #f0c8c2;border-radius:8px;padding:14px 18px;margin:14px 0;font-size:13.5px}
+.danger b{color:var(--red)}
+.ok{background:var(--green-bg);border:1px solid #c8e5d5;border-radius:8px;padding:14px 18px;margin:14px 0;font-size:13.5px}
+.ok b{color:var(--green)}
+.grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+@media(max-width:760px){.grid4,.grid3{grid-template-columns:1fr 1fr}}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px;text-align:center}
+.kpi .n{font-size:24px;font-weight:600;color:var(--blue);line-height:1.15}
+.kpi .l{font-size:12.5px;color:var(--ink3);margin-top:3px;line-height:1.5}
+.foot{margin-top:56px;padding-top:20px;border-top:1px solid var(--line);color:var(--ink3);font-size:12.5px}
+code{background:#f0f0ee;padding:1px 5px;border-radius:4px;font-size:12.5px}
+ol,ul{padding-left:22px;margin:8px 0}
+li{margin:5px 0}
+.ppt{background:var(--purple-bg);border-left:3px solid var(--purple);padding:10px 14px;margin:8px 0;font-size:13.5px;border-radius:0 6px 6px 0}
+.ppt b{color:var(--purple)}
+.stage{display:inline-block;background:var(--ink);color:#fff;font-size:12px;font-weight:600;padding:2px 10px;border-radius:4px;letter-spacing:.3px}
+.stage.new{background:var(--red)}
+.badge{display:inline-block;font-size:11px;font-weight:700;padding:1px 7px;border-radius:4px;background:var(--red);color:#fff;letter-spacing:.05em;vertical-align:1px}
+.ts{font-family:Consolas,Menlo,monospace;font-size:12px;color:var(--ink3)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>井邻章 · 我的贡献与成果总账</h1>
+<div class="sub">2026-10-09 更新（v2，取代 10-06 版）｜ 用途：中期汇报井邻章内容底稿 ｜ 全部条目均可溯源，出处见文末索引</div>
+
+<div class="lead">
+<b>口径先钉死（这一句不能改）：</b>项目由<b>陈晔老师推动</b>（乡村美育工作站学术主理人）；<b>我的角色是丝网印刷 / 版画工作坊负责人 + 工作站现场执行</b>。
+<br><br>
+<b>四个数字就是我的工作量证据：</b>驻村日志 <b>33 个工作日</b>（其中 <b>32 天的工作人员栏只有我一个人</b>）· 接待 <b>8 批次</b>（6 批现场 + 2 批准备，截至 08-20）<b>＋ 10-03 领导视察 1 次</b> · 问题闭环 <b>8 项（7 已解决 + 1 跟进中）</b> · 完整跑通 <b>6 批次「Codex 出图 → 利世隆打印 → 小马制版 → 次日现场」制版链</b>。
+</div>
+
+<div class="grid4">
+<div class="kpi"><div class="n">33</div><div class="l">个工作日驻村<br>32 天独自在岗</div></div>
+<div class="kpi"><div class="n">8<span style="font-size:15px">+1</span></div><div class="l">批次接待<br>8 批至 08-20 ＋ 10-03</div></div>
+<div class="kpi"><div class="n">7+1</div><div class="l">问题闭环<br>7 已解决 / 1 跟进</div></div>
+<div class="kpi"><div class="n">6</div><div class="l">批次制版链<br>07-24 起跑通 6 轮</div></div>
+</div>
+
+<h2 style="border-bottom-color:var(--red)">★ 零、先看这里：已修正的 5 处事实</h2>
+<p>这 5 条是 <b>2026-10-09 用原始记录（微信原文 + Codex 本地会话 + 文件名锚点）逐条回查</b>后推翻的口述版本。<b>写进汇报的必须是「实际」那一列。</b></p>
+
+<table>
+<tr><th style="width:38%">口述版本（✗ 不要用）</th><th style="width:38%">实际（✓ 用这个）</th><th>证据</th></tr>
+<tr>
+<td>8 月 19 日那晚做的是<b>黄版、群青版</b>，四轮制版</td>
+<td>8/19 是 <b>CMYK 四色</b>（<code>01-C-CYAN / 02-M-MAGENTA / 03-Y-YELLOW / 04-K-BLACK</code>，1200dpi POSITIVE.tif）＋ 悲鸿袖标 A4 ＋ 怀柔竖排硫酸纸 A4；「6 个版每个打两份」共 12 元。<b>「黄版 + 群青版」是 8/29</b>，且属澜沧「绿墨护未」项目</td>
+<td>微信：利世隆 08-19 19:50–20:29 · 文件名 mtime</td>
+</tr>
+<tr>
+<td>悲鸿有<b>粉、黄、蓝、绿四个色版</b>要叠印</td>
+<td>是四种<b>配色版本</b>（选款用），<b>不是四张要叠印的分色版</b>。「黄、群青、红、黑四版」在全部记录中<b>无出处</b></td>
+<td>Codex 09-30 09:28 核对结论</td>
+</tr>
+<tr>
+<td>10 月 3 日带去了<b>五张 A3、两张 A4</b></td>
+<td>实际是 <b>4 张 A3 ＋ 2 张 A4</b>。A3 5 元/张、A4 3 元/张 → 4×5＋2×3＝<b>26 元</b></td>
+<td>目录名 <code>打印店专用_4张A3_2张A4_v35</code>；微信：利世隆 10-02 21:09</td>
+</tr>
+<tr>
+<td>「单色收敛」和「飞鸟两帧」是 <b>10 月 5 日</b>做的</td>
+<td>「单色和双色对版难度要下降」＝ <b>10-01 12:58</b>；飞鸟 = <b>10-01 21:59</b> 起做、<b>10-02 12:24</b> 定「用绳子连起来快速翻动」。<b>10/05 飞鸟关键词 0 命中</b></td>
+<td>Codex 本地会话 2026-10 逐日扫描</td>
+</tr>
+<tr>
+<td>领导视察是<b>上午</b>来的</td>
+<td>是<b>下午约 16:11</b>。当天 09:58 你到场时「人还没来」</td>
+<td>微信：你→陈晔 10-03 09:58 / 16:11</td>
+</tr>
+</table>
+
+<div class="danger">
+<b>✗ 总账自身也要修正的一处：</b>10-06 版把「微信扫码生成 MBTI」写成「<b>四色 CMYK 对应性格维度</b>」—— 这是把两件事混在一起了。<br>
+正确表述：<b>MBTI 八版系统</b>＝四个维度各做两版（E/I 深海军蓝动势 · S/N 黄色纹理 · T/F 暖橙红或正红结构 · J/P 深海军蓝人物收边），<b>共 8 张网版</b>，参与者按四字母选 4 张印 4 次；<b>CMYK 四色</b>属于另一个项目「偏移四型」（08-19 制版）。本页下方已按此更正。
+</div>
+
+<h2>一、阶段一 · 前期策划（2025.10 — 2026.06）</h2>
+<p><span class="stage">我写的方案</span> 这一段是「我做了很多事」里最容易被忽略、但最能体现<b>研究能力</b>的部分 —— 不是执行，是<b>把项目从概念写成方案</b>。</p>
+
+<table>
+<tr><th>时间</th><th>成果</th><th>核心内容（可直接写进 PPT）</th><th>归属</th></tr>
+<tr>
+<td>2025-10-24</td>
+<td><b>《栗子期货 / 碳迹合约》方案</b></td>
+<td>板栗染料丝网版画 + 碳足迹远期合约 + 碳足迹可视化；提出「让城市 1 人的低碳价值与乡村差价交易」—— <b>这是本项目的第一个自研概念</b>，也是后来论文的案例原型</td>
+<td><span class="tag t-me">我提出</span></td>
+</tr>
+<tr>
+<td>2025-11-29</td>
+<td><b>论文《矛盾转化与动力重构：社会美育介入乡村振兴的路径研究——以怀柔井邻「碳迹合约」参与式艺术项目为例》</b></td>
+<td>含完整标题 + 摘要 + 关键词（社会美育 / 乡村振兴 / 矛盾分析法 / 系统论 / 参与艺术 / 碳迹合约）+ 六章结构；用唯物辩证法的矛盾分析法与系统科学方法做框架</td>
+<td><span class="tag t-me">我独著</span></td>
+</tr>
+<tr>
+<td>2026-03-14</td>
+<td>《洞见温度：井邻生态艺术共生计划【草拟】》</td>
+<td>成稿（Obsidian 事件库有独立条目）</td>
+<td><span class="tag t-co">待核实执笔人</span></td>
+</tr>
+<tr>
+<td>2026-03-24</td>
+<td><b>工作站标识「乡村美育工作站.ai」</b></td>
+<td>导师当天派活「你出个版画工作坊的方案」，<b>当天即提交标识源文件</b></td>
+<td><span class="tag t-me">我设计</span></td>
+</tr>
+<tr>
+<td>2026-03-30</td>
+<td><b>《从山到城 —— 井邻印迹扩散系统》</b></td>
+<td>逻辑翻转：「原来的思路：城里种草 → 去山里体验；<b>现在改成：山里破冰 → 城里续印</b>」「怀柔的工作室是<b>起点</b>，不是<b>终点</b>」—— 这句是<b>整个项目的模型核心</b></td>
+<td><span class="tag t-me">我提出</span></td>
+</tr>
+<tr>
+<td>2026-04-24</td>
+<td><b>《植墨 · 三间房》完整方案</b></td>
+<td>「用井邻 200 棵百年栗子树的壳，亲手印一幅全世界只有你有的画」；三间房 = 三种时间（房3 过去 / 房2 现在 / 房1 未来）；窗户变成对话窗口</td>
+<td><span class="tag t-me">我提出</span></td>
+</tr>
+<tr>
+<td>2026-05-26</td>
+<td><b>《井邻装置落地规则说明》</b></td>
+<td>7 件装置作品的<b>落地规则统筹</b> + 报销规则 + 邮寄地址；发票抬头「北京逐日计划科技有限公司」（税号 91110108MABRBFAB67）· 邮寄：洞台村 297 号井邻</td>
+<td><span class="tag t-lead">我统筹<br>（作品非我作）</span></td>
+</tr>
+<tr>
+<td>2026-06</td>
+<td><b>《错位套色 · 数字算命互动版画装置 · 项目全案》</b></td>
+<td><b>15 章完整全案</b>：项目概述 / 核心概念 / 观众动线 / 系统三层逻辑 / 四原型配色 / 手势映射 / 视觉风格 / 系统架构 / 软件文件 / 丝网生产 / 硬件清单 / 现场运营 / 风险约束 / 待办 / 参考资源。含 6 桶预调墨色值、四原型（焰/澈/壤/渊）、MediaPipe 手势→套色错位参数映射</td>
+<td><span class="tag t-me">我独立撰写</span></td>
+</tr>
+</table>
+
+<div class="warn">
+<b>⚠️ 这一段的口径纪律：</b>《装置落地规则说明》里那 7 件作品（栗子灯 / 风起轴转 / 栗化了 / 第五向量 / 网球计划 / 栗子球 / 地问）<b>作者分别是王子辰、廖玉琢、李晴、李彦樵、杨斐、杜清轩、王博</b> —— <b>不能算成我的作品</b>。我做的是「落地规则与统筹」。
+</div>
+
+<h2>二、阶段二 · 驻村建设（2026.05.29 — 08.20 · 33 个工作日）</h2>
+<p><span class="stage">我在现场</span> 这一段是工作量最硬的部分。<b>33 天日志中，只有 5 月 29 日一天的工作人员栏写了两个人（陈晔、蔡浩文），其余 32 天都只有我一个人。</b></p>
+
+<h3>2.1 空间与设备建设（逐项可查）</h3>
+
+<table>
+<tr><th>时间</th><th>我做的事</th><th>结果</th></tr>
+<tr><td>5/29 → 6/4</td><td>接收乒乓球桌（2.7m×1.5m）→ 与井邻团队确认水槽方案（大石槽）</td><td>操作台就位</td></tr>
+<tr><td>6/6</td><td>采购工作桌桌布（3m×2m 米白）；<b>把操作台布置到工作站最内侧空间</b>；对接廖玉琢借调 34 寸显示器</td><td>工作区成型</td></tr>
+<tr><td>6/12</td><td>把电视、丝网印刷设备等物资运送至怀柔工作站</td><td>设备进场</td></tr>
+<tr><td>6/17</td><td>射灯到场（灯具由陈晔老师提供）；对接电工明确安装需求</td><td>光环境启动</td></tr>
+<tr><td>7/5</td><td>对接郭师傅定导轨方案（<b>二线轨道，2m 导轨四根</b>），<b>赴怀柔县城取回导轨</b>；完成腾讯地图登记；与主任核对门牌号 <b>78 号</b>；<b>建立物料费用记账台账</b>；对接王总申请凳子 + 定墙面挂画水钻方案</td><td>五件事同日闭环</td></tr>
+<tr><td>7/7 → 7/8</td><td>完成导轨与钉子安装（支付导轨费）；丝网菲林与网版曝光（对接马慧楠老师）；从关总中餐厅搬 10 把凳子；定显示屏安装位并现场跟进上墙</td><td>照明 + 显示落地</td></tr>
+<tr><td>7/13</td><td>筹划墙面架子木板钉装方案（后调整为先绳挂临时布置）；进城采购显示屏配件</td><td>方案迭代</td></tr>
+<tr><td>7/17</td><td>暴雨前完成灯具安装跟进；<b>完成投屏连接调试</b></td><td>—</td></tr>
+<tr><td>7/18</td><td><b>制定电视壁挂方案</b>（固定式超薄架 3 个 / 单价 15–30 元 / 釉面砖需冲击钻 / 安装高度离地 1.3m）；<b>提出画作悬挂两套方案</b>（画轨 40–100 元/根 vs 打孔支架）并论证「画框较重 → 建议打孔悬挂」；确认试营业悬挂作品清单</td><td>方案 + 论证</td></tr>
+<tr><td>7/19</td><td>检查三块显示屏（两块角部裂痕 → 换新）；画作悬挂上墙；从羊圈搬 2 把凳子（合计 8 把）；完成网络连接调试</td><td>布展完成</td></tr>
+<tr><td>7/24 → 7/25</td><td>提交采购清单（34 寸曲面屏壁挂架、VESA 100×100 支架、8mm 膨胀螺丝、理线槽、隐藏挂片、水平仪）；<b>跟进郭师傅完成 34 寸曲面屏壁挂安装 + 2 幅装饰画上墙</b>；蓝晒画上墙；<b>开业当日现场值守</b></td><td>开业状态达成</td></tr>
+<tr><td>7/31</td><td><b>通过路由器与小米盒子实现全部显示屏投屏联动</b>（日志原文：「实现完美投屏」）；申请两人协助把村支书提供的柜子从村大队搬入工作站</td><td>多屏联动</td></tr>
+</table>
+
+<h3>2.2 制版与印刷（我的技术主线）</h3>
+
+<table>
+<tr><th>时间</th><th>内容</th></tr>
+<tr><td>7/7</td><td>完成丝网菲林与网版曝光（对接马慧楠老师）</td></tr>
+<tr><td>7/23</td><td><b>为开业提前制版</b>：完成分版 → 打印硫酸纸 → 涂感光胶；<b>晚间借取钥匙，在工作室加班完成制版</b></td></tr>
+<tr><td>7/24</td><td>借用马慧楠老师曝光台与烘干箱，<b>完成 3 块网版曝光制作</b>；参与手绘制版与暗室制版</td></tr>
+<tr><td>7/27</td><td><b>设计丝网错位套色方案</b>；拟制错位参与者招募方案；筹备植物染料套色材料</td></tr>
+<tr><td>8/5</td><td><b>完成四色丝网印刷实验</b></td></tr>
+<tr><td>8/13</td><td>为额外版订制网框；<b>因学校丝网工作室未修好，独立完成手工制版</b></td></tr>
+<tr><td>8/14 → 8/15</td><td>为区委书记到访再次借取网版；请版画技师协助检查网版可用性并重新制版；<b>完成网版重新制版</b>；现场拍摄记录（CR2 一批）</td></tr>
+<tr><td>8/19</td><td>为次日区领导视察再次借取网版并完成制版准备（<b>CMYK 四色 + 悲鸿袖标 + 怀柔竖排</b>）</td></tr>
+</table>
+
+<div class="card">
+<b>技术成果量化清单（截至 2026-10-03，已更新）：</b>
+<ul>
+<li>制作单色丝网版画作品 <b>5 件</b></li>
+<li><b>MBTI 八版制版系统</b>：四个维度各两版（E/I 深海军蓝动势 · S/N 黄色纹理 · T/F 暖橙红或正红结构 · J/P 深海军蓝人物收边），<b>共 8 张阳片</b>；含六点套准靶标、颜色陷印（黄扩 0.4mm / 暖色扩 0.2–0.3mm）、现场容差 ±0.6mm</li>
+<li>制作 <b>CMYK 四色网点菲林</b>（偏移四型）：成品宽 26cm / 1200dpi / 300 目丝网 / 95LPI / 网角 C15° M75° Y0° K45°</li>
+<li>制作<b>工作站标志三色套印分版菲林</b>（红/黄/蓝 + 黑文字标记，36cm、300dpi 阳片）与单色字版菲林</li>
+<li><b>悲鸿主题分版</b>：四种配色版本（选款用）+ 工作站标识分版（单色 / 黑字 / RYB 三色加黑）</li>
+<li><b>飞鸟两帧动效版</b>：两帧孔版 + 纸片，用绳子串联快速翻动形成动感（10-01 起做，10-02 定型）</li>
+<li>计算丝网套色偏移量，解决套色对位问题；设计朋克风套色方案与两色简单套色方案</li>
+<li><b>先后三次借取、归还网版</b>，并请版画技师协助检查、重新制版</li>
+<li><b>完整跑通 6 批次制版链</b>（详见第四节 4.1）</li>
+</ul>
+</div>
+
+<h3>2.3 八项问题闭环（★ 这一页最有说服力）</h3>
+<p>「问题闭环」是<b>把忙碌变成可检查的行动</b>的直接证据。8 项中 <b>7 项已解决，1 项持续跟进</b>。</p>
+
+<table>
+<tr><th>#</th><th>问题</th><th>提出</th><th>处理过程（我做的）</th><th>状态</th></tr>
+<tr><td>1</td><td>导轨安装需等郭师傅到场</td><td>7/5</td><td>7/7 完成导轨与钉子安装；7/8 现场跟进安装完成</td><td><span class="tag t-ok">已解决</span></td></tr>
+<tr><td>2</td><td><b>空调不制冷、管道被拔</b></td><td>7/8</td><td>7/10 跟进外机安装 → 7/27—7/29 与关总、房东（曹委员）多方协调 → <b>7/31 安装完成、制冷正常</b> → 8/1 向王总汇报</td><td><span class="tag t-ok">已解决</span></td></tr>
+<tr><td>3</td><td>显示屏更换与安装位待跟进</td><td>7/8</td><td>7/10 换回可用屏；7/13 采购配件；7/17 跟进墙面安装；7/19 更换新屏；7/24—7/25 完成 34 寸曲面屏壁挂</td><td><span class="tag t-ok">已解决</span></td></tr>
+<tr><td>4</td><td>显示屏角部裂痕需更换</td><td>7/19</td><td>当日完成三块屏检查并更换新屏</td><td><span class="tag t-ok">已解决</span></td></tr>
+<tr><td>5</td><td>立面墙插头未通电、缺配电箱钥匙</td><td>7/27</td><td>持续跟进中（截至 8/20）</td><td><span class="tag t-lead">跟进中</span></td></tr>
+<tr><td>6</td><td><b>房东不愿打洞、空调安装受阻</b></td><td>7/28</td><td>7/28 沟通确认方案；7/29 研究管道调整方案；<b>7/31 完成安装</b></td><td><span class="tag t-ok">已解决</span></td></tr>
+<tr><td>7</td><td>卫生站柜子未能调出</td><td>7/28</td><td>7/29 赴村大队挑选；<b>7/31 村支书提供柜子并搬入工作站</b></td><td><span class="tag t-ok">已解决</span></td></tr>
+<tr><td>8</td><td><b>隔壁住户反对空调安装</b></td><td>7/31</td><td>现场协调处理；8/1 确认制冷正常、安装收口</td><td><span class="tag t-ok">已解决</span></td></tr>
+</table>
+
+<div class="ppt">
+<b>PPT 讲法（这一页最好的落点）：</b>「空调这一项，从 7 月 8 日发现管道被拔，到房东顾虑外墙美观不愿打洞、隔壁住户堵门反对，经过大半个月的多方协调重新排布管线，最终 7 月 31 日恢复制冷。<b>这两件事让我看清：乡村工作站真正难的不是工艺，是把突发的社会关系阻碍转化成可用的空间条件。</b>」
+</div>
+
+<h2>三、阶段三 · 接待与运营（2026.07.29 — 10.03）</h2>
+<p><span class="stage">我对外</span> 8 批次接待（截至 08-20）是「高密度常态劳动」，不是合影。逐批可查。<b>10-03 的领导视察另见第四节 4.3。</b></p>
+
+<table>
+<tr><th>日期</th><th>到访</th><th>我做了什么</th></tr>
+<tr><td>07-29 上午</td><td><b>怀柔区政协主席（刚主席）</b></td><td>接待参观；记录领导提出的「体」字等细节意见</td></tr>
+<tr><td>07-29 下午</td><td><b>怀柔区委宣传部部长（工部长）</b></td><td>接待参观（屋内太热未久留）</td></tr>
+<tr><td>07-29 下午</td><td>新京报记者 + 镇上宣传干事</td><td>配合实地采访工作站</td></tr>
+<tr><td>07-31</td><td><b>怀柔区委组织部</b></td><td>接待参观；同日现场跟进空调安装、处理隔壁住户异议</td></tr>
+<tr><td>08-02</td><td><b>长城国际动漫谷开街仪式领导</b></td><td>参与领导寻街参观现场接待；<b>暴雨天气坚守现场</b></td></tr>
+<tr><td>08-03</td><td><b>未来科学城领导</b></td><td><b>撰写并提供丝网印刷工作坊介绍材料</b>；梳理工作坊课程与定价方案（关总反馈「特别感兴趣，想了解下」）</td></tr>
+<tr><td>08-15</td><td><b>怀柔区委书记</b></td><td>提前一天通知 → <b>再次借取网版并完成重新制版</b>；现场拍摄记录</td></tr>
+<tr><td>08-16</td><td><b>世界科学家团队（印度、新加坡等，数十人）</b></td><td><b>主动向关总自荐参加</b>（8/13：「可英文协助讲解与现场工作」）→ <b>现场英文介绍与展示</b>；归还网版</td></tr>
+<tr><td>08-20</td><td><b>梁区长 + 北京市文旅局局长</b></td><td>见下方「我的一天」</td></tr>
+<tr style="background:var(--red-bg)"><td><b>10-03</b> <span class="badge">新增</span></td><td><b>领导到访（身份待核实）</b></td><td>下午约 16:11 到访；我全程值守并引导讲解；现场问及丙烯与书法；<b>领导未参与付费体验</b>。口径见 4.3</td></tr>
+</table>
+
+<div class="card">
+<b>★ 8 月 20 日区领导视察 · 我的一天（单案深讲，最有画面感）</b>
+<ol>
+<li><b>8/19 18:41 我主动请缨：</b>「老师，明天上午区领导视察，我想早点到现场把展区、设备和物料检查一遍，领导来了版画/丝网这块我能讲清楚。<b>今晚要不要先去把版制了，明天直接用</b>」</li>
+<li>8/19 晚：<b>借取网版并完成制版准备</b></li>
+<li>8/20 06:59 出发（<b>途中发生车辆剐蹭，仍安全抵达</b>）；08:49 到达工作站</li>
+<li>8/20 10:23 <b>提交文化墙主视觉诗句方案（6 句备选）</b>：燕山脚下书声朗 / 长城脚下墨花香 / 怀柔山乡入画图 / 栗林深处翰墨香 / 京韵满乡书意浓 / 雁栖河畔童心画</li>
+<li>8/20 现场：<b>借笔记本调试无线网络</b>；与村民互动开展乡村美育工作；<b>对接关总完成展区作品上墙固定（钉钉子）</b>；<b>接待现场体验群众并引导关注工作站小红书账号</b></li>
+<li>8/20 19:34 导师反馈：领导指出门口英文拼写错误（多了一个 r）→ <b>当天协调工程整改</b></li>
+</ol>
+</div>
+
+<h3>3.1 运营机制与内容产出</h3>
+
+<table>
+<tr><th>时间</th><th>成果</th><th>内容</th></tr>
+<tr><td>7/5 起</td><td><b>物料费用记账台账</b></td><td>负责工作站物料费用记账（导师要求「账单不可能出现任何漏洞」）</td></tr>
+<tr><td>7/5 → 7/24</td><td><b>三平台地图登记</b></td><td>腾讯地图（7/5）→ 高德、百度地图（7/24）全部完成；门牌号 78 号核对</td></tr>
+<tr><td>7/27</td><td>错位套色参与者招募方案</td><td>拟制招募方案 + 筹备植物染料套色材料</td></tr>
+<tr><td>8/3</td><td><b>工作坊课程与定价方案</b></td><td>梳理课程结构与定价：<b>村民免费 / 井邻客人 58 元 / 预约 68 元</b>（2–3 小时含物料）</td></tr>
+<tr><td>8/5</td><td><b>「微信扫码生成 MBTI」功能</b></td><td><b>开发并测试通过</b> —— 对应 <b>MBTI 八版系统</b>：四个维度各两版、共 8 张网版，参与者按四字母选 4 张印 4 次，作品带个人属性</td></tr>
+<tr><td>8/9</td><td><b>版画工坊宣传海报定稿 + 矢量图制作</b></td><td>与王总沟通招募安排</td></tr>
+<tr><td>8/13</td><td>工作坊现场组织</td><td>对接关总确定周六版画工作坊招募与现场组织安排</td></tr>
+<tr><td>7/30</td><td>防汛保障</td><td><b>接杨斐、廖玉琢下山，保障同学安全撤离</b></td></tr>
+</table>
+
+<div class="warn">
+<b>⚠️ 运营段的口径纪律（导师已明确划界）：</b>2026-08-05 导师「井邻优惠不能写出来啊」；2026-10-02 导师「你不需要给井邻做广告」。
+<br>→ 汇报里讲<b>机制设计</b>（为什么分三档、对应什么参与门槛），<b>不讲商业成绩、不写优惠、不提政府采购</b>。24 页版已处理得当：「价格机制不是商业牟利，而是为了平衡公益普及与工作站长期维持的材料成本」—— 沿用这句。
+</div>
+
+<h2 style="border-bottom-color:var(--red)">四、阶段四 · 收尾与领导视察（2026.08.21 — 10.09）<span class="badge" style="margin-left:8px">本次新增</span></h2>
+<p><span class="stage new">我收口</span> 这一段的主题不是「又做了多少事」，而是<b>从「让人参与印制」推进到「让地方经验进入作品，再通过身体操作被感受到」</b>。全部有 Codex 本地会话原话与文件名为证。</p>
+
+<h3>4.1 制版链延续：从 3 批次扩到 6 批次</h3>
+<p>「Codex 出图 → 利世隆打印硫酸纸 → 小马借曝光台制版 → 次日现场」这条链，<b>在 7/24 首次跑通后，又完整跑了 5 轮</b>。</p>
+
+<table>
+<tr><th>批次</th><th>日期</th><th>当晚流程（关键时间点）</th><th>费用</th></tr>
+<tr><td><b>A</b></td><td>07-24 → 07-25</td><td>04:01–09:39 出图分版 → 09:05 借曝光台/烘干箱 → 09:52 引荐利世隆 → 10:06 首开户出片 → 白天完成 3 块网版曝光 → <b>7/25 开业</b></td><td>未记录</td></tr>
+<tr><td><b>B</b></td><td>08-14 → 08-15</td><td>20:48 借旧版 → 20:49「上回寄回来我还没拆封呢」→ 8/15 05:30 技师检查、不能用就重做 → 05:53 到场 → <b>8/15 区委书记到访</b>（唯一沿用旧版、无新分版的一次）</td><td>—</td></tr>
+<tr><td><b>C</b> ★最典型</td><td>08-19 → 08-20</td><td>17:52 群内通知 → <b>18:41 我主动请缨</b> → 19:07 借板 → 19:50–20:21 发 CMYK 四色 + A4 满版 + 3 个 PDF（「6 个版每个打两份」）→ 20:22 高姐「12」→ 21:27 取件 → 21:42–22:24 制版完成（转 40 元）→ 8/20 06:59 出发（剐蹭）→ 08:49 到岗 → <b>09:00 梁区长 + 市文旅局局长到访</b></td><td>12 + 40 = <b>52 元</b></td></tr>
+<tr><td><b>D</b></td><td>08-29</td><td>19:20 马慧楠「下午<b>刘老师</b>给我打电话说你还要拿网板」→ 19:58–20:42 黄版 + 群青版各 2 张、V2 红/黄双色 2 张 → 20:25「8 元」→ 20:42「6 元」→ 20:50 高姐「放电车里了」→ 22:13 到场制版</td><td><b>14 元</b></td></tr>
+<tr><td><b>E</b></td><td>09-30 → 10-01</td><td><b>纯整理与重做（无打印/制版）</b>：17:39–17:41 悲鸿为主_分版资料汇总（全部历史分版收拢）→ 20:45 整体视觉策划 v3 → 10-01 04:04–04:08 工作站标识分版（单色/黑字/RYB 三色加黑）→ 20:35–20:58 视察准备 v2 / 影像版画 v4 / 单色 v5–v7</td><td>—</td></tr>
+<tr><td><b>F</b> ★主交付</td><td>10-02 → 10-03</td><td>凌晨 04:43–08:00 连出 v9→v21 → 白天 11:20–20:43 出 v31–v34 → 20:17 问打印店「现在能打印吗」→「<b>硫酸纸用完了</b>」「菲林的打不了」→ <b>自己外卖下单 70 余元硫酸纸</b>加急送到店 → 20:47「机器坏了，打不了」→「哥我都买了 70 多块钱硫酸纸了」→ 20:59 发 6 页 PDF → 21:06 拆分「4 张 A3 + 2 张 A4」→ 21:09 高姐「A3 打印 5 元一张，A4 的 3 元」→ <b>26 元</b> → 23:43「感谢马姐」连夜制版 → <b>10-03 视察</b></td><td>70+ + <b>26 元</b></td></tr>
+</table>
+
+<div class="ppt">
+<b>PPT 讲法：</b>「10 月 2 日晚上打印店说硫酸纸用完了、菲林打不了。我自己下单七十多块钱的硫酸纸加急送到店里，才把第二天的版打出来。<b>这条链能连着跑六轮，靠的不是设备，是每次都得当场把断掉的一环接上。</b>」
+</div>
+
+<h3>4.2 创作线：四个问题的推进（全部有原话）</h3>
+<p>这一段是<b>本次更新的核心</b>。它把「我做了什么」升级为「我为什么这么做」—— 从「让人参与印制」到「让地方经验进入作品，再通过身体操作被感受到」。</p>
+
+<table>
+<tr><th style="width:22%">问题</th><th>推进过程</th><th>关键原话（Codex 本地会话）</th></tr>
+<tr>
+<td><b>Q1</b><br>参与者如何被选择</td>
+<td>不是给 16 型各做一套版，而是<b>四个维度各做两个选项</b>，共 8 张；参与者按自己的四字母<b>选 4 张、印 4 次</b>，作品因此带个人属性。选择权交回参与者。</td>
+<td><span class="ts">07-24 09:28</span><br>「把这个标也做个小标的版印刷在 T恤衫上需要做成位图…叫悲鸿文件夹名」</td>
+</tr>
+<tr>
+<td><b>Q2</b><br>地方素材如何进入作品</td>
+<td>9 月底收拢到<b>悲鸿 + 乡村美育工作站双标识</b>；10-01 明确<b>悲鸿站主导</b>、要「参考重要艺术家设计风格」；同时要求「结合当地特色」、保留栗子等在地元素。</td>
+<td><span class="ts">09-30 09:22</span>「主要是悲鸿主要是悲鸿这一版为主，今晚找一下，还有乡村美育工作站」<br><span class="ts">10-01 13:06</span>「<b>悲鸿要站主导位置，不要太感觉是 ai 做的要参考重要艺术家设计参考风格</b>」<br><span class="ts">10-01 20:31</span>「…需要结合当地特色，希望类似能做具身交互，例如<b>在颜料里面加入栗子旷野的香味以达到在地性</b>…不要宣传井邻…」</td>
+</tr>
+<tr>
+<td><b>Q3</b><br>身体如何参与</td>
+<td>两条路径并行：① <b>嗅觉</b>——颜料里加入栗子/旷野香味；② <b>动觉</b>——飞鸟两帧用<b>绳子连起来快速翻动</b>形成动感。10-03 决定先介绍概念、不实际加香料。</td>
+<td><span class="ts">10-01 20:46</span>「3 号先不准备香料先介绍概念，图片不要太强的 ai 感是要给高级领导介绍的符合政策的…」<br><span class="ts">10-01 21:59</span>「整体设计语言美化：这个也做一下-「两个小鸟飞起来」」（配小红书原话「神笔马良是真的？我画的小鸟飞起来了！」「你做两个鸟吧」「快做吧」）<br><span class="ts">10-02 12:24</span>「<b>飞鸟要用绳子连起来快速翻动形成动感不宜过大</b>」</td>
+</tr>
+<tr>
+<td><b>Q4</b><br>想法如何落到物质</td>
+<td>把「艺术品不是海报」这条判断，落成<b>单色/双色方案 + 对版难度控制 + 具体分版文件</b>。落到物质层面才有交付。</td>
+<td><span class="ts">10-01 12:58</span>「尽量单色方案…是个专业的设计专家和正国级视察国家投资的文旅乡村振兴的一个项目」<br><span class="ts">10-01 12:58</span>「还有悲鸿也要结合一下，<b>单色和双色对版难度要下降</b>」<br><span class="ts">10-02 03:26</span>「<b>我要的是版画不是海报印刷注意这一点我要的是艺术品</b>」<br><span class="ts">10-02 10:45</span>「右上角的字替代成悲鸿的标和加上乡村美育工作站的标可以，语言变成双色或者单色，龚银一座村庄不要留」<br><span class="ts">10-02 11:32</span>「栗子改成单色制一下版」<br><span class="ts">10-03 02:32</span>「还是之前那个带标识的吧这个做的不好，待会儿投影到井邻的 spacedesk 上面去准备一下」</td>
+</tr>
+</table>
+
+<div class="ok">
+<b>✓ 这一段的汇报价值：</b>它证明我不是在执行一套既定方案，而是<b>在过程中不断做判断并修正</b>——从「参与者选择」到「地方素材进入」，到「身体经验」，再到「落到可交付文件」。这正是参与式艺术研究该有的样子。<br>
+<span style="color:var(--ink2)">配套证据台账：<code>井邻章_创作线_四问结构_证据台账_2026-10-09.html</code>（含五次关键转折 + 逐字原话表 + 必须修正的 4 处）</span>
+</div>
+
+<h3>4.3 10-03 领导到访：事实与口径 <span class="badge">重要</span></h3>
+
+<div class="card">
+<b>已经能确认的（可写）</b>
+<ul>
+<li><b>当天确实有领导到访</b>，时段为<b>下午约 16:11</b>（非上午）。你全程值守。</li>
+<li>现场细节：领导「<b>问了一下丙烯</b>就走了」「<b>问了一下书法</b>」「<b>不给照片</b>」「付费体验没咋有人」「<b>领导没体验</b>」。</li>
+<li>消息来源：导师陈晔 <span class="ts">09-30 14:43</span>「说是 10.3 会有大大领导来」、<span class="ts">10-01 14:36</span>「10 月 3 日大大大领导去」——<b>未给级别、未给姓名</b>。</li>
+</ul>
+</div>
+
+<div class="danger">
+<b>✗ 不能确认的（不可写）</b>
+<ul>
+<li><b>姓名</b>：微信全库（39.6 万条）+ Codex 会话，<b>均无</b>把任何姓名与此次到访关联。</li>
+<li><b>级别</b>：「副国级」仅出自你 10-02 的两句话，无第三方佐证。公开渠道（怀柔区政府 / 首都之窗 / 新华网 / 人民网 / 政协网）<b>均无退休副国级领导 10-03 到访怀柔的报道</b>。</li>
+<li><b>陪同关系</b>：公开记录显示<b>张强（区委书记）10-03 全天在雁栖湖片区</b>（火车站 / 雁栖小镇 / 雁栖湖公园 / 阿那亚雁栖小镇），陪同为宫吉成、季学伟、欧阳沁、孙乐、夏文佳；<b>通稿无渤海镇、无洞台村、无井邻</b>。</li>
+<li><b>「石姓高层」这条线已查完</b>：怀柔区<b>现任四套班子 37 人无一人姓石</b>；<b>区委书记 8 任、区长 8 任、县人大主任 5 人、区人大主任、区政协主席历届名单，同样无石姓</b>。全区唯一命中的石姓是区统计局一名正处级干部（在职）。即便确为怀柔区某位退休老领导，级别上限也只有<b>正厅级</b>，与「副国级」相差 3 级以上。</li>
+</ul>
+</div>
+
+<div class="warn">
+<b>⚠ 逻辑上互相矛盾的两条，至少有一条不准确：</b>在职的区委书记通常<b>不会</b>陪同一位退休的区级老领导做正式视察；区委书记出面陪同，意味着来访者级别<b>高于区级</b>。「张强陪同」与「来访者是怀柔区的高层」不可能同时成立。<br><br>
+<b>→ 处理方式：</b>核实前，<b>不写级别、不写姓名、不写陪同</b>。用下面这句零风险口径。
+</div>
+
+<div class="ok">
+<b>✓ 推荐汇报口径（零风险 · 事实成立 · 可回查）</b>
+<div class="quote q-green" style="margin-top:8px">「10 月 3 日国庆期间有领导到访工作站，我全程值守并做引导讲解。当天工作站照常开放，我完成了丝网版试印确认与设备检查。」</div>
+<span style="color:var(--ink2);font-size:13px">核实路径见 <code>井邻_10-03领导到访_核实清单_2026-10-09.html</code>（含可直接照问的话术）。<b>核实成功后可升级为写实版</b>，但必须拿到姓名 + 职务。</span>
+</div>
+
+<h3>4.4 参与者回声：10-03 素材已解出（补齐原有空白）<span class="badge">本次新增</span></h3>
+<p>从本机微信图片缓存（微信 4.x V2 加密格式）中解出 10-03 当天的实物影像。<b>肖像授权已获拍摄方同意</b>，可直接用于汇报。</p>
+
+<table>
+<tr><th style="width:34%">素材</th><th>内容</th><th style="width:120px">规格 / 用途</th></tr>
+<tr><td><b>领导到访现场照</b></td><td>16:11 你发给陈晔老师的那张。画面含随行专业摄影师与墙面书法作品，与「不给照片」「问了一下书法」完全吻合</td><td>2276×1024<br><span style="color:var(--ink3)">仅作存证，<b>不进 PPT</b>（无人露正脸、无单位标识）</span></td></tr>
+<tr><td><b>女童持作品</b></td><td>儿童举起自己印制的作品，作品上有栗子/栗叶红色图形与工作站标识</td><td>1280×1708<br><span style="color:var(--green);font-weight:600">可直接进 PPT</span></td></tr>
+<tr><td><b>儿童操作台刮印</b></td><td>儿童正在刮印，操作台上有多张已印好的作品</td><td>157×210<br><span style="color:var(--amber)">需点开原图后可解全分辨率</span></td></tr>
+<tr><td><b>四孩持作品合影 A/B/C</b></td><td>四个孩子举起各自作品在墙前合影（同场景 3 张）</td><td>157×210<br><span style="color:var(--amber)">同上</span></td></tr>
+</table>
+
+<div class="ppt">
+<b>PPT 讲法（补上第 3 页一直空着的「参与者回声」）：</b>「这是 10 月 3 日国庆假期，村里几个孩子印完之后自己举着作品让我拍的。<b>他们要的不是讲解，是把自己印的东西带走。</b>这一天付费体验的人不多，但免费档的村民和儿童一直在用 —— 这恰好说明三档定价里『村民免费』那一档在起作用。」
+</div>
+
+<div class="ok">
+<b>✓ 为什么这批素材特别值：</b>它同时解决了三件事 —— ① 补上「参与者回声」这个唯一空白的板块；② 用实物证明<b>三档定价机制真的在运行</b>（而不只是方案）；③ 说明工作站<b>在国庆假期照常开放且有真实参与者</b>，是「持续维护」而非「一次活动」的直接证据。
+</div>
+
+<h2>五、★ 口径分层表（写 PPT 必须分开标注）</h2>
+
+<p>「团队成果不能直接等同个人贡献」—— 逐项拆开，被追问时才站得住。</p>
+
+<table>
+<tr><th>归属层级</th><th>内容</th><th>PPT 里怎么写</th></tr>
+<tr>
+<td><span class="tag t-me">我独立完成</span></td>
+<td>33 天驻村日志（32 天独自在岗）· 全部制版与四色丝网实验 · <b>MBTI 八版系统</b> · <b>6 批次制版链全流程</b> · 三平台地图登记 · 物料记账台账 · 电视壁挂与画作悬挂方案 · 投屏联动调试 · 工作坊定价方案 · MBTI 扫码功能 · 版画工坊海报 · 8 月 20 日接待全流程 · 前期全部策划案（碳迹合约 / 从山到城 / 植墨三间房 / 错位套色全案）· <b>飞鸟两帧动效版</b></td>
+<td>「我独立完成 / 我负责 / 我撰写」</td>
+</tr>
+<tr>
+<td><span class="tag t-lead">我主导、他人协作</span></td>
+<td>空调问题闭环（我协调关总、房东、隔壁住户）· 柜子调配（我赴村大队，村支书提供）· 8 批次接待（我接待讲解）· 装置落地规则统筹（7 件作品为他人所作）· <b>打印店断料应急（自购硫酸纸）</b></td>
+<td>「我协调 / 我统筹 / 我跟进完成」</td>
+</tr>
+<tr>
+<td><span class="tag t-co">导师安排 / 他人提供</span></td>
+<td>乒乓球桌（陈晔老师协调借用）· 水池砌筑（陈晔老师安排工人）· 射灯灯具（陈晔老师提供）· 曝光台与烘干箱（借马慧楠老师）· 34 寸显示器（借廖玉琢）· 安装施工（郭师傅）· 场地与运营支持（关总 / 王总 / 井邻团队）</td>
+<td>「在导师协调与团队支持下，我落实……」</td>
+</tr>
+<tr>
+<td><span class="tag t-tm">团队成果（不认领）</span></td>
+<td>7 件装置作品（王子辰 / 廖玉琢 / 李晴 / 李彦樵 / 杨斐 / 杜清轩 / 王博）· 洞台村方案（郭静秋 / 齐家滨）· 驻村工作人员名单（陈晔、刘丽萍、马慧楠、李晴、王博、杨丁懿、蔡浩文）</td>
+<td>只作背景，<b>不写成我的作品</b></td>
+</tr>
+<tr>
+<td><span class="tag t-tm">不写（口径红线）</span></td>
+<td>10-03 到访者的<b>姓名 / 级别 / 陪同关系</b> · 任何<b>家世或私人关系</b>推断 · 井邻<b>商业成绩与优惠</b> · 数字人<b>已交付</b>表述</td>
+<td>一律不写；用零风险口径替代</td>
+</tr>
+</table>
+
+<h2>六、对应到 PPT 井邻章</h2>
+
+<table>
+<tr><th>页</th><th>判断句（副标题）</th><th>放哪些成果</th><th>状态</th></tr>
+<tr><td>1</td><td>澜沧是集中课程，井邻是必须有人持续维护的现场 —— <b>我的角色从授课变成建场</b></td><td>角色口径 + 33 天 / 8 批次 / 7+1 三个数字 + 工作站全景照</td><td><span class="tag t-ok">已成页</span></td></tr>
+<tr><td>2</td><td>空间只有具备可用条件，美育活动才能真正落地</td><td>2.1 建设清单 + 7/7 与 7/24 前后对比照</td><td><span class="tag t-ok">已成页</span></td></tr>
+<tr><td>3</td><td><b>参与发生在每一个可选择的节点</b></td><td>走入现场 / 挑选图案 / 示范推印 / 带走作品 四节点 + MBTI 八版 + <b>参与者回声照片（10-03 儿童印制与持作品）</b></td><td><span class="tag t-ok">已成页</span><br><span style="font-size:11.5px;color:var(--green)">回声素材已就位</span></td></tr>
+<tr><td>4</td><td><b>定价不是商业牟利，是组织参与的一部分</b></td><td>三档定价 + 三平台登记 + MBTI 扫码 + 两次开街（只讲机制，不写优惠）</td><td><span class="tag t-ok">已成页</span></td></tr>
+<tr><td>5</td><td>八批对接是<b>高密度常态劳动</b>，不是合影</td><td>8 批次表 + <b>10-03 到访（零风险口径）</b></td><td><span class="tag t-lead">建议补 10-03</span></td></tr>
+<tr><td>6</td><td>把领导关切转化为当天的具体行动</td><td>8/20 单案深讲（主动请缨 / 06:59 出发 / 诗句方案 / 现场调网 / 钉钉子）</td><td><span class="tag t-ok">已成页</span></td></tr>
+<tr><td>7</td><td>日志把「忙碌」变成<b>可检查、可闭环</b>的行动</td><td>8 项问题闭环表 + 空调问题完整过程（7/8 发现 → 7/31 解决）</td><td><span class="tag t-ok">已成页</span></td></tr>
+<tr style="background:var(--red-bg)"><td><b>8</b> <span class="badge">建议新增</span></td><td><b>从「让人参与印制」到「让地方经验被身体感受到」</b></td><td>4.2 四问结构（Q1 选择权 → Q2 地方素材 → Q3 身体经验 → Q4 落到物质）+ 6 批次制版链 + 飞鸟两帧 + 悲鸿主导</td><td><span class="tag t-me">待做</span></td></tr>
+</table>
+
+<div class="ppt">
+<b>为什么建议加第 8 页：</b>现有 7 页全部止于 <b>8 月 20 日</b>，而 <b>9/30 – 10/03</b> 这一段（悲鸿主导、单色/双色收敛、飞鸟两帧、领导视察）是<b>最新、最能体现创作判断力</b>的部分，且有 Codex 逐字原话支撑。<b>缺了它，汇报停在「建设与接待」，没有收口到「创作方法」。</b>
+</div>
+
+<h2>七、证据位置索引</h2>
+
+<table>
+<tr><th>材料</th><th>位置</th></tr>
+<tr><td><b>★ 驻村工作日志（33 天逐日 + 8 项闭环）</b></td><td><code>Desktop\10_个人资料与旧文件\工作日志\蔡浩文_乡村美育驻村工作日志.md</code>（另有 .pdf 与打印版 .html）</td></tr>
+<tr><td><b>★ 创作线四问结构 + 12 条 Codex 逐字原话</b></td><td><code>Desktop\中期汇报_2026-09\井邻章_创作线_四问结构_证据台账_2026-10-09.html</code></td></tr>
+<tr><td><b>★ 10-03 现场照 + 参与者回声（已解出，授权已获同意）</b></td><td><code>Desktop\中期汇报_2026-09\14_10-03现场与参与者回声_2026-10-09\</code>（含 1280×1708 全分辨率女童持作品照）</td></tr>
+<tr><td><b>★ 10-03 到访全部信息与 5 种可能性</b></td><td><code>Desktop\中期汇报_2026-09\井邻_10-03到访_全部可查信息与可能性_2026-10-09.html</code></td></tr>
+<tr><td><b>★ 6 批次制版链（逐时段 + 微信检索锚点）</b></td><td><code>Desktop\井邻_制版打印链_文件包_2026-10-06\00_批次时间对照表.md</code>（另有 .csv / .html）</td></tr>
+<tr><td><b>★ 10-03 到访核实清单（含怀柔历届名单）</b></td><td><code>Desktop\中期汇报_2026-09\井邻_10-03领导到访_核实清单_2026-10-09.html</code></td></tr>
+<tr><td>接待与运营微信证据台账</td><td><code>Desktop\中期汇报_2026-09\井邻章_接待与运营_微信证据台账_2026-10-06.html</code></td></tr>
+<tr><td>接待前制版打印链微信证据台账</td><td><code>Desktop\中期汇报_2026-09\井邻章_接待前制版打印链_微信证据台账_2026-10-06.html</code></td></tr>
+<tr><td><b>MBTI 八版系统说明（套准 / 陷印 / 墨色）</b></td><td><code>Desktop\05_井邻项目_视觉与丝网印刷\制版\8版现场操作与套准说明.md</code>；阳片在 <code>制版\02-eight-plates\</code></td></tr>
+<tr><td>个人工作成果汇总（23 条技术清单）</td><td><code>Desktop\中期汇报_2026-09\04_聊天记录数据\陈晔导师聊天记录_2026-09-15导出\蔡浩文_工作成果汇总_微信原文.md</code></td></tr>
+<tr><td>版画学习 + 领导接待材料汇总（8 批次逐批）</td><td><code>Desktop\中期汇报_2026-09\02_材料汇总\材料汇总_版画学习与井邻领导接待.md</code></td></tr>
+<tr><td>错位套色项目全案（15 章）</td><td><code>Desktop\05_井邻项目_视觉与丝网印刷\项目全案.md</code></td></tr>
+<tr><td>现场照片（导师记录 341 张 / 接待 115 张）</td><td><code>Desktop\中期汇报_2026-09\07_照片素材\03_工作站现场_导师记录\</code> · <code>01_工作站与领导接待\</code></td></tr>
+<tr><td>12 秒丝网动画 9 关键帧（现成动效）</td><td><code>Desktop\05_井邻项目_视觉与丝网印刷\12秒丝网版画_9个关键帧_20260721\</code></td></tr>
+<tr><td>CMYK 四色分版原作</td><td><code>Desktop\05_井邻项目_视觉与丝网印刷\偏移四型CMYK四色A4硫酸纸分版_原Codex主视觉_20260819\</code></td></tr>
+<tr><td>项目时间线（井邻线 515 条事件化）</td><td><code>WorkBuddy AI\2026-09-28-06-58-18\井邻_洞台村_全打通_2026-10-04.html</code></td></tr>
+<tr><td><b>Codex 本地会话（设计决策原话，第二取证库）</b></td><td><code>C:\Users\wardc\.codex\sessions\2026\&lt;MM&gt;\&lt;DD&gt;\*.jsonl</code>（2026-07 起连续；微信库对设计决策类问题 0 命中）</td></tr>
+</table>
+
+<div class="foot">
+本总账全部条目来自：① 驻村工作日志 33 天逐日（一手）② 个人工作成果汇总微信原文 ③ 版画学习与领导接待材料汇总（含导师私聊原文）④ 项目全案.md ⑤ 井邻·洞台村全打通报告 ⑥ 24 页《在场与回应》讲稿 ⑦ <b>批次时间对照表（6 批次制版链）</b> ⑧ <b>Codex 本地会话逐日扫描（2026-07 起）</b> ⑨ <b>怀柔区政府官网 / 首都之窗 / 中国经济网 / 千龙网 / 新京报 / 名单网 /《怀柔县人大志》（10-03 与历届名单核查）</b>。
+<br><b>口径边界</b>：项目由陈晔老师推动；我的角色为丝网印刷 / 版画工作坊负责人 + 工作站现场执行；8 项问题 = 7 已解决 + 1 跟进中；运营只讲机制不讲商业成绩；<b>10-03 到访不写姓名、级别与陪同关系</b>。<b>内部资料，含真人姓名与金额，不得外传。</b>
+<br><b>版本</b>：v2 · 2026-10-09 更新 · 取代 v1（2026-10-06）。
+</div>
+
+</div>
+</body>
+</html>

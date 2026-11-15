@@ -1,0 +1,5184 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+<meta name="wb-stamp" content="20261006-073839|2026-10-06|2026-10-06 07:38:39|v1-migrate-20261004"><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>自我理解引擎 · 统一排查台 2026-10-05</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f7f6f3;color:#22201d;
+ font:15px/1.75 -apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei",sans-serif}
+.wrap{max-width:1180px;margin:0 auto;padding:40px 30px 80px}
+h1{font-size:27px;font-weight:600;margin:0 0 8px;letter-spacing:-.3px}
+h2{font-size:20px;font-weight:600;margin:52px 0 14px;padding-bottom:8px;
+ border-bottom:2px solid #22201d;letter-spacing:-.2px}
+h3{font-size:16px;font-weight:600;margin:30px 0 10px}
+h4{font-size:14px;font-weight:600;margin:20px 0 8px;color:#4a4642}
+p{margin:10px 0}
+.sub{color:#6b6660;font-size:13.5px}
+.small{font-size:12.5px;color:#6b6660;line-height:1.65}
+.meta{color:#6b6660;font-size:13px;margin:0 0 6px}
+.warn{background:#fdf3f3;border-left:3px solid #b13b3b;padding:11px 15px;border-radius:0 6px 6px 0;
+ font-size:13.5px;margin:16px 0;color:#7d2626}
+.note{background:#f3f6fb;border-left:3px solid #2f5c96;padding:11px 15px;border-radius:0 6px 6px 0;
+ font-size:13.5px;margin:16px 0;color:#24476f}
+.ok{background:#f2f8f2;border-left:3px solid #2f7d4f;padding:11px 15px;border-radius:0 6px 6px 0;
+ font-size:13.5px;margin:16px 0;color:#20583a}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:12.5px;background:#fff;
+ border:1px solid #e3e0da;border-radius:6px;overflow:hidden}
+th,td{padding:7px 10px;text-align:left;border-bottom:1px solid #efede9;vertical-align:top}
+th{background:#f2f0eb;font-weight:600;white-space:nowrap;font-size:12px}
+td.num,th.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+tbody tr:last-child td{border-bottom:none}
+tbody tr:hover{background:#faf9f6}
+code{font-family:ui-monospace,Consolas,"Courier New",monospace;font-size:12px;
+ background:#f0eeea;padding:1px 5px;border-radius:4px;color:#3a3733}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(158px,1fr));gap:10px;margin:22px 0 8px}
+.kpi{background:#fff;border:1px solid #e3e0da;border-radius:8px;padding:13px 15px}
+.k-l{font-size:11.5px;color:#6b6660;margin-bottom:5px;letter-spacing:.02em}
+.k-v{font-size:21px;font-weight:600;font-variant-numeric:tabular-nums;letter-spacing:-.4px}
+.k-n{font-size:11.5px;color:#8b8680;margin-top:4px}
+.tag{display:inline-block;font-size:11px;padding:1.5px 7px;border-radius:20px;
+ font-weight:500;white-space:nowrap}
+.t-ok{background:#e8f3ea;color:#20583a}
+.t-no{background:#fbeaea;color:#8f2c2c}
+.t-half{background:#fbf1e2;color:#7a4d12}
+.t-idle{background:#eeece8;color:#5a554f}
+.t-ask{background:#e9eef7;color:#26456e}
+.toc{background:#fff;border:1px solid #e3e0da;border-radius:8px;padding:16px 20px;margin:20px 0 6px}
+.toc ol{margin:6px 0 0;padding-left:22px}
+.toc li{margin:3px 0;font-size:13.5px}
+.toc a{color:#24476f;text-decoration:none}
+.toc a:hover{text-decoration:underline}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:820px){.two{grid-template-columns:1fr}}
+.foot{margin-top:60px;padding-top:16px;border-top:1px solid #ddd9d2;font-size:12.5px;color:#6b6660}
+.scroll{overflow-x:auto;border-radius:6px}
+ul,ol{margin:10px 0;padding-left:24px}
+li{margin:5px 0}
+strong{font-weight:600}
+hr{border:none;border-top:1px solid #e3e0da;margin:34px 0}
+</style></head><body><div class='wrap'>
+<h1>自我理解引擎 · 统一排查台</h1>
+<p class="meta">数据窗口 2024-11 → 2026-10-05 ｜ 本轮 run_id <code>20261006-073839</code> ｜ 生成 2026-10-06 07:38</p>
+<p class="meta">把「年度事件重建第一轮」散落在报告 / 引擎 / 记忆 / <code>_tmp</code> 各处的结果汇成一份，供逐项对照排查。</p>
+<div class="warn"><strong>内部资料</strong> · 含真人姓名、金额与私密内容 · <strong>不得外传、不得上传任何第三方</strong>。全部数字来自本机只读库（<code>analysis.sqlite</code> · <code>index.sqlite</code> · <code>sns.db</code> · <code>general.db</code>）。</div>
+<div class="kpis">
+<div class="kpi"><div class="k-l">结论台账</div><div class="k-v">64 条</div><div class="k-n">在效 41</div></div>
+<div class="kpi"><div class="k-l">事件库</div><div class="k-v">2,864 条</div><div class="k-n">证据 5,463 条</div></div>
+<div class="kpi"><div class="k-l">缺口候选</div><div class="k-v">183 条</div><div class="k-n">07→10 月 · 未进库</div></div>
+<div class="kpi"><div class="k-l">母亲一年转入</div><div class="k-v">¥183,275</div><div class="k-n">175 笔 · 月均 ¥15,273</div></div>
+<div class="kpi"><div class="k-l">8 月单月转入</div><div class="k-v">¥36,300</div><div class="k-n">全年最高</div></div>
+<div class="kpi"><div class="k-l">笑一日均</div><div class="k-v">48.8</div><div class="k-n">10 月 · 8 月为 85.3</div></div>
+<div class="kpi"><div class="k-l">结论有证据</div><div class="k-v">27 / 64</div><div class="k-n">42.2%</div></div>
+<div class="kpi"><div class="k-l">验收 / 盲测</div><div class="k-v">30 / 30 · 7 / 7</div><div class="k-n">断链 0</div></div>
+</div>
+<div class="toc"><strong>目录</strong><ol>
+<li><a href="#s1">怎么用这份文档（排查路径）</a></li>
+<li><a href="#s2">本轮已裁决结论</a></li>
+<li><a href="#s3">数据表全集</a></li>
+<li><a href="#s4">结论台账（61 条）</a></li>
+<li><a href="#s5">遗留问题台账</a></li>
+<li><a href="#s6">红线与已知陷阱</a></li>
+<li><a href="#s7">脚本与产物索引</a></li>
+<li><a href="#s8">系统状态与验收</a></li>
+</ol></div>
+<h2 id="s1">一、怎么用这份文档（排查路径）</h2>
+<table><thead><tr><th>你想干什么</th><th>去哪一节</th><th>怎么用</th></tr></thead><tbody>
+<tr><td>核对某个数字对不对</td><td>第三节 数据表全集</td><td>表是按天 / 按小时 / 按月的原始明细，可直接跟微信、支付记录对</td></tr>
+<tr><td>核对某条结论站不站得住</td><td>第四节 结论台账</td><td>看「证据条数」与「成立时间」两列：0 条 = 目前只靠本人自述</td></tr>
+<tr><td>找还没解决的问题</td><td>第五节 遗留问题台账</td><td>分「已裁定 / 悬空 / 待你拍板」三档</td></tr>
+<tr><td>确认哪些话不能写</td><td>第六节 红线与陷阱</td><td>对外写材料前先扫一遍</td></tr>
+<tr><td>重跑 / 复现</td><td>第七节 脚本索引</td><td>每个脚本标注了「只读 / 写库」和产出文件</td></tr>
+<tr><td>确认这版数据是哪一次生成的</td><td>第八节 系统状态</td><td>全部产物共用同一个 run_id</td></tr>
+</tbody></table>
+<div class="note"><strong>一句话口径</strong>：所有「跨月比较」一律用<b>日均</b>，不用总量（10 月是不完整月）；所有「单日极值」撑起来的相关系数，必须同时看秩相关。</div>
+<h2 id="s2">二、本轮已裁决结论</h2>
+<h3>2.1 8 月逐日对齐：C1 / C2 双双证伪</h3>
+<p>把母亲转账、他转出、支出、各会话消息量拉到「天」这根轴上。脚本 <code>tools/august_daily_align.py</code>（只读）。</p>
+<table><thead><tr><th>检验</th><th>方法</th><th>结果</th><th>判定</th></tr></thead><tbody>
+<tr><td>一 · 滞后相关</td><td>A(t) vs B(t+L)，L=−5..+5</td><td>全部 |秩相关| &lt; 0.3，无稳定滞后结构</td><td><span class="tag t-no">不共动</span></td></tr>
+<tr><td>二 · 跨月反例</td><td>8 月 → 9 月</td><td>母亲转账 ¥36,300 → ¥11,800（<b>−67%</b>）；笑一日均 85.3 → 83.5（<b>−2%</b>）</td><td><span class="tag t-no">C1 证伪</span></td></tr>
+<tr><td>三 · 大额定性</td><td>单日拆解</td><td>08-28 ¥20,600 → 当天付 ¥20,000 = 央美学费；08-25 ¥3,800 → ¥1,500×3 信用还款</td><td><span class="tag t-half">定向过路钱</span></td></tr>
+</tbody></table>
+<ol>
+<li><b>C1（钱 → 关系）证伪</b> —— 日级无共动；钱跌 67%，关系只跌 2%（日均）。</li>
+<li><b>C2（关系 → 钱）证伪</b> —— 方向反了也不成立：9 月关系仍在高位，钱却崩了。</li>
+<li><b>8 月「双峰」是日历效应</b> —— 学费 8 月底到期、关系 8 月初进入新阶段（08-02 起「老公/老婆」），两件事各有时间表。</li>
+<li><b>C3 的日级检验也是负的</b>（母亲消息 × 笑一 = −0.20）→ 必须换分辨率。</li>
+</ol>
+<div class="warn"><strong>反假象纪律</strong>：整月「转账 × 支出」Pearson 高达 <b>0.98</b>，那是 08-28 单日 ¥20,600 撑起来的；换成秩相关只剩 <b>0.25</b>。只能说「定向大额当天进当天出」，<b>不能说「天天过路」</b>。</div>
+<h3>2.2 独处时段：C3 拆成两半</h3>
+<p>换分辨率 —— 从「聊多少」换到「什么时候聊」。脚本 <code>tools/idle_hours_align.py</code>（只读）。</p>
+<table><thead><tr><th>假设</th><th>证据</th><th>判定</th></tr></thead><tbody>
+<tr><td><b>C3-a</b> 同住挤压</td><td>笑一聊天窗口被压到 22 时后 / 00 时后；峰值小时 16 时 → 22 时；00:00–01:00 从 8 月 215 条 → 9 月 580 条；本人 09-27 自述「在家跟爸妈住，晚上不方便打电话」</td><td><span class="tag t-ok">成立</span></td></tr>
+<tr><td><b>C3-b</b> 外部补偿（量增加）</td><td>母亲消息<b>高</b>的日子笑一日均 <b>67.9</b>，<b>低</b>的日子 <b>85.7</b> —— 反而<b>少 21%</b></td><td><span class="tag t-no">不成立</span></td></tr>
+<tr><td><b>C4</b> 自然升温</td><td>未被排除；但 10 月 22 时占 40% 的集中度，更像「只有这个窗口」</td><td><span class="tag t-half">未排除</span></td></tr>
+</tbody></table>
+<div class="note"><strong>净收获</strong>：C3 从「待验证」变成「<b>一半成立、一半证伪</b>」——挤压带来的是<b>时段重排</b>，不是<b>总量补偿</b>。</div>
+<h3>2.3 盲测核对（外部模型只看 9 月前资料）</h3>
+<table><thead><tr><th>题</th><th>外部预测</th><th>回库核对</th><th>判定</th></tr></thead><tbody>
+<tr><td><b>Q3</b> 导师划界</td><td>「白干了」+ 委屈 + 被剥夺 + 压抑/合理化</td><td>10-02 19:06 划界 → <b>19:07 回「明白老师」</b>（1 分钟）→ 又干 40 分钟 → 次日 07:23 如常出发 → <b>对母亲一句抱怨都没有</b>；同日 10:55 / 11:33 还在问「走陈晔老师的账什么时候能出来」</td><td><span class="tag t-no">本次预测错</span></td></tr>
+<tr><td><b>Q4</b> 关系角色</td><td>本质是「被她需要的人」</td><td>两者在数据上不可分；且与大量主动情感表达张力明显（七夕长信 / 10-01 连发 6 条道歉）</td><td><span class="tag t-half">不可证伪</span></td></tr>
+<tr><td><b>Q5</b> 10 月回落</td><td>主动冷下来（防卫性撤离）</td><td>前提错（用了「十二分之一」，那是拿 5 天总量比整月总量）+ 方向可疑 + 同段自相矛盾</td><td><span class="tag t-no">前提错</span></td></tr>
+</tbody></table>
+<p><b>★ 反向验证</b>：改用引擎已裁定的 <b>Q14（清醒的交易者）</b>去预测 Q3 → <b>6 行全中</b>。同一个盲测、两个模型，一个全错一个全对 ⇒ <b>选对模型比选对标签重要</b>。</p>
+<h3>2.4 年度骨架与密度断崖</h3>
+<p>8 条生活线 × 13 个月。脚本 <code>tools/annual_skeleton.py</code>（只读）。</p>
+<table class="">
+<thead><tr>
+<th class="">生活线</th>
+<th class="num">2025-10</th>
+<th class="num">2025-11</th>
+<th class="num">2025-12</th>
+<th class="num">2026-01</th>
+<th class="num">2026-02</th>
+<th class="num">2026-03</th>
+<th class="num">2026-04</th>
+<th class="num">2026-05</th>
+<th class="num">2026-06</th>
+<th class="num">2026-07</th>
+<th class="num">2026-08</th>
+<th class="num">2026-09</th>
+<th class="num">2026-10</th>
+<th class="num">合计</th>
+</tr></thead><tbody>
+<tr>
+<td class="">家庭</td>
+<td class="num">2</td>
+<td class="num">4</td>
+<td class="num">3</td>
+<td class="num">9</td>
+<td class="num">7</td>
+<td class="num">6</td>
+<td class="num">7</td>
+<td class="num">8</td>
+<td class="num">5</td>
+<td class="num">8</td>
+<td class="num">7</td>
+<td class="num">1</td>
+<td class="num">1</td>
+<td class="num">68</td>
+</tr>
+<tr>
+<td class="">资金</td>
+<td class="num">7</td>
+<td class="num">13</td>
+<td class="num">9</td>
+<td class="num">10</td>
+<td class="num">4</td>
+<td class="num">15</td>
+<td class="num">12</td>
+<td class="num">16</td>
+<td class="num">8</td>
+<td class="num">11</td>
+<td class="num">27</td>
+<td class="num">13</td>
+<td class="num">3</td>
+<td class="num">148</td>
+</tr>
+<tr>
+<td class="">学习</td>
+<td class="num">51</td>
+<td class="num">24</td>
+<td class="num">50</td>
+<td class="num">48</td>
+<td class="num">6</td>
+<td class="num">34</td>
+<td class="num">82</td>
+<td class="num">42</td>
+<td class="num">20</td>
+<td class="num">15</td>
+<td class="num">3</td>
+<td class="num">3</td>
+<td class="num">1</td>
+<td class="num">379</td>
+</tr>
+<tr>
+<td class="">工作与项目</td>
+<td class="num">59</td>
+<td class="num">6</td>
+<td class="num">22</td>
+<td class="num">38</td>
+<td class="num">13</td>
+<td class="num">37</td>
+<td class="num">20</td>
+<td class="num">38</td>
+<td class="num">26</td>
+<td class="num">23</td>
+<td class="num">14</td>
+<td class="num">6</td>
+<td class="num">1</td>
+<td class="num">303</td>
+</tr>
+<tr>
+<td class="">亲密关系</td>
+<td class="num">3</td>
+<td class="num">5</td>
+<td class="num">6</td>
+<td class="num">14</td>
+<td class="num">13</td>
+<td class="num">33</td>
+<td class="num">26</td>
+<td class="num">19</td>
+<td class="num">5</td>
+<td class="num">21</td>
+<td class="num">1</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">146</td>
+</tr>
+<tr>
+<td class="">社交</td>
+<td class="num">108</td>
+<td class="num">45</td>
+<td class="num">82</td>
+<td class="num">92</td>
+<td class="num">41</td>
+<td class="num">109</td>
+<td class="num">134</td>
+<td class="num">99</td>
+<td class="num">59</td>
+<td class="num">54</td>
+<td class="num">3</td>
+<td class="num">4</td>
+<td class="num">0</td>
+<td class="num">830</td>
+</tr>
+<tr>
+<td class="">出行</td>
+<td class="num">18</td>
+<td class="num">3</td>
+<td class="num">3</td>
+<td class="num">5</td>
+<td class="num">5</td>
+<td class="num">4</td>
+<td class="num">10</td>
+<td class="num">8</td>
+<td class="num">5</td>
+<td class="num">9</td>
+<td class="num">5</td>
+<td class="num">4</td>
+<td class="num">0</td>
+<td class="num">79</td>
+</tr>
+<tr>
+<td class="">个人创作</td>
+<td class="num">20</td>
+<td class="num">4</td>
+<td class="num">19</td>
+<td class="num">11</td>
+<td class="num">4</td>
+<td class="num">21</td>
+<td class="num">5</td>
+<td class="num">16</td>
+<td class="num">13</td>
+<td class="num">6</td>
+<td class="num">2</td>
+<td class="num">2</td>
+<td class="num">0</td>
+<td class="num">123</td>
+</tr>
+<tr>
+<td class="">未分类</td>
+<td class="num">5</td>
+<td class="num">3</td>
+<td class="num">7</td>
+<td class="num">0</td>
+<td class="num">4</td>
+<td class="num">4</td>
+<td class="num">6</td>
+<td class="num">9</td>
+<td class="num">3</td>
+<td class="num">6</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">47</td>
+</tr>
+<tr>
+<td class="">原始消息量</td>
+<td class="num">23420</td>
+<td class="num">20305</td>
+<td class="num">24692</td>
+<td class="num">21717</td>
+<td class="num">12861</td>
+<td class="num">23964</td>
+<td class="num">21834</td>
+<td class="num">22289</td>
+<td class="num">16932</td>
+<td class="num">22763</td>
+<td class="num">21611</td>
+<td class="num">21165</td>
+<td class="num">4587</td>
+<td class="num">258140</td>
+</tr>
+<tr>
+<td class="">事件/千条消息</td>
+<td class="num">11.4</td>
+<td class="num">5.1</td>
+<td class="num">7.9</td>
+<td class="num">10.5</td>
+<td class="num">7.2</td>
+<td class="num">10.8</td>
+<td class="num">13.6</td>
+<td class="num">11.0</td>
+<td class="num">8.3</td>
+<td class="num">6.5</td>
+<td class="num">2.9</td>
+<td class="num">1.6</td>
+<td class="num">1.3</td>
+<td class="num"></td>
+</tr>
+</tbody></table>
+<div class="warn"><strong>密度断崖</strong>：事件 / 千条消息，前 10 个月均值 <b>9.2</b>；2025-11 = 5.1 · 2026-07 = 6.5 · <b>08 = 2.9</b> · <b>09 = 1.6</b> · 10 = 2.0。而<b>消息量全年平稳（月均 2.1 万条）</b> ⇒ 低密度不是他变安静，是<b>抽取源停了</b>。</div>
+<h3>2.5 三条深入事件链</h3>
+<div class="two">
+<div><h4>链 A · 车 → 钱 → 父母</h4><ul><li>一年内<b>至少 2 次剐蹭</b>：07-02（央美门口撞公交，开母亲的车）· 10-03（怀柔，保险杠）</li><li>母亲一年转账 <b>175 笔 / ¥183,275</b>（去重后），月均 ¥15,273</li><li>07-02 夜大吵：「你为什么每天要开车」「买车就是花钱的事」；他「你俩整天闹」「我爸有病似的」</li><li>08-18 要钱 1,100（花呗+网贷）→ 母亲给，附条件「不许给车买东西了」</li><li><b>反向发现</b>：母亲自己的车贷也逾期（他：「你逾期了半个月了」「影响征信很严重」）</li><li><b>净结论</b>：车不是消费问题，是<b>「使用权审计」</b>问题 —— 他争的是使用权的正当性，不是钱</li></ul></div>
+<div><h4>链 B · 井邻工作站 → 导师</h4><ul><li>06→10：拉设备进怀柔 · 高德标注 · 07-23 开业 · 07-29 政协主席+宣传部长到场 · 08-22《工作成果汇总》《驻村工作日志》 · 08-25 见区委书记 · 09-22 入党思想汇报</li><li>本人发言 148 条；母亲「去了井邻都 20 多趟了」；他补「我就在井邻住过两晚」</li><li>08-18 原话是钥匙：「陈晔的活哪那么好干」「好事从来没有我，烂事永远都是我的」→「<b>我就是想入党</b>」</li></ul></div>
+</div>
+<div class="two">
+<div><h4>链 C · 笑一 → 亲密关系</h4><ul><li>消息量 05 = 300 → 06 = 297 → <b>07 = 869 → 08 = 2,473 → 09 = 2,170</b> → 10（4 天）= 195</li><li>08-02 起「老公/老婆」固定化；08-19 七夕写信备礼；08-29 / 09-02 / 09-16 三次生日；09-05 她遇纠纷报警 → 他「明早连夜到北京」；10-01 他失联一整天 → 连发道歉</li><li><b>资源约束显形</b>：08-11「十月宽裕点带你多吃点」；08-17 用「做饭」替代「花钱」；08-29 生日 190 元她先垫</li><li><b>09-27 自述</b>：「现在在家跟爸妈住，晚上不方便打电话」</li></ul></div>
+<div><h4>三套竞争解释（ACH）</h4><ul><li><b>A 组（车钱）</b>：A1 使用权审计 / A2 现金流缺口外溢 / A3 父母关系紧张外溢 / A4 面子投资失败 → 倾向 <b>A1 + A2</b></li><li><b>B 组（井邻）</b>：B1 换入党（对价）/ B2 建作品履历 / B3 关系归属 → <b>B1+B2 明面，B3 暗面</b></li><li><b>C 组（笑一）</b>：C1 ❌ 证伪 · C2 ❌ 证伪 · <b>C3 拆两半</b> · C4 未排除</li></ul></div>
+</div>
+<h2 id="s3">三、数据表全集</h2>
+<p class="small">以下表全部由脚本从只读库直接导出，未做人工修饰；可逐行跟微信 / 支付记录对照。</p>
+<h3>3.1 8 月逐日对齐（31 天 · 只列有资金动作的日子见报告版，此处为全量）</h3>
+<table class="">
+<thead><tr>
+<th class="">日期</th>
+<th class="num">星期</th>
+<th class="num">母亲转账_金额</th>
+<th class="num">母亲转账_笔数</th>
+<th class="num">他转出_金额</th>
+<th class="num">支出_总额</th>
+<th class="num">笑一消息</th>
+<th class="num">母亲消息</th>
+<th class="num">导师消息</th>
+<th class="num">全库消息</th>
+</tr></thead><tbody>
+<tr>
+<td class="">2026-08-01</td>
+<td class="num">六</td>
+<td class="num">0.0</td>
+<td class="num">0</td>
+<td class="num">0.0</td>
+<td class="num">0.0</td>
+<td class="num">7</td>
+<td class="num">3</td>
+<td class="num">73</td>
+<td class="num">453</td>
+</tr>
+<tr>
+<td class="">2026-08-02</td>
+<td class="num">日</td>
+<td class="num">1000.0</td>
+<td class="num">1</td>
+<td class="num">0.0</td>
+<td class="num">0.0</td>
+<td class="num">206</td>
+<td class="num">10</td>
+<td class="num">51</td>
+<td class="num">543</td>
+</tr>
+<tr>
+<td class="">2026-08-03</td>
+<td class="num">一</td>
+<td class="num">300.0</td>
+<td class="num">1</td>
+<td class="num">0.0</td>
+<td class="num">0.0</td>
+<td class="num">129</td>
+<td class="num">8</td>
+<td class="num">30</td>
+<td class="num">582</td>
+</tr>
+<tr>
+<td class="">2026-08-04</td>
+<td class="num">二</td>
+<td class="num">0.0</td>
+<td class="num">0</td>
+<td class="num">560.0</td>
+<td class="num">0.0</td>
+<td class="num">30</td>
+<td class="num">21</td>
+<td class="num">7</td>
+<td class="num">502</td>
+</tr>
+<tr>
+<td class="">2026-08-05</td>
+<td class="num">三</td>
+<td class="num">0.0</td>
+<td class="num">0</td>
+<td class="num">0.0</td>
+<td class="num">29.85</td>
+<td class="num">22</td>
+<td class="num">56</td>
+<td class="num">69</td>
+<td class="num">690</td>
+</tr>
+<tr>
+<td class="">2026-08-06</td>
+<td class="num">四</td>
+<td class="num">300.0</td>
+<td class="num">1</td>
+<td class="num">0.0</td>
+<td class="num">0.0</td>
+<td class="num">68</td>
+<td class="num">23</td>
+<td class="num">4</td>
+<td class="num">609</td>
+</tr>
+<tr>
+<td class="">2026-08-07</td>
+<td class="num">五</td>
+<td class="num">300.0</td>
+<td class="num">1</td>
+<td class="num">0.0</td>
+<td class="num">254.0</td>
+<td class="num">127</td>
+<td class="num">26</td>
+<td class="num">7</td>
+<td class="num">916</td>
+</tr>
+<tr>
+<td class="">2026-08-08</td>
+<td class="num">六</td>
+<td class="num">1600.0</td>
+<td class="num">1</td>
+<td class="num">70.0</td>
+<td class="num">10.0</td>
+<td class="num">65</td>
+<td class="num">113</td>
+<td class="num">0</td>
+<td class="num">544</td>
+</tr>
+<tr>
+<td class="">2026-08-09</td>
+<td class="num">日</td>
+<td class="num">350.0</td>
+<td class="num">3</td>
+<td class="num">10.0</td>
+<td class="num">35.8</td>
+<td class="num">2</td>
+<td class="num">198</td>
+<td class="num">41</td>
+<td class="num">957</td>
+</tr>
+<tr>
+<td class="">2026-08-10</td>
+<td class="num">一</td>
+<td class="num">400.0</td>
+<td class="num">1</td>
+<td class="num">468.0</td>
+<td class="num">44.0</td>
+<td class="num">348</td>
+<td class="num">50</td>
+<td class="num">6</td>
+<td class="num">1195</td>
+</tr>
+<tr>
+<td class="">2026-08-11</td>
+<td class="num">二</td>
+<td class="num">0.0</td>
+<td class="num">0</td>
+<td class="num">500.0</td>
+<td class="num">2.0</td>
+<td class="num">34</td>
+<td class="num">33</td>
+<td class="num">0</td>
+<td class="num">788</td>
+</tr>
+<tr>
+<td class="">2026-08-12</td>
+<td class="num">三</td>
+<td class="num">0.0</td>
+<td class="num">0</td>
+<td class="num">0.0</td>
+<td class="num">10.9</td>
+<td class="num">6</td>
+<td class="num">30</td>
+<td class="num">10</td>
+<td class="num">724</td>
+</tr>
+<tr>
+<td class="">2026-08-13</td>
+<td class="num">四</td>
+<td class="num">0.0</td>
+<td class="num">0</td>
+<td class="num">0.0</td>
+<td class="num">0.0</td>
+<td class="num">262</td>
+<td class="num">27</td>
+<td class="num">56</td>
+<td class="num">791</td>
+</tr>
+<tr>
+<td class="">2026-08-14</td>
+<td class="num">五</td>
+<td class="num">600.0</td>
+<td class="num">2</td>
+<td class="num">0.0</td>
+<td class="num">0.0</td>
+<td class="num">72</td>
+<td class="num">6</td>
+<td class="num">34</td>
+<td class="num">536</td>
+</tr>
+<tr>
+<td class="">2026-08-15</td>
+<td class="num">六</td>
+<td class="num">0.0</td>
+<td class="num">0</td>
+<td class="num">0.0</td>
+<td class="num">173.45</td>
+<td class="num">60</td>
+<td class="num">61</td>
+<td class="num">23</td>
+<td class="num">622</td>
+</tr>
+<tr>
+<td class="">2026-08-16</td>
+<td class="num">日</td>
+<td class="num">100.0</td>
+<td class="num">1</td>
+<td class="num">0.0</td>
+<td class="num">193.83</td>
+<td class="num">63</td>
+<td class="num">30</td>
+<td class="num">9</td>
+<td class="num">549</td>
+</tr>
+<tr>
+<td class="">2026-08-17</td>
+<td class="num">一</td>
+<td class="num">100.0</td>
+<td class="num">1</td>
+<td class="num">0.0</td>
+<td class="num">139.56</td>
+<td class="num">41</td>
+<td class="num">12</td>
+<td class="num">1</td>
+<td class="num">592</td>
+</tr>
+<tr>
+<td class="">2026-08-18</td>
+<td class="num">二</td>
+<td class="num">1000.0</td>
+<td class="num">2</td>
+<td class="num">100.0</td>
+<td class="num">383.48</td>
+<td class="num">0</td>
+<td class="num">289</td>
+<td class="num">16</td>
+<td class="num">844</td>
+</tr>
+<tr>
+<td class="">2026-08-19</td>
+<td class="num">三</td>
+<td class="num">0.0</td>
+<td class="num">0</td>
+<td class="num">140.0</td>
+<td class="num">99.66</td>
+<td class="num">53</td>
+<td class="num">41</td>
+<td class="num">15</td>
+<td class="num">810</td>
+</tr>
+<tr>
+<td class="">2026-08-20</td>
+<td class="num">四</td>
+<td class="num">0.0</td>
+<td class="num">0</td>
+<td class="num">0.0</td>
+<td class="num">34.5</td>
+<td class="num">142</td>
+<td class="num">10</td>
+<td class="num">20</td>
+<td class="num">742</td>
+</tr>
+<tr>
+<td class="">2026-08-21</td>
+<td class="num">五</td>
+<td class="num">1000.0</td>
+<td class="num">2</td>
+<td class="num">0.0</td>
+<td class="num">88.74</td>
+<td class="num">19</td>
+<td class="num">31</td>
+<td class="num">0</td>
+<td class="num">699</td>
+</tr>
+<tr>
+<td class="">2026-08-22</td>
+<td class="num">六</td>
+<td class="num">0.0</td>
+<td class="num">0</td>
+<td class="num">0.0</td>
+<td class="num">187.56</td>
+<td class="num">0</td>
+<td class="num">12</td>
+<td class="num">47</td>
+<td class="num">439</td>
+</tr>
+<tr>
+<td class="">2026-08-23</td>
+<td class="num">日</td>
+<td class="num">250.0</td>
+<td class="num">3</td>
+<td class="num">54.0</td>
+<td class="num">139.99</td>
+<td class="num">74</td>
+<td class="num">46</td>
+<td class="num">9</td>
+<td class="num">637</td>
+</tr>
+<tr>
+<td class="">2026-08-24</td>
+<td class="num">一</td>
+<td class="num">0.0</td>
+<td class="num">0</td>
+<td class="num">0.0</td>
+<td class="num">26.0</td>
+<td class="num">31</td>
+<td class="num">7</td>
+<td class="num">0</td>
+<td class="num">638</td>
+</tr>
+<tr>
+<td class="">2026-08-25</td>
+<td class="num">二</td>
+<td class="num">3800.0</td>
+<td class="num">4</td>
+<td class="num">0.0</td>
+<td class="num">4859.81</td>
+<td class="num">188</td>
+<td class="num">5</td>
+<td class="num">0</td>
+<td class="num">781</td>
+</tr>
+<tr>
+<td class="">2026-08-26</td>
+<td class="num">三</td>
+<td class="num">600.0</td>
+<td class="num">2</td>
+<td class="num">0.0</td>
+<td class="num">135.32</td>
+<td class="num">51</td>
+<td class="num">16</td>
+<td class="num">0</td>
+<td class="num">666</td>
+</tr>
+<tr>
+<td class="">2026-08-27</td>
+<td class="num">四</td>
+<td class="num">0.0</td>
+<td class="num">0</td>
+<td class="num">300.0</td>
+<td class="num">294.52</td>
+<td class="num">21</td>
+<td class="num">25</td>
+<td class="num">0</td>
+<td class="num">621</td>
+</tr>
+<tr>
+<td class="">2026-08-28</td>
+<td class="num">五</td>
+<td class="num">20600.0</td>
+<td class="num">3</td>
+<td class="num">0.0</td>
+<td class="num">20247.96</td>
+<td class="num">61</td>
+<td class="num">77</td>
+<td class="num">7</td>
+<td class="num">800</td>
+</tr>
+<tr>
+<td class="">2026-08-29</td>
+<td class="num">六</td>
+<td class="num">0.0</td>
+<td class="num">0</td>
+<td class="num">560.0</td>
+<td class="num">73.7</td>
+<td class="num">127</td>
+<td class="num">34</td>
+<td class="num">4</td>
+<td class="num">738</td>
+</tr>
+<tr>
+<td class="">2026-08-30</td>
+<td class="num">日</td>
+<td class="num">4000.0</td>
+<td class="num">2</td>
+<td class="num">0.0</td>
+<td class="num">541.38</td>
+<td class="num">120</td>
+<td class="num">27</td>
+<td class="num">0</td>
+<td class="num">547</td>
+</tr>
+<tr>
+<td class="">2026-08-31</td>
+<td class="num">一</td>
+<td class="num">0.0</td>
+<td class="num">0</td>
+<td class="num">393.0</td>
+<td class="num">411.65</td>
+<td class="num">44</td>
+<td class="num">52</td>
+<td class="num">37</td>
+<td class="num">1056</td>
+</tr>
+</tbody></table>
+<h3>3.2 滞后相关矩阵（A(t) vs B(t+L)）</h3>
+<table class="">
+<thead><tr>
+<th class="">A</th>
+<th class="num">B</th>
+<th class="num">L-5</th>
+<th class="num">L-4</th>
+<th class="num">L-3</th>
+<th class="num">L-2</th>
+<th class="num">L-1</th>
+<th class="num">L+0</th>
+<th class="num">L+1</th>
+<th class="num">L+2</th>
+<th class="num">L+3</th>
+<th class="num">L+4</th>
+<th class="num">L+5</th>
+<th class="num">同秩(L0)</th>
+</tr></thead><tbody>
+<tr>
+<td class="">母亲转账金额</td>
+<td class="num">笑一消息</td>
+<td class="num">0.07</td>
+<td class="num">-0.144</td>
+<td class="num">0.176</td>
+<td class="num">-0.098</td>
+<td class="num">-0.121</td>
+<td class="num">0.025</td>
+<td class="num">0.05</td>
+<td class="num">0.118</td>
+<td class="num">-0.098</td>
+<td class="num">0.122</td>
+<td class="num">0.211</td>
+<td class="num">0.287</td>
+</tr>
+<tr>
+<td class="">笑一消息</td>
+<td class="num">母亲转账金额</td>
+<td class="num">0.211</td>
+<td class="num">0.122</td>
+<td class="num">-0.098</td>
+<td class="num">0.118</td>
+<td class="num">0.05</td>
+<td class="num">0.025</td>
+<td class="num">-0.121</td>
+<td class="num">-0.098</td>
+<td class="num">0.176</td>
+<td class="num">-0.144</td>
+<td class="num">0.07</td>
+<td class="num">0.287</td>
+</tr>
+<tr>
+<td class="">他转出金额</td>
+<td class="num">笑一消息</td>
+<td class="num">-0.211</td>
+<td class="num">0.121</td>
+<td class="num">-0.143</td>
+<td class="num">0.073</td>
+<td class="num">0.225</td>
+<td class="num">0.122</td>
+<td class="num">-0.185</td>
+<td class="num">0.173</td>
+<td class="num">0.294</td>
+<td class="num">-0.123</td>
+<td class="num">-0.169</td>
+<td class="num">-0.108</td>
+</tr>
+<tr>
+<td class="">笑一消息</td>
+<td class="num">他转出金额</td>
+<td class="num">-0.169</td>
+<td class="num">-0.123</td>
+<td class="num">0.294</td>
+<td class="num">0.173</td>
+<td class="num">-0.185</td>
+<td class="num">0.122</td>
+<td class="num">0.225</td>
+<td class="num">0.073</td>
+<td class="num">-0.143</td>
+<td class="num">0.121</td>
+<td class="num">-0.211</td>
+<td class="num">-0.108</td>
+</tr>
+<tr>
+<td class="">支出总额</td>
+<td class="num">笑一消息</td>
+<td class="num">0.031</td>
+<td class="num">-0.148</td>
+<td class="num">0.203</td>
+<td class="num">-0.064</td>
+<td class="num">-0.164</td>
+<td class="num">0.01</td>
+<td class="num">0.077</td>
+<td class="num">0.066</td>
+<td class="num">-0.078</td>
+<td class="num">0.098</td>
+<td class="num">0.077</td>
+<td class="num">-0.093</td>
+</tr>
+<tr>
+<td class="">母亲转账金额</td>
+<td class="num">支出总额</td>
+<td class="num">0.142</td>
+<td class="num">-0.078</td>
+<td class="num">0.166</td>
+<td class="num">0.124</td>
+<td class="num">-0.058</td>
+<td class="num">0.979</td>
+<td class="num">-0.073</td>
+<td class="num">-0.014</td>
+<td class="num">0.13</td>
+<td class="num">-0.077</td>
+<td class="num">-0.059</td>
+<td class="num">0.25</td>
+</tr>
+<tr>
+<td class="">母亲消息</td>
+<td class="num">笑一消息</td>
+<td class="num">0.374</td>
+<td class="num">-0.216</td>
+<td class="num">0.017</td>
+<td class="num">0.092</td>
+<td class="num">-0.134</td>
+<td class="num">-0.246</td>
+<td class="num">0.213</td>
+<td class="num">0.296</td>
+<td class="num">-0.236</td>
+<td class="num">0.025</td>
+<td class="num">0.155</td>
+<td class="num">-0.196</td>
+</tr>
+<tr>
+<td class="">导师消息</td>
+<td class="num">笑一消息</td>
+<td class="num">-0.025</td>
+<td class="num">-0.227</td>
+<td class="num">0.44</td>
+<td class="num">0.144</td>
+<td class="num">-0.185</td>
+<td class="num">0.001</td>
+<td class="num">0.337</td>
+<td class="num">-0.112</td>
+<td class="num">-0.17</td>
+<td class="num">-0.19</td>
+<td class="num">0.242</td>
+<td class="num">-0.066</td>
+</tr>
+<tr>
+<td class="">全库消息</td>
+<td class="num">笑一消息</td>
+<td class="num">0.041</td>
+<td class="num">-0.182</td>
+<td class="num">0.118</td>
+<td class="num">-0.08</td>
+<td class="num">-0.167</td>
+<td class="num">0.373</td>
+<td class="num">0.151</td>
+<td class="num">-0.181</td>
+<td class="num">0.313</td>
+<td class="num">0.123</td>
+<td class="num">-0.051</td>
+<td class="num">0.098</td>
+</tr>
+</tbody></table>
+<h3>3.3 笑一消息逐小时分布（按对象 × 月，原始条数）</h3>
+<table class="">
+<thead><tr>
+<th class="">小时</th>
+<th class="num">2026-06</th>
+<th class="num">2026-07</th>
+<th class="num">2026-08</th>
+<th class="num">2026-09</th>
+<th class="num">2026-10</th>
+<th class="num">合计</th>
+</tr></thead><tbody>
+<tr>
+<td class="">00 时</td>
+<td class="num">0</td>
+<td class="num">6</td>
+<td class="num">103</td>
+<td class="num">384</td>
+<td class="num">34</td>
+<td class="num">527</td>
+</tr>
+<tr>
+<td class="">01 时</td>
+<td class="num">0</td>
+<td class="num">4</td>
+<td class="num">110</td>
+<td class="num">196</td>
+<td class="num">0</td>
+<td class="num">310</td>
+</tr>
+<tr>
+<td class="">02 时</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">2</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">2</td>
+</tr>
+<tr>
+<td class="">03 时</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">4</td>
+<td class="num">1</td>
+<td class="num">0</td>
+<td class="num">5</td>
+</tr>
+<tr>
+<td class="">04 时</td>
+<td class="num">0</td>
+<td class="num">2</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">2</td>
+</tr>
+<tr>
+<td class="">05 时</td>
+<td class="num">0</td>
+<td class="num">3</td>
+<td class="num">5</td>
+<td class="num">0</td>
+<td class="num">2</td>
+<td class="num">10</td>
+</tr>
+<tr>
+<td class="">06 时</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">7</td>
+<td class="num">0</td>
+<td class="num">7</td>
+</tr>
+<tr>
+<td class="">07 时</td>
+<td class="num">0</td>
+<td class="num">3</td>
+<td class="num">1</td>
+<td class="num">7</td>
+<td class="num">0</td>
+<td class="num">11</td>
+</tr>
+<tr>
+<td class="">08 时</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">49</td>
+<td class="num">0</td>
+<td class="num">49</td>
+</tr>
+<tr>
+<td class="">09 时</td>
+<td class="num">0</td>
+<td class="num">2</td>
+<td class="num">0</td>
+<td class="num">28</td>
+<td class="num">0</td>
+<td class="num">30</td>
+</tr>
+<tr>
+<td class="">10 时</td>
+<td class="num">0</td>
+<td class="num">0</td>
+<td class="num">4</td>
+<td class="num">28</td>
+<td class="num">0</td>
+<td class="num">32</td>
+</tr>
+<tr>
+<td class="">11 时</td>
+<td class="num">0</td>
+<td class="num">39</td>
+<td class="num">39</td>
+<td class="num">65</td>
+<td class="num">0</td>
+<td class="num">143</td>
+</tr>
+<tr>
+<td class="">12 时</td>
+<td class="num">0</td>
+<td class="num">54</td>
+<td class="num">180</td>
+<td class="num">232</td>
+<td class="num">14</td>
+<td class="num">480</td>
+</tr>
+<tr>
+<td class="">13 时</td>
+<td class="num">0</td>
+<td class="num">85</td>
+<td class="num">119</td>
+<td class="num">38</td>
+<td class="num">2</td>
+<td class="num">244</td>
+</tr>
+<tr>
+<td class="">14 时</td>
+<td class="num">0</td>
+<td class="num">4</td>
+<td class="num">120</td>
+<td class="num">69</td>
+<td class="num">3</td>
+<td class="num">196</td>
+</tr>
+<tr>
+<td class="">15 时</td>
+<td class="num">0</td>
+<td class="num">51</td>
+<td class="num">43</td>
+<td class="num">121</td>
+<td class="num">0</td>
+<td class="num">215</td>
+</tr>
+<tr>
+<td class="">16 时</td>
+<td class="num">0</td>
+<td class="num">176</td>
+<td class="num">95</td>
+<td class="num">180</td>
+<td class="num">0</td>
+<td class="num">451</td>
+</tr>
+<tr>
+<td class="">17 时</td>
+<td class="num">4</td>
+<td class="num">83</td>
+<td class="num">191</td>
+<td class="num">19</td>
+<td class="num">17</td>
+<td class="num">314</td>
+</tr>
+<tr>
+<td class="">18 时</td>
+<td class="num">72</td>
+<td class="num">61</td>
+<td class="num">163</td>
+<td class="num">141</td>
+<td class="num">15</td>
+<td class="num">452</td>
+</tr>
+<tr>
+<td class="">19 时</td>
+<td class="num">0</td>
+<td class="num">102</td>
+<td class="num">219</td>
+<td class="num">28</td>
+<td class="num">9</td>
+<td class="num">358</td>
+</tr>
+<tr>
+<td class="">20 时</td>
+<td class="num">0</td>
+<td class="num">32</td>
+<td class="num">173</td>
+<td class="num">18</td>
+<td class="num">3</td>
+<td class="num">226</td>
+</tr>
+<tr>
+<td class="">21 时</td>
+<td class="num">0</td>
+<td class="num">85</td>
+<td class="num">71</td>
+<td class="num">34</td>
+<td class="num">0</td>
+<td class="num">190</td>
+</tr>
+<tr>
+<td class="">22 时</td>
+<td class="num">19</td>
+<td class="num">71</td>
+<td class="num">619</td>
+<td class="num">457</td>
+<td class="num">78</td>
+<td class="num">1244</td>
+</tr>
+<tr>
+<td class="">23 时</td>
+<td class="num">202</td>
+<td class="num">6</td>
+<td class="num">212</td>
+<td class="num">68</td>
+<td class="num">29</td>
+<td class="num">517</td>
+</tr>
+<tr>
+<td class="">合计</td>
+<td class="num">297</td>
+<td class="num">869</td>
+<td class="num">2473</td>
+<td class="num">2170</td>
+<td class="num">206</td>
+<td class="num">6015</td>
+</tr>
+</tbody></table>
+<h3>3.4 时段指标汇总（深夜 = 23:00–05:59）</h3>
+<table class="">
+<thead><tr>
+<th class="">对象</th>
+<th class="num">月份</th>
+<th class="num">总条数</th>
+<th class="num">深夜条数</th>
+<th class="num">深夜占比%</th>
+<th class="num">峰值小时</th>
+<th class="num">峰值占比%</th>
+</tr></thead><tbody>
+<tr>
+<td class="">笑一</td>
+<td class="num">2026-06</td>
+<td class="num">297</td>
+<td class="num">202</td>
+<td class="num">68.0</td>
+<td class="num">23</td>
+<td class="num">68.0</td>
+</tr>
+<tr>
+<td class="">笑一</td>
+<td class="num">2026-07</td>
+<td class="num">869</td>
+<td class="num">21</td>
+<td class="num">2.4</td>
+<td class="num">16</td>
+<td class="num">20.3</td>
+</tr>
+<tr>
+<td class="">笑一</td>
+<td class="num">2026-08</td>
+<td class="num">2473</td>
+<td class="num">436</td>
+<td class="num">17.6</td>
+<td class="num">22</td>
+<td class="num">25.0</td>
+</tr>
+<tr>
+<td class="">笑一</td>
+<td class="num">2026-09</td>
+<td class="num">2170</td>
+<td class="num">649</td>
+<td class="num">29.9</td>
+<td class="num">22</td>
+<td class="num">21.1</td>
+</tr>
+<tr>
+<td class="">笑一</td>
+<td class="num">2026-10</td>
+<td class="num">206</td>
+<td class="num">65</td>
+<td class="num">31.6</td>
+<td class="num">22</td>
+<td class="num">37.9</td>
+</tr>
+<tr>
+<td class="">母亲</td>
+<td class="num">2026-06</td>
+<td class="num">576</td>
+<td class="num">103</td>
+<td class="num">17.9</td>
+<td class="num">17</td>
+<td class="num">12.5</td>
+</tr>
+<tr>
+<td class="">母亲</td>
+<td class="num">2026-07</td>
+<td class="num">1487</td>
+<td class="num">690</td>
+<td class="num">46.4</td>
+<td class="num">23</td>
+<td class="num">15.5</td>
+</tr>
+<tr>
+<td class="">母亲</td>
+<td class="num">2026-08</td>
+<td class="num">1379</td>
+<td class="num">466</td>
+<td class="num">33.8</td>
+<td class="num">23</td>
+<td class="num">24.1</td>
+</tr>
+<tr>
+<td class="">母亲</td>
+<td class="num">2026-09</td>
+<td class="num">754</td>
+<td class="num">126</td>
+<td class="num">16.7</td>
+<td class="num">16</td>
+<td class="num">13.3</td>
+</tr>
+<tr>
+<td class="">母亲</td>
+<td class="num">2026-10</td>
+<td class="num">175</td>
+<td class="num">17</td>
+<td class="num">9.7</td>
+<td class="num">07</td>
+<td class="num">36.0</td>
+</tr>
+<tr>
+<td class="">导师</td>
+<td class="num">2026-06</td>
+<td class="num">558</td>
+<td class="num">13</td>
+<td class="num">2.3</td>
+<td class="num">15</td>
+<td class="num">17.4</td>
+</tr>
+<tr>
+<td class="">导师</td>
+<td class="num">2026-07</td>
+<td class="num">1332</td>
+<td class="num">10</td>
+<td class="num">0.8</td>
+<td class="num">18</td>
+<td class="num">15.0</td>
+</tr>
+<tr>
+<td class="">导师</td>
+<td class="num">2026-08</td>
+<td class="num">576</td>
+<td class="num">8</td>
+<td class="num">1.4</td>
+<td class="num">22</td>
+<td class="num">15.3</td>
+</tr>
+<tr>
+<td class="">导师</td>
+<td class="num">2026-09</td>
+<td class="num">260</td>
+<td class="num">16</td>
+<td class="num">6.2</td>
+<td class="num">21</td>
+<td class="num">20.4</td>
+</tr>
+<tr>
+<td class="">导师</td>
+<td class="num">2026-10</td>
+<td class="num">172</td>
+<td class="num">2</td>
+<td class="num">1.2</td>
+<td class="num">19</td>
+<td class="num">32.0</td>
+</tr>
+<tr>
+<td class="">全库</td>
+<td class="num">2026-06</td>
+<td class="num">32433</td>
+<td class="num">3190</td>
+<td class="num">9.8</td>
+<td class="num">17</td>
+<td class="num">10.4</td>
+</tr>
+<tr>
+<td class="">全库</td>
+<td class="num">2026-07</td>
+<td class="num">41838</td>
+<td class="num">4393</td>
+<td class="num">10.5</td>
+<td class="num">17</td>
+<td class="num">7.2</td>
+</tr>
+<tr>
+<td class="">全库</td>
+<td class="num">2026-08</td>
+<td class="num">38794</td>
+<td class="num">4978</td>
+<td class="num">12.8</td>
+<td class="num">17</td>
+<td class="num">9.1</td>
+</tr>
+<tr>
+<td class="">全库</td>
+<td class="num">2026-09</td>
+<td class="num">39146</td>
+<td class="num">3445</td>
+<td class="num">8.8</td>
+<td class="num">17</td>
+<td class="num">7.8</td>
+</tr>
+<tr>
+<td class="">全库</td>
+<td class="num">2026-10</td>
+<td class="num">8495</td>
+<td class="num">670</td>
+<td class="num">7.9</td>
+<td class="num">17</td>
+<td class="num">8.2</td>
+</tr>
+</tbody></table>
+<h3>3.5 外部数据源清单（朋友圈互动 + 搜索历史）</h3>
+<div class="warn"><strong>朋友圈测不出「浏览活跃度」</strong>：<code>SnsTopItem_1.create_time</code> 是<b>别人发帖的时间</b>，<code>last_read_time</code> 是一个统一水位（全是 10-05 04:49）。它只能答「他信息流里都是谁」，<b>答不了「他哪天看了」</b>。下表是唯一有真实时间戳的两类事件。</div>
+<table class="">
+<thead><tr>
+<th class="num">日期</th>
+<th class="num">类型</th>
+<th class="num">说明</th>
+</tr></thead><tbody>
+<tr>
+<td class="num">2026-08-08</td>
+<td class="num">搜索</td>
+<td class="num">高</td>
+</tr>
+<tr>
+<td class="num">2026-08-10</td>
+<td class="num">搜索</td>
+<td class="num">高晓斌</td>
+</tr>
+<tr>
+<td class="num">2026-08-10</td>
+<td class="num">朋友圈互动</td>
+<td class="num">点赞 ㅤㅤ</td>
+</tr>
+<tr>
+<td class="num">2026-08-10</td>
+<td class="num">朋友圈互动</td>
+<td class="num">点赞 ㅤㅤ</td>
+</tr>
+<tr>
+<td class="num">2026-08-22</td>
+<td class="num">搜索</td>
+<td class="num">格拉斯</td>
+</tr>
+<tr>
+<td class="num">2026-08-22</td>
+<td class="num">搜索</td>
+<td class="num">格拉斯哥</td>
+</tr>
+<tr>
+<td class="num">2026-08-25</td>
+<td class="num">朋友圈互动</td>
+<td class="num">点赞 火山雪0号</td>
+</tr>
+<tr>
+<td class="num">2026-08-27</td>
+<td class="num">搜索</td>
+<td class="num">汪</td>
+</tr>
+<tr>
+<td class="num">2026-08-28</td>
+<td class="num">朋友圈互动</td>
+<td class="num">点赞 Ealthy</td>
+</tr>
+<tr>
+<td class="num">2026-08-29</td>
+<td class="num">搜索</td>
+<td class="num">利</td>
+</tr>
+<tr>
+<td class="num">2026-08-31</td>
+<td class="num">搜索</td>
+<td class="num">安</td>
+</tr>
+<tr>
+<td class="num">2026-08-31</td>
+<td class="num">朋友圈互动</td>
+<td class="num">点赞 ㅤㅤ</td>
+</tr>
+<tr>
+<td class="num">2026-08-31</td>
+<td class="num">朋友圈互动</td>
+<td class="num">点赞 ㅤㅤ</td>
+</tr>
+<tr>
+<td class="num">2026-09-01</td>
+<td class="num">朋友圈互动</td>
+<td class="num">点赞 刘丽萍</td>
+</tr>
+<tr>
+<td class="num">2026-09-01</td>
+<td class="num">朋友圈互动</td>
+<td class="num">评论 刘丽萍</td>
+</tr>
+<tr>
+<td class="num">2026-09-02</td>
+<td class="num">朋友圈互动</td>
+<td class="num">评论 刘丽萍</td>
+</tr>
+<tr>
+<td class="num">2026-09-03</td>
+<td class="num">搜索</td>
+<td class="num">米雪</td>
+</tr>
+<tr>
+<td class="num">2026-09-03</td>
+<td class="num">搜索</td>
+<td class="num">词元</td>
+</tr>
+<tr>
+<td class="num">2026-09-04</td>
+<td class="num">朋友圈互动</td>
+<td class="num">点赞 薛伟东</td>
+</tr>
+<tr>
+<td class="num">2026-09-09</td>
+<td class="num">搜索</td>
+<td class="num">AI</td>
+</tr>
+<tr>
+<td class="num">2026-09-09</td>
+<td class="num">搜索</td>
+<td class="num">XI</td>
+</tr>
+<tr>
+<td class="num">2026-09-10</td>
+<td class="num">搜索</td>
+<td class="num">jt</td>
+</tr>
+<tr>
+<td class="num">2026-09-12</td>
+<td class="num">搜索</td>
+<td class="num">xia</td>
+</tr>
+<tr>
+<td class="num">2026-09-15</td>
+<td class="num">朋友圈互动</td>
+<td class="num">点赞 可以叫我huǎn缓缓</td>
+</tr>
+<tr>
+<td class="num">2026-09-24</td>
+<td class="num">朋友圈互动</td>
+<td class="num">点赞 火山雪0号</td>
+</tr>
+<tr>
+<td class="num">2026-09-25</td>
+<td class="num">搜索</td>
+<td class="num">*</td>
+</tr>
+<tr>
+<td class="num">2026-09-25</td>
+<td class="num">搜索</td>
+<td class="num">Lzh</td>
+</tr>
+<tr>
+<td class="num">2026-09-25</td>
+<td class="num">搜索</td>
+<td class="num">yu</td>
+</tr>
+<tr>
+<td class="num">2026-09-25</td>
+<td class="num">搜索</td>
+<td class="num">冯梦</td>
+</tr>
+<tr>
+<td class="num">2026-09-25</td>
+<td class="num">搜索</td>
+<td class="num">华天</td>
+</tr>
+<tr>
+<td class="num">2026-09-25</td>
+<td class="num">搜索</td>
+<td class="num">如</td>
+</tr>
+<tr>
+<td class="num">2026-09-25</td>
+<td class="num">搜索</td>
+<td class="num">导</td>
+</tr>
+<tr>
+<td class="num">2026-09-25</td>
+<td class="num">搜索</td>
+<td class="num">杜铭</td>
+</tr>
+<tr>
+<td class="num">2026-09-25</td>
+<td class="num">搜索</td>
+<td class="num">武</td>
+</tr>
+<tr>
+<td class="num">2026-09-25</td>
+<td class="num">搜索</td>
+<td class="num">海</td>
+</tr>
+<tr>
+<td class="num">2026-09-25</td>
+<td class="num">搜索</td>
+<td class="num">火山</td>
+</tr>
+<tr>
+<td class="num">2026-09-25</td>
+<td class="num">搜索</td>
+<td class="num">章</td>
+</tr>
+<tr>
+<td class="num">2026-09-26</td>
+<td class="num">搜索</td>
+<td class="num">xiao</td>
+</tr>
+<tr>
+<td class="num">2026-09-29</td>
+<td class="num">搜索</td>
+<td class="num">笑</td>
+</tr>
+<tr>
+<td class="num">2026-10-01</td>
+<td class="num">搜索</td>
+<td class="num">笑一</td>
+</tr>
+<tr>
+<td class="num">2026-10-01</td>
+<td class="num">朋友圈互动</td>
+<td class="num">点赞 火山雪0号</td>
+</tr>
+<tr>
+<td class="num">2026-10-02</td>
+<td class="num">搜索</td>
+<td class="num">刘丽</td>
+</tr>
+<tr>
+<td class="num">2026-10-02</td>
+<td class="num">朋友圈互动</td>
+<td class="num">点赞 火山雪0号</td>
+</tr>
+<tr>
+<td class="num">2026-10-03</td>
+<td class="num">搜索</td>
+<td class="num">关</td>
+</tr>
+<tr>
+<td class="num">2026-10-05</td>
+<td class="num">搜索</td>
+<td class="num">刘</td>
+</tr>
+</tbody></table>
+<div class="ok"><strong>唯一有信号的发现</strong>：<b>9 月下旬起他反复搜「笑一 / 笑 / xiao / xia」</b>（09-12 · 09-26 · 09-29 · 10-01），而同期消息量在回落 → <b>量掉了，注意力在涨</b>，与「主动冷下来（防卫性撤离）」相反。</div>
+<h3>3.6 缺口候选事件（178 条 · 全部）</h3>
+<p class="small">规则抽取的候选，标 <code>待核实</code>，<b>未进分析库</b>。群聊已加闸：必须他本人说了事件词；已剔除链接转发与系统账号。</p>
+<table class="">
+<thead><tr>
+<th class="num">date</th>
+<th class="num">time</th>
+<th class="num">session</th>
+<th class="num">session_type</th>
+<th class="num">session_key</th>
+<th class="num">msg_n</th>
+<th class="num">score</th>
+<th class="num">category</th>
+<th class="num">excerpt</th>
+<th class="num">certainty</th>
+<th class="num">review_status</th>
+</tr></thead><tbody>
+<tr>
+<td class="num">2026-07-01</td>
+<td class="num">07:35–21:57</td>
+<td class="num">刘丽萍</td>
+<td class="num">私聊</td>
+<td class="num">wxid_1wa75s1kze3o22</td>
+<td class="num">24</td>
+<td class="num">5</td>
+<td class="num">家庭</td>
+<td class="num">我先出发了。有事联系[抱拳][玫瑰][握手]</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-07-01</td>
+<td class="num">20:41–23:17</td>
+<td class="num">Parapluie</td>
+<td class="num">私聊</td>
+<td class="num">wxid_ms91bfytb5t152</td>
+<td class="num">43</td>
+<td class="num">5</td>
+<td class="num">家庭</td>
+<td class="num">我在t3 国际港澳台出发这里</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-07-02</td>
+<td class="num">11:29–23:59</td>
+<td class="num">刘丽萍</td>
+<td class="num">私聊</td>
+<td class="num">wxid_1wa75s1kze3o22</td>
+<td class="num">288</td>
+<td class="num">7</td>
+<td class="num">钱/财务</td>
+<td class="num">我：报警 ｜ 我：剐蹭了 ｜ 我：你就没发生交通事故</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-07-02</td>
+<td class="num">14:44–22:24</td>
+<td class="num">TTPRO</td>
+<td class="num">私聊</td>
+<td class="num">wxid_rwgdnpjyg0b612</td>
+<td class="num">145</td>
+<td class="num">7</td>
+<td class="num">钱/财务</td>
+<td class="num">我：是本科成绩单和毕业证书吧</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-07-02</td>
+<td class="num">15:48–16:10</td>
+<td class="num">蔡峰峰</td>
+<td class="num">私聊</td>
+<td class="num">wxid_59s8kbe7imd422</td>
+<td class="num">17</td>
+<td class="num">4</td>
+<td class="num">家庭</td>
+<td class="num">你妈的车，没了。可否报警？5分钟之内回答！ ｜ 我现在报警！</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-07-03</td>
+<td class="num">00:00–18:41</td>
+<td class="num">刘丽萍</td>
+<td class="num">私聊</td>
+<td class="num">wxid_1wa75s1kze3o22</td>
+<td class="num">157</td>
+<td class="num">7</td>
+<td class="num">钱/财务</td>
+<td class="num">我：我去报警也是说我 ｜ 我：还有跟大巴车剐蹭 ｜ 我：事故责任书是否达成一致修理 ｜ 我：定损是否事故责任书定责</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-07-03</td>
+<td class="num">00:30–14:57</td>
+<td class="num">太平洋王曙光-185****3320（夜班）</td>
+<td class="num">私聊</td>
+<td class="num">wxid_jkarzbxaojcv22</td>
+<td class="num">22</td>
+<td class="num">4</td>
+<td class="num">待定</td>
+<td class="num">我：咱们的三者能覆盖他的修车费用吗</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-07-03</td>
+<td class="num">07:50–07:57</td>
+<td class="num">称心如意</td>
+<td class="num">私聊</td>
+<td class="num">wxid_frcwdfoich2s22</td>
+<td class="num">10</td>
+<td class="num">5</td>
+<td class="num">生活/事务</td>
+<td class="num">我：我出现了剐蹭 ｜ 我：抱歉就是剐蹭</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-07-03</td>
+<td class="num">08:01–08:03</td>
+<td class="num">D_D</td>
+<td class="num">私聊</td>
+<td class="num">wxid_sd720cqntowl29</td>
+<td class="num">14</td>
+<td class="num">5</td>
+<td class="num">生活/事务</td>
+<td class="num">我：剐蹭了</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-07-03</td>
+<td class="num">12:18–13:59</td>
+<td class="num">大海</td>
+<td class="num">私聊</td>
+<td class="num">wxid_9avwtkuxq36922</td>
+<td class="num">6</td>
+<td class="num">4</td>
+<td class="num">生活/事务</td>
+<td class="num">我：师傅您好，昨天的事确实给您添麻烦了，我这边也很不好意思。事故认定书和保险我都已经走了，车损维修我会配合保险处理。 我想跟您沟通一下后续：…</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-07-04</td>
+<td class="num">08:26–22:01</td>
+<td class="num">导！急速回，三思回得体！！！</td>
+<td class="num">私聊</td>
+<td class="num">deerluna</td>
+<td class="num">14</td>
+<td class="num">5</td>
+<td class="num">出行/迁移</td>
+<td class="num">我：老师我待会儿就出发可以</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-07-04</td>
+<td class="num">08:29–22:43</td>
+<td class="num">刘丽萍</td>
+<td class="num">私聊</td>
+<td class="num">wxid_1wa75s1kze3o22</td>
+<td class="num">86</td>
+<td class="num">7</td>
+<td class="num">项目/实践</td>
+<td class="num">我：跟刘总面试顺利</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-07-05</td>
+<td class="num">06:39–20:09</td>
+<td class="num">刘丽萍</td>
+<td class="num">私聊</td>
+<td class="num">wxid_1wa75s1kze3o22</td>
+<td class="num">53</td>
+<td class="num">5</td>
+<td class="num">项目/实践</td>
+<td class="num">首批立项团队公示｜第三届Movers4Climate绿色乡村青年行动首批立项团队公布</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-07-05</td>
+<td class="num">08:41–20:55</td>
+<td class="num">导！急速回，三思回得体！！！</td>
+<td class="num">私聊</td>
+<td class="num">deerluna</td>
+<td class="num">150</td>
+<td class="num">7</td>
+<td class="num">项目/实践</td>
+<td class="num">我：老师作为用户的地点高德已提交</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-07-05</td>
+<td class="num">22:16–22:34</td>
+<td class="num">子辰</td>
+<td class="num">私聊</td>
+<td class="num">wxid_oen8m1zbicea22</td>
+<td class="num">47</td>
+<td class="num">7</td>
+<td class="num">项目/实践</td>
+<td class="num">我：后天等辰哥顺义的项目搞定了 ｜ 我：落地落在那儿确定了吗</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-07-06</td>
+<td class="num">09:29–22:58</td>
+<td class="num">导！急速回，三思回得体！！！</td>
+<td class="num">私聊</td>
+<td class="num">deerluna</td>
+<td class="num">50</td>
+<td class="num">7</td>
+<td class="num">项目/实践</td>
+<td class="num">我：提交了已经</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-07-06</td>
+<td class="num">09:39–09:48</td>
+<td class="num">会</td>
+<td class="num">私聊</td>
+<td class="num">wxid_hoesfz52wi6621</td>
+<td class="num">15</td>
+<td class="num">3</td>
+<td class="num">项目/实践</td>
+<td class="num">我开车去，从东四环出发，走京承高速。</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-07-06</td>
+<td class="num">10:52–20:10</td>
+<td class="num">Sīrius R</td>
+<td class="num">私聊</td>
+<td class="num">zhouran68</td>
+<td class="num">63</td>
+<td class="num">7</td>
+<td class="num">学业/学术</td>
+<td class="num">我：要不下次有机会可以来我们学校看看毕业展可以吗学姐</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-07-08</td>
+<td class="num">02:02–23:14</td>
+<td class="num">刘丽萍</td>
+<td class="num">私聊</td>
+<td class="num">wxid_1wa75s1kze3o22</td>
+<td class="num">76</td>
+<td class="num">3</td>
+<td class="num">求职/职场</td>
+<td class="num">今天央美二冲电桩坏了。其他都满。 ｜ 收藏合同（刘丽萍）16.pdf</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-07-08</td>
+<td class="num">09:28–11:17</td>
+<td class="num">央美美育工作站</td>
+<td class="num">群聊</td>
+<td class="num">53074549232@chatroom</td>
+<td class="num">25</td>
+<td class="num">7</td>
+<td class="num">项目/实践</td>
+<td class="num">我：安装方案可能给确定下</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-07-08</td>
+<td class="num">10:44–14:05</td>
+<td class="num">会</td>
+<td class="num">私聊</td>
+<td class="num">wxid_hoesfz52wi6621</td>
+<td class="num">61</td>
+<td class="num">5</td>
+<td class="num">项目/实践</td>
+<td class="num">好，你这会儿已经返程了吗</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-07-09</td>
+<td class="num">11:54–23:21</td>
+<td class="num">琢</td>
+<td class="num">私聊</td>
+<td class="num">wxid_u240wu17qzc222</td>
+<td class="num">118</td>
+<td class="num">7</td>
+<td class="num">项目/实践</td>
+<td class="num">我：现在出发 ｜ 我：老师生气了？</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-07-09</td>
+<td class="num">13:47–18:57</td>
+<td class="num">刘丽萍</td>
+<td class="num">私聊</td>
+<td class="num">wxid_1wa75s1kze3o22</td>
+<td class="num">16</td>
+<td class="num">4</td>
+<td class="num">钱/财务</td>
+<td class="num">北京6区发布暴雨红色预警！汛期首个全市暴雨橙色预警！最新天气情况/景区闭园！ | 注意！</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-07-09</td>
+<td class="num">17:43–20:24</td>
+<td class="num">duyueling</td>
+<td class="num">私聊</td>
+<td class="num">wxid_7iqooqjrazhv22</td>
+<td class="num">6</td>
+<td class="num">2</td>
+<td class="num">待定</td>
+<td class="num">浩文天气好了再取也行，贴上便签了</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-07-10</td>
+<td class="num">18:12–23:00</td>
+<td class="num">笑一</td>
+<td class="num">私聊</td>
+<td class="num">wxid_wdnk6ue9kiyn22</td>
+<td class="num">20</td>
+<td class="num">6</td>
+<td class="num">项目/实践</td>
+<td class="num">我：那说定了,你练歌我练打call,谁毁约谁请烤全羊[奸笑] 行了不打扰你嗨了,今天怀柔山洪,收拾工作站的时候还想着下次带你来转转呢。玩开心…</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-07-14</td>
+<td class="num">00:48–18:18</td>
+<td class="num">舒泽林</td>
+<td class="num">私聊</td>
+<td class="num">wxid_0ejd54z34nmv32</td>
+<td class="num">48</td>
+<td class="num">7</td>
+<td class="num">学业/学术</td>
+<td class="num">我：刚结课啊 ｜ 我：舒哥刚结课先好好歇歇 回头约饭请舒哥吃点好的哈哈哈</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-07-15</td>
+<td class="num">12:13–21:54</td>
+<td class="num">Jake</td>
+<td class="num">私聊</td>
+<td class="num">wxid_ae56kxawv58522</td>
+<td class="num">104</td>
+<td class="num">5</td>
+<td class="num">钱/财务</td>
+<td class="num">这个退不了，你确定呀 7天内使用</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-07-15</td>
+<td class="num">20:54–21:42</td>
+<td class="num">Hannah W</td>
+<td class="num">私聊</td>
+<td class="num">wxid_xx30m2c0kxre21</td>
+<td class="num">35</td>
+<td class="num">7</td>
+<td class="num">求职/职场</td>
+<td class="num">我：有机会最近在怀柔有个工作室开幕</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-07-16</td>
+<td class="num">15:57–21:27</td>
+<td class="num">笑一</td>
+<td class="num">私聊</td>
+<td class="num">wxid_wdnk6ue9kiyn22</td>
+<td class="num">61</td>
+<td class="num">7</td>
+<td class="num">待定</td>
+<td class="num">我：那就说定了改天试试</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-07-16</td>
+<td class="num">20:42–20:50</td>
+<td class="num">Charlie</td>
+<td class="num">私聊</td>
+<td class="num">wyang110</td>
+<td class="num">21</td>
+<td class="num">4</td>
+<td class="num">出行/迁移</td>
+<td class="num">没事，你可以用，但是我出差不在家，不知道怎么连蓝牙</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-07-17</td>
+<td class="num">00:51–21:37</td>
+<td class="num">笑一</td>
+<td class="num">私聊</td>
+<td class="num">wxid_wdnk6ue9kiyn22</td>
+<td class="num">28</td>
+<td class="num">7</td>
+<td class="num">出行/迁移</td>
+<td class="num">我：我还没出发</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-07-17</td>
+<td class="num">10:27–19:28</td>
+<td class="num">导！急速回，三思回得体！！！</td>
+<td class="num">私聊</td>
+<td class="num">deerluna</td>
+<td class="num">34</td>
+<td class="num">5</td>
+<td class="num">项目/实践</td>
+<td class="num">我：没能及时跟您汇报 ｜ 我：跟您实时汇报进度</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-07-17</td>
+<td class="num">12:48–16:23</td>
+<td class="num">Charlie</td>
+<td class="num">私聊</td>
+<td class="num">wyang110</td>
+<td class="num">90</td>
+<td class="num">7</td>
+<td class="num">项目/实践</td>
+<td class="num">我：t&#x27;7还没发布用什么电机</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-07-18</td>
+<td class="num">18:48–21:39</td>
+<td class="num">Jason 关宇佳</td>
+<td class="num">私聊</td>
+<td class="num">wxid_y8f0y4jfthgs21</td>
+<td class="num">80</td>
+<td class="num">7</td>
+<td class="num">项目/实践</td>
+<td class="num">我：还是没确定</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-07-19</td>
+<td class="num">17:24–19:10</td>
+<td class="num">导！急速回，三思回得体！！！</td>
+<td class="num">私聊</td>
+<td class="num">deerluna</td>
+<td class="num">37</td>
+<td class="num">7</td>
+<td class="num">学业/学术</td>
+<td class="num">我：毕业展估计就烧了</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-07-20</td>
+<td class="num">11:56–23:28</td>
+<td class="num">刘丽萍</td>
+<td class="num">私聊</td>
+<td class="num">wxid_1wa75s1kze3o22</td>
+<td class="num">55</td>
+<td class="num">5</td>
+<td class="num">待定</td>
+<td class="num">我今天电费又交了200</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-07-20</td>
+<td class="num">20:38–20:40</td>
+<td class="num">米雪</td>
+<td class="num">私聊</td>
+<td class="num">25984982731545183@openim</td>
+<td class="num">8</td>
+<td class="num">5</td>
+<td class="num">待定</td>
+<td class="num">我：下定了决心</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-07-21</td>
+<td class="num">00:59–23:09</td>
+<td class="num">刘丽萍</td>
+<td class="num">私聊</td>
+<td class="num">wxid_1wa75s1kze3o22</td>
+<td class="num">268</td>
+<td class="num">5</td>
+<td class="num">钱/财务</td>
+<td class="num">你爸年轻时，在你小时候。是个有钱人。现在逐渐衰了。他也生气。 ｜ 孟老师博士毕业</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-07-21</td>
+<td class="num">15:05–15:09</td>
+<td class="num">笑一</td>
+<td class="num">私聊</td>
+<td class="num">wxid_wdnk6ue9kiyn22</td>
+<td class="num">13</td>
+<td class="num">5</td>
+<td class="num">生活/事务</td>
+<td class="num">我：宝，临时跟Tesla发生了点事故，有点狼狈😂 你要是已经准备好了，我现在收拾出门，大概五点能到；要是你也还没动，咱们改器，我请你吃顿好的…</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-07-22</td>
+<td class="num">08:45–22:00</td>
+<td class="num">导！急速回，三思回得体！！！</td>
+<td class="num">私聊</td>
+<td class="num">deerluna</td>
+<td class="num">83</td>
+<td class="num">7</td>
+<td class="num">项目/实践</td>
+<td class="num">我：腾讯没通过我再修改一下 ｜ 我：可能还没通过</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-07-23</td>
+<td class="num">15:45–22:49</td>
+<td class="num">Parapluie</td>
+<td class="num">私聊</td>
+<td class="num">wxid_ms91bfytb5t152</td>
+<td class="num">47</td>
+<td class="num">5</td>
+<td class="num">生活/事务</td>
+<td class="num">那我先报名考1级</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-07-24</td>
+<td class="num">08:08–09:54</td>
+<td class="num">马慧楠 ᥫᩣ LE HAUS版画</td>
+<td class="num">私聊</td>
+<td class="num">wxid_8081720817911</td>
+<td class="num">14</td>
+<td class="num">5</td>
+<td class="num">出行/迁移</td>
+<td class="num">我：马姐我们已经出发</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-07-24</td>
+<td class="num">22:09–22:26</td>
+<td class="num">氮气鲨鱼🍁🦈</td>
+<td class="num">私聊</td>
+<td class="num">wxid_p4oc16vc9vfj22</td>
+<td class="num">154</td>
+<td class="num">7</td>
+<td class="num">学业/学术</td>
+<td class="num">我：团委的立项已经通过了 ｜ 我：8月25号左右出发 ｜ 我：我明天有个怀柔项目开幕 ｜ 我：现在就是立项我都给争取</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-07-25</td>
+<td class="num">07:44–17:38</td>
+<td class="num">导！急速回，三思回得体！！！</td>
+<td class="num">私聊</td>
+<td class="num">deerluna</td>
+<td class="num">67</td>
+<td class="num">7</td>
+<td class="num">项目/实践</td>
+<td class="num">我：老师马上出发</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-07-26</td>
+<td class="num">04:06–22:31</td>
+<td class="num">笑一</td>
+<td class="num">私聊</td>
+<td class="num">wxid_wdnk6ue9kiyn22</td>
+<td class="num">97</td>
+<td class="num">7</td>
+<td class="num">出行/迁移</td>
+<td class="num">我：我从央美这就出发 ｜ 我：这就出发</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-07-27</td>
+<td class="num">01:08–23:17</td>
+<td class="num">笑一</td>
+<td class="num">私聊</td>
+<td class="num">wxid_wdnk6ue9kiyn22</td>
+<td class="num">242</td>
+<td class="num">7</td>
+<td class="num">项目/实践</td>
+<td class="num">我：我马上出发宝</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-07-27</td>
+<td class="num">09:53–18:59</td>
+<td class="num">导！急速回，三思回得体！！！</td>
+<td class="num">私聊</td>
+<td class="num">deerluna</td>
+<td class="num">54</td>
+<td class="num">7</td>
+<td class="num">项目/实践</td>
+<td class="num">我：确定的</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-07-28</td>
+<td class="num">05:02–21:40</td>
+<td class="num">笑一</td>
+<td class="num">私聊</td>
+<td class="num">wxid_wdnk6ue9kiyn22</td>
+<td class="num">54</td>
+<td class="num">7</td>
+<td class="num">出行/迁移</td>
+<td class="num">我：宝我出发了</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-07-28</td>
+<td class="num">08:23–15:40</td>
+<td class="num">导！急速回，三思回得体！！！</td>
+<td class="num">私聊</td>
+<td class="num">deerluna</td>
+<td class="num">36</td>
+<td class="num">5</td>
+<td class="num">待定</td>
+<td class="num">空调和柜子今天必须得搞定了 ｜ 本来想这周开展给村民设计名章的活动，还有就是板工坊丝网印刷的活动，但是太热了，咋开展啊？</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-07-28</td>
+<td class="num">09:27–19:21</td>
+<td class="num">刘丽萍</td>
+<td class="num">私聊</td>
+<td class="num">wxid_1wa75s1kze3o22</td>
+<td class="num">57</td>
+<td class="num">5</td>
+<td class="num">项目/实践</td>
+<td class="num">我：跟老妈汇报一下</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-07-29</td>
+<td class="num">10:33–22:11</td>
+<td class="num">刘丽萍</td>
+<td class="num">私聊</td>
+<td class="num">wxid_1wa75s1kze3o22</td>
+<td class="num">57</td>
+<td class="num">5</td>
+<td class="num">钱/财务</td>
+<td class="num">中国文艺志愿者协会会歌《到人民中去》发布</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-07-30</td>
+<td class="num">13:13–23:01</td>
+<td class="num">导！急速回，三思回得体！！！</td>
+<td class="num">私聊</td>
+<td class="num">deerluna</td>
+<td class="num">67</td>
+<td class="num">3</td>
+<td class="num">钱/财务</td>
+<td class="num">柜子借了吗？</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-08-01</td>
+<td class="num">09:19–18:48</td>
+<td class="num">导！急速回，三思回得体！！！</td>
+<td class="num">私聊</td>
+<td class="num">deerluna</td>
+<td class="num">73</td>
+<td class="num">7</td>
+<td class="num">项目/实践</td>
+<td class="num">我：明天区委宣传部工部长来不确定上下午</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-08-01</td>
+<td class="num">10:01–20:13</td>
+<td class="num">Jason 关宇佳</td>
+<td class="num">私聊</td>
+<td class="num">wxid_y8f0y4jfthgs21</td>
+<td class="num">48</td>
+<td class="num">7</td>
+<td class="num">项目/实践</td>
+<td class="num">我：关总我马上出发过来</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-08-03</td>
+<td class="num">14:01–20:47</td>
+<td class="num">笑一</td>
+<td class="num">私聊</td>
+<td class="num">wxid_wdnk6ue9kiyn22</td>
+<td class="num">127</td>
+<td class="num">5</td>
+<td class="num">亲密关系</td>
+<td class="num">宝贝待会可以出发</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-08-03</td>
+<td class="num">18:12–19:25</td>
+<td class="num">央美美育工作站</td>
+<td class="num">群聊</td>
+<td class="num">53074549232@chatroom</td>
+<td class="num">22</td>
+<td class="num">6</td>
+<td class="num">学业/学术</td>
+<td class="num">我：顺义雨有点大智驾退出了等老师确认确定方案</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-08-04</td>
+<td class="num">13:15–13:32</td>
+<td class="num">李满</td>
+<td class="num">私聊</td>
+<td class="num">weixin934001900</td>
+<td class="num">28</td>
+<td class="num">7</td>
+<td class="num">待定</td>
+<td class="num">我：大概的流程大概是先确定主要房间或者人物的形象</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-08-04</td>
+<td class="num">15:11–21:55</td>
+<td class="num">笑一</td>
+<td class="num">私聊</td>
+<td class="num">wxid_wdnk6ue9kiyn22</td>
+<td class="num">29</td>
+<td class="num">5</td>
+<td class="num">出行/迁移</td>
+<td class="num">我出发咯宝贝</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-08-05</td>
+<td class="num">00:03–22:19</td>
+<td class="num">刘丽萍</td>
+<td class="num">私聊</td>
+<td class="num">wxid_1wa75s1kze3o22</td>
+<td class="num">56</td>
+<td class="num">5</td>
+<td class="num">家庭</td>
+<td class="num">你不是要和他和好吗？</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-08-05</td>
+<td class="num">09:25–23:36</td>
+<td class="num">导！急速回，三思回得体！！！</td>
+<td class="num">私聊</td>
+<td class="num">deerluna</td>
+<td class="num">69</td>
+<td class="num">7</td>
+<td class="num">钱/财务</td>
+<td class="num">我：偏 ENFP，主要依据是你在陈老师对话中反复出现的四类行为： 维度 对话证据 判断 N：直觉 你把非遗、经济周期、视觉艺术、文化产业、A…</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-08-06</td>
+<td class="num">01:51–23:05</td>
+<td class="num">刘丽萍</td>
+<td class="num">私聊</td>
+<td class="num">wxid_1wa75s1kze3o22</td>
+<td class="num">21</td>
+<td class="num">4</td>
+<td class="num">钱/财务</td>
+<td class="num">浩文：晚上不要和你爸吵架。天太热[抱拳][爱心]</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-08-07</td>
+<td class="num">01:34–02:18</td>
+<td class="num">安奇</td>
+<td class="num">私聊</td>
+<td class="num">h329831285</td>
+<td class="num">191</td>
+<td class="num">7</td>
+<td class="num">学业/学术</td>
+<td class="num">我：基本没有没毕业的 ｜ 我：博三也能签合同吧 ｜ 我：我还没毕业啊 ｜ 我：第三年把合同签了</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-08-08</td>
+<td class="num">04:48–23:12</td>
+<td class="num">刘丽萍</td>
+<td class="num">私聊</td>
+<td class="num">wxid_1wa75s1kze3o22</td>
+<td class="num">112</td>
+<td class="num">5</td>
+<td class="num">钱/财务</td>
+<td class="num">没和你爸吵架吧。</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-08-08</td>
+<td class="num">21:44–22:49</td>
+<td class="num">高晓斌 初中</td>
+<td class="num">私聊</td>
+<td class="num">wxid_10v2lg98794422</td>
+<td class="num">60</td>
+<td class="num">7</td>
+<td class="num">出行/迁移</td>
+<td class="num">我：晓斌总，你明天从昌平出发吗，明天十二点到店，我开车去接你一起过去呗？几点方便，我来定时间。 ｜ 我：确定是牡丹园不是昌平对吧</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-08-09</td>
+<td class="num">00:08–23:50</td>
+<td class="num">刘丽萍</td>
+<td class="num">私聊</td>
+<td class="num">wxid_1wa75s1kze3o22</td>
+<td class="num">198</td>
+<td class="num">7</td>
+<td class="num">钱/财务</td>
+<td class="num">我：您好，我是安鹏公司享权服务专员，由我来全程协助您办理车辆享权服务，为了让您的权益能尽快顺利到账，麻烦您提前准备好以下资料，我也帮您整理成…</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-08-09</td>
+<td class="num">02:42–04:05</td>
+<td class="num">安奇</td>
+<td class="num">私聊</td>
+<td class="num">h329831285</td>
+<td class="num">155</td>
+<td class="num">7</td>
+<td class="num">学业/学术</td>
+<td class="num">我：清华报名过了 ｜ 我：结果今年清华报名截止了......</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-08-09</td>
+<td class="num">07:57–21:34</td>
+<td class="num">金盏好修养极狐售后</td>
+<td class="num">私聊</td>
+<td class="num">wxid_vk33qtlz3yyn22</td>
+<td class="num">4</td>
+<td class="num">4</td>
+<td class="num">生活/事务</td>
+<td class="num">我：您好，我是安鹏公司享权服务专员，由我来全程协助您办理车辆享权服务，为了让您的权益能尽快顺利到账，麻烦您提前准备好以下资料，我也帮您整理成…</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-08-09</td>
+<td class="num">10:06–23:58</td>
+<td class="num">高晓斌 初中</td>
+<td class="num">私聊</td>
+<td class="num">wxid_10v2lg98794422</td>
+<td class="num">54</td>
+<td class="num">5</td>
+<td class="num">社交/见面</td>
+<td class="num">我：见面再说</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-08-09</td>
+<td class="num">21:29–21:34</td>
+<td class="num">张辉</td>
+<td class="num">私聊</td>
+<td class="num">25984983181458612@openim</td>
+<td class="num">8</td>
+<td class="num">3</td>
+<td class="num">生活/事务</td>
+<td class="num">您好，我是安鹏公司享权服务专员，由我来全程协助您办理车辆享权服务，为了让您的权益能尽快顺利到账，麻烦您提前准备好以下资料，我也帮您整理成了带…</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-08-10</td>
+<td class="num">07:34–23:49</td>
+<td class="num">笑一</td>
+<td class="num">私聊</td>
+<td class="num">wxid_wdnk6ue9kiyn22</td>
+<td class="num">340</td>
+<td class="num">7</td>
+<td class="num">家庭</td>
+<td class="num">我：下次我生气了</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-08-10</td>
+<td class="num">16:47–17:01</td>
+<td class="num">韩璧钧</td>
+<td class="num">私聊</td>
+<td class="num">25984982387486258@openim</td>
+<td class="num">8</td>
+<td class="num">3</td>
+<td class="num">项目/实践</td>
+<td class="num">尊敬的客户，您好！ 首先感谢您选择太平洋保险，我是您本次事故的理赔专员韩璧钧,电话：185****5277。在后续理赔过程中遇到任何问题，您…</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-08-10</td>
+<td class="num">23:21–23:32</td>
+<td class="num">舒泽林</td>
+<td class="num">私聊</td>
+<td class="num">wxid_0ejd54z34nmv32</td>
+<td class="num">75</td>
+<td class="num">5</td>
+<td class="num">项目/实践</td>
+<td class="num">等他来北京出差的时候</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-08-11</td>
+<td class="num">02:18–22:04</td>
+<td class="num">刘丽萍</td>
+<td class="num">私聊</td>
+<td class="num">wxid_1wa75s1kze3o22</td>
+<td class="num">33</td>
+<td class="num">3</td>
+<td class="num">待定</td>
+<td class="num">浩文：车坏了吗？</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-08-11</td>
+<td class="num">17:14–17:46</td>
+<td class="num">张辉</td>
+<td class="num">私聊</td>
+<td class="num">25984983181458612@openim</td>
+<td class="num">70</td>
+<td class="num">7</td>
+<td class="num">生活/事务</td>
+<td class="num">我：4.1 事故责任认定书</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-08-12</td>
+<td class="num">00:01–21:46</td>
+<td class="num">唐紫璇 修复</td>
+<td class="num">私聊</td>
+<td class="num">wxid_f8q4i6kgs21j22</td>
+<td class="num">124</td>
+<td class="num">7</td>
+<td class="num">项目/实践</td>
+<td class="num">我：已经立项难炸了 ｜ 我：团委的立项的</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-08-13</td>
+<td class="num">07:30–20:37</td>
+<td class="num">导！急速回，三思回得体！！！</td>
+<td class="num">私聊</td>
+<td class="num">deerluna</td>
+<td class="num">56</td>
+<td class="num">7</td>
+<td class="num">项目/实践</td>
+<td class="num">我：上午敲定大概老师</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-08-13</td>
+<td class="num">07:58–08:41</td>
+<td class="num">都阳丝印-张俪153****8815</td>
+<td class="num">私聊</td>
+<td class="num">wxid_29xc926w4uso22</td>
+<td class="num">17</td>
+<td class="num">6</td>
+<td class="num">待定</td>
+<td class="num">我：这周先不定了</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-08-13</td>
+<td class="num">08:20–21:45</td>
+<td class="num">刘丽萍</td>
+<td class="num">私聊</td>
+<td class="num">wxid_1wa75s1kze3o22</td>
+<td class="num">25</td>
+<td class="num">5</td>
+<td class="num">学业/学术</td>
+<td class="num">现在攻击央美毕业展了</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-08-15</td>
+<td class="num">07:54–22:30</td>
+<td class="num">导！急速回，三思回得体！！！</td>
+<td class="num">私聊</td>
+<td class="num">deerluna</td>
+<td class="num">23</td>
+<td class="num">4</td>
+<td class="num">项目/实践</td>
+<td class="num">出发了吗</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-08-15</td>
+<td class="num">08:13–23:36</td>
+<td class="num">刘丽萍</td>
+<td class="num">私聊</td>
+<td class="num">wxid_1wa75s1kze3o22</td>
+<td class="num">60</td>
+<td class="num">5</td>
+<td class="num">项目/实践</td>
+<td class="num">第九届全国青少年人工智能创新挑战赛决赛在浙江嘉兴开幕</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-08-15</td>
+<td class="num">16:14–21:56</td>
+<td class="num">唐紫璇 修复</td>
+<td class="num">私聊</td>
+<td class="num">wxid_f8q4i6kgs21j22</td>
+<td class="num">37</td>
+<td class="num">7</td>
+<td class="num">项目/实践</td>
+<td class="num">我：那就说定了 ｜ 我：回京见</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-08-16</td>
+<td class="num">10:29–13:17</td>
+<td class="num">Jason 关宇佳</td>
+<td class="num">私聊</td>
+<td class="num">wxid_y8f0y4jfthgs21</td>
+<td class="num">8</td>
+<td class="num">5</td>
+<td class="num">出行/迁移</td>
+<td class="num">我：关总我已出发，稍晚到</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-08-16</td>
+<td class="num">10:53–23:44</td>
+<td class="num">刘丽萍</td>
+<td class="num">私聊</td>
+<td class="num">wxid_1wa75s1kze3o22</td>
+<td class="num">30</td>
+<td class="num">5</td>
+<td class="num">钱/财务</td>
+<td class="num">找到二把手术刀。刻锡纸版画。 | &amp;lt;msg&amp;gt;&amp;lt;img hdlength=&quot;1755505&quot; length=&quot;159111&quot;…</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-08-17</td>
+<td class="num">05:43–19:47</td>
+<td class="num">刘丽萍</td>
+<td class="num">私聊</td>
+<td class="num">wxid_1wa75s1kze3o22</td>
+<td class="num">12</td>
+<td class="num">3</td>
+<td class="num">钱/财务</td>
+<td class="num">我和马宝霞说了，她回京，我把财务章给她[抱拳][握手][玫瑰]</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-08-17</td>
+<td class="num">17:57–18:11</td>
+<td class="num">笑一</td>
+<td class="num">私聊</td>
+<td class="num">wxid_wdnk6ue9kiyn22</td>
+<td class="num">36</td>
+<td class="num">7</td>
+<td class="num">学业/学术</td>
+<td class="num">我：是嘛，我宝怎么这么棒，ddl 之间就计划好把作业搞定了</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-08-18</td>
+<td class="num">10:57–23:59</td>
+<td class="num">刘丽萍</td>
+<td class="num">私聊</td>
+<td class="num">wxid_1wa75s1kze3o22</td>
+<td class="num">288</td>
+<td class="num">5</td>
+<td class="num">钱/财务</td>
+<td class="num">另外。研究生开题方向 ｜ 明天来人让我签合同</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-08-18</td>
+<td class="num">16:58–17:17</td>
+<td class="num">导！急速回，三思回得体！！！</td>
+<td class="num">私聊</td>
+<td class="num">deerluna</td>
+<td class="num">16</td>
+<td class="num">4</td>
+<td class="num">项目/实践</td>
+<td class="num">立项了就得做</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-08-19</td>
+<td class="num">18:39–22:24</td>
+<td class="num">导！急速回，三思回得体！！！</td>
+<td class="num">私聊</td>
+<td class="num">deerluna</td>
+<td class="num">15</td>
+<td class="num">5</td>
+<td class="num">待定</td>
+<td class="num">我：就这个搞定了我撤了老师</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-08-20</td>
+<td class="num">00:14–13:18</td>
+<td class="num">笑一</td>
+<td class="num">私聊</td>
+<td class="num">wxid_wdnk6ue9kiyn22</td>
+<td class="num">138</td>
+<td class="num">7</td>
+<td class="num">学业/学术</td>
+<td class="num">我：点事故 ｜ 我：结果路上遇到事故错过了</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-08-20</td>
+<td class="num">06:59–15:28</td>
+<td class="num">导！急速回，三思回得体！！！</td>
+<td class="num">私聊</td>
+<td class="num">deerluna</td>
+<td class="num">20</td>
+<td class="num">6</td>
+<td class="num">出行/迁移</td>
+<td class="num">我：老师我可能晚了点发生了点剐蹭</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-08-20</td>
+<td class="num">07:00–16:37</td>
+<td class="num">Jason 关宇佳</td>
+<td class="num">私聊</td>
+<td class="num">wxid_y8f0y4jfthgs21</td>
+<td class="num">31</td>
+<td class="num">7</td>
+<td class="num">生活/事务</td>
+<td class="num">我：关总我可能稍晚晚了点发生了点剐蹭</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-08-21</td>
+<td class="num">07:54–22:11</td>
+<td class="num">刘丽萍</td>
+<td class="num">私聊</td>
+<td class="num">wxid_1wa75s1kze3o22</td>
+<td class="num">30</td>
+<td class="num">5</td>
+<td class="num">钱/财务</td>
+<td class="num">最好不要用在宣传和公众号上向他们这种级别没有报批是不能发布的，免得惹到麻烦</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-08-21</td>
+<td class="num">11:39–16:40</td>
+<td class="num">笑一</td>
+<td class="num">私聊</td>
+<td class="num">wxid_wdnk6ue9kiyn22</td>
+<td class="num">17</td>
+<td class="num">6</td>
+<td class="num">家庭</td>
+<td class="num">我：看着我宝的有食欲，下次回京我也给宝做点好吃的</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-08-21</td>
+<td class="num">17:29–19:07</td>
+<td class="num">是否</td>
+<td class="num">私聊</td>
+<td class="num">wxid_vu29qh4eizm122</td>
+<td class="num">86</td>
+<td class="num">7</td>
+<td class="num">项目/实践</td>
+<td class="num">我：那就说定了九月可以有空的话</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-08-21</td>
+<td class="num">19:07–19:09</td>
+<td class="num">南吕</td>
+<td class="num">私聊</td>
+<td class="num">wxid_vs0pedc9tm9k21</td>
+<td class="num">14</td>
+<td class="num">5</td>
+<td class="num">待定</td>
+<td class="num">我：蔡浩文报名的志愿者 ｜ 我：报名</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-08-22</td>
+<td class="num">12:05–19:33</td>
+<td class="num">Darwin</td>
+<td class="num">私聊</td>
+<td class="num">Darwin480015</td>
+<td class="num">29</td>
+<td class="num">5</td>
+<td class="num">项目/实践</td>
+<td class="num">Darwin与Sisi Xi 💛的聊天记录 | Sisi Xi 💛: hello 哥这边请问这篇推文这次还发送嘛？因为两周里我们收到了后多报…</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-08-22</td>
+<td class="num">15:16–22:43</td>
+<td class="num">导！急速回，三思回得体！！！</td>
+<td class="num">私聊</td>
+<td class="num">deerluna</td>
+<td class="num">47</td>
+<td class="num">7</td>
+<td class="num">钱/财务</td>
+<td class="num">我：# 乡村美育工作站 · 个人工作成果汇总 汇报人：蔡浩文 **项目**：北京市怀柔区渤海镇洞台村乡村美育工作站 **角色**：丝网印刷 …</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-08-22</td>
+<td class="num">18:25–20:35</td>
+<td class="num">安奇</td>
+<td class="num">私聊</td>
+<td class="num">h329831285</td>
+<td class="num">32</td>
+<td class="num">5</td>
+<td class="num">学业/学术</td>
+<td class="num">推荐信 20226年 09 月 27 日 尊敬的相关负责人： 我写此信，是为支持侯安琪女士申请澳门大学博士研究生，希望我的推荐能帮助您进一步…</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-08-23</td>
+<td class="num">07:44–16:50</td>
+<td class="num">823北京金融黑客松北京决赛·现场志</td>
+<td class="num">群聊</td>
+<td class="num">45436251305@chatroom</td>
+<td class="num">46</td>
+<td class="num">7</td>
+<td class="num">学业/学术</td>
+<td class="num">我：跟林老师发生冲突的那个既没有报名也没有签到</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-08-23</td>
+<td class="num">18:24–23:03</td>
+<td class="num">笑一</td>
+<td class="num">私聊</td>
+<td class="num">wxid_wdnk6ue9kiyn22</td>
+<td class="num">70</td>
+<td class="num">5</td>
+<td class="num">家庭</td>
+<td class="num">我：今晚这么乖，见面的时候老公给你奖励 ｜ 我：睡吧乖宝，把今晚的想留给见面那天。明天肚子疼就喊老公。晚安</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-08-24</td>
+<td class="num">10:51–16:11</td>
+<td class="num">刘丽萍</td>
+<td class="num">私聊</td>
+<td class="num">wxid_1wa75s1kze3o22</td>
+<td class="num">6</td>
+<td class="num">2</td>
+<td class="num">学业/学术</td>
+<td class="num">群公告 【开学提醒】各位老师好，8月28日（本周五）开始上班，8月31日正式开课，请各位老师做好开课前准备。 咱们实验室装修尚未完全结束，施…</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-08-24</td>
+<td class="num">14:29–15:07</td>
+<td class="num">韩云峰</td>
+<td class="num">私聊</td>
+<td class="num">TIANMU1998</td>
+<td class="num">40</td>
+<td class="num">7</td>
+<td class="num">项目/实践</td>
+<td class="num">我：韩哥，在的！周三没问题。我开车去接您，您把位置发我，我提前到。咱们去井邻转转——看看工作站和商业街，中午在那边吃口饭。您看几点出发合适？</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-08-24</td>
+<td class="num">16:47–17:39</td>
+<td class="num">安奇</td>
+<td class="num">私聊</td>
+<td class="num">h329831285</td>
+<td class="num">15</td>
+<td class="num">5</td>
+<td class="num">待定</td>
+<td class="num">我：我弄到了确定是这个</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-08-24</td>
+<td class="num">20:37–20:58</td>
+<td class="num">笑一</td>
+<td class="num">私聊</td>
+<td class="num">wxid_wdnk6ue9kiyn22</td>
+<td class="num">29</td>
+<td class="num">7</td>
+<td class="num">家庭</td>
+<td class="num">我：还没有完全确定 ｜ 我：我云南定了，第一时间告诉你</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-08-25</td>
+<td class="num">11:48–12:06</td>
+<td class="num">Darwin</td>
+<td class="num">私聊</td>
+<td class="num">Darwin480015</td>
+<td class="num">40</td>
+<td class="num">7</td>
+<td class="num">项目/实践</td>
+<td class="num">我：【联合活动】海外人才走进平谷·创新创业交流专场 9月12日 平谷政企闭门对接会 📅 活动时间： 2026年9月12日（周六）9:00–1…</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-08-25</td>
+<td class="num">11:54–17:58</td>
+<td class="num">格拉斯哥大学北京校友会1</td>
+<td class="num">群聊</td>
+<td class="num">1788036366@chatroom</td>
+<td class="num">13</td>
+<td class="num">5</td>
+<td class="num">项目/实践</td>
+<td class="num">我：【联合活动】海外人才走进平谷·创新创业交流专场 9月12日 平谷政企闭门对接会 📅 活动时间： 2026年9月12日（周六）9:00–1…</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-08-25</td>
+<td class="num">17:34–20:12</td>
+<td class="num">Hannah W</td>
+<td class="num">私聊</td>
+<td class="num">wxid_xx30m2c0kxre21</td>
+<td class="num">8</td>
+<td class="num">5</td>
+<td class="num">钱/财务</td>
+<td class="num">我：我报名</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-08-25</td>
+<td class="num">22:02–22:45</td>
+<td class="num">笑一</td>
+<td class="num">私聊</td>
+<td class="num">wxid_wdnk6ue9kiyn22</td>
+<td class="num">186</td>
+<td class="num">7</td>
+<td class="num">家庭</td>
+<td class="num">我：老公虽然生气，但不会把气撒在你身上。咱俩谁难受了都可以说，先把彼此接住，不用一个人憋着</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-08-26</td>
+<td class="num">10:47–13:04</td>
+<td class="num">韩云峰</td>
+<td class="num">私聊</td>
+<td class="num">TIANMU1998</td>
+<td class="num">9</td>
+<td class="num">3</td>
+<td class="num">出行/迁移</td>
+<td class="num">我出发了二爷，估计一点左右到您那[旺柴]</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-08-26</td>
+<td class="num">16:19–16:25</td>
+<td class="num">米雪</td>
+<td class="num">私聊</td>
+<td class="num">25984982731545183@openim</td>
+<td class="num">13</td>
+<td class="num">5</td>
+<td class="num">出行/迁移</td>
+<td class="num">我：老师我已出发前往云南还来得及吧 ｜ 我：老师不是说 30 日还可以延迟提交吗老师 ｜ 我：那我就继续按照 30 号提交的进程继续执行</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-08-27</td>
+<td class="num">04:27–23:31</td>
+<td class="num">刘丽萍</td>
+<td class="num">私聊</td>
+<td class="num">wxid_1wa75s1kze3o22</td>
+<td class="num">24</td>
+<td class="num">3</td>
+<td class="num">项目/实践</td>
+<td class="num">刘老师：今天先是我们开会，后边校长又有其他会，我等到现在都还没有和校长汇报，只能等明天了[抱拳][愉快]</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-08-28</td>
+<td class="num">01:05–23:42</td>
+<td class="num">刘丽萍</td>
+<td class="num">私聊</td>
+<td class="num">wxid_1wa75s1kze3o22</td>
+<td class="num">76</td>
+<td class="num">7</td>
+<td class="num">钱/财务</td>
+<td class="num">我：老师您好我是来自中央美术学院的学生实验艺术与科技艺术学院的研究生蔡浩文，今年研二，研究方向是社会美育与乡村振兴，导师是陈晔老师，中央美术…</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-08-28</td>
+<td class="num">20:22–20:40</td>
+<td class="num">笑一</td>
+<td class="num">私聊</td>
+<td class="num">wxid_wdnk6ue9kiyn22</td>
+<td class="num">60</td>
+<td class="num">5</td>
+<td class="num">学业/学术</td>
+<td class="num">那到时候确定了再说 | 没有了，我可能下学期去中传学习</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-08-29</td>
+<td class="num">15:02–23:55</td>
+<td class="num">jt</td>
+<td class="num">私聊</td>
+<td class="num">wxid_6lxct8lknfzt21</td>
+<td class="num">10</td>
+<td class="num">5</td>
+<td class="num">出行/迁移</td>
+<td class="num">我：老师这是我们学院的介绍信我就准备出发了，有什么需要的材料我联系系里再补充</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-08-29</td>
+<td class="num">15:03–15:51</td>
+<td class="num">米雪</td>
+<td class="num">私聊</td>
+<td class="num">25984982731545183@openim</td>
+<td class="num">10</td>
+<td class="num">3</td>
+<td class="num">出行/迁移</td>
+<td class="num">和成果一起提交就行 ｜ 现在已经截止了 你们尽快提交哈</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-08-29</td>
+<td class="num">20:09–20:37</td>
+<td class="num">彭于晏 AI</td>
+<td class="num">私聊</td>
+<td class="num">wxid_15fxm28ql9vc22</td>
+<td class="num">62</td>
+<td class="num">5</td>
+<td class="num">钱/财务</td>
+<td class="num">我这固定了菲区的</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-08-30</td>
+<td class="num">02:52–17:21</td>
+<td class="num">笑一</td>
+<td class="num">私聊</td>
+<td class="num">wxid_wdnk6ue9kiyn22</td>
+<td class="num">117</td>
+<td class="num">7</td>
+<td class="num">亲密关系</td>
+<td class="num">我：出发返京了跟老公说一声 ｜ 我：出发了跟我说 ｜ 我：回京见</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-08-31</td>
+<td class="num">10:20–15:13</td>
+<td class="num">米雪</td>
+<td class="num">私聊</td>
+<td class="num">25984982731545183@openim</td>
+<td class="num">11</td>
+<td class="num">5</td>
+<td class="num">学业/学术</td>
+<td class="num">我：米雪老师好，抱歉让您久等。成果文件最晚9月2号（周三）中午12点前一定全部提交完毕，提交后马上跟您确认。 材料主体都已完成（课程执行、问…</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-08-31</td>
+<td class="num">11:18–18:39</td>
+<td class="num">星铂广告</td>
+<td class="num">私聊</td>
+<td class="num">yndg150</td>
+<td class="num">115</td>
+<td class="num">5</td>
+<td class="num">钱/财务</td>
+<td class="num">我发往昆明长水机场的货物正在运送 | 货拉拉丨拉货搬家跑腿货运物流</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-08-31</td>
+<td class="num">14:59–15:22</td>
+<td class="num">no one</td>
+<td class="num">私聊</td>
+<td class="num">wxid_ynvojcwp7rf322</td>
+<td class="num">53</td>
+<td class="num">7</td>
+<td class="num">学业/学术</td>
+<td class="num">我：确定这是最新的吗</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-08-31</td>
+<td class="num">16:01–22:58</td>
+<td class="num">刘丽萍</td>
+<td class="num">私聊</td>
+<td class="num">wxid_1wa75s1kze3o22</td>
+<td class="num">52</td>
+<td class="num">5</td>
+<td class="num">学业/学术</td>
+<td class="num">望京房子己签合同了</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-08-31</td>
+<td class="num">21:58–23:08</td>
+<td class="num">笑一</td>
+<td class="num">私聊</td>
+<td class="num">wxid_wdnk6ue9kiyn22</td>
+<td class="num">42</td>
+<td class="num">5</td>
+<td class="num">亲密关系</td>
+<td class="num">决定</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-09-01</td>
+<td class="num">07:38–21:08</td>
+<td class="num">刘丽萍</td>
+<td class="num">私聊</td>
+<td class="num">wxid_1wa75s1kze3o22</td>
+<td class="num">15</td>
+<td class="num">3</td>
+<td class="num">学业/学术</td>
+<td class="num">开幕式参会人员名单（总）（1）.xlsx</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-09-02</td>
+<td class="num">08:45–22:49</td>
+<td class="num">jt</td>
+<td class="num">私聊</td>
+<td class="num">wxid_6lxct8lknfzt21</td>
+<td class="num">25</td>
+<td class="num">7</td>
+<td class="num">学业/学术</td>
+<td class="num">我：第一步：开场发问 同学们，我想先问大家一个问题：你们觉得，艺术是什么？ 是挂在美术馆里的画，还是课本里的插图？其实，艺术远不止这些。艺术…</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-09-03</td>
+<td class="num">06:15–23:22</td>
+<td class="num">Иосиф💫</td>
+<td class="num">私聊</td>
+<td class="num">wxid_x1vba930dc2i12</td>
+<td class="num">20</td>
+<td class="num">6</td>
+<td class="num">出行/迁移</td>
+<td class="num">我：我们在云南澜沧开展的</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-09-03</td>
+<td class="num">09:25–23:55</td>
+<td class="num">米雪</td>
+<td class="num">私聊</td>
+<td class="num">25984982731545183@openim</td>
+<td class="num">12</td>
+<td class="num">5</td>
+<td class="num">待定</td>
+<td class="num">我：老师全部文件都提交</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-09-03</td>
+<td class="num">11:11–23:30</td>
+<td class="num">笑一</td>
+<td class="num">私聊</td>
+<td class="num">wxid_wdnk6ue9kiyn22</td>
+<td class="num">155</td>
+<td class="num">7</td>
+<td class="num">家庭</td>
+<td class="num">我：决定回北京了吗</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-09-03</td>
+<td class="num">19:20–23:52</td>
+<td class="num">净</td>
+<td class="num">私聊</td>
+<td class="num">wxid_gl4fn2jbzb0t22</td>
+<td class="num">129</td>
+<td class="num">7</td>
+<td class="num">钱/财务</td>
+<td class="num">我：我已经搞定了</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-09-04</td>
+<td class="num">00:03–00:16</td>
+<td class="num">导！急速回，三思回得体！！！</td>
+<td class="num">私聊</td>
+<td class="num">deerluna</td>
+<td class="num">16</td>
+<td class="num">6</td>
+<td class="num">出行/迁移</td>
+<td class="num">我：老师全部文件都提交 ｜ 我：有事我可以加快回京老师</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-09-04</td>
+<td class="num">08:56–23:54</td>
+<td class="num">笑一</td>
+<td class="num">私聊</td>
+<td class="num">wxid_wdnk6ue9kiyn22</td>
+<td class="num">53</td>
+<td class="num">7</td>
+<td class="num">钱/财务</td>
+<td class="num">我：这两天我也回京了也</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-09-04</td>
+<td class="num">09:51–14:37</td>
+<td class="num">米雪</td>
+<td class="num">私聊</td>
+<td class="num">25984982731545183@openim</td>
+<td class="num">7</td>
+<td class="num">2</td>
+<td class="num">待定</td>
+<td class="num">组委会老师马上要进行评审，你们剩余材料拖太久容易影响你们最终评分，剩余材料最晚6号晚上12点前要提交上来</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-09-04</td>
+<td class="num">15:38–20:01</td>
+<td class="num">SoulRich</td>
+<td class="num">私聊</td>
+<td class="num">wxid_xsxkoq0dsvmb21</td>
+<td class="num">66</td>
+<td class="num">7</td>
+<td class="num">学业/学术</td>
+<td class="num">我：千问办公在上线首月取得3000万用户且企业用户过半的成绩，展现了企业级AI Agent摆脱浅层玩具化定位、深入实体工作流的产业趋势。其依…</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-09-04</td>
+<td class="num">18:30–18:58</td>
+<td class="num">汪伊俊</td>
+<td class="num">私聊</td>
+<td class="num">wxid_o9to6kw5j35x12</td>
+<td class="num">50</td>
+<td class="num">7</td>
+<td class="num">学业/学术</td>
+<td class="num">我：面试最高分</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-09-05</td>
+<td class="num">14:55–23:03</td>
+<td class="num">笑一</td>
+<td class="num">私聊</td>
+<td class="num">wxid_wdnk6ue9kiyn22</td>
+<td class="num">192</td>
+<td class="num">7</td>
+<td class="num">亲密关系</td>
+<td class="num">我：刚丢肯定生气 ｜ 我：委屈宝了本来丢东西就生气 ｜ 我：老公都生气了</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-09-08</td>
+<td class="num">12:20–13:06</td>
+<td class="num">笑一</td>
+<td class="num">私聊</td>
+<td class="num">wxid_wdnk6ue9kiyn22</td>
+<td class="num">113</td>
+<td class="num">5</td>
+<td class="num">项目/实践</td>
+<td class="num">我就研一刚开学的时候交了 ｜ 不亲了生气😠</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-09-09</td>
+<td class="num">09:04–09:08</td>
+<td class="num">彭于晏 AI</td>
+<td class="num">私聊</td>
+<td class="num">wxid_15fxm28ql9vc22</td>
+<td class="num">10</td>
+<td class="num">5</td>
+<td class="num">待定</td>
+<td class="num">我：确定要先不是今天感谢</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-09-10</td>
+<td class="num">09:03–16:28</td>
+<td class="num">刘丽萍</td>
+<td class="num">私聊</td>
+<td class="num">wxid_1wa75s1kze3o22</td>
+<td class="num">26</td>
+<td class="num">7</td>
+<td class="num">钱/财务</td>
+<td class="num">我：主题党日活动——拜访退休党员老教师 值此第42个教师节，直属党支部计划组织师生党员看望本院系退休的胡明哲老师，明天下午1:30北区停车场…</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-09-10</td>
+<td class="num">10:39–13:56</td>
+<td class="num">桃餮</td>
+<td class="num">私聊</td>
+<td class="num">wxid_fmoc5trgeqso21</td>
+<td class="num">16</td>
+<td class="num">6</td>
+<td class="num">出行/迁移</td>
+<td class="num">我：报名一下住宿</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-09-10</td>
+<td class="num">11:33–20:37</td>
+<td class="num">笑一</td>
+<td class="num">私聊</td>
+<td class="num">wxid_wdnk6ue9kiyn22</td>
+<td class="num">38</td>
+<td class="num">3</td>
+<td class="num">亲密关系</td>
+<td class="num">耳钉游丢了</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-09-10</td>
+<td class="num">13:32–15:21</td>
+<td class="num">沐茜妍</td>
+<td class="num">私聊</td>
+<td class="num">wxid_id1nfp5f20e122</td>
+<td class="num">61</td>
+<td class="num">7</td>
+<td class="num">学业/学术</td>
+<td class="num">我：确定要了吗</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-09-11</td>
+<td class="num">01:27–23:54</td>
+<td class="num">笑一</td>
+<td class="num">私聊</td>
+<td class="num">wxid_wdnk6ue9kiyn22</td>
+<td class="num">86</td>
+<td class="num">7</td>
+<td class="num">家庭</td>
+<td class="num">我：要不现在咱们就从央美出发</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-09-11</td>
+<td class="num">01:55–17:49</td>
+<td class="num">刘丽萍</td>
+<td class="num">私聊</td>
+<td class="num">wxid_1wa75s1kze3o22</td>
+<td class="num">93</td>
+<td class="num">5</td>
+<td class="num">钱/财务</td>
+<td class="num">老宋博士毕业到中传</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-09-12</td>
+<td class="num">06:02–16:46</td>
+<td class="num">刘丽萍</td>
+<td class="num">私聊</td>
+<td class="num">wxid_1wa75s1kze3o22</td>
+<td class="num">13</td>
+<td class="num">1</td>
+<td class="num">待定</td>
+<td class="num">浩文：让金盏修车。把把正一下。把往右斜。[抱拳][爱心]</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-09-12</td>
+<td class="num">10:47–11:06</td>
+<td class="num">海燕</td>
+<td class="num">私聊</td>
+<td class="num">guo647789</td>
+<td class="num">13</td>
+<td class="num">3</td>
+<td class="num">学业/学术</td>
+<td class="num">我：李老师好！！！我是蔡浩文，经王利敏老师引荐，昨天上午在您的课上完整听完了第一讲，收获非常大，课后也一直在整理消化。王老师把您的嘱咐都转达…</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-09-13</td>
+<td class="num">11:43–17:02</td>
+<td class="num">银窝头</td>
+<td class="num">私聊</td>
+<td class="num">wxid_buutrilrhq4a22</td>
+<td class="num">276</td>
+<td class="num">5</td>
+<td class="num">学业/学术</td>
+<td class="num">应该我毕业了会去玩</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-09-13</td>
+<td class="num">12:05–12:14</td>
+<td class="num">Yi㸜慾</td>
+<td class="num">私聊</td>
+<td class="num">wxid_z34y0x8ordw222</td>
+<td class="num">23</td>
+<td class="num">4</td>
+<td class="num">钱/财务</td>
+<td class="num">我：我也争取申请经费做美育课题</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-09-14</td>
+<td class="num">08:39–13:46</td>
+<td class="num">导！急速回，三思回得体！！！</td>
+<td class="num">私聊</td>
+<td class="num">deerluna</td>
+<td class="num">6</td>
+<td class="num">4</td>
+<td class="num">项目/实践</td>
+<td class="num">我：蔡浩文_乡村美育驻村工作日志.pdf</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-09-16</td>
+<td class="num">06:51–22:50</td>
+<td class="num">刘丽萍</td>
+<td class="num">私聊</td>
+<td class="num">wxid_1wa75s1kze3o22</td>
+<td class="num">52</td>
+<td class="num">3</td>
+<td class="num">钱/财务</td>
+<td class="num">19号中关村五路居那边开会</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-09-17</td>
+<td class="num">21:09–22:03</td>
+<td class="num">笑一</td>
+<td class="num">私聊</td>
+<td class="num">wxid_wdnk6ue9kiyn22</td>
+<td class="num">30</td>
+<td class="num">3</td>
+<td class="num">学业/学术</td>
+<td class="num">我在写思想汇报</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-09-18</td>
+<td class="num">08:00–19:08</td>
+<td class="num">海燕</td>
+<td class="num">私聊</td>
+<td class="num">guo647789</td>
+<td class="num">13</td>
+<td class="num">5</td>
+<td class="num">求职/职场</td>
+<td class="num">我：感谢老师面试顺利，打扰老师</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-09-18</td>
+<td class="num">08:55–23:06</td>
+<td class="num">笑一</td>
+<td class="num">私聊</td>
+<td class="num">wxid_wdnk6ue9kiyn22</td>
+<td class="num">87</td>
+<td class="num">7</td>
+<td class="num">求职/职场</td>
+<td class="num">我：没必要他们是要转正你暂时还不需要</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-09-18</td>
+<td class="num">13:04–17:02</td>
+<td class="num">yumilier☔</td>
+<td class="num">私聊</td>
+<td class="num">a35599192</td>
+<td class="num">7</td>
+<td class="num">2</td>
+<td class="num">求职/职场</td>
+<td class="num">浩文，你好。[玫瑰]今天我们临时通知有研究生入学面试，李老师的课就暂停一次。抱歉今天没有早一些通知到你。早上8点前因为手机上交，没有及时看到…</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-09-19</td>
+<td class="num">00:43–11:45</td>
+<td class="num">笑一</td>
+<td class="num">私聊</td>
+<td class="num">wxid_wdnk6ue9kiyn22</td>
+<td class="num">237</td>
+<td class="num">7</td>
+<td class="num">项目/实践</td>
+<td class="num">我：咱们转正还在而且刚开始实习</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-09-19</td>
+<td class="num">05:14–21:03</td>
+<td class="num">刘丽萍</td>
+<td class="num">私聊</td>
+<td class="num">wxid_1wa75s1kze3o22</td>
+<td class="num">45</td>
+<td class="num">5</td>
+<td class="num">钱/财务</td>
+<td class="num">我：你先开会吧</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-09-19</td>
+<td class="num">15:40–23:20</td>
+<td class="num">Jason 关宇佳</td>
+<td class="num">私聊</td>
+<td class="num">wxid_y8f0y4jfthgs21</td>
+<td class="num">47</td>
+<td class="num">7</td>
+<td class="num">学业/学术</td>
+<td class="num">我：这个暑假最主要的限制主要是央美学校的工作室基础设备因为装修无法使用，导致配合井邻的活动一直显得力不从心和没有真正开展，但是就这几天马上就…</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-09-20</td>
+<td class="num">13:35–22:43</td>
+<td class="num">笑一</td>
+<td class="num">私聊</td>
+<td class="num">wxid_wdnk6ue9kiyn22</td>
+<td class="num">44</td>
+<td class="num">3</td>
+<td class="num">亲密关系</td>
+<td class="num">老公辛苦 见面好好亲亲你</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-09-20</td>
+<td class="num">13:57–14:15</td>
+<td class="num">yumilier☔</td>
+<td class="num">私聊</td>
+<td class="num">a35599192</td>
+<td class="num">21</td>
+<td class="num">6</td>
+<td class="num">待定</td>
+<td class="num">我：我查一下校历应该差不多小王阿姨，我在校历上确定好十月之前</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-09-21</td>
+<td class="num">00:00–13:28</td>
+<td class="num">刘丽萍</td>
+<td class="num">私聊</td>
+<td class="num">wxid_1wa75s1kze3o22</td>
+<td class="num">15</td>
+<td class="num">1</td>
+<td class="num">钱/财务</td>
+<td class="num">车又坏了？</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-09-21</td>
+<td class="num">00:11–18:38</td>
+<td class="num">笑一</td>
+<td class="num">私聊</td>
+<td class="num">wxid_wdnk6ue9kiyn22</td>
+<td class="num">121</td>
+<td class="num">7</td>
+<td class="num">亲密关系</td>
+<td class="num">我：明天决定去了，就不要想这些了 | 我来不来都没人知道</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-09-22</td>
+<td class="num">00:07–22:41</td>
+<td class="num">笑一</td>
+<td class="num">私聊</td>
+<td class="num">wxid_wdnk6ue9kiyn22</td>
+<td class="num">45</td>
+<td class="num">7</td>
+<td class="num">亲密关系</td>
+<td class="num">我：宝我已出发稍微晚一点 ｜ 我：前方有事故</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-09-22</td>
+<td class="num">00:07–23:55</td>
+<td class="num">刘丽萍</td>
+<td class="num">私聊</td>
+<td class="num">wxid_1wa75s1kze3o22</td>
+<td class="num">50</td>
+<td class="num">7</td>
+<td class="num">钱/财务</td>
+<td class="num">我：面试完了</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-09-23</td>
+<td class="num">22:18–22:51</td>
+<td class="num">笑一</td>
+<td class="num">私聊</td>
+<td class="num">wxid_wdnk6ue9kiyn22</td>
+<td class="num">206</td>
+<td class="num">7</td>
+<td class="num">学业/学术</td>
+<td class="num">我：我今天交了汇报，听了个讲座明天去丰台领东西</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-09-24</td>
+<td class="num">00:56–23:53</td>
+<td class="num">刘丽萍</td>
+<td class="num">私聊</td>
+<td class="num">wxid_1wa75s1kze3o22</td>
+<td class="num">18</td>
+<td class="num">6</td>
+<td class="num">求职/职场</td>
+<td class="num">我：同学你好： 恭喜你被录用为中央美术学院美术馆2026年秋季实习生，期待与你见面！ 请微信与美术馆办公室岳老师联系（微信：13810649…</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-09-24</td>
+<td class="num">13:14–22:36</td>
+<td class="num">Yi㸜慾</td>
+<td class="num">私聊</td>
+<td class="num">wxid_z34y0x8ordw222</td>
+<td class="num">92</td>
+<td class="num">5</td>
+<td class="num">学业/学术</td>
+<td class="num">听说民中那边要开展这个社团，然后我们老师申请了，就是晚自习下了以后给他一点时间，让我们去搞这个社团，但无奈，我在。好班，然后就导致我不能去，…</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-09-24</td>
+<td class="num">16:10–17:42</td>
+<td class="num">导！急速回，三思回得体！！！</td>
+<td class="num">私聊</td>
+<td class="num">deerluna</td>
+<td class="num">35</td>
+<td class="num">7</td>
+<td class="num">项目/实践</td>
+<td class="num">我：老师，洗照片的方案我理了一下。 设备：索尼f501胶卷相机有，老放大机玻璃碎了，不能用。 两个方案：一是显影液方案，拍胶卷→显影药水负片…</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-09-24</td>
+<td class="num">17:26–17:32</td>
+<td class="num">Junyao</td>
+<td class="num">私聊</td>
+<td class="num">shuixiaoxie</td>
+<td class="num">5</td>
+<td class="num">4</td>
+<td class="num">项目/实践</td>
+<td class="num">我：老师好，我是报名的实习生蔡浩文，岗位是拍摄及视频制作助理实习生，学生蔡浩文，电话151****1638，中秋期间全程在京，非常感谢老师！…</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-09-24</td>
+<td class="num">17:30–17:37</td>
+<td class="num">Yisharlot🍬</td>
+<td class="num">私聊</td>
+<td class="num">huxiaomi123</td>
+<td class="num">8</td>
+<td class="num">5</td>
+<td class="num">项目/实践</td>
+<td class="num">我：何主任好，我是前两天面试的实习生蔡浩文</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-09-25</td>
+<td class="num">11:06–23:18</td>
+<td class="num">笑一</td>
+<td class="num">私聊</td>
+<td class="num">wxid_wdnk6ue9kiyn22</td>
+<td class="num">34</td>
+<td class="num">7</td>
+<td class="num">亲密关系</td>
+<td class="num">我：昨天确定是姨妈吗还是伤到了啊</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-09-26</td>
+<td class="num">10:54–23:52</td>
+<td class="num">刘丽萍</td>
+<td class="num">私聊</td>
+<td class="num">wxid_1wa75s1kze3o22</td>
+<td class="num">13</td>
+<td class="num">5</td>
+<td class="num">钱/财务</td>
+<td class="num">我：1．用一个问题贯穿整场 我建议保留《在场与回应》，副标题用： 从社会美育现场到情境化数字交互 贯穿的问题是： 在有限的时间、材料与组织条…</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-09-26</td>
+<td class="num">16:14–16:32</td>
+<td class="num">金盏好修养极狐售后</td>
+<td class="num">私聊</td>
+<td class="num">wxid_vk33qtlz3yyn22</td>
+<td class="num">32</td>
+<td class="num">7</td>
+<td class="num">生活/事务</td>
+<td class="num">我：这两天上班时间是啥时候想打个电话又有剐蹭了</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-09-26</td>
+<td class="num">23:47–23:53</td>
+<td class="num">微信ClawBot</td>
+<td class="num">私聊</td>
+<td class="num">mmo9cq804nm67AluaCTbbAcTy-qTis@weclaw</td>
+<td class="num">12</td>
+<td class="num">1</td>
+<td class="num">项目/实践</td>
+<td class="num">你好！👋 我是运行在 DeepSeek Harness 上的编码助手。当前工作目录是： `C:\Users\wardc\Documents\…</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-09-27</td>
+<td class="num">21:39–22:20</td>
+<td class="num">笑一</td>
+<td class="num">私聊</td>
+<td class="num">wxid_wdnk6ue9kiyn22</td>
+<td class="num">96</td>
+<td class="num">5</td>
+<td class="num">亲密关系</td>
+<td class="num">我：那就见面了把宝贝亲亲抱抱举高高</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-09-30</td>
+<td class="num">00:00–21:33</td>
+<td class="num">笑一</td>
+<td class="num">私聊</td>
+<td class="num">wxid_wdnk6ue9kiyn22</td>
+<td class="num">250</td>
+<td class="num">7</td>
+<td class="num">亲密关系</td>
+<td class="num">我：我确定清醒的</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-09-30</td>
+<td class="num">14:05–17:32</td>
+<td class="num">导！急速回，三思回得体！！！</td>
+<td class="num">私聊</td>
+<td class="num">deerluna</td>
+<td class="num">64</td>
+<td class="num">5</td>
+<td class="num">项目/实践</td>
+<td class="num">那定了</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-10-01</td>
+<td class="num">03:09–21:32</td>
+<td class="num">刘丽萍</td>
+<td class="num">私聊</td>
+<td class="num">wxid_1wa75s1kze3o22</td>
+<td class="num">75</td>
+<td class="num">3</td>
+<td class="num">项目/实践</td>
+<td class="num">见面说话</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-10-01</td>
+<td class="num">22:39–23:00</td>
+<td class="num">笑一</td>
+<td class="num">私聊</td>
+<td class="num">wxid_wdnk6ue9kiyn22</td>
+<td class="num">20</td>
+<td class="num">6</td>
+<td class="num">亲密关系</td>
+<td class="num">我：宝，对不起。 今天一整天没回你，是老公的错——昨晚昏睡过去，白天作息全乱了，等你消息时已经这个点。 说好陪你过国庆，让你一个人等了一整天…</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-10-02</td>
+<td class="num">07:45–23:44</td>
+<td class="num">刘丽萍</td>
+<td class="num">私聊</td>
+<td class="num">wxid_1wa75s1kze3o22</td>
+<td class="num">49</td>
+<td class="num">7</td>
+<td class="num">钱/财务</td>
+<td class="num">我：搞定了</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-10-02</td>
+<td class="num">09:15–19:49</td>
+<td class="num">导！急速回，三思回得体！！！</td>
+<td class="num">私聊</td>
+<td class="num">deerluna</td>
+<td class="num">114</td>
+<td class="num">7</td>
+<td class="num">项目/实践</td>
+<td class="num">我：这两个改一下拿其中一个我就出发去制版了</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-10-02</td>
+<td class="num">22:51–23:47</td>
+<td class="num">笑一</td>
+<td class="num">私聊</td>
+<td class="num">wxid_wdnk6ue9kiyn22</td>
+<td class="num">87</td>
+<td class="num">5</td>
+<td class="num">学业/学术</td>
+<td class="num">又跟我妈吵架了 ｜ 不管了 我再生气能怎么样</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-10-03</td>
+<td class="num">00:00–20:39</td>
+<td class="num">笑一</td>
+<td class="num">私聊</td>
+<td class="num">wxid_wdnk6ue9kiyn22</td>
+<td class="num">81</td>
+<td class="num">7</td>
+<td class="num">家庭</td>
+<td class="num">我：我出了点事故</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-10-03</td>
+<td class="num">07:23–17:29</td>
+<td class="num">导！急速回，三思回得体！！！</td>
+<td class="num">私聊</td>
+<td class="num">deerluna</td>
+<td class="num">32</td>
+<td class="num">7</td>
+<td class="num">出行/迁移</td>
+<td class="num">我：刚出发老师</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-10-03</td>
+<td class="num">15:32–15:38</td>
+<td class="num">🍉</td>
+<td class="num">私聊</td>
+<td class="num">wxid_8368913688512</td>
+<td class="num">6</td>
+<td class="num">4</td>
+<td class="num">钱/财务</td>
+<td class="num">我：可以来我们学校开展</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+<tr>
+<td class="num">2026-10-05</td>
+<td class="num">17:21–17:58</td>
+<td class="num">汪伊俊</td>
+<td class="num">私聊</td>
+<td class="num">wxid_o9to6kw5j35x12</td>
+<td class="num">68</td>
+<td class="num">7</td>
+<td class="num">钱/财务</td>
+<td class="num">我：积分报名就给</td>
+<td class="num">确定（有明确日期）</td>
+<td class="num">待核实</td>
+</tr>
+</tbody></table>
+<h3>3.7 缺口逐日（83 天）</h3>
+<table class="">
+<thead><tr>
+<th class="">date</th>
+<th class="num">消息数</th>
+<th class="num">候选事件数</th>
+<th class="num">活跃会话数</th>
+</tr></thead><tbody>
+<tr>
+<td class="">2026-07-01</td>
+<td class="num">794</td>
+<td class="num">2</td>
+<td class="num">2</td>
+</tr>
+<tr>
+<td class="">2026-07-02</td>
+<td class="num">1124</td>
+<td class="num">3</td>
+<td class="num">3</td>
+</tr>
+<tr>
+<td class="">2026-07-03</td>
+<td class="num">876</td>
+<td class="num">5</td>
+<td class="num">5</td>
+</tr>
+<tr>
+<td class="">2026-07-04</td>
+<td class="num">907</td>
+<td class="num">2</td>
+<td class="num">2</td>
+</tr>
+<tr>
+<td class="">2026-07-05</td>
+<td class="num">512</td>
+<td class="num">3</td>
+<td class="num">3</td>
+</tr>
+<tr>
+<td class="">2026-07-06</td>
+<td class="num">489</td>
+<td class="num">3</td>
+<td class="num">3</td>
+</tr>
+<tr>
+<td class="">2026-07-07</td>
+<td class="num">667</td>
+<td class="num">0</td>
+<td class="num">0</td>
+</tr>
+<tr>
+<td class="">2026-07-08</td>
+<td class="num">709</td>
+<td class="num">3</td>
+<td class="num">3</td>
+</tr>
+<tr>
+<td class="">2026-07-09</td>
+<td class="num">554</td>
+<td class="num">3</td>
+<td class="num">3</td>
+</tr>
+<tr>
+<td class="">2026-07-10</td>
+<td class="num">476</td>
+<td class="num">1</td>
+<td class="num">1</td>
+</tr>
+<tr>
+<td class="">2026-07-11</td>
+<td class="num">157</td>
+<td class="num">0</td>
+<td class="num">0</td>
+</tr>
+<tr>
+<td class="">2026-07-12</td>
+<td class="num">193</td>
+<td class="num">0</td>
+<td class="num">0</td>
+</tr>
+<tr>
+<td class="">2026-07-13</td>
+<td class="num">292</td>
+<td class="num">0</td>
+<td class="num">0</td>
+</tr>
+<tr>
+<td class="">2026-07-14</td>
+<td class="num">343</td>
+<td class="num">1</td>
+<td class="num">1</td>
+</tr>
+<tr>
+<td class="">2026-07-15</td>
+<td class="num">490</td>
+<td class="num">2</td>
+<td class="num">2</td>
+</tr>
+<tr>
+<td class="">2026-07-16</td>
+<td class="num">629</td>
+<td class="num">2</td>
+<td class="num">2</td>
+</tr>
+<tr>
+<td class="">2026-07-17</td>
+<td class="num">505</td>
+<td class="num">3</td>
+<td class="num">3</td>
+</tr>
+<tr>
+<td class="">2026-07-18</td>
+<td class="num">704</td>
+<td class="num">1</td>
+<td class="num">1</td>
+</tr>
+<tr>
+<td class="">2026-07-19</td>
+<td class="num">367</td>
+<td class="num">1</td>
+<td class="num">1</td>
+</tr>
+<tr>
+<td class="">2026-07-20</td>
+<td class="num">466</td>
+<td class="num">2</td>
+<td class="num">2</td>
+</tr>
+<tr>
+<td class="">2026-07-21</td>
+<td class="num">604</td>
+<td class="num">2</td>
+<td class="num">2</td>
+</tr>
+<tr>
+<td class="">2026-07-22</td>
+<td class="num">539</td>
+<td class="num">1</td>
+<td class="num">1</td>
+</tr>
+<tr>
+<td class="">2026-07-23</td>
+<td class="num">612</td>
+<td class="num">1</td>
+<td class="num">1</td>
+</tr>
+<tr>
+<td class="">2026-07-24</td>
+<td class="num">518</td>
+<td class="num">2</td>
+<td class="num">2</td>
+</tr>
+<tr>
+<td class="">2026-07-25</td>
+<td class="num">403</td>
+<td class="num">1</td>
+<td class="num">1</td>
+</tr>
+<tr>
+<td class="">2026-07-26</td>
+<td class="num">437</td>
+<td class="num">1</td>
+<td class="num">1</td>
+</tr>
+<tr>
+<td class="">2026-07-27</td>
+<td class="num">800</td>
+<td class="num">2</td>
+<td class="num">2</td>
+</tr>
+<tr>
+<td class="">2026-07-28</td>
+<td class="num">531</td>
+<td class="num">3</td>
+<td class="num">3</td>
+</tr>
+<tr>
+<td class="">2026-07-29</td>
+<td class="num">518</td>
+<td class="num">1</td>
+<td class="num">1</td>
+</tr>
+<tr>
+<td class="">2026-07-30</td>
+<td class="num">583</td>
+<td class="num">1</td>
+<td class="num">1</td>
+</tr>
+<tr>
+<td class="">2026-07-31</td>
+<td class="num">718</td>
+<td class="num">0</td>
+<td class="num">0</td>
+</tr>
+<tr>
+<td class="">2026-08-01</td>
+<td class="num">453</td>
+<td class="num">2</td>
+<td class="num">2</td>
+</tr>
+<tr>
+<td class="">2026-08-02</td>
+<td class="num">543</td>
+<td class="num">0</td>
+<td class="num">0</td>
+</tr>
+<tr>
+<td class="">2026-08-03</td>
+<td class="num">582</td>
+<td class="num">2</td>
+<td class="num">2</td>
+</tr>
+<tr>
+<td class="">2026-08-04</td>
+<td class="num">487</td>
+<td class="num">2</td>
+<td class="num">2</td>
+</tr>
+<tr>
+<td class="">2026-08-05</td>
+<td class="num">371</td>
+<td class="num">2</td>
+<td class="num">2</td>
+</tr>
+<tr>
+<td class="">2026-08-06</td>
+<td class="num">300</td>
+<td class="num">1</td>
+<td class="num">1</td>
+</tr>
+<tr>
+<td class="">2026-08-07</td>
+<td class="num">578</td>
+<td class="num">1</td>
+<td class="num">1</td>
+</tr>
+<tr>
+<td class="">2026-08-08</td>
+<td class="num">352</td>
+<td class="num">2</td>
+<td class="num">2</td>
+</tr>
+<tr>
+<td class="">2026-08-09</td>
+<td class="num">816</td>
+<td class="num">5</td>
+<td class="num">5</td>
+</tr>
+<tr>
+<td class="">2026-08-10</td>
+<td class="num">890</td>
+<td class="num">3</td>
+<td class="num">3</td>
+</tr>
+<tr>
+<td class="">2026-08-11</td>
+<td class="num">474</td>
+<td class="num">2</td>
+<td class="num">2</td>
+</tr>
+<tr>
+<td class="">2026-08-12</td>
+<td class="num">413</td>
+<td class="num">1</td>
+<td class="num">1</td>
+</tr>
+<tr>
+<td class="">2026-08-13</td>
+<td class="num">789</td>
+<td class="num">3</td>
+<td class="num">3</td>
+</tr>
+<tr>
+<td class="">2026-08-14</td>
+<td class="num">468</td>
+<td class="num">0</td>
+<td class="num">0</td>
+</tr>
+<tr>
+<td class="">2026-08-15</td>
+<td class="num">432</td>
+<td class="num">3</td>
+<td class="num">3</td>
+</tr>
+<tr>
+<td class="">2026-08-16</td>
+<td class="num">363</td>
+<td class="num">2</td>
+<td class="num">2</td>
+</tr>
+<tr>
+<td class="">2026-08-17</td>
+<td class="num">278</td>
+<td class="num">2</td>
+<td class="num">2</td>
+</tr>
+<tr>
+<td class="">2026-08-18</td>
+<td class="num">493</td>
+<td class="num">2</td>
+<td class="num">2</td>
+</tr>
+<tr>
+<td class="">2026-08-19</td>
+<td class="num">516</td>
+<td class="num">1</td>
+<td class="num">1</td>
+</tr>
+<tr>
+<td class="">2026-08-20</td>
+<td class="num">604</td>
+<td class="num">3</td>
+<td class="num">3</td>
+</tr>
+<tr>
+<td class="">2026-08-21</td>
+<td class="num">361</td>
+<td class="num">4</td>
+<td class="num">4</td>
+</tr>
+<tr>
+<td class="">2026-08-22</td>
+<td class="num">232</td>
+<td class="num">3</td>
+<td class="num">3</td>
+</tr>
+<tr>
+<td class="">2026-08-23</td>
+<td class="num">429</td>
+<td class="num">2</td>
+<td class="num">2</td>
+</tr>
+<tr>
+<td class="">2026-08-24</td>
+<td class="num">321</td>
+<td class="num">4</td>
+<td class="num">4</td>
+</tr>
+<tr>
+<td class="">2026-08-25</td>
+<td class="num">441</td>
+<td class="num">4</td>
+<td class="num">4</td>
+</tr>
+<tr>
+<td class="">2026-08-26</td>
+<td class="num">336</td>
+<td class="num">2</td>
+<td class="num">2</td>
+</tr>
+<tr>
+<td class="">2026-08-27</td>
+<td class="num">271</td>
+<td class="num">1</td>
+<td class="num">1</td>
+</tr>
+<tr>
+<td class="">2026-08-28</td>
+<td class="num">394</td>
+<td class="num">2</td>
+<td class="num">2</td>
+</tr>
+<tr>
+<td class="">2026-08-29</td>
+<td class="num">509</td>
+<td class="num">3</td>
+<td class="num">3</td>
+</tr>
+<tr>
+<td class="">2026-08-30</td>
+<td class="num">315</td>
+<td class="num">1</td>
+<td class="num">1</td>
+</tr>
+<tr>
+<td class="">2026-08-31</td>
+<td class="num">686</td>
+<td class="num">5</td>
+<td class="num">5</td>
+</tr>
+<tr>
+<td class="">2026-09-01</td>
+<td class="num">313</td>
+<td class="num">1</td>
+<td class="num">1</td>
+</tr>
+<tr>
+<td class="">2026-09-02</td>
+<td class="num">430</td>
+<td class="num">1</td>
+<td class="num">1</td>
+</tr>
+<tr>
+<td class="">2026-09-03</td>
+<td class="num">649</td>
+<td class="num">4</td>
+<td class="num">4</td>
+</tr>
+<tr>
+<td class="">2026-09-04</td>
+<td class="num">657</td>
+<td class="num">5</td>
+<td class="num">5</td>
+</tr>
+<tr>
+<td class="">2026-09-05</td>
+<td class="num">339</td>
+<td class="num">1</td>
+<td class="num">1</td>
+</tr>
+<tr>
+<td class="">2026-09-08</td>
+<td class="num">582</td>
+<td class="num">1</td>
+<td class="num">1</td>
+</tr>
+<tr>
+<td class="">2026-09-09</td>
+<td class="num">303</td>
+<td class="num">1</td>
+<td class="num">1</td>
+</tr>
+<tr>
+<td class="">2026-09-10</td>
+<td class="num">547</td>
+<td class="num">4</td>
+<td class="num">4</td>
+</tr>
+<tr>
+<td class="">2026-09-11</td>
+<td class="num">662</td>
+<td class="num">2</td>
+<td class="num">2</td>
+</tr>
+<tr>
+<td class="">2026-09-12</td>
+<td class="num">321</td>
+<td class="num">2</td>
+<td class="num">2</td>
+</tr>
+<tr>
+<td class="">2026-09-13</td>
+<td class="num">952</td>
+<td class="num">2</td>
+<td class="num">2</td>
+</tr>
+<tr>
+<td class="">2026-09-14</td>
+<td class="num">297</td>
+<td class="num">1</td>
+<td class="num">1</td>
+</tr>
+<tr>
+<td class="">2026-09-15</td>
+<td class="num">506</td>
+<td class="num">0</td>
+<td class="num">0</td>
+</tr>
+<tr>
+<td class="">2026-09-16</td>
+<td class="num">360</td>
+<td class="num">1</td>
+<td class="num">1</td>
+</tr>
+<tr>
+<td class="">2026-09-17</td>
+<td class="num">284</td>
+<td class="num">1</td>
+<td class="num">1</td>
+</tr>
+<tr>
+<td class="">2026-09-18</td>
+<td class="num">374</td>
+<td class="num">3</td>
+<td class="num">3</td>
+</tr>
+<tr>
+<td class="">2026-09-19</td>
+<td class="num">532</td>
+<td class="num">3</td>
+<td class="num">3</td>
+</tr>
+<tr>
+<td class="">2026-09-20</td>
+<td class="num">335</td>
+<td class="num">2</td>
+<td class="num">2</td>
+</tr>
+<tr>
+<td class="">2026-09-21</td>
+<td class="num">457</td>
+<td class="num">2</td>
+<td class="num">2</td>
+</tr>
+<tr>
+<td class="">2026-09-22</td>
+<td class="num">504</td>
+<td class="num">2</td>
+<td class="num">2</td>
+</tr>
+<tr>
+<td class="">2026-09-23</td>
+<td class="num">1102</td>
+<td class="num">1</td>
+<td class="num">1</td>
+</tr>
+<tr>
+<td class="">2026-09-24</td>
+<td class="num">572</td>
+<td class="num">5</td>
+<td class="num">5</td>
+</tr>
+<tr>
+<td class="">2026-09-25</td>
+<td class="num">465</td>
+<td class="num">1</td>
+<td class="num">1</td>
+</tr>
+<tr>
+<td class="">2026-09-26</td>
+<td class="num">351</td>
+<td class="num">3</td>
+<td class="num">3</td>
+</tr>
+<tr>
+<td class="">2026-09-27</td>
+<td class="num">375</td>
+<td class="num">1</td>
+<td class="num">1</td>
+</tr>
+<tr>
+<td class="">2026-09-28</td>
+<td class="num">220</td>
+<td class="num">0</td>
+<td class="num">0</td>
+</tr>
+<tr>
+<td class="">2026-09-29</td>
+<td class="num">353</td>
+<td class="num">0</td>
+<td class="num">0</td>
+</tr>
+<tr>
+<td class="">2026-09-30</td>
+<td class="num">685</td>
+<td class="num">2</td>
+<td class="num">2</td>
+</tr>
+<tr>
+<td class="">2026-10-01</td>
+<td class="num">324</td>
+<td class="num">2</td>
+<td class="num">2</td>
+</tr>
+<tr>
+<td class="">2026-10-02</td>
+<td class="num">545</td>
+<td class="num">3</td>
+<td class="num">3</td>
+</tr>
+<tr>
+<td class="">2026-10-03</td>
+<td class="num">399</td>
+<td class="num">3</td>
+<td class="num">3</td>
+</tr>
+<tr>
+<td class="">2026-10-04</td>
+<td class="num">249</td>
+<td class="num">0</td>
+<td class="num">0</td>
+</tr>
+<tr>
+<td class="">2026-10-05</td>
+<td class="num">589</td>
+<td class="num">1</td>
+<td class="num">1</td>
+</tr>
+</tbody></table>
+<h2 id="s4">四、结论台账（analysis.sqlite · 64 条）</h2>
+<p>「证据条数」= 这条结论绑定了几个事件 ID；<b>0 = 目前只靠本人自述</b>，不是匹配失败。「成立时间」= 从哪天起成立。</p>
+<p>状态分布：<b>已修正</b> 13 · <b>已撤回</b> 9 · <b>待核实</b> 1 · <b>有效</b> 41 ｜ 有事件证据 <b>27</b> 条（42.2%）</p>
+<table class="">
+<thead><tr>
+<th class="num">ID</th>
+<th class="num">结论（截断）</th>
+<th class="num">状态</th>
+<th class="num">证据条数</th>
+<th class="num">成立时间</th>
+<th class="num">出处章节</th>
+</tr></thead><tbody>
+<tr>
+<td class="num">CON-001</td>
+<td class="num">人工锚点 &gt; 一切机器推断。</td>
+<td class="num">有效</td>
+<td class="num">0</td>
+<td class="num">2026-10-04</td>
+<td class="num">05-纠偏层.md</td>
+</tr>
+<tr>
+<td class="num">CON-002</td>
+<td class="num">笑一「朋友·潜在恋人」</td>
+<td class="num">已撤回</td>
+<td class="num">0</td>
+<td class="num"></td>
+<td class="num">二、已推翻清单</td>
+</tr>
+<tr>
+<td class="num">CON-003</td>
+<td class="num">陈昶文「朋友·学弟」</td>
+<td class="num">已撤回</td>
+<td class="num">0</td>
+<td class="num"></td>
+<td class="num">二、已推翻清单</td>
+</tr>
+<tr>
+<td class="num">CON-004</td>
+<td class="num">租她家的车跑滴滴</td>
+<td class="num">已撤回</td>
+<td class="num">0</td>
+<td class="num"></td>
+<td class="num">二、已推翻清单</td>
+</tr>
+<tr>
+<td class="num">CON-005</td>
+<td class="num">「不同意就分手」</td>
+<td class="num">已撤回</td>
+<td class="num">0</td>
+<td class="num"></td>
+<td class="num">二、已推翻清单</td>
+</tr>
+<tr>
+<td class="num">CON-006</td>
+<td class="num">用她的证件做兼职</td>
+<td class="num">已撤回</td>
+<td class="num">0</td>
+<td class="num"></td>
+<td class="num">二、已推翻清单</td>
+</tr>
+<tr>
+<td class="num">CON-007</td>
+<td class="num">顺风车增收</td>
+<td class="num">已撤回</td>
+<td class="num">0</td>
+<td class="num"></td>
+<td class="num">二、已推翻清单</td>
+</tr>
+<tr>
+<td class="num">CON-008</td>
+<td class="num">8/30「不许碰下面」</td>
+<td class="num">已撤回</td>
+<td class="num">0</td>
+<td class="num"></td>
+<td class="num">二、已推翻清单</td>
+</tr>
+<tr>
+<td class="num">CON-009</td>
+<td class="num">M1 = 0.80</td>
+<td class="num">已修正</td>
+<td class="num">0</td>
+<td class="num"></td>
+<td class="num">二、已推翻清单</td>
+</tr>
+<tr>
+<td class="num">CON-010</td>
+<td class="num">「她是焦虑型依恋」</td>
+<td class="num">已修正</td>
+<td class="num">0</td>
+<td class="num">2026-10-05</td>
+<td class="num">二、已推翻清单</td>
+</tr>
+<tr>
+<td class="num">CON-011</td>
+<td class="num">家人「人均 328 排倒数第一」</td>
+<td class="num">已撤回</td>
+<td class="num">0</td>
+<td class="num"></td>
+<td class="num">二、已推翻清单</td>
+</tr>
+<tr>
+<td class="num">CON-012</td>
+<td class="num">负产出区 14.2%</td>
+<td class="num">已修正</td>
+<td class="num">0</td>
+<td class="num"></td>
+<td class="num">二、已推翻清单</td>
+</tr>
+<tr>
+<td class="num">CON-013</td>
+<td class="num">距离定律「远距离 0 负面」</td>
+<td class="num">已修正</td>
+<td class="num">0</td>
+<td class="num"></td>
+<td class="num">二、已推翻清单</td>
+</tr>
+<tr>
+<td class="num">CON-014</td>
+<td class="num">距离定律「零距离两者皆无」</td>
+<td class="num">已修正</td>
+<td class="num">0</td>
+<td class="num">2026-09-29</td>
+<td class="num">二、已推翻清单</td>
+</tr>
+<tr>
+<td class="num">CON-015</td>
+<td class="num">母亲转账「两年 389 笔 / ¥347,550」</td>
+<td class="num">已撤回</td>
+<td class="num">0</td>
+<td class="num">2026-10-06</td>
+<td class="num">二、已推翻清单</td>
+</tr>
+<tr>
+<td class="num">CON-016</td>
+<td class="num">「母亲 2026-08 起几乎每天转一笔」</td>
+<td class="num">已修正</td>
+<td class="num">0</td>
+<td class="num">2026-10-06</td>
+<td class="num">二、已推翻清单</td>
+</tr>
+<tr>
+<td class="num">CON-017</td>
+<td class="num">这一条修正本身，就是本引擎存在的理由</td>
+<td class="num">已修正</td>
+<td class="num">0</td>
+<td class="num">2026-09-29</td>
+<td class="num">三、距离定律的修正记录（2026-09-29</td>
+</tr>
+<tr>
+<td class="num">CON-018</td>
+<td class="num">「家里就这样，不算事。父亲老了无能狂怒，并且越老越计较。 我认为我是个具有承受能力的人，加上他病重不想理他罢了。」</td>
+<td class="num">已修正</td>
+<td class="num">0</td>
+<td class="num">2026-09-29</td>
+<td class="num">05-纠偏层.md</td>
+</tr>
+<tr>
+<td class="num">CON-019</td>
+<td class="num">「还是分开的两件事」</td>
+<td class="num">有效</td>
+<td class="num">0</td>
+<td class="num">2026-09-29</td>
+<td class="num">三·补·2</td>
+</tr>
+<tr>
+<td class="num">CON-020</td>
+<td class="num">⚠️ 医疗与丧事资料永久保护。可确认时间，不得展开细节。</td>
+<td class="num">有效</td>
+<td class="num">3</td>
+<td class="num">2026-09-29</td>
+<td class="num">三·补·3</td>
+</tr>
+<tr>
+<td class="num">CON-021</td>
+<td class="num">「大头清了，程颂孟秋那笔还欠着就差 2000 元。但是我之前泡妞花超了， 每个月有 3000 元左右贷款要还，手头一点钱都没有。」</td>
+<td class="num">有效</td>
+<td class="num">4</td>
+<td class="num">2026-09-29</td>
+<td class="num">三·补·4</td>
+</tr>
+<tr>
+<td class="num">CON-022</td>
+<td class="num">同一个模式，两个现场。</td>
+<td class="num">有效</td>
+<td class="num">0</td>
+<td class="num">2026-09-29</td>
+<td class="num">三·补·5</td>
+</tr>
+<tr>
+<td class="num">CON-023</td>
+<td class="num">★ 2026-10-04 本人亲口印证（Q15 定稿）</td>
+<td class="num">有效</td>
+<td class="num">0</td>
+<td class="num">2026-09-29</td>
+<td class="num">三·补·6</td>
+</tr>
+<tr>
+<td class="num">CON-024</td>
+<td class="num">「我不是在央美读博，是读硕士。有时候好面子跟别人说读博。」 「还有笑一和林立娜也是练练手谈恋爱，不会长期投入。」</td>
+<td class="num">有效</td>
+<td class="num">0</td>
+<td class="num">2026-09-29</td>
+<td class="num">三·补·7</td>
+</tr>
+<tr>
+<td class="num">CON-025</td>
+<td class="num">「和笑一 / 林立娜一类（练练手），太丑连性都不愿意。」</td>
+<td class="num">有效</td>
+<td class="num">2</td>
+<td class="num">2026-09-29</td>
+<td class="num">三·补·8</td>
+</tr>
+<tr>
+<td class="num">CON-026</td>
+<td class="num">「我在格拉斯哥读发展经济学只拿到最低等学位，没法找工作，所以我母亲是央美退休教授， 跟章燕紫是认识的，冯梦波院长刚退休是老朋友，武宏也是我妈之前学生老朋友 所以让我考央美硕士能考上。」</td>
+<td class="num">有效</td>
+<td class="num">1</td>
+<td class="num">2026-09-29</td>
+<td class="num">三·补·9</td>
+</tr>
+<tr>
+<td class="num">CON-027</td>
+<td class="num">「被骗了错误操作，我之前回答过你。」 → 即本条早已答过（2026-09-29）；本人确认措辞为「被骗（后做了）错误操作」， 与下方裁定一致（被骗 → 影响学业）。不得再当悬空项提问。</td>
+<td class="num">有效</td>
+<td class="num">0</td>
+<td class="num">2026-09-29</td>
+<td class="num">三·补·10</td>
+</tr>
+<tr>
+<td class="num">CON-028</td>
+<td class="num">「家里不知道。英国欠的钱不着急找我要，暂时生活没影响，他们都没音了。」</td>
+<td class="num">有效</td>
+<td class="num">0</td>
+<td class="num">2026-09-29</td>
+<td class="num">三·补·11</td>
+</tr>
+<tr>
+<td class="num">CON-029</td>
+<td class="num">★ 2026-10-04 本人补充（Q13+ 收尾）</td>
+<td class="num">有效</td>
+<td class="num">0</td>
+<td class="num">2026-09-29</td>
+<td class="num">三·补·12</td>
+</tr>
+<tr>
+<td class="num">CON-030</td>
+<td class="num">三·补·13、2026 夏（07-24 → 09-29）补录：盲区已用数据补上（2026-09-30）</td>
+<td class="num">有效</td>
+<td class="num">0</td>
+<td class="num">2026-09-30</td>
+<td class="num">三·补·13</td>
+</tr>
+<tr>
+<td class="num">CON-031</td>
+<td class="num">最主要入党</td>
+<td class="num">有效</td>
+<td class="num">0</td>
+<td class="num">2026-09-30</td>
+<td class="num">三·补·14</td>
+</tr>
+<tr>
+<td class="num">CON-032</td>
+<td class="num">「已经是女朋友。能给我在性关系玩得开，暂时没钱换更好的。」</td>
+<td class="num">有效</td>
+<td class="num">0</td>
+<td class="num">2026-10-04</td>
+<td class="num">三·补·15</td>
+</tr>
+<tr>
+<td class="num">CON-033</td>
+<td class="num">他的付出之所以「换不到东西」，不只是导师薄凉 —— 是他投的是「态度」（道歉、感谢、加倍劳动）， 而她要的是「结果」（按时交付）。两者不在同一个计价体系里。</td>
+<td class="num">有效</td>
+<td class="num">5</td>
+<td class="num">2026-09-30</td>
+<td class="num">三·补·16</td>
+</tr>
+<tr>
+<td class="num">CON-034</td>
+<td class="num">备注是盖子。对妈妈说的「陈晔什么都没给过我」是盖子底下那锅水。</td>
+<td class="num">有效</td>
+<td class="num">5</td>
+<td class="num">2026-09-30</td>
+<td class="num">三·补·17</td>
+</tr>
+<tr>
+<td class="num">CON-035</td>
+<td class="num">三·补·18、★ 2026-10-04 全维度盘点：修正 2 个错误 + 新增第四层「无人时档案」</td>
+<td class="num">已修正</td>
+<td class="num">5</td>
+<td class="num">2026-10-04</td>
+<td class="num">三·补·18</td>
+</tr>
+<tr>
+<td class="num">CON-036</td>
+<td class="num">⚠️ 2026-10-04 第三批访谈修正</td>
+<td class="num">有效</td>
+<td class="num">5</td>
+<td class="num">2026-10-04</td>
+<td class="num">三·补·19</td>
+</tr>
+<tr>
+<td class="num">CON-037</td>
+<td class="num">「我老师想做自己政绩，我没有办法只能去。」</td>
+<td class="num">有效</td>
+<td class="num">0</td>
+<td class="num">2026-10-04</td>
+<td class="num">三·补·20</td>
+</tr>
+<tr>
+<td class="num">CON-038</td>
+<td class="num">★★ 2026-10-04 后续三轮访谈后的更新（本节清单已被逐条关闭）</td>
+<td class="num">有效</td>
+<td class="num">1</td>
+<td class="num">2026-10-04</td>
+<td class="num">三·补·21</td>
+</tr>
+<tr>
+<td class="num">CON-039</td>
+<td class="num">三·补·22、★ 2026-10-04 第三批访谈（4 条）· 「同住 = 想搬出去」</td>
+<td class="num">待核实</td>
+<td class="num">0</td>
+<td class="num">2026-10-04</td>
+<td class="num">三·补·22</td>
+</tr>
+<tr>
+<td class="num">CON-040</td>
+<td class="num">三·补·23、★ 2026-10-04 第四批访谈（4 条）· 舒泽林线 + 坝上「招待」证伪 + 美团收尾</td>
+<td class="num">有效</td>
+<td class="num">1</td>
+<td class="num">2026-10-04</td>
+<td class="num">三·补·23</td>
+</tr>
+<tr>
+<td class="num">CON-041</td>
+<td class="num">「舒泽林是大哥，崔鹏和韩建中都是他介绍的高端人脉。他是我高中同学，一直瞧不上我，但是认识久了， 属于我圈子里面的高端大哥，需要认真对待。」 「崔鹏是国安部的中央选调生；韩建中家里亦庄那边最大的酒店产业是他父亲的，德州人， 从北理工对面的酒店发家；他们是中国海洋的同学。还有 99hh，他父亲是退休的丰</td>
+<td class="num">有效</td>
+<td class="num">1</td>
+<td class="num">2026-10-04</td>
+<td class="num">三·补·24</td>
+</tr>
+<tr>
+<td class="num">CON-042</td>
+<td class="num">三·补·25、2026-10-04 第六批访谈（3 条）· 2017–2024 三块盲区定位</td>
+<td class="num">有效</td>
+<td class="num">0</td>
+<td class="num">2026-10-04</td>
+<td class="num">三·补·25</td>
+</tr>
+<tr>
+<td class="num">CON-043</td>
+<td class="num">「（李松澤）远，但是他有白血病，入党投票可能需要他。」 「（李彦樵）他女朋友知道我妈是教授想逗我，对我有点恨意，入党投票需要担心拉拢。」 「（周宇涵）也是入党投票需要拉拢，没什么相关的。」</td>
+<td class="num">有效</td>
+<td class="num">0</td>
+<td class="num">2026-10-04</td>
+<td class="num">三·补·26</td>
+</tr>
+<tr>
+<td class="num">CON-044</td>
+<td class="num">★★ 四、方法论修正：问档位时不能用「零」（2026-10-04 实测踩坑）</td>
+<td class="num">已修正</td>
+<td class="num">0</td>
+<td class="num">2026-10-04</td>
+<td class="num">四、方法论修正：问档位时不能用「零」</td>
+</tr>
+<tr>
+<td class="num">CON-045</td>
+<td class="num">★★ 六、最终标定结果（29/29 完成 · 2026-10-04 ｜ 含当日 Groot 修正）</td>
+<td class="num">已修正</td>
+<td class="num">5</td>
+<td class="num">2026-10-04</td>
+<td class="num">六、最终标定结果（29/29 完成</td>
+</tr>
+<tr>
+<td class="num">CON-046</td>
+<td class="num">三·补·27、★★★ 距离档不可自动推断（2026-10-04 · 全库预标定实测 · 硬结论）</td>
+<td class="num">有效</td>
+<td class="num">0</td>
+<td class="num">2026-10-04</td>
+<td class="num">三·补·27</td>
+</tr>
+<tr>
+<td class="num">CON-047</td>
+<td class="num">三·补·28、★★ 关系起点逆推：他怎么加人 + 关系的「生死榜」（2026-10-04）</td>
+<td class="num">有效</td>
+<td class="num">5</td>
+<td class="num">2026-10-04</td>
+<td class="num">三·补·28</td>
+</tr>
+<tr>
+<td class="num">CON-048</td>
+<td class="num">⚠️ 2026-10-04 更正：本节把「琢 / 养肥 / 王博」读作「社会美育核心协作者」—— 该判断作废。 本人裁定：他们是下一届同门师弟师妹，且「都坑过我」。详见 `三·补·31`。</td>
+<td class="num">有效</td>
+<td class="num">5</td>
+<td class="num">2026-10-04</td>
+<td class="num">三·补·29</td>
+</tr>
+<tr>
+<td class="num">CON-049</td>
+<td class="num">三·补·30、★★★ 数据源盘点：12 个源只用 3 个 + 三个推翻性发现（2026-10-04）</td>
+<td class="num">已修正</td>
+<td class="num">5</td>
+<td class="num">2026-10-04</td>
+<td class="num">三·补·30</td>
+</tr>
+<tr>
+<td class="num">CON-050</td>
+<td class="num">来源：本人对「多轮交叉分析」8 项待裁定的口头答复。以下四条以本人原话为准，不得改写。</td>
+<td class="num">有效</td>
+<td class="num">5</td>
+<td class="num">2026-10-04</td>
+<td class="num">三·补·31</td>
+</tr>
+<tr>
+<td class="num">CON-051</td>
+<td class="num">触发：本人「继续分析这两年重要的事情」。 数据：全库 388,550 条 / 1,802 会话，逐月总量 × 逐月 TOP6 × 新进/末次活跃 × 50词×24月 矩阵，四层对齐。 报告：`这两年重要的事_2024-11至2026-10_2026-10-04.html` 脚本：`tools/min</td>
+<td class="num">有效</td>
+<td class="num">4</td>
+<td class="num">2026-10-04</td>
+<td class="num">三·补·32</td>
+</tr>
+<tr>
+<td class="num">CON-052</td>
+<td class="num">触发：本人「感觉分析的还是很偏没什么重要的，还是聚焦这一年吧，大胆猜测，利用分析的结果分析，再分析，多层次分析」。 方法：换打法 —— 先看钱，再看他说了什么，最后才看关系。 报告：`这一年_大胆猜测_2025-10至2026-10_2026-10-04.html` 脚本：`tools/focus_</td>
+<td class="num">有效</td>
+<td class="num">5</td>
+<td class="num">2026-10-04</td>
+<td class="num">三·补·33</td>
+</tr>
+<tr>
+<td class="num">CON-053</td>
+<td class="num">触发：本人「以我的支付记录或者消费记录倒推补充事件也可以…母亲给我的钱也有一部分是不是买车用的，大胆推测，分析再分析」 附加约束：「我很痛不要问太多」 → 本节不出待确认清单，只出结论 + 可证伪条件。</td>
+<td class="num">有效</td>
+<td class="num">1</td>
+<td class="num">2026-10-04</td>
+<td class="num">三·补·34</td>
+</tr>
+<tr>
+<td class="num">CON-054</td>
+<td class="num">触发：本人「把所有的东西都打通吧，分析再分析，再分析，多层次分析修正，然后整体带通打通」 性质：这不是一次新分析，是一次「检修 + 校表」 —— 把七层（引擎 / 知识库 / 事件库 / 距离地图 / 实时索引 / HTML / 记忆）互相矛盾的地方一次修平。 附加约束（延续）：「我很痛不要问太多」</td>
+<td class="num">已修正</td>
+<td class="num">5</td>
+<td class="num">2026-10-04</td>
+<td class="num">三·补·35</td>
+</tr>
+<tr>
+<td class="num">CON-055</td>
+<td class="num">触发：本人「你能同步到我的微信支付记录还有美团的支付提醒吗，这样事件库会更加健全能跑到吗」 结论：能跑，且已在库里 —— 不需要外部数据，五个官方推送号就在索引库中。</td>
+<td class="num">有效</td>
+<td class="num">5</td>
+<td class="num">2026-10-04</td>
+<td class="num">三·补·36</td>
+</tr>
+<tr>
+<td class="num">CON-056</td>
+<td class="num">触发：本人「那与事件深度打通，分析分析再分析争取全部打通」 性质：把「钱」并进事件层，并用索引库校正事件库的两处结构性问题。</td>
+<td class="num">有效</td>
+<td class="num">5</td>
+<td class="num">2026-10-04</td>
+<td class="num">三·补·37</td>
+</tr>
+<tr>
+<td class="num">CON-057</td>
+<td class="num">井邻不是「一个实习」，是读研期间的真正主线（515 条 / 99 会话 / 跨 19 个月）， 而且它同时是三件事 —— 一个乡村美育项目、一次与母亲的共同劳动、一条被他主动淡化的投入。</td>
+<td class="num">有效</td>
+<td class="num">5</td>
+<td class="num">2026-10-04</td>
+<td class="num">三·补·38</td>
+</tr>
+<tr>
+<td class="num">CON-058</td>
+<td class="num">此前的事件库 / 支付流 / 井邻线 / 距离地图 / 车与家教线都是按主题组织的， 彼此要靠人脑去对日期。本节把它们汇流到「一天一行」 —— 于是「钱与事不同步」「多线并行」这类结构，第一次能在每一天的层面直接看见。</td>
+<td class="num">有效</td>
+<td class="num">5</td>
+<td class="num">2026-10-04</td>
+<td class="num">三·补·39</td>
+</tr>
+<tr>
+<td class="num">CON-059</td>
+<td class="num">本人原话（节选）</td>
+<td class="num">有效</td>
+<td class="num">0</td>
+<td class="num">2026-10-04</td>
+<td class="num">三·补·40</td>
+</tr>
+<tr>
+<td class="num">CON-060</td>
+<td class="num">第二轮四件事做完：Bases 四工作视图可用了、盲测证明分析没偷看未来、隐私核对挖出 3 个真问题（其中 Ollama 监听地址已修）。</td>
+<td class="num">有效</td>
+<td class="num">0</td>
+<td class="num">2026-10-05</td>
+<td class="num">三·补·41</td>
+</tr>
+<tr>
+<td class="num">CON-061</td>
+<td class="num">每条结论现在能答两件事：支持它的事件是哪几条、它从哪天起成立。53% 的在效结论有事件证据，剩下的是本人自述——不是匹配失败，是它们本来就不由事件支撑。</td>
+<td class="num">有效</td>
+<td class="num">0</td>
+<td class="num">2026-10-05</td>
+<td class="num">三·补·42</td>
+</tr>
+<tr>
+<td class="num">CON-062</td>
+<td class="num">这份报告 90% 是引擎已有裁定的复述，事实层基本可信；但有 3 处与引擎已裁定直接冲突、5 处违反明令红线、3 处数据不支撑。它不该进纠偏层当结论，但它的 4 个可证伪预测值得登记。</td>
+<td class="num">有效</td>
+<td class="num">2</td>
+<td class="num">2026-10-05</td>
+<td class="num">三·补·43</td>
+</tr>
+<tr>
+<td class="num">CON-063</td>
+<td class="num">年度骨架铺满、2026-07 之后的抽取缺口定位并补出 183 条候选、三条主线找到「起点—选项—代价—结果」；母亲一年转来 125 笔 / ¥136,275（⚠️ 2026-10-06 已按三·补·45 去重；旧口径 175 笔 / ¥183,275 系重复记账），笑一消息量 7 月 869 → </td>
+<td class="num">有效</td>
+<td class="num">5</td>
+<td class="num">2026-10-05</td>
+<td class="num">三·补·44</td>
+</tr>
+<tr>
+<td class="num">CON-064</td>
+<td class="num">微信转账在导出库里每笔记两行（一行 role=them、一行 role=me，内容完全相同、时间差中位数 27 秒），所以「母亲两年转来 389 笔 / ¥347,550」是双倍的；去重后真值是 ≈197 笔 / ¥174,825（两年），2026 年 1–10 月 ≈113 笔 / ¥124,17</td>
+<td class="num">有效</td>
+<td class="num">1</td>
+<td class="num">2026-10-06</td>
+<td class="num">三·补·45</td>
+</tr>
+</tbody></table>
+<h2 id="s5">五、遗留问题台账</h2>
+<h3>5.1 已裁定（本轮）</h3>
+<table><thead><tr><th>问题</th><th>裁定</th><th>依据</th></tr></thead><tbody>
+<tr><td>C1 钱 → 关系？</td><td>❌ 证伪</td><td>日级无共动；9 月钱跌 67%，关系只跌 2%</td></tr>
+<tr><td>C2 关系 → 钱？</td><td>❌ 证伪</td><td>方向反了也不成立</td></tr>
+<tr><td>8 月双峰是不是因果？</td><td>❌ 不是，是日历效应</td><td>学费 8 月底到期 + 关系 8 月初进入新阶段</td></tr>
+<tr><td>C3-a 同住挤压？</td><td>✅ 成立</td><td>峰值小时 16 时 → 22 时；09-27 自述；深夜占比逐月上升</td></tr>
+<tr><td>C3-b 外部补偿？</td><td>❌ 不成立</td><td>母亲消息高的日子笑一反而少 21%</td></tr>
+<tr><td>导师划界后他的反应？</td><td>❌ 不是「白干了」</td><td>1 分钟内回「明白老师」，同日仍在推进交易</td></tr>
+</tbody></table>
+<h3>5.2 悬空（等他答）</h3>
+<table><thead><tr><th>#</th><th>问题</th><th>为什么要问</th></tr></thead><tbody>
+<tr><td><b>Q1</b></td><td>2026-08 家里给的钱是全年最多（¥36,300）—— 是「手上有钱所以敢多花」，还是「关系上花多了才去要」？</td><td>决定 A 组解释的最终归属</td></tr>
+<tr><td><b>Q2</b></td><td>2026-07-02 的「你俩整天闹」—— 是就事论事骂你开车，还是他们两人本来就在闹？</td><td>决定 A3（父母关系紧张外溢）能否升级为可检验假设</td></tr>
+<tr><td><b>Q3</b></td><td>2026-10-02 导师划界时，第一反应是松了一口气还是白干了？</td><td>内部动机只能本人注入（铁律 4）</td></tr>
+<tr><td><b>Q4</b></td><td>在笑一面前，你是「照顾她的人」还是「被她需要的人」？这两个在你这儿是同一件事吗？</td><td>Q4 目前不可证伪，只能靠自述</td></tr>
+<tr><td><b>Q5</b></td><td>10 月前 5 天笑一日均掉到 8 月的 58%（48.8 vs 85.3）—— 是你主动冷下来，还是外部事情挤掉了？</td><td>决定 C4 是否成立</td></tr>
+</tbody></table>
+<h3>5.3 待你拍板</h3>
+<table><thead><tr><th>事项</th><th>建议</th><th>现状</th></tr></thead><tbody>
+<tr><td>C3-a 是否升级为裁定？</td><td>升级</td><td>已有自述 + 时段双重印证</td></tr>
+<tr><td>C3-b 是否写进「已推翻清单」？</td><td>写进</td><td>日级 + 分组双重否定</td></tr>
+<tr><td>依恋类型（焦虑型 / 恐惧-回避型）</td><td>维持「未裁定」</td><td>两边都无人工锚点；不得作为推理前提</td></tr>
+<tr><td>知识库 PII 57 处</td><td>脱敏 or 永久不开 Sync</td><td>二选一，工具已就绪 &lt;code&gt;tools/sanitize_vault_pii.py&lt;/code&gt;</td></tr>
+<tr><td>知识库聊天流水 1 篇</td><td>删除或脱敏</td><td>&lt;code&gt;03_微信聊天分析\01_人物档案\新增人物案例.md&lt;/code&gt;</td></tr>
+<tr><td>Q15+ 笑一定性</td><td>已裁定为「现任女友（名分）+ 资源约束（实质）」</td><td>见引擎 三·补·15</td></tr>
+</tbody></table>
+<h3>5.4 待办（下一批）</h3>
+<ol>
+<li>人工过 <b>9 个零候选日</b>：2026-07-07、07-13、07-31、08-02、08-14、09-15、09-28、09-29、10-04</li>
+<li>把 <b>178 条候选</b>升级为事件（逐条标「确定 / 范围 / 待确认」，写进 <code>analysis.sqlite</code>，<code>review_status=待核实</code>）</li>
+<li>补 <b>2025-11 缺口</b>（密度 5.1，全年最早的异常月）</li>
+<li>Ollama JSON Schema + Pydantic 结构化抽取（先补 2026-08 之后）</li>
+<li>FTS5 + 人物别名表（<code>persons</code> / <code>aliases</code> 表已建但空）</li>
+<li><code>load_self</code>（本人确认的感受）仍是<b>全空</b> —— 只有本人能填，脚本永不覆盖</li>
+<li><code>unlinked</code> 1,036 条证据待人工确认</li>
+</ol>
+<h2 id="s6">六、红线与已知陷阱</h2>
+<p class="small">权威版本在引擎 <code>05-纠偏层.md</code>；此处是排查时最常用的一份速查。对外写材料前先扫一遍。</p>
+<h3>6.1 内容红线</h3>
+<table><thead><tr><th>#</th><th>红线</th><th>为什么</th></tr></thead><tbody>
+<tr><td class='num'>12</td><td>债务叙事不得抹掉「被骗」这一主因</td><td>抹掉就变成「他自己乱花」</td></tr>
+<tr><td class='num'>13</td><td>「父母冷战」不得当数据事实引用</td><td>全库搜「冷战」零命中，目前只有本人自述</td></tr>
+<tr><td class='num'>14</td><td>不得用「未裁定」的标签当推理前提</td><td>典型＝依恋类型；本轮实测该做法预测全错</td></tr>
+<tr><td class='num'>—</td><td>不得读成谄媚 / 病态</td><td>「备注即规程」是自我规程，不是人格缺陷</td></tr>
+<tr><td class='num'>—</td><td>不得用一方否定另一方（母亲 vs 导师）</td><td>两条线都是真的</td></tr>
+<tr><td class='num'>—</td><td>不得建议他改备注</td><td>备注是盖子，改盖子解决不了盖子底下的事</td></tr>
+<tr><td class='num'>—</td><td>不得把「朋友圈不加评估语」读成「对人虚伪」</td><td>两套语言都是真的，只是场景不同</td></tr>
+<tr><td class='num'>—</td><td>不得把「母亲点赞」读成「关系变好了」</td><td>它只证明朋友圈是第二条通道</td></tr>
+<tr><td class='num'>—</td><td>不得用朋友圈 11 条反推「发圈频率」绝对值</td><td>样本是缓存，非全量</td></tr>
+<tr><td class='num'>—</td><td>不得把「同住 → 母亲微信量少」读成「关系淡」</td><td>同住 = 事务面对面，微信只承担通知</td></tr>
+<tr><td class='num'>—</td><td>「独立负责技术开发」等口径不得写</td><td>见 USER.md 口径红线表</td></tr>
+<tr><td class='num'>—</td><td>含真人姓名 / 金额 / 私密内容的产物不得外传</td><td>数据主权硬约束</td></tr>
+</tbody></table>
+<h3>6.2 方法陷阱（已踩过）</h3>
+<table><thead><tr><th>陷阱</th><th>正解</th></tr></thead><tbody>
+<tr><td>拿不完整月的<b>总量</b>比整月总量</td><td>跨月比较一律用<b>日均</b>（本报告初版犯过：10 月 5 天 vs 8 月整月）</td></tr>
+<tr><td>用 Pearson 0.98 说「天天过路」</td><td>单日极值会撑起假相关；必须同时看<b>秩相关</b>（此处只剩 0.25）</td></tr>
+<tr><td>把「候选」当「事实」</td><td>178 条是规则抽取，标 <code>待核实</code>；只有被链 A/B/C 引用过的逐条看过原文</td></tr>
+<tr><td>把「消息量」当「关系强度」</td><td>它只是粗代理；同住 / 事务 / 刷屏都会污染</td></tr>
+<tr><td>把「父母冷战」当数据事实</td><td>全库零命中（红线 13）</td></tr>
+<tr><td>把「未裁定标签」当前提</td><td>改用已有人工锚点的裁定（如 Q14）</td></tr>
+<tr><td>用朋友圈缓存算发圈频率</td><td>样本是缓存，只能读风格与簇状分布</td></tr>
+<tr><td>FTS 搜 2 字人名返回 0</td><td><code>tokenize='trigram'</code> 要求 ≥3 字；2 字改用 <code>LIKE</code></td></tr>
+<tr><td>文件名含点时用 <code>splitext</code> 取 basename</td><td>会在最后一个点切错；只剥结尾 <code>.md</code></td></tr>
+<tr><td>结论抽取的「一句话」不在节首第一行</td><td>会被抓成短标签（本轮 CON-061 一度变成「起因」）</td></tr>
+</tbody></table>
+<h2 id="s7">七、脚本与产物索引</h2>
+<h3>7.1 本轮新增 / 涉及的脚本（<code>tools\</code>）</h3>
+<table><thead><tr><th>脚本</th><th>作用</th><th>读写</th><th>字节</th></tr></thead><tbody>
+<tr><td><code>annual_skeleton.py</code></td><td>年度事件骨架（2025-10 → 2026-10）</td><td><span class='tag t-ok'>只读</span></td><td class='num'>7,080</td></tr>
+<tr><td><code>august_daily_align.py</code></td><td>2026 年 8 月逐日对齐（解决 C1「钱→关系」 vs C2「关系→钱」）</td><td><span class='tag t-ok'>只读</span></td><td class='num'>8,494</td></tr>
+<tr><td><code>blind_test.py</code></td><td>时间盲测：只给截至某日的资料，检验有没有「偷看未来」</td><td><span class='tag t-ok'>只读</span></td><td class='num'>13,564</td></tr>
+<tr><td><code>build_master_index.py</code></td><td>分析总览：一个页面找到全部分析产物（只读扫描 + 生成索引）</td><td><span class='tag t-idle'>—</span></td><td class='num'>29,087</td></tr>
+<tr><td><code>build_unified_workbench.py</code></td><td>统一排查台（单文件 HTML · 自包含 · 浅色 · 中文）</td><td><span class='tag t-ok'>只读</span></td><td class='num'>33,768</td></tr>
+<tr><td><code>check_vault_links.py</code></td><td>Obsidian Vault 断链体检 v2（只读）</td><td><span class='tag t-idle'>—</span></td><td class='num'>4,429</td></tr>
+<tr><td><code>extract_conclusions.py</code></td><td>从 05-纠偏层.md 提取结论 → conclusions 表（幂等）</td><td><span class='tag t-half'>写库</span></td><td class='num'>8,351</td></tr>
+<tr><td><code>idle_hours_align.py</code></td><td>C3（同住挤压 → 外部补偿）的验证材料（只读）</td><td><span class='tag t-ok'>只读</span></td><td class='num'>6,468</td></tr>
+<tr><td><code>mine_gap_events.py</code></td><td>补抽 2026-07 → 2026-10 的事件缺口</td><td><span class='tag t-ok'>只读</span></td><td class='num'>9,900</td></tr>
+<tr><td><code>privacy_audit.py</code></td><td>隐私核对：本地 AI 与知识库的对外暴露面（只读，除 --fix）</td><td><span class='tag t-ok'>只读</span></td><td class='num'>15,023</td></tr>
+<tr><td><code>regenerate_all.py</code></td><td>统一生成管线（一次计算 → 全部产物同一版本戳）</td><td><span class='tag t-ok'>只读</span></td><td class='num'>12,688</td></tr>
+<tr><td><code>verify_analysis.py</code></td><td>一次改动后必跑的验收检查（只读为主 · 自测在临时副本上）</td><td><span class='tag t-ok'>只读</span></td><td class='num'>19,688</td></tr>
+</tbody></table>
+<div class="note"><b>只读铁律</b>：所有读 <code>index.sqlite</code> 的脚本一律 <code>file:...?mode=ro</code>；只有 3 个白名单脚本可以写 <code>analysis.sqlite</code>。<code>python tools\regenerate_all.py</code> 一条命令重跑全部产物。</div>
+<h3>7.2 <code>_tmp</code> 产物清单</h3>
+<table><thead><tr><th>文件</th><th>行数</th><th>字节</th></tr></thead><tbody>
+<tr><td><code>annual_skeleton.csv</code></td><td class='num'>11</td><td class='num'>722</td></tr>
+<tr><td><code>annual_skeleton_detail.csv</code></td><td class='num'>1672</td><td class='num'>278,013</td></tr>
+<tr><td><code>august_daily.csv</code></td><td class='num'>31</td><td class='num'>1,576</td></tr>
+<tr><td><code>august_lag.csv</code></td><td class='num'>9</td><td class='num'>1,015</td></tr>
+<tr><td><code>daily_master.csv</code></td><td class='num'>701</td><td class='num'>217,621</td></tr>
+<tr><td><code>dist_features_29.csv</code></td><td class='num'>29</td><td class='num'>4,169</td></tr>
+<tr><td><code>dist_features_all.csv</code></td><td class='num'>1004</td><td class='num'>133,192</td></tr>
+<tr><td><code>event_date_audit.csv</code></td><td class='num'>416</td><td class='num'>50,361</td></tr>
+<tr><td><code>gap_daily.csv</code></td><td class='num'>95</td><td class='num'>1,953</td></tr>
+<tr><td><code>gap_events_2026H2.csv</code></td><td class='num'>183</td><td class='num'>39,490</td></tr>
+<tr><td><code>idle_events.csv</code></td><td class='num'>171</td><td class='num'>5,959</td></tr>
+<tr><td><code>idle_hours.csv</code></td><td class='num'>480</td><td class='num'>10,431</td></tr>
+<tr><td><code>idle_hours_summary.csv</code></td><td class='num'>20</td><td class='num'>816</td></tr>
+<tr><td><code>jinglin_timeline.csv</code></td><td class='num'>515</td><td class='num'>173,598</td></tr>
+<tr><td><code>number_baseline.json</code></td><td class='num'></td><td class='num'>4,431</td></tr>
+<tr><td><code>payment_event_daily.csv</code></td><td class='num'>366</td><td class='num'>9,568</td></tr>
+<tr><td><code>payment_flow.csv</code></td><td class='num'>2207</td><td class='num'>276,791</td></tr>
+<tr><td><code>pipeline_manifest.json</code></td><td class='num'></td><td class='num'>7,933</td></tr>
+<tr><td><code>pipeline_stamp.json</code></td><td class='num'></td><td class='num'>153</td></tr>
+<tr><td><code>sess.json</code></td><td class='num'></td><td class='num'>201,571</td></tr>
+<tr><td><code>transfer_dedup.csv</code></td><td class='num'>20</td><td class='num'>922</td></tr>
+</tbody></table>
+<h2 id="s8">八、系统状态与验收</h2>
+<table><thead><tr><th>项</th><th>值</th></tr></thead><tbody>
+<tr><td>run_id</td><td><code>20261006-073839</code>（全部产物共用同一戳）</td></tr>
+<tr><td>数据截至</td><td>2026-10-05</td></tr>
+<tr><td>分析库</td><td><code>analysis.sqlite</code> · 2,864 事件 / 5,463 证据 / 64 结论</td></tr>
+<tr><td>索引库</td><td><code>index.sqlite</code> · 389,375 条 / 1,803 会话</td></tr>
+<tr><td>验收检查</td><td>✅ 30 / 30 通过</td></tr>
+<tr><td>时间盲测</td><td>✅ 7 / 7 通过（证明分析没偷看未来）</td></tr>
+<tr><td>隐私核对</td><td>⚠️ 8 通过 / 2 失败（知识库聊天流水 1 篇 · PII 57 处）—— 待拍板</td></tr>
+<tr><td>知识库断链</td><td>✅ 0</td></tr>
+<tr><td>人工批注</td><td>✅ 0 丢失（verdict / my_note 永不被脚本覆盖）</td></tr>
+<tr><td>结论 ←→ 证据覆盖</td><td>27 / 64 = 42.2%</td></tr>
+</tbody></table>
+<div class="foot">
+生成 2026-10-06 07:38 ｜ run_id <code>20261006-073839</code> ｜ 脚本 <code>tools\build_unified_workbench.py</code>（只读）<br>
+权威来源：引擎 <code>05-纠偏层.md</code> 三·补·44（第八 / 九 / 十 / 十一节）· 报告 <code>年度事件重建_第二个我_第一轮_2026-10-05.html</code><br>
+数据全程本地 · 未联网 · 未上传第三方 · <b>不得外传</b>
+</div>
+</div></body></html>

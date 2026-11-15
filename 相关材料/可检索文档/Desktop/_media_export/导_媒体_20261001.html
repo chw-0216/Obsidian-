@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>导！急速回，三思回得体！！！</title>
+<style>
+  :root { color-scheme: dark; }
+  body { font-family: "Segoe UI", "Microsoft YaHei", system-ui, sans-serif; background:#121417; color:#e8eaed; margin:0; }
+  h1 { font-size: 20px; margin: 18px 16px 2px; }
+  .meta { color:#9aa0a6; font-size: 12px; margin: 0 16px 14px; }
+  #chat { display:flex; flex-direction:column; gap:10px; padding: 0 16px 20px; max-width: 860px; margin: 0 auto; }
+  .msg { display:flex; flex-direction:column; max-width: 72%; }
+  .msg.me { align-self: flex-end; align-items: flex-end; }
+  .msg.peer { align-self: flex-start; align-items: flex-start; }
+  .who { font-size: 12px; color:#9aa0a6; margin-bottom: 3px; padding: 0 4px; }
+  .bubble { background:#1e2329; border:1px solid #2b313a; border-radius: 12px; padding: 8px 12px;
+            word-break: break-word; white-space: pre-wrap; line-height: 1.5; }
+  .msg.me .bubble { background:#1f4e36; border-color:#2c6b4c; }
+  .tag { color:#e8c76a; font-size: 11px; margin-right: 6px; }
+  .time { font-size: 11px; color:#6b7280; margin-top: 2px; padding: 0 4px; }
+  .footer { text-align:center; color:#6b7280; font-size: 12px; padding: 8px 0 24px; }
+  .media-img { display:block; max-width: 320px; max-height: 320px; border-radius: 8px; margin-top: 8px; border:1px solid #333a44; }
+  /* ---- cards (M4) ---- */
+  .card { margin-top: 6px; }
+  .card.media { position: relative; }
+  .card.media img { display:block; max-width: 320px; max-height: 320px; border-radius: 8px; border:1px solid #333a44; }
+  .card.media img.thumb { max-width: 160px; max-height: 160px; }
+  .card.media video { display:block; max-width: 360px; border-radius: 8px; background:#000; }
+  .badge { position:absolute; right:6px; bottom:6px; background: rgba(0,0,0,.62); color:#dfe5ea; font-size:10px; padding:2px 6px; border-radius:5px; }
+  .card.stub, .card.app { display:flex; gap:9px; align-items:flex-start; background:#171c22; border:1px solid #2b333d;
+                           border-radius:10px; padding:8px 10px; min-width:190px; max-width:340px; }
+  .msg.me .card.stub, .msg.me .card.app { background:#1b3a2c; border-color:#2c6b4c; }
+  .card .ic { font-size:19px; line-height:1.1; }
+  .card .cbody { min-width:0; }
+  .card .ctitle { font-size:13px; font-weight:600; }
+  .card .csub { font-size:11px; color:#98a1ab; margin-top:2px; }
+  .card .cwhy { font-size:11px; color:#d9a05b; margin-top:3px; }
+  .card .curl { display:block; font-size:11px; color:#78c8a4; margin-top:3px; word-break:break-all; }
+  .card.voice { display:flex; align-items:center; gap:8px; }
+  .card.voice audio { height:34px; max-width:250px; }
+  .quote { font-size:11px; color:#9aa0a6; border-left:2px solid #4a5462; padding:2px 0 2px 7px; margin-top:4px; word-break:break-word; }
+  .sysmsg { align-self:center; max-width:82%; text-align:center; margin:6px 0; }
+  .sysbody { display:inline-block; background:#1a1e24; border:1px solid #262d36; color:#98a1ab; font-size:11.5px; padding:4px 10px; border-radius:10px; line-height:1.5; }
+  .sysmsg .time { font-size:10px; color:#5d6570; }
+  .media-img.thumb { max-width: 160px; max-height: 160px; }
+  .media-video { display:block; max-width: 380px; margin-top: 8px; border-radius: 8px; background:#000; }
+  .voice { color:#7fd0a0; font-weight:600; text-decoration:none; }
+  .media-note { font-size: 11px; color:#9aa0a6; margin-top: 4px; }
+  .media-note a, .voice a { color:#7fd0a0; }
+  .media-warn { color:#d9a05b; font-size: 12px; }
+</style>
+</head>
+<body>
+<h1>导！急速回，三思回得体！！！</h1>
+<div class="meta">username: deerluna · media: on</div>
+<div id="chat">
+<div class="msg peer"><div class="who">导！急速回，三思回得体！！！</div><div class="bubble">版画工作坊的视频你做好了吗？</div><div class="time">2026-09-30 14:05:35</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">老师宣传视频正在做老师</div><div class="time">2026-09-30 14:15:47</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">上次那个手势音乐的项目我找到库了</div><div class="time">2026-09-30 14:16:05</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">调试了一版类似的</div><div class="time">2026-09-30 14:16:12</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">和原版待会儿演练给老师看看</div><div class="time">2026-09-30 14:16:24</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">宣传视频我抓紧老师</div><div class="time">2026-09-30 14:16:35</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">这两天宣传视频我加速应该有成果</div><div class="time">2026-09-30 14:16:56</div></div>
+<div class="msg peer"><div class="who">导！急速回，三思回得体！！！</div><div class="bubble">你3日能去洞台工作站吗</div><div class="time">2026-09-30 14:43:26</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">能的老师</div><div class="time">2026-09-30 14:43:37</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">3 号吗</div><div class="time">2026-09-30 14:43:50</div></div>
+<div class="msg peer"><div class="who">导！急速回，三思回得体！！！</div><div class="bubble">说是10.3会有大大领导来</div><div class="time">2026-09-30 14:43:50</div></div>
+<div class="msg peer"><div class="who">导！急速回，三思回得体！！！</div><div class="bubble">但你的版少了好多啊</div><div class="time">2026-09-30 14:44:08</div></div>
+<div class="msg peer"><div class="who">导！急速回，三思回得体！！！</div><div class="bubble">你工作坊的海报改一下，要打出来贴上</div><div class="time">2026-09-30 14:44:49</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">好的明白老师</div><div class="time">2026-09-30 14:45:03</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">还来得及制版</div><div class="time">2026-09-30 14:45:10</div></div>
+<div class="msg peer"><div class="who">导！急速回，三思回得体！！！</div><div class="bubble">那定了</div><div class="time">2026-09-30 14:45:32</div></div>
+<div class="msg peer"><div class="who">导！急速回，三思回得体！！！</div><div class="bubble">快准备吧</div><div class="time">2026-09-30 14:45:38</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">收到老师</div><div class="time">2026-09-30 14:45:52</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">明白老师</div><div class="time">2026-09-30 14:45:54</div></div>
+<div class="msg peer"><div class="who">导！急速回，三思回得体！！！</div><div class="bubble">今晚给我看下你的版</div><div class="time">2026-09-30 16:37:46</div></div>
+<div class="msg peer"><div class="who">导！急速回，三思回得体！！！</div><div class="bubble"><div class="quote">引用：你工作坊的海报改一下，要打出来贴上</div><div class="card app"><span class="ic">💬</span><div class="cbody"><div class="ctitle">三食堂的一层那能打，你记我名下</div></div></div></div><div class="time">2026-09-30 16:43:28</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">收到老师明白老师</div><div class="time">2026-09-30 16:52:06</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">今晚做出来分版的电子版</div><div class="time">2026-09-30 16:52:16</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">还有海报</div><div class="time">2026-09-30 16:52:20</div></div>
+<div class="msg peer"><div class="who">导！急速回，三思回得体！！！</div><div class="bubble">海报就改这个，时间换成10.3日</div><div class="time">2026-09-30 16:54:17</div></div>
+<div class="msg peer"><div class="who">导！急速回，三思回得体！！！</div><div class="bubble">另的不变</div><div class="time">2026-09-30 16:54:29</div></div>
+<div class="msg peer"><div class="who">导！急速回，三思回得体！！！</div><div class="bubble">改日期，打A2背胶</div><div class="time">2026-09-30 16:55:21</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble"><div class="card media"><a href="559.png" target="_blank"><img loading="lazy" src="559.png" alt="图片"></a><div class="badge">100×180 · 11.9 KB</div></div></div><div class="time">2026-09-30 16:55:54</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">这个吗老师</div><div class="time">2026-09-30 16:55:57</div></div>
+<div class="msg peer"><div class="who">导！急速回，三思回得体！！！</div><div class="bubble"><div class="quote">引用：&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;msg&gt;
+	&lt;img aeskey=&quot;a178f5340d6db7ff10badd03742929cd&quot; encryver=&quot;1&quot; c</div><div class="card app"><span class="ic">💬</span><div class="cbody"><div class="ctitle">不是</div></div></div></div><div class="time">2026-09-30 16:56:22</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">我找一下老师</div><div class="time">2026-09-30 16:56:59</div></div>
+<div class="msg peer"><div class="who">导！急速回，三思回得体！！！</div><div class="bubble"><div class="card media"><a href="563.jpg" target="_blank"><img loading="lazy" src="563.jpg" alt="图片"></a><div class="badge">86×180 · 103.4 KB</div></div></div><div class="time">2026-09-30 16:57:03</div></div>
+<div class="msg peer"><div class="who">导！急速回，三思回得体！！！</div><div class="bubble">你打不开吗</div><div class="time">2026-09-30 16:57:16</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">收到老师</div><div class="time">2026-09-30 16:57:16</div></div>
+<div class="msg peer"><div class="who">导！急速回，三思回得体！！！</div><div class="bubble">这图你建的尺寸是多少</div><div class="time">2026-09-30 16:57:43</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">老师刚收到照片</div><div class="time">2026-09-30 16:58:18</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">马上改好</div><div class="time">2026-09-30 16:58:23</div></div>
+<div class="msg peer"><div class="who">导！急速回，三思回得体！！！</div><div class="bubble">刚收到？</div><div class="time">2026-09-30 16:58:31</div></div>
+<div class="msg peer"><div class="who">导！急速回，三思回得体！！！</div><div class="bubble">之前是你发我的啊</div><div class="time">2026-09-30 16:58:41</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble"><div class="card media"><a href="571.jpg" target="_blank"><img loading="lazy" src="571.jpg" alt="图片"></a><div class="badge">221×489 · 554.2 KB</div></div></div><div class="time">2026-09-30 16:58:44</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">对的老师</div><div class="time">2026-09-30 16:58:57</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">马上改</div><div class="time">2026-09-30 16:59:00</div></div>
+<div class="msg peer"><div class="who">导！急速回，三思回得体！！！</div><div class="bubble"><div class="quote">引用：对的老师</div><div class="card app"><span class="ic">💬</span><div class="cbody"><div class="ctitle">[天啊]</div></div></div></div><div class="time">2026-09-30 16:59:19</div></div>
+<div class="msg peer"><div class="who">导！急速回，三思回得体！！！</div><div class="bubble"><div class="card media"><a href="575.jpg" target="_blank"><img loading="lazy" src="575.jpg" alt="图片"></a><div class="badge">96×210 · 92.0 KB</div></div></div><div class="time">2026-09-30 17:00:09</div></div>
+<div class="msg peer"><div class="who">导！急速回，三思回得体！！！</div><div class="bubble">这是你发的啊</div><div class="time">2026-09-30 17:00:17</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">明白老师</div><div class="time">2026-09-30 17:01:03</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">我之前发的</div><div class="time">2026-09-30 17:01:21</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">我错了</div><div class="time">2026-09-30 17:01:40</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">马上按照这个修改</div><div class="time">2026-09-30 17:01:45</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble"><div class="card media"><a href="581.png" target="_blank"><img loading="lazy" src="581.png" alt="图片"></a><div class="badge">86×180 · 76.6 KB</div></div></div><div class="time">2026-09-30 17:02:45</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">还有一点修改半个小时完善</div><div class="time">2026-09-30 17:05:18</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble"><div class="card media"><a href="583.jpg" target="_blank"><img loading="lazy" src="583.jpg" alt="图片"></a><div class="badge">86×180 · 113.8 KB</div></div></div><div class="time">2026-09-30 17:13:33</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">老师制版应该是还有怀柔的版我看一下</div><div class="time">2026-09-30 17:13:56</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">打出来海报的尺寸是42×59.4厘米的海报，如果尺寸可以我做成矢量图明天晚上去打印室打好给老师看成名</div><div class="time">2026-09-30 17:16:29</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">主要是悲鸿这一版为主，今晚找一下，还有乡村美育工作站的标，10月3日之前这两个版绝对要全</div><div class="time">2026-09-30 17:20:11</div></div>
+<div class="msg peer"><div class="who">导！急速回，三思回得体！！！</div><div class="bubble">你别的图呢</div><div class="time">2026-09-30 17:28:24</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">那些零零散的可能有的不在了</div><div class="time">2026-09-30 17:29:03</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">还有一个小红人老师</div><div class="time">2026-09-30 17:29:13</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">但是还能制作老师</div><div class="time">2026-09-30 17:29:22</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">我今晚给您大概方案</div><div class="time">2026-09-30 17:29:34</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">之前的版的文件</div><div class="time">2026-09-30 17:29:43</div></div>
+<div class="msg peer"><div class="who">导！急速回，三思回得体！！！</div><div class="bubble">新的也行</div><div class="time">2026-09-30 17:31:37</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">明白老师</div><div class="time">2026-09-30 17:31:47</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">我制作些新的方案</div><div class="time">2026-09-30 17:32:03</div></div>
+<div class="msg peer"><div class="who">导！急速回，三思回得体！！！</div><div class="bubble">？</div><div class="time">2026-10-01 14:34:58</div></div>
+<div class="msg peer"><div class="who">导！急速回，三思回得体！！！</div><div class="bubble">石总催你呢</div><div class="time">2026-10-01 14:35:10</div></div>
+<div class="msg peer"><div class="who">导！急速回，三思回得体！！！</div><div class="bubble"><div class="card media"><a href="598.jpg" target="_blank"><img loading="lazy" src="598.jpg" alt="图片"></a><div class="badge">96×210 · 75.8 KB</div></div></div><div class="time">2026-10-01 14:35:48</div></div>
+<div class="msg peer"><div class="who">导！急速回，三思回得体！！！</div><div class="bubble">10月3日大大大领导去</div><div class="time">2026-10-01 14:36:12</div></div>
+<div class="msg peer"><div class="who">导！急速回，三思回得体！！！</div><div class="bubble"><div class="quote">引用：我今晚给您大概方案</div><div class="card app"><span class="ic">💬</span><div class="cbody"><div class="ctitle">你的新版和海报呢？</div></div></div></div><div class="time">2026-10-01 14:36:33</div></div>
+<div class="msg peer"><div class="who">导！急速回，三思回得体！！！</div><div class="bubble"><div class="card app"><span class="ic">📞</span><div class="cbody"><div class="ctitle">通话 </div><div class="csub">语音通话</div></div></div></div><div class="time">2026-10-01 15:20:19</div></div>
+<div class="msg peer"><div class="who">导！急速回，三思回得体！！！</div><div class="bubble"><div class="card media"><a href="602.jpg" target="_blank"><img loading="lazy" src="602.jpg" alt="图片"></a><div class="badge">179×210 · 18.9 KB</div></div></div><div class="time">2026-10-01 22:13:12</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">收到老师</div><div class="time">2026-10-01 22:13:28</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">我正在改</div><div class="time">2026-10-01 22:13:36</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">明天上午就给您</div><div class="time">2026-10-01 22:13:44</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">乡村美育的标换成这个</div><div class="time">2026-10-01 22:13:53</div></div>
+<div class="msg peer"><div class="who">导！急速回，三思回得体！！！</div><div class="bubble">不是</div><div class="time">2026-10-01 22:13:59</div></div>
+<div class="msg peer"><div class="who">导！急速回，三思回得体！！！</div><div class="bubble">是增加一个</div><div class="time">2026-10-01 22:14:09</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">明白老师</div><div class="time">2026-10-01 22:14:23</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">单独制作一个这个的版</div><div class="time">2026-10-01 22:15:22</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">收到老师</div><div class="time">2026-10-01 22:18:30</div></div>
+<div class="msg peer"><div class="who">导！急速回，三思回得体！！！</div><div class="bubble"><div class="card media"><a href="612.jpg" target="_blank"><img loading="lazy" src="612.jpg" alt="图片"></a><div class="badge">210×179 · 60.7 KB</div></div></div><div class="time">2026-10-01 22:37:37</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">收到老师</div><div class="time">2026-10-01 22:43:58</div></div>
+<div class="msg peer"><div class="who">导！急速回，三思回得体！！！</div><div class="bubble">神笔马良是真的？我画的小鸟飞起来了！ 明明是两幅画... https://xhslink.cn/o/1ZZ2SCMRd6z <br>直达【小红书】看看这篇分享~</div><div class="time">2026-10-01 22:49:53</div></div>
+<div class="msg peer"><div class="who">导！急速回，三思回得体！！！</div><div class="bubble">你做两个鸟吧</div><div class="time">2026-10-01 22:50:04</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">收到老师明白老师</div><div class="time">2026-10-01 22:50:19</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">我看看</div><div class="time">2026-10-01 22:50:27</div></div>
+<div class="msg peer"><div class="who">导！急速回，三思回得体！！！</div><div class="bubble">快做吧[抓狂]</div><div class="time">2026-10-01 22:51:06</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">收到老师抓紧</div><div class="time">2026-10-01 23:01:19</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">明白老师</div><div class="time">2026-10-01 23:01:24</div></div>
+</div>
+<div class="footer">89 messages · 媒体附件目录: 导_媒体_20261001_assets/（图片 9，语音 0，视频 0）</div>
+</body></html>

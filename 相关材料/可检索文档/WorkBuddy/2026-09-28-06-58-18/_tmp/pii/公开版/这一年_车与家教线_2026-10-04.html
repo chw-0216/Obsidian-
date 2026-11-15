@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>车 · 家教线 · 清理（2026-10-04）</title>
+<style>
+  :root{
+    --bg:#F8F7F4; --card:#FFFFFF; --ink:#161514; --ink2:#3B3835; --mut:#7C756C;
+    --line:#E6E1D8; --line2:#F1EDE6;
+    --red:#A32B22; --redbg:#FBF0EE; --redline:#EBD3CF;
+    --teal:#2B5B60; --tealbg:#EEF5F4;
+    --gold:#87683A; --goldbg:#F9F4E9;
+    --inkbg:#F2F0EB;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--ink);
+    font-family:"Microsoft YaHei","PingFang SC",sans-serif;
+    font-size:15px;line-height:1.85;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1020px;margin:0 auto;padding:0 30px 100px}
+
+  header{padding:64px 0 34px;border-bottom:2px solid var(--ink)}
+  .kick{font-size:11.5px;letter-spacing:.34em;color:var(--red);font-weight:700;margin-bottom:16px}
+  h1{font-family:"Songti SC","SimSun",serif;font-size:42px;line-height:1.22;font-weight:700}
+  h1 em{font-style:normal;color:var(--red)}
+  .sub{margin-top:18px;font-size:15.5px;color:var(--ink2);max-width:780px}
+  .meta{margin-top:22px;font-size:12px;color:var(--mut);letter-spacing:.05em}
+  .meta span{display:inline-block;margin-right:18px}
+
+  .banner{margin:34px 0 6px;background:var(--redbg);border:1px solid var(--redline);padding:24px 28px}
+  .banner .t{font-size:11.5px;letter-spacing:.22em;color:var(--red);font-weight:700;margin-bottom:12px}
+  .banner .n{font-family:"Songti SC",serif;font-size:46px;line-height:1.05;color:var(--red)}
+  .banner .n small{font-size:17px;font-weight:400;color:var(--ink2);margin-left:6px}
+  .banner p{font-size:13.5px;color:var(--ink2);margin-top:10px}
+
+  h2{font-family:"Songti SC","SimSun",serif;font-size:23px;margin:60px 0 6px;padding-bottom:11px;border-bottom:1px solid var(--ink)}
+  h2 .n{color:var(--red);font-size:14px;margin-right:9px;letter-spacing:.08em}
+  .lead{color:var(--mut);font-size:13.5px;margin:11px 0 24px}
+
+  .g{background:var(--card);border:1px solid var(--line);padding:22px 26px;margin-bottom:14px}
+  .g > h3{font-size:16.5px;margin-bottom:10px;display:flex;align-items:baseline;gap:10px}
+  .g > h3 .tag{font-size:10.5px;font-weight:700;color:#fff;background:var(--ink);padding:3px 8px;letter-spacing:.08em}
+  .g > h3 .tag.r{background:var(--red)} .g > h3 .tag.t{background:var(--teal)} .g > h3 .tag.g{background:var(--gold)}
+  .g > h3 .cf{margin-left:auto;font-size:11px;color:var(--mut);letter-spacing:.04em}
+  .g p{font-size:14px;color:var(--ink2)}
+  .g p + p{margin-top:9px}
+
+  .evd{margin-top:13px;border-top:1px dashed var(--line);padding-top:12px}
+  .evd .lb{font-size:11px;letter-spacing:.16em;color:var(--mut);font-weight:700;margin-bottom:8px}
+  .evd ul{list-style:none}
+  .evd li{position:relative;padding:5px 0 5px 16px;font-size:13.2px;color:var(--ink2);font-variant-numeric:tabular-nums}
+  .evd li::before{content:"";position:absolute;left:0;top:14px;width:5px;height:5px;background:var(--red);border-radius:50%}
+  .evd li b{color:var(--ink);font-weight:700}
+  .evd li .d{color:var(--red);font-weight:700;font-variant-numeric:tabular-nums}
+
+  .q{font-family:"Songti SC",serif;font-size:13.5px;color:var(--ink);background:var(--inkbg);
+     border-left:2px solid var(--red);padding:10px 15px;margin:10px 0;line-height:1.8}
+
+  table{width:100%;border-collapse:collapse;font-size:13px;margin:4px 0}
+  th{text-align:left;font-size:11px;letter-spacing:.06em;color:var(--mut);font-weight:700;padding:8px 9px;border-bottom:2px solid var(--ink)}
+  td{padding:7px 9px;border-bottom:1px solid var(--line2);vertical-align:top;font-variant-numeric:tabular-nums}
+  td.r{text-align:right}
+  .hi{background:var(--redbg)}
+  .hi td{font-weight:700;color:var(--red)}
+
+  .bar{display:grid;grid-template-columns:70px 1fr 92px;align-items:center;gap:10px;font-size:12px;color:var(--mut);margin:4px 0}
+  .bar i{font-style:normal;font-variant-numeric:tabular-nums}
+  .bar .tr{height:9px;background:var(--line2);position:relative}
+  .bar .tr u{position:absolute;left:0;top:0;bottom:0;background:var(--red);text-decoration:none;opacity:.82}
+  .bar.hi2 .tr u{background:var(--red);opacity:1}
+
+  .warn{background:var(--goldbg);border:1px solid #E8DCC0;padding:17px 21px;font-size:13.3px;color:var(--ink2);margin:20px 0}
+  .warn b{color:var(--gold)}
+  .stop{background:var(--redbg);border:1px solid var(--redline);padding:17px 21px;font-size:13.3px;color:var(--ink2);margin:20px 0}
+  .stop b{color:var(--red)}
+
+  ol.pk{padding-left:0;list-style:none;counter-reset:p}
+  ol.pk li{counter-increment:p;position:relative;padding:11px 0 11px 42px;border-bottom:1px solid var(--line2);font-size:13.7px}
+  ol.pk li::before{content:counter(p);position:absolute;left:0;top:11px;width:25px;height:25px;line-height:25px;text-align:center;font-size:12px;font-weight:700;color:#fff;background:var(--ink);border-radius:50%}
+  ol.pk li b{color:var(--red)}
+
+  .nx{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:12px}
+  .nx div{background:var(--card);border:1px solid var(--line);padding:15px 18px}
+  .nx div b{display:block;font-size:13.5px;margin-bottom:5px}
+  .nx div p{font-size:12.6px;color:var(--mut)}
+
+  footer{margin-top:70px;padding-top:20px;border-top:1px solid var(--line);font-size:12px;color:var(--mut);line-height:1.9}
+  @media(max-width:700px){.wrap{padding:0 17px 64px}h1{font-size:28px}.nx{grid-template-columns:1fr}.bar{grid-template-columns:58px 1fr 76px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="kick">支付记录倒推 · 车线 · 家教线 · 清理</div>
+  <h1>母亲的钱，<em>有一部分确实是买车用的</em></h1>
+  <div class="sub">从微信支付凭证、极狐交付群、母亲转账三头对推，把「车」这条线一次走完。
+  顺带回答家教线：全库第一大会话，你一个字都没说过。</div>
+  <div class="meta">
+    <span>数据源：index.sqlite 388,705 条 / 1,802 会话</span>
+    <span>窗口：2025-12 → 2026-10</span>
+    <span>2026-10-04</span>
+  </div>
+</header>
+
+<div class="banner">
+  <div class="t">车 · 总价</div>
+  <div class="n">132,050<small>元</small></div>
+  <p>极狐 αT5 660（铁锂高压）元境神行版 · 赤焰棕外观 / 海岩灰内饰 · VIN LNBMC14K0SZ186134 · 京 A·CP0263<br>
+  首付 80,000（母亲出）＋ 尾款 52,050（贷款，<b>贷款人写的是母亲</b>）· 指标也是母亲的</p>
+</div>
+
+<div class="stop">
+  <b>先说清楚：这不是「妈妈给你买了辆车」那么简单。</b>
+  全链条里，谈价、比店、挑配置、催退款、跑临牌、盯首保、出事故定损——都是你自己在做。
+  母亲出的是**钱、指标、贷款资格**这三样你当时拿不到的东西。所以正确说法是：
+  <b>车是你买的，钱和资格是母亲的。</b>
+</div>
+
+<h2><span class="n">01</span>车的完整证据链</h2>
+<div class="lead">从「在网上留了电话」到「首保」，全程 10 个月，一条不漏。</div>
+
+<table>
+  <thead><tr><th style="width:110px">时间</th><th>发生了什么</th><th style="width:150px">关键原话</th></tr></thead>
+  <tbody>
+    <tr><td>2025-12-01</td><td>极狐 DCC 专员殷虹主动联系（北京鹏龙）</td><td class="r" style="text-align:left">—</td></tr>
+    <tr><td>2025-12-12</td><td>来广营店「极狐 小于儿」加上，你主动询价</td><td style="font-size:12px">「t5t6s6」</td></tr>
+    <tr><td>2025-12-13</td><td>提到旧车</td><td style="font-size:12px">「我有报废指标」「ev200 还能报废吗」</td></tr>
+    <tr class="hi"><td>2025-12-25</td><td>方案定型：母亲下单、母亲贷款、母亲指标</td><td style="font-size:12px">「我母亲下单」「她退休了」「63 岁返聘教授」「指标人和贷款人都是您母亲」「车的指标也是我妈的」</td></tr>
+    <tr><td>2025-12-28</td><td>母亲踩刹车</td><td style="font-size:12px">「买车还要和你爸商量。现在经济不好。手里也要留点钱。别化光了」</td></tr>
+    <tr><td>2025-12-29</td><td>两家店报价打架</td><td style="font-size:12px">「首付 91500 含保险上牌」／「首付 8 万 7800」</td></tr>
+    <tr><td>2025-12-30</td><td>父亲表态</td><td style="font-size:12px">「你买车的目的，决定你车的选择。」</td></tr>
+    <tr class="hi"><td>2025-12-31</td><td><b>第一笔首付打给了另一家店</b></td><td style="font-size:12px">他发出：「单位名称：北京鸿都瑞通汽车销售服务有限公司 账号：1371********4461」</td></tr>
+    <tr class="hi"><td>2025-12-31<br>23:52</td><td><b>母亲当晚说的那句话</b></td><td style="font-size:12px">「我们只有钱的关系。没有达到你的目标。就不接电话。太功利了」</td></tr>
+    <tr><td>2026-01-04</td><td>中介确认跨店退款</td><td style="font-size:12px">「原本 31 号首付已经付过去了」「还给等上一个 4s 店把首付退了」</td></tr>
+    <tr><td>2026-01-09</td><td>退款到账，换到鹏龙花乡店</td><td style="font-size:12px">母亲：「退款己办」</td></tr>
+    <tr><td>2026-04-17</td><td>母亲腾出时间</td><td style="font-size:12px">「我把博士论文评审完。联系你。可以去看新车。」</td></tr>
+    <tr><td>2026-04-24</td><td>交付排期，卡在母亲身份证</td><td style="font-size:12px">「妈妈是车主，提车也得需要车主本人的身份证原件」</td></tr>
+    <tr class="hi"><td>2026-04-28</td><td><b>进专属交付群，尾款结构定死</b></td><td style="font-size:12px">「132050-75000-5000 尾款 52050」</td></tr>
+    <tr><td>2026-05-06</td><td>付款日</td><td style="font-size:12px">「我六号支付」</td></tr>
+    <tr><td>2026-05-16</td><td>交款（线上/到场两路并行）</td><td style="font-size:12px">—</td></tr>
+    <tr><td>2026-05-18/19</td><td>临牌 → 上牌</td><td style="font-size:12px">VIN LNBMC14K0SZ186134</td></tr>
+    <tr><td>2026-07-06</td><td>第一次剐蹭定损（太平洋保险）</td><td style="font-size:12px">报案号 C110106VEH26010697</td></tr>
+    <tr><td>2026-08-20</td><td>第二次</td><td style="font-size:12px">「哥」「又刮了」「我错了」</td></tr>
+    <tr><td>2026-09-12 → 17</td><td>首保 + 方向盘跑偏 + 第三次剐蹭</td><td style="font-size:12px">「要是有没用的充电桩能慢充一下电吗」</td></tr>
+  </tbody>
+</table>
+
+<h2><span class="n">02</span>132,050 到底怎么付的</h2>
+<div class="lead">三段钱，三个来源，别混。</div>
+
+<div class="g">
+  <h3><span class="tag r">首付</span>80,000 元 — 母亲出<span class="cf">2026-05-16</span></h3>
+  <p>「132050 − 75000 − 5000 = 尾款 52050」。前两笔 75,000 + 5,000 是现场付掉的，主付款人是母亲。
+  2026-04-28 你自己在群里说得很直白：</p>
+  <div class="q">「我母亲在外地」「需要她付款主要是」</div>
+  <p style="font-size:13px;color:var(--mut)">⚠️ 精确边界：2026-05-08 你又说「我转到车行了已经钱我给退出来」——
+  说明这笔首付里<b>也有你自己的钱在流转</b>，不是纯母亲出资。数据只能支持「主付款人是母亲」，不能支持「100% 母亲出资」。</p>
+</div>
+
+<div class="g">
+  <h3><span class="tag t">尾款</span>52,050 元 — 贷款，<b>贷款人写母亲</b><span class="cf">2026-04</span></h3>
+  <p>2025-12-25 你就把条件讲透了：「我母亲下单 / 她退休了 / 63 岁返聘教授 / 退休工资 1 万 5 / 指标人和贷款人都是您母亲」。
+  2026-04-24 贷款中介 Pink 也在核这件事：「我妈 63 了能在邮储办下来贷款吗」。</p>
+  <p><b>所以月供落在母亲账上，不在你账上。</b>这是「微信转账线看不到车款」的原因 —— 车款走的是银行，不走微信。</p>
+</div>
+
+<div class="g">
+  <h3><span class="tag g">周转</span>5,000–7,000 元 — 你垫的钱卡在车行<span class="cf">2026-05-08</span></h3>
+  <p>这是微信线里唯一直接和车挂钩的一笔。付款前两天你在机场，跟母亲说：</p>
+  <div class="q">「老妈能转我 7000 吗先」「或者 5000」<br>「<b>我暂时转不出来我转到车行了已经钱我给退出来</b>」</div>
+  <p>母亲回「现在卡。只这么多。马上换卡。」然后转了 5,000。说明<b>你确实为车垫过自己的钱</b>，
+  而且垫到现金流断口。</p>
+</div>
+
+<div class="g">
+  <h3><span class="tag">保险</span>车险挂母亲名字，但钱你转给她<span class="cf">2026-05-19</span></h3>
+  <p>母亲：「车保险上我名字。办央美停车证。米杰说」→ 你：「妈一定保险需要上你的名字才能办进门证吗」
+  「然后你支付保险」→ 当天「老妈我转过去了保险钱」「妈这就是保险的钱」。</p>
+  <p>2026-07-02 母亲又说「我买了两份商业险」「还有极狐的维修险」，07-05 三份 PDF（交强/驾意/商业）同时发过来。
+  <b>名字是母亲的，决策和付款是你做的。</b></p>
+</div>
+
+<h2><span class="n">03</span>三个此前没人说出口的细节</h2>
+<div class="lead">比车本身更值钱的东西。</div>
+
+<div class="g">
+  <h3><span class="tag r">一</span>你在母亲面前维护一个「省」的形象<span class="cf">2026-04-28 20:05</span></h3>
+  <div class="q">「我再单独转公司 300」「手续费」「<b>就别跟我妈说扫码的手续费了</b>」</div>
+  <p>312 元的手续费，你选择自己吃下来，不让母亲知道。这一句和 2026-09-22「老妈能要 250 块钱吗还一笔欠款[捂脸]」
+  是同一个人的两种写法 —— <b>一笔小钱可以开口，一笔小钱宁愿自己扛。</b>区别在：一个是「我不够」，一个是「我不该」。</p>
+</div>
+
+<div class="g">
+  <h3><span class="tag r">二</span>母亲那句「我们只有钱的关系」，落在打款当晚<span class="cf">2025-12-31 23:52</span></h3>
+  <p>当晚 15:11 你发出收款账户，19:04 你说「6 号钱全部退回来我回家」，然后母亲连续四条「浩文回电话」，
+  最后一条是那句。</p>
+  <p><b>时序上，这是买车这件事里最重的一句话，而且它和钱直接绑在一起。</b>不是母子关系的定性，
+  是那一晚她对你「只在该谈钱的时候出现」的感受。⚠️ 不得反过来读成「他功利」。</p>
+</div>
+
+<div class="g">
+  <h3><span class="tag r">三</span>父亲在这件事里只说了两句，但都关于「为什么」<span class="cf">2025-12</span></h3>
+  <div class="q">「你买车的目的，决定你车的选择。」<br>（母亲转述）「你爸问我：要买车吗」</div>
+  <p>母亲管钱和流程，父亲只问目的。而你 2026-07-02 之后和父亲归零三个月 —— <b>这条线现在停在「他问过目的，你还没答」。</b></p>
+</div>
+
+<h2><span class="n">04</span>家教线：全库第一大会话，你 0 条</h2>
+<div class="lead">21,979 条，角色分布里没有「me」。</div>
+
+<div class="banner">
+  <div class="t">Q&amp;L北京29家教老师群</div>
+  <div class="n">21,979<small>条 / 你 0 条</small></div>
+  <p>两个发单账号吃掉 90%（14,525 + 5,232）。这是一条<b>广播流</b>，不是社交群。<br>
+  同一批人里对照：25实验艺术硕士唠嗑群 3,264 条 / 你 478 条 —— 那才是你在用的群。</p>
+</div>
+
+<div class="g">
+  <h3><span class="tag">逐月</span>这是一条「用完就退」的曲线</h3>
+  <div class="bar"><i>2025-06</i><div class="tr"><u style="width:100%"></u></div><i>2,183 峰值</i></div>
+  <div class="bar"><i>2025-09</i><div class="tr"><u style="width:69%"></u></div><i>1,511</i></div>
+  <div class="bar"><i>2026-05</i><div class="tr"><u style="width:57%"></u></div><i>1,235</i></div>
+  <div class="bar"><i>2026-06</i><div class="tr"><u style="width:17%"></u></div><i>366</i></div>
+  <div class="bar hi2"><i>2026-09</i><div class="tr"><u style="width:8%"></u></div><i>164</i></div>
+  <p style="margin-top:12px">峰值在 <b>2025-06</b> —— 你毕业、找工作、最需要现金流的月份。
+  <b>2025-09</b> 入学央美 + 进精华之后掉下来，<b>2026-06</b> 之后断崖。
+  这条线在你生活里的位置，从「补给」变成了「备胎」，现在连备胎都算不上。</p>
+</div>
+
+<h2><span class="n">05</span>但你真的做过家教 —— 简历原文找到了</h2>
+<div class="lead">2025-01-10，你亲手投给中介的版本。</div>
+
+<div class="g">
+  <h3><span class="tag g">原文</span>小杨老师 · 2025-01-10</h3>
+  <div class="q">姓名或《姓》：蔡　性别：男　年龄：25　籍贯：北京　年级：研究生<br>
+  专业：发展经济学　就读学校或毕业学校和校区：格拉斯哥大学 qs 世界排名 71 英国<br>
+  家教经验：辅导过学生英语，奥数，物理；因为自己从小长到在海淀所以有见过一些课外辅导的名师，
+  所以能够快速帮助，初中，小学，高中的孩子，在英语和物理等学科快速的提升。<br>
+  联系电话：151****1638</div>
+  <p>对方当场算价：<b>「120×3×3×0.9 = 972」</b>。这是 2025 年 1 月，你还在英国时给自己的定价：<b>120/h</b>。</p>
+</div>
+
+<div class="g">
+  <h3><span class="tag">其他落点</span>家教在你的语料里出现过 4 次</h3>
+  <ul class="evd" style="border:0;padding:0">
+    <li><b>2025-01-10</b>　向中介投简历（上面那条）</li>
+    <li><b>2025-10-07</b>　filehelper 里存过一条订单：「海淀区北清路 107 号院 · 数学和英语 · 幼儿园大班男 · 一周 5 次 · <b>要求女教员</b> · 100 元/小时」</li>
+    <li><b>2026-06-15</b>　对舒桐：「我可以顺带你上家教课可以」</li>
+    <li class="hi" style="list-style:none"><b>2026-07-26</b>　对笑一：「家教吗」← <b>家教就是笑一这条关系的原始接口</b>，7 月你还在往那儿提</li>
+  </ul>
+</div>
+
+<h2><span class="n">06</span>「有适合我的吗」—— 直接回答</h2>
+<div class="lead">不列清单，给判断。</div>
+
+<div class="stop">
+  <b>不适合。除非是国际课程经济/商科类的高价单。</b>
+</div>
+
+<div class="g">
+  <h3><span class="tag r">为什么</span>价格带对不上你的锚点</h3>
+  <p>群里订单的价带（我扫了全部格式）：<br>
+  小学 100–150/h · 初中 120–180/h · 高中理科综合 300/2h（合 150/h）· 音乐专业 600/2h。<br>
+  而且大量订单明写「<b>要求女教员</b>」「女老师优先」——你连投都投不进去。</p>
+  <p>你现在的锚点是：<b>海淀精华培训学校在职教职（初高中数学主讲 + 英语 + 物理）</b>，加上央美硕士 + 首经贸经济金融 + 格拉斯哥发展经济学。
+  海淀一对一市场的私教行情是 300–500/h 起。<b>进这个群接 150/h 的单，是给自己降价。</b></p>
+</div>
+
+<div class="g">
+  <h3><span class="tag t">真正该用哪条线</span>不是家教群，是笑一</h3>
+  <p>2026-05-08 20:27 她第一句话就是：「想问下小升初考试主要是央美附中…<b>我帮我兼职机构的老师问的，她们想辅导</b>」。</p>
+  <p>这是<b>机构对接</b>，不是散单。散单是「你去一个家庭，拿 150 块」；机构对接是「一批学生，一个价目表，可重复」。
+  你 7 月还在问她「家教吗」，说明你自己也知道哪条线更值。</p>
+</div>
+
+<div class="nx">
+  <div><b>能用上你背景的</b><p>AP / IB / A-Level 经济与商科 · 考研经济类专业课 · 雅思托福写作 —— 这些地方格拉斯哥 + 首经贸是硬通货，单价 500–800/h 起。</p></div>
+  <div><b>别碰的</b><p>小学全科（女老师优先 + 单价低）· 幼儿园 · 陪读检查作业。这些占群里订单的六成以上，对你是纯时间损失。</p></div>
+</div>
+
+<h2><span class="n">07</span>清理：48% 的库体量，你一个字没说过</h2>
+<div class="lead">不用判断，机械可判。</div>
+
+<div class="banner">
+  <div class="t">零发言会话</div>
+  <div class="n">186,725<small>条 / 388,705 条 = 48.0%</small></div>
+  <p>864 个会话里，你的发言数是 <b>0</b>。其中群聊 180 个 / 116,509 条，公众号 513 个 / 67,887 条，私聊 171 个 / 2,329 条。</p>
+</div>
+
+<table>
+  <thead><tr><th>类型</th><th class="r">会话数</th><th class="r">条数</th><th>说明</th></tr></thead>
+  <tbody>
+    <tr><td>群聊</td><td class="r">180</td><td class="r">116,509</td><td>二手群 / 拼单群 / 内购群 / 考试群，你是被拉进去的</td></tr>
+    <tr><td>公众号</td><td class="r">513</td><td class="r">67,887</td><td>订阅号推送，与你无关的新闻流</td></tr>
+    <tr><td>私聊</td><td class="r">171</td><td class="r">2,329</td><td>营销号 / 客服 / 福利官，非人际关系</td></tr>
+    <tr class="hi"><td>合计</td><td class="r">864</td><td class="r">186,725</td><td>占全库 48.0%</td></tr>
+  </tbody>
+</table>
+
+<div class="g">
+  <h3><span class="tag r">TOP 靶子</span>前 10 个就占 6.4 万条</h3>
+  <table>
+    <thead><tr><th>会话</th><th class="r">条数</th><th class="r">你发言</th></tr></thead>
+    <tbody>
+      <tr><td>Q&amp;L北京29家教老师群</td><td class="r">21,979</td><td class="r">0</td></tr>
+      <tr><td>吃一头内购粉丝49群牛排馆筹备ing</td><td class="r">9,593</td><td class="r">0</td></tr>
+      <tr><td>UoG休闲娱乐圈</td><td class="r">9,479</td><td class="r">0</td></tr>
+      <tr><td>UofG格拉斯哥｜格拉二手群❹</td><td class="r">7,080</td><td class="r">0</td></tr>
+      <tr><td>Chái Pizza🍕柴披萨1</td><td class="r">5,891</td><td class="r">0</td></tr>
+      <tr><td>2026伦敦二手&amp;租房群🚁</td><td class="r">5,248</td><td class="r">0</td></tr>
+      <tr><td>UoG人工智能AI校友会</td><td class="r">4,400</td><td class="r">0</td></tr>
+      <tr><td>长江云新闻（公众号）</td><td class="r">4,113</td><td class="r">0</td></tr>
+      <tr><td>猛犸极限大家庭1群</td><td class="r">4,046</td><td class="r">0</td></tr>
+      <tr><td>【F333】像素蛋糕AI修图产品体验群</td><td class="r">3,758</td><td class="r">0</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="warn">
+  <b>清理的执行边界（必须先说）</b><br>
+  1. 我只动<b>索引库</b>和<b>工作区/Obsidian 文件</b>，不动微信本体。<br>
+  2. 索引层清理 = 建「排除名单」，产出 `index_v3.sqlite`，<b>旧库原封不动</b>可回滚。<br>
+  3. 任何本机文件删除走<b>回收站</b>，分批 ≤10 项，删前出清单。<br>
+  4. 上面这份名单我<b>不自动执行</b> —— 你说删哪个才删哪个。
+</div>
+
+<h2><span class="n">08</span>落盘与红线</h2>
+
+<div class="nx">
+  <div><b>本轮新增</b><p>本报告 · 引擎 `05-纠偏层.md` 三·补·34 · Obsidian `03_事件库\车与家教线·2026-10-04.md` · 索引 3 处更新</p></div>
+  <div><b>脚本</b><p>`tools\probe_pay_car.py`（支付/车线）· `tools\probe_car_money.py`（买车钱+家教线）—— 全部 `mode=ro` 只读</p></div>
+</div>
+
+<div class="stop">
+  <b>红线</b><br>
+  · 不得把「母亲出钱买车」读成「啃老」或「母亲控制」——他全程自己在执行，母亲提供的是他当时拿不到的资格。<br>
+  · 不得把「就别跟我妈说手续费」读成欺骗——那是维护。<br>
+  · 不得把「我们只有钱的关系」当作母子关系结论——它是 2025-12-31 那一晚的情绪，不是定性。<br>
+  · 家教线结论只适用于「该不该在散单群接单」，不构成对他职业选择的评价。<br>
+  · 含真人姓名与金额，<b>不得外传</b>。
+</div>
+
+<footer>
+  数据源：`index.sqlite`（388,705 条 / 1,802 会话 / 2024-11-10 → 2026-10-04）· 全程本地只读，无任何内容离开本机。<br>
+  报告：`这一年_车与家教线_2026-10-04.html`　生成于 2026-10-04
+</footer>
+
+</div>
+</body>
+</html>

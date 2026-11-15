@@ -1,0 +1,138 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<title>照片证据总览（第二批）2026-10-06</title><style>
+*{box-sizing:border-box}body{margin:0;background:#f7f6f3;color:#22201d;
+font:15px/1.78 -apple-system,"Segoe UI","Microsoft YaHei",sans-serif}
+.wrap{max-width:1180px;margin:0 auto;padding:40px 26px 90px}
+h1{font-size:26px;margin:0 0 6px;color:#1F3D2B}
+h2{font-size:18.5px;margin:36px 0 10px;padding-bottom:7px;border-bottom:2px solid #e5e1da;color:#1F3D2B}
+h3{font-size:15.5px;margin:20px 0 6px;color:#9E3B2E}
+table{border-collapse:collapse;width:100%;font-size:12.5px;margin:10px 0}
+th,td{border:1px solid #e5e1da;padding:6px 9px;text-align:left;vertical-align:top}
+th{background:#efece6;font-weight:600}
+tr:nth-child(even) td{background:#fbfaf8}
+.kpi{display:flex;gap:12px;flex-wrap:wrap;margin:14px 0}
+.kpi div{background:#fff;border:1px solid #e5e1da;border-radius:8px;padding:12px 18px;min-width:150px}
+.kpi b{display:block;font-size:23px;color:#1F3D2B}
+.kpi span{font-size:12px;color:#6b6660}
+.warn{background:#fff8e6;border-left:4px solid #e0a800;padding:11px 15px;border-radius:0 6px 6px 0;margin:14px 0;font-size:13.5px}
+.ok{background:#eef7ef;border-left:4px solid #3f9d54;padding:11px 15px;border-radius:0 6px 6px 0;margin:14px 0;font-size:13.5px}
+.bad{background:#fdeeee;border-left:4px solid #c0392b;padding:11px 15px;border-radius:0 6px 6px 0;margin:14px 0;font-size:13.5px}
+code{background:#efece6;padding:1px 5px;border-radius:3px;font-size:11.5px;word-break:break-all}
+.foot{margin-top:52px;padding-top:14px;border-top:1px solid #ddd9d2;font-size:12.5px;color:#6b6660}
+</style></head><body><div class="wrap">
+<h1>照片证据总览（第二批）</h1>
+<p style="color:#6b6660;font-size:13px">生成 2026-10-06 11:19 ｜ 主任务：搜集考上央美之后的照片与个人行动证据 → 中期汇报可直接用的 PPT 材料</p>
+<div class="kpi">
+<div><b>68,158</b><span>照片总数</span></div>
+<div><b>15,754</b><span>可用池（≥800px 且 ≥80KB）</span></div>
+<div><b>2,196</b><span>他本人发出（role=me）</span></div>
+<div><b>12,454</b><span>拿到精确消息/发帖时间</span></div>
+</div>
+<div class="bad"><b>★ 先说结论：照片家底比上一轮大了约 1.4 倍，但「他工作的现场照」仍然稀少。</b><br>这一轮新挖出 4 类此前**完全没进过索引**的来源：<b>微信「原图」的 .hevc 高清静帧（9,753）</b>、<b>朋友圈 media（7,806，配 JSON 可还原发帖时间/昵称/文案）</b>、<b>井邻项目/宣传文件夹（555）</b>、<b>Capture One 摄影原片（383）</b>。但**厦门课堂、北京台实习这两个时段的现场照依然几乎没有**（见 §4）。</div>
+<h2>一、照片来源总览（现算）</h2>
+<table><tr><th>来源</th><th>张数</th><th>可用（≥800px）</th><th>时间跨度</th><th>性质</th><th>判定</th></tr>
+<tr><td><b>微信缩略图</b><br><span style='color:#8a857e;font-size:11.5px'>微信聊天导出</span></td><td>32,214</td><td>91</td><td>2025-05-01 → 2026-09-01</td><td>低分辨率（均 ~177px），仅作线索</td><td>不可用</td></tr>
+<tr><td><b>微信图片</b><br><span style='color:#8a857e;font-size:11.5px'>微信聊天导出</span></td><td>11,607</td><td>68</td><td>2024-11-01 → 2026-09-02</td><td>聊天压缩图（均 ~135px）</td><td>基本不可用</td></tr>
+<tr><td><b>微信图片HEVC</b><br><span style='color:#8a857e;font-size:11.5px'>微信「原图」导出</span></td><td>8,865</td><td>3,825</td><td>2025-05-01 → 2026-09-30</td><td>同上，数量主体</td><td>可用</td></tr>
+<tr><td><b>朋友圈</b><br><span style='color:#8a857e;font-size:11.5px'>朋友圈导出 JSON</span></td><td>7,806</td><td>6,474</td><td>2012-10-12 → 2026-07-22</td><td>含**发帖时间/昵称/文案**；只有 `role=me` 是他本人发的</td><td>可用（需筛）</td></tr>
+<tr><td><b>AI产物</b><br><span style='color:#8a857e;font-size:11.5px'>AI-archive/outputs</span></td><td>3,147</td><td>2,476</td><td>2026-03-21 → 2026-10-03</td><td>他跑的 AIGC 产出与设计稿</td><td>可用（是产出不是现场）</td></tr>
+<tr><td><b>WeFlow图片</b><br><span style='color:#8a857e;font-size:11.5px'>WeFlow 导出</span></td><td>1,122</td><td>702</td><td>2025-08-01 → 2026-09-01</td><td>微信图片的 WeFlow 版本</td><td>可用（需筛）</td></tr>
+<tr><td><b>汇报照片素材</b><br><span style='color:#8a857e;font-size:11.5px'>已策展（WeFlow 导出）</span></td><td>949</td><td>600</td><td>2025-10-11 → 2026-09-03</td><td>上一轮策展的 796 张，含**带编号联系表**</td><td>可用</td></tr>
+<tr><td><b>微信原图HEVC</b><br><span style='color:#8a857e;font-size:11.5px'>微信「原图」导出</span></td><td>888</td><td>158</td><td>2025-08-01 → 2026-09-30</td><td>**HEVC 编码的高清静帧**（非视频），可解出完整画面</td><td>可用</td></tr>
+<tr><td><b>井邻项目</b><br><span style='color:#8a857e;font-size:11.5px'>桌面项目文件夹</span></td><td>432</td><td>334</td><td>2013-08-07 → 2026-08-19</td><td>575 周年原图 / 交互主视觉 / 悲鸿 / 制版 / 丝网</td><td>可用</td></tr>
+<tr><td><b>C1原片</b><br><span style='color:#8a857e;font-size:11.5px'>Capture One 目录</span></td><td>383</td><td>383</td><td>2025-04-16 → 2025-04-24</td><td>**他本人的摄影原片**（含 34 张 .cr2）</td><td>可用</td></tr>
+<tr><td><b>微信原图HD</b><br><span style='color:#8a857e;font-size:11.5px'>微信「原图」导出</span></td><td>329</td><td>290</td><td>2025-12-18 → 2026-09-02</td><td>jpg/png 原图</td><td>可用</td></tr>
+<tr><td><b>井邻宣传</b><br><span style='color:#8a857e;font-size:11.5px'>桌面项目文件夹</span></td><td>123</td><td>111</td><td>2026-04-02 → 2026-09-30</td><td>工作站海报 / 丝网工作坊宣传页 / 知行计划</td><td>可用</td></tr>
+<tr><td><b>澜沧课堂照</b><br><span style='color:#8a857e;font-size:11.5px'>已策展</span></td><td>121</td><td>121</td><td>2026-09-02 → 2026-09-03</td><td>澜沧支教评审优化版课堂照</td><td>可用</td></tr>
+<tr><td><b>澜沧提交包</b><br><span style='color:#8a857e;font-size:11.5px'>桌面提交包</span></td><td>66</td><td>62</td><td>2026-07-31 → 2026-09-03</td><td>澜沧项目提交材料里的课堂照</td><td>可用</td></tr>
+<tr><td><b>PPT用图</b><br><span style='color:#8a857e;font-size:11.5px'>已策展</span></td><td>33</td><td>28</td><td>2026-08-02 → 2026-09-01</td><td>上一版 PPT 用图</td><td>可用</td></tr>
+<tr><td><b>定稿图</b><br><span style='color:#8a857e;font-size:11.5px'>桌面</span></td><td>30</td><td>4</td><td>2026-10-03 → 2026-10-03</td><td>定稿视觉</td><td>可用</td></tr>
+<tr><td><b>图片素材</b><br><span style='color:#8a857e;font-size:11.5px'>桌面</span></td><td>15</td><td>8</td><td>2025-09-17 → 2026-10-02</td><td>散图</td><td>可用</td></tr>
+<tr><td><b>RAW优化版</b><br><span style='color:#8a857e;font-size:11.5px'>桌面</span></td><td>9</td><td>9</td><td>2026-09-03 → 2026-09-03</td><td>他摄影的 RAW 优化输出</td><td>可用</td></tr>
+<tr><td><b>媒体导出</b><br><span style='color:#8a857e;font-size:11.5px'>桌面</span></td><td>8</td><td>3</td><td>2026-10-01 → 2026-10-01</td><td>零星导出</td><td>可用</td></tr>
+<tr><td><b>知行最终版</b><br><span style='color:#8a857e;font-size:11.5px'>桌面</span></td><td>8</td><td>4</td><td>2026-07-31 → 2026-08-31</td><td>知行计划材料</td><td>可用</td></tr>
+<tr><td><b>知行最终材料</b><br><span style='color:#8a857e;font-size:11.5px'>桌面</span></td><td>3</td><td>3</td><td>2026-09-03 → 2026-09-03</td><td>知行计划材料</td><td>可用</td></tr>
+</table>
+<h2>二、三类归属（任务书第一部分）</h2>
+<table><tr><th>类别</th><th>张数</th><th>说明</th></tr>
+<tr><td>待确认</td><td>55,704</td><td>无语义目录（项目文件夹/摄影原片）—— **拍摄者与角色均待确认**</td></tr>
+<tr><td>③ 别人发来（朋友圈，拍摄者待确认）</td><td>7,740</td><td>别人朋友圈（本批已排除，不用于经历页）</td></tr>
+<tr><td>③ 别人发来（现场/成果，拍摄者待确认）</td><td>2,518</td><td>他人发来 —— **拍摄者待确认**，不能算他拍的</td></tr>
+<tr><td>① 我拍摄/记录（我发出）</td><td>1,823</td><td>他本人发到会话里的照片 —— 拍摄/记录成果</td></tr>
+<tr><td>① 我拍摄/记录（存给自己）</td><td>307</td><td>他发到「文件传输助手」的 —— 多为素材留存</td></tr>
+<tr><td>① 我拍摄/记录（我发的朋友圈）</td><td>66</td><td>他本人朋友圈 —— 有发帖时间与文案</td></tr>
+</table>
+<div class="warn"><b>口径</b>：三类归属是**规则判定**，不是目检结论。「② 记录我工作过程（我产出的设计/作品）」= 该文件是他做的，<b>但画面里没有他本人</b>；要写「我设计了…」需要**设计稿 + 交付记录**双重依据。</div>
+<h2>三、朋友圈：他自己发的 66 张（带发帖时间与文案）</h2>
+<div class="ok">朋友圈 JSON 每条含 <code>createTime / nickname / contentDesc / media[].localPath</code>，<b>localPath 直接对上 media 文件名</b> → 可精确还原「谁、什么时候、配了什么话发的哪张图」。<code>nickname == 蔡浩文</code> 的即他本人发的。</div>
+<table><tr><th>发帖日期</th><th>尺寸</th><th>文案</th></tr>
+<tr><td>2026-05-25</td><td>1440×—</td><td>新的学习 ｜ 赞0 评0</td></tr>
+<tr><td>2026-05-07</td><td>1440×—</td><td>准备离厦了 ｜ 赞3 评3</td></tr>
+<tr><td>2026-05-01</td><td>1080×—</td><td>重生之黑道班主任短期体验卡[旺柴] ​五一假期冒名版 ｜ 赞2 评0</td></tr>
+<tr><td>2026-03-15</td><td>2400×—</td><td>学习了几场openclaw龙虾别人做的作品感觉大概方式如出一辙，大家运用的并不是龙虾的自动化，而是龙虾的开放性， ​个人数据就像一个数据集开放式矩阵 ​抽象成矩阵的特征值 ​再将这个特征值灌输到不同的场景形成新的数据集 至于准确性可以参考十 ｜ 赞0 评0</td></tr>
+<tr><td>2026-03-15</td><td>2400×—</td><td>学习了几场openclaw龙虾别人做的作品感觉大概方式如出一辙，大家运用的并不是龙虾的自动化，而是龙虾的开放性， ​个人数据就像一个数据集开放式矩阵 ​抽象成矩阵的特征值 ​再将这个特征值灌输到不同的场景形成新的数据集 至于准确性可以参考十 ｜ 赞0 评0</td></tr>
+<tr><td>2026-03-15</td><td>2400×—</td><td>学习了几场openclaw龙虾别人做的作品感觉大概方式如出一辙，大家运用的并不是龙虾的自动化，而是龙虾的开放性， ​个人数据就像一个数据集开放式矩阵 ​抽象成矩阵的特征值 ​再将这个特征值灌输到不同的场景形成新的数据集 至于准确性可以参考十 ｜ 赞0 评0</td></tr>
+<tr><td>2026-02-10</td><td>1080×—</td><td>速成木板甲马，报喜马子 ｜ 赞0 评0</td></tr>
+<tr><td>2026-02-10</td><td>1080×—</td><td>速成木板甲马，报喜马子 ｜ 赞0 评0</td></tr>
+<tr><td>2026-02-10</td><td>1080×—</td><td>速成木板甲马，报喜马子 ｜ 赞0 评0</td></tr>
+<tr><td>2026-02-07</td><td>1080×—</td><td>甲马甲马 ｜ 赞0 评0</td></tr>
+<tr><td>2026-02-07</td><td>1080×—</td><td>甲马甲马 ｜ 赞0 评0</td></tr>
+<tr><td>2026-02-07</td><td>1080×—</td><td>甲马甲马 ｜ 赞0 评0</td></tr>
+<tr><td>2026-02-07</td><td>1080×—</td><td>速成甲马木刻马年报喜马子 ｜ 赞0 评0</td></tr>
+<tr><td>2025-09-11</td><td>1920×—</td><td>爱马仕艺术总监Denis Schmitz和央美实验艺术与科技艺术学院活动设立基金联合探索材料的边界艺术的展现 ｜ 赞5 评0</td></tr>
+<tr><td>2025-09-11</td><td>2400×—</td><td>爱马仕艺术总监Denis Schmitz和央美实验艺术与科技艺术学院活动设立基金联合探索材料的边界艺术的展现 ｜ 赞5 评0</td></tr>
+<tr><td>2025-09-11</td><td>2400×—</td><td>爱马仕艺术总监Denis Schmitz和央美实验艺术与科技艺术学院活动设立基金联合探索材料的边界艺术的展现 ｜ 赞5 评0</td></tr>
+<tr><td>2025-07-13</td><td>2036×—</td><td>油墨好用！ ｜ 赞0 评0</td></tr>
+<tr><td>2025-07-13</td><td>2315×—</td><td>油墨好用！ ｜ 赞0 评0</td></tr>
+<tr><td>2025-07-13</td><td>2203×—</td><td>油墨好用！ ｜ 赞0 评0</td></tr>
+<tr><td>2025-05-20</td><td>1080×—</td><td>德宏这边学校给的一年住宅，外地山清水秀养生驻地+1！！ ｜ 赞0 评0</td></tr>
+<tr><td>2025-05-20</td><td>1080×—</td><td>德宏这边学校给的一年住宅，外地山清水秀养生驻地+1！！ ｜ 赞0 评0</td></tr>
+<tr><td>2025-05-20</td><td>1080×—</td><td>德宏这边学校给的一年住宅，外地山清水秀养生驻地+1！！ ｜ 赞0 评0</td></tr>
+<tr><td>2025-05-20</td><td>1080×—</td><td>德宏这边学校给的一年住宅，外地山清水秀养生驻地+1！！ ｜ 赞0 评0</td></tr>
+<tr><td>2025-04-27</td><td>1920×—</td><td>黔地再会！清凉！！！ ​期待再发贵地！！！！！！ ｜ 赞2 评0</td></tr>
+</table>
+<p style="font-size:12.5px;color:#6b6660">共 66 张；上表为与经历直接相关的条目（其余见 <code>photos</code> 表 <code>root=朋友圈 and role=me</code>）。</p>
+<h2>四、逐段经历：照片可用性与缺口（现算）</h2>
+<table><tr><th>#</th><th>经历</th><th>区间</th><th>本批入选图</th><th>状态</th></tr>
+<tr><td>1</td><td>洞台村乡村美育工作站</td><td>2026-03 → 2026-10</td><td>4</td><td>✅ 有主图 + 过程图</td></tr>
+<tr><td>2</td><td>澜沧支教（Movers4Climate）</td><td>2026-06 → 2026-09</td><td>4</td><td>✅ 有主图 + 过程图</td></tr>
+<tr><td>3</td><td>版画技法补齐（木版 · 石版 · 丝网）</td><td>2026-01 → 2026-06</td><td>4</td><td>✅ 有主图 + 过程图</td></tr>
+<tr><td>4</td><td>第五届美学与艺术研究学术研讨会（会务）</td><td>2025-09 → 2025-11</td><td>4</td><td>✅ 有主图 + 过程图</td></tr>
+<tr><td>5</td><td>「悲鸿 YOUNG」视觉体系</td><td>2026-08 → 2026-10</td><td>4</td><td>✅ 有主图 + 过程图</td></tr>
+<tr><td>6</td><td>厦门集美授课</td><td>2026-04-26 → 2026-05-10</td><td>4</td><td>✅ 有主图 + 过程图</td></tr>
+<tr><td>7</td><td>北京广播电视台 AIGC 科研实习</td><td>2026-01-07 → 2026-02-12</td><td>2</td><td>🟡 图偏少（2 张）</td></tr>
+<tr><td>8</td><td>数字人与交互技术线</td><td>2025-12 → 2026-10</td><td>4</td><td>✅ 有主图 + 过程图</td></tr>
+</table>
+<h3>明确的缺口（不掩盖）</h3>
+<div class="bad"><b>06 厦门集美授课</b>：<b>没有课堂现场照</b>。能拿到的是他本人朋友圈 2026-05-01「重生之黑道班主任短期体验卡·五一假期冒名版」与 2026-05-07「准备离厦了」等自拍/记录，<b>拍摄者待确认</b>；学校全称与课时也仍待确认。</div>
+<div class="bad"><b>07 北京广播电视台 AIGC 科研实习</b>：全库仅 3 张相关图（<code>梅宸羽 北京台</code> 1 张 role=me、<code>李明嘉 北京台</code> 2 张）。**没有工作现场照**。</div>
+<div class="warn"><b>03 版画技法</b>：作品与过程照有，但**石版全流程**、**丝网制版实操**的现场照偏少。策展集里 C 组前两批是**武宏老师发的临摹参考图，不是他的作品**，已排除。</div>
+<div class="warn"><b>08 数字人</b>：图最多（井邻项目「交互文件与主视觉汇总」134 张含交互装置现场 + 工作坊现场），但**成品层未交付**，PPT 上必须按「数据层完成 / 架构层设想 / 成品层未交付」写。</div>
+<h2>五、联系表索引（带编号 / 缩略图 / 来源）</h2>
+<p style="font-size:13px">每段经历一份候选联系表（编号 <code>E01-01</code> 起），旁边 CSV 是「编号 → 原始路径 / 日期 / 会话 / 谁发的 / 三类归属」对照表。</p>
+<table><tr><th>联系表</th><th>张数</th><th>文件</th></tr>
+<tr><td>EXP01_洞台村乡村美育工作站.jpg</td><td>64</td><td><code>C:\Users\wardc\WorkBuddy AI\2026-09-28-06-58-18\_tmp\sheets\EXP01_洞台村乡村美育工作站.jpg</code></td></tr>
+<tr><td>EXP02_澜沧支教Movers4Clima.jpg</td><td>64</td><td><code>C:\Users\wardc\WorkBuddy AI\2026-09-28-06-58-18\_tmp\sheets\EXP02_澜沧支教Movers4Clima.jpg</code></td></tr>
+<tr><td>EXP03_版画技法补齐木版石版丝网.jpg</td><td>64</td><td><code>C:\Users\wardc\WorkBuddy AI\2026-09-28-06-58-18\_tmp\sheets\EXP03_版画技法补齐木版石版丝网.jpg</code></td></tr>
+<tr><td>EXP04_第五届美学与艺术研究学术研讨会会.jpg</td><td>64</td><td><code>C:\Users\wardc\WorkBuddy AI\2026-09-28-06-58-18\_tmp\sheets\EXP04_第五届美学与艺术研究学术研讨会会.jpg</code></td></tr>
+<tr><td>EXP05_悲鸿YOUNG视觉体系.jpg</td><td>63</td><td><code>C:\Users\wardc\WorkBuddy AI\2026-09-28-06-58-18\_tmp\sheets\EXP05_悲鸿YOUNG视觉体系.jpg</code></td></tr>
+<tr><td>EXP06_厦门集美授课.jpg</td><td>6</td><td><code>C:\Users\wardc\WorkBuddy AI\2026-09-28-06-58-18\_tmp\sheets\EXP06_厦门集美授课.jpg</code></td></tr>
+<tr><td>EXP07_北京广播电视台AIGC科研实习.jpg</td><td>2</td><td><code>C:\Users\wardc\WorkBuddy AI\2026-09-28-06-58-18\_tmp\sheets\EXP07_北京广播电视台AIGC科研实习.jpg</code></td></tr>
+<tr><td>EXP08_数字人与交互技术线.jpg</td><td>63</td><td><code>C:\Users\wardc\WorkBuddy AI\2026-09-28-06-58-18\_tmp\sheets\EXP08_数字人与交互技术线.jpg</code></td></tr>
+<tr><td>SRC_C1原片.jpg</td><td>120</td><td><code>C:\Users\wardc\WorkBuddy AI\2026-09-28-06-58-18\_tmp\sheets\SRC_C1原片.jpg</code></td></tr>
+<tr><td>SRC_井邻宣传.jpg</td><td>112</td><td><code>C:\Users\wardc\WorkBuddy AI\2026-09-28-06-58-18\_tmp\sheets\SRC_井邻宣传.jpg</code></td></tr>
+<tr><td>SRC_井邻项目.jpg</td><td>120</td><td><code>C:\Users\wardc\WorkBuddy AI\2026-09-28-06-58-18\_tmp\sheets\SRC_井邻项目.jpg</code></td></tr>
+<tr><td>SRC_朋友圈_他发的.jpg</td><td>66</td><td><code>C:\Users\wardc\WorkBuddy AI\2026-09-28-06-58-18\_tmp\sheets\SRC_朋友圈_他发的.jpg</code></td></tr>
+</table>
+<h2>六、本批交付物</h2>
+<table><tr><th>文件</th><th>说明</th></tr>
+<tr><td><code>中期汇报_经历页_第二批_2026-10-06.pptx</code></td><td>8 页可编辑 PPT（沿用 16:9 · 微软雅黑 · #1F3D2B / #9E3B2E）</td></tr>
+<tr><td><code>汇报页面材料包_第二批_2026-10-06.html</code></td><td>每段经历的材料包（7 项齐全 + 图源明细）</td></tr>
+<tr><td><code>入选原图索引_第二批_2026-10-06.csv</code></td><td>入选图的原始路径 / 三类归属 / 拍摄者 / 转发日期</td></tr>
+<tr><td><code>_tmp\sheets\EXP01..08*.jpg + .csv</code></td><td>每段经历的候选联系表（带编号）</td></tr>
+<tr><td><code>照片证据总览_第二批_2026-10-06.html</code></td><td>本文档</td></tr>
+</table>
+<h2>七、还没做的（如实登记）</h2>
+<table><tr><th>#</th><th>待办</th><th>卡在哪</th></tr><tr><td>1</td><td>06/07 两段的现场照</td><td>本机确实没有 —— 需本人补拍或从老师/同事处索取</td></tr><tr><td>2</td><td>拍摄者判定</td><td>已按 <code>role</code> 严格判定；<b>项目文件夹与摄影原片无 role 语义</b>，一律「待确认」</td></tr><tr><td>3</td><td>拍摄日期</td><td>微信已剥离 EXIF —— <b>结构性拿不到</b>；只能给转发日期</td></tr><tr><td>4</td><td>「我做了什么」的句子</td><td>需要读同期聊天原文 —— <b>远程模型读取范围未确认</b>，未启动</td></tr><tr><td>5</td><td>其余 45 段经历的照片</td><td>本批只做了证据较完整的 8 段</td></tr></table>
+<div class="foot">工具 <code>tools\photo_evidence_overview.py</code> ｜ 照片索引 <code>tools\hevc_photos.py</code> + <code>tools\photo_sources.py</code> ｜ 联系表 <code>tools\contact_sheet.py</code> ｜ <b>内部资料，含个人隐私，不得外传</b></div>
+</div></body></html>

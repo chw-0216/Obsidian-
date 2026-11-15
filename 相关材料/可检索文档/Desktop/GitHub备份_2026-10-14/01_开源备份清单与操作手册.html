@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GitHub 开源备份 · 清单与操作手册</title>
+<style>
+:root{
+  --ink:#1a1a1a; --ink2:#5c5c5c; --ink3:#8d8d8d;
+  --line:#e6e4df; --line2:#f0eee9;
+  --accent:#0f6e56; --accent2:#185fa5; --warn:#993c1d;
+  --bg2:#faf9f7;
+}
+*{box-sizing:border-box;}
+body{
+  margin:0; padding:0 20px 80px;
+  background:#f5f4f1; color:var(--ink);
+  font-family:system-ui,-apple-system,"Segoe UI","Microsoft YaHei",sans-serif;
+  font-size:14px; line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:920px; margin:0 auto;}
+header{padding:52px 0 28px;}
+h1{font-size:26px; font-weight:600; margin:0 0 10px; letter-spacing:-0.2px;}
+.sub{color:var(--ink2); font-size:14px; margin:0;}
+.meta{margin-top:18px; display:flex; gap:10px; flex-wrap:wrap;}
+.chip{
+  background:#fff; border:1px solid var(--line); border-radius:999px;
+  padding:4px 13px; font-size:12.5px; color:var(--ink2);
+}
+.chip b{color:var(--ink); font-weight:600;}
+section{background:#fff; border:1px solid var(--line); border-radius:14px; padding:30px 32px; margin-bottom:22px;}
+h2{font-size:17px; font-weight:600; margin:0 0 6px; display:flex; align-items:center; gap:10px;}
+h2 .dot{width:8px; height:8px; border-radius:50%; flex:none;}
+h3{font-size:14.5px; font-weight:600; margin:26px 0 8px;}
+h3:first-of-type{margin-top:14px;}
+p{margin:8px 0; color:var(--ink2);}
+.lead{color:var(--ink2); font-size:13.5px; margin:0 0 20px;}
+table{width:100%; border-collapse:collapse; margin:14px 0 6px; font-size:13.5px;}
+th{
+  text-align:left; font-weight:600; font-size:12.5px; color:var(--ink3);
+  padding:8px 10px; border-bottom:1px solid var(--line); background:var(--bg2);
+}
+th:first-child{border-radius:8px 0 0 0;} th:last-child{border-radius:0 8px 0 0;}
+td{padding:10px; border-bottom:1px solid var(--line2); vertical-align:top;}
+tr:last-child td{border-bottom:none;}
+td.name{font-weight:500; white-space:nowrap;}
+td.name code{background:none; padding:0; color:var(--ink); font-size:13px;}
+td.why{color:var(--ink2);}
+td.note{color:var(--ink3); font-size:12.5px; white-space:nowrap;}
+input[type=checkbox]{
+  appearance:none; width:16px; height:16px; border:1.5px solid #c9c6bf;
+  border-radius:4px; cursor:pointer; position:relative; top:3px; transition:.12s;
+}
+input[type=checkbox]:checked{background:var(--accent); border-color:var(--accent);}
+input[type=checkbox]:checked::after{
+  content:""; position:absolute; left:4.5px; top:1.5px; width:4px; height:8px;
+  border:solid #fff; border-width:0 1.5px 1.5px 0; transform:rotate(45deg);
+}
+code{
+  font-family:ui-monospace,"Cascadia Code",Consolas,monospace;
+  background:#f4f2ee; padding:1.5px 6px; border-radius:5px; font-size:12.5px;
+  color:#3a3a3a;
+}
+pre{
+  background:#fbfaf8; border:1px solid var(--line); border-radius:10px;
+  padding:14px 16px; overflow-x:auto; margin:12px 0;
+}
+pre code{background:none; padding:0; font-size:12.5px; line-height:1.65; color:#333;}
+.steps{counter-reset:s; list-style:none; padding:0; margin:10px 0;}
+.steps>li{
+  counter-increment:s; position:relative; padding-left:38px; margin:14px 0; color:var(--ink2);
+}
+.steps>li::before{
+  content:counter(s); position:absolute; left:0; top:1px;
+  width:24px; height:24px; border-radius:50%; background:var(--bg2);
+  border:1px solid var(--line); color:var(--ink);
+  font-size:12px; font-weight:600; display:flex; align-items:center; justify-content:center;
+}
+.steps>li b{color:var(--ink);}
+.tip{
+  border-left:2.5px solid var(--accent); background:#f7fbf9;
+  padding:12px 16px; border-radius:0 8px 8px 0; margin:16px 0; font-size:13.5px; color:var(--ink2);
+}
+.tip.warn{border-left-color:var(--warn); background:#fdf8f6;}
+.tip b{color:var(--ink);}
+.kbd{font-size:12px; color:var(--ink3);}
+.footer{text-align:center; color:var(--ink3); font-size:12.5px; padding:26px 0 0;}
+.counter{
+  position:sticky; top:0; z-index:5; margin:0 0 22px;
+  background:rgba(245,244,241,.92); backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line); padding:12px 0;
+  display:flex; align-items:center; gap:12px; font-size:13.5px;
+}
+.counter b{color:var(--accent); font-size:16px; font-weight:600;}
+.counter button{
+  margin-left:auto; background:#fff; border:1px solid var(--line); border-radius:8px;
+  padding:5px 14px; font-size:12.5px; color:var(--ink2); cursor:pointer;
+  font-family:inherit; transition:.12s;
+}
+.counter button:hover{border-color:#c9c6bf; color:var(--ink);}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>GitHub 开源备份 · 清单与操作手册</h1>
+  <p class="sub">把你在用、在研究的开源项目，从「别人的仓库」变成「你自己的资产」。原库删了，你手里还有。</p>
+  <div class="meta">
+    <span class="chip">整理日期 <b>2026-10-14</b></span>
+    <span class="chip">候选项目 <b>36</b> 个</span>
+    <span class="chip">来源 <b>Obsidian 选型 · 微信管道 · 本机克隆痕迹</b></span>
+  </div>
+</header>
+
+<div class="counter">
+  <span>已勾选 <b id="n">0</b> 个项目</span>
+  <button onclick="document.querySelectorAll('input[type=checkbox]').forEach(c=>{c.checked=false});count()">清空</button>
+</div>
+
+<section>
+  <h2><span class="dot" style="background:#0f6e56"></span>A 类 · 记忆与检索研究</h2>
+  <p class="lead">来自你的 Obsidian《开源选型》与《创作开源案例》。这类项目偏研究框架，作者多为实验室，删库/归档风险相对高，值得优先备份。</p>
+  <table>
+    <tr><th style="width:34px"></th><th style="width:230px">项目</th><th>用途</th><th style="width:120px">备注</th></tr>
+    <tr><td><input type="checkbox" data-r="getzep/graphiti"></td><td class="name"><code>getzep/graphiti</code></td><td class="why">双时态知识图谱，来源回溯</td><td class="note">Apache-2.0</td></tr>
+    <tr><td><input type="checkbox" data-r="letta-ai/letta"></td><td class="name"><code>letta-ai/letta</code></td><td class="why">分层上下文与长期记忆平台</td><td class="note">Apache-2.0</td></tr>
+    <tr><td><input type="checkbox" data-r="letta-ai/letta-code"></td><td class="name"><code>letta-ai/letta-code</code></td><td class="why">Letta 当前主线源码</td><td class="note">Apache-2.0</td></tr>
+    <tr><td><input type="checkbox" data-r="mem0ai/mem0"></td><td class="name"><code>mem0ai/mem0</code></td><td class="why">候选记忆提取与多路检索</td><td class="note">Apache-2.0</td></tr>
+    <tr><td><input type="checkbox" data-r="HKUDS/LightRAG"></td><td class="name"><code>HKUDS/LightRAG</code></td><td class="why">细节与主题双层检索</td><td class="note">MIT</td></tr>
+    <tr><td><input type="checkbox" data-r="OSU-NLP-Group/HippoRAG"></td><td class="name"><code>OSU-NLP-Group/HippoRAG</code></td><td class="why">图扩展多跳检索</td><td class="note">MIT</td></tr>
+    <tr><td><input type="checkbox" data-r="snap-research/locomo"></td><td class="name"><code>snap-research/locomo</code></td><td class="why">长对话记忆评测数据集</td><td class="note">CC BY-NC 4.0</td></tr>
+    <tr><td><input type="checkbox" data-r="xiaowu0162/LongMemEval"></td><td class="name"><code>xiaowu0162/LongMemEval</code></td><td class="why">长期记忆评测基准</td><td class="note">MIT</td></tr>
+    <tr><td><input type="checkbox" data-r="mohammadtavakoli78/BEAM"></td><td class="name"><code>mohammadtavakoli78/BEAM</code></td><td class="why">千万 token 规模压力测试</td><td class="note">MIT</td></tr>
+    <tr><td><input type="checkbox" data-r="ankitects/anki"></td><td class="name"><code>ankitects/anki</code></td><td class="why">间隔复习（你已有使用习惯）</td><td class="note">AGPL-3.0</td></tr>
+  </table>
+</section>
+
+<section>
+  <h2><span class="dot" style="background:#185fa5"></span>B 类 · 微信数据管道</h2>
+  <p class="lead">来自你的《微信消息自动分析项目全景表》。这是你聊天记录分析链路的核心依赖，也是受平台政策影响最大的一类——项目随时可能被下架，备份价值最高。</p>
+  <table>
+    <tr><th style="width:34px"></th><th style="width:230px">项目</th><th>用途</th><th style="width:120px">备注</th></tr>
+    <tr><td><input type="checkbox" data-r="lich0821/WeChatFerry"></td><td class="name"><code>lich0821/WeChatFerry</code></td><td class="why">Hook 注入，功能最全</td><td class="note">生态成熟</td></tr>
+    <tr><td><input type="checkbox" data-r="cluic/wxauto"></td><td class="name"><code>cluic/wxauto</code></td><td class="why">UI 自动化，不注入进程</td><td class="note">中等风险</td></tr>
+    <tr><td><input type="checkbox" data-r="wechaty/wechaty"></td><td class="name"><code>wechaty/wechaty</code></td><td class="why">对话式 RPA SDK</td><td class="note">多平台</td></tr>
+    <tr><td><input type="checkbox" data-r="zhayujie/chatgpt-on-wechat"></td><td class="name"><code>zhayujie/chatgpt-on-wechat</code></td><td class="why">多模型微信机器人</td><td class="note">34K+ star</td></tr>
+    <tr><td><input type="checkbox" data-r="wechatpython/ntchat"></td><td class="name"><code>wechatpython/ntchat</code></td><td class="why">Hook 类 Python 封装</td><td class="note">接口友好</td></tr>
+    <tr><td><input type="checkbox" data-r="freestylefly/WeChatBridge"></td><td class="name"><code>freestylefly/WeChatBridge</code></td><td class="why">聊天记录转 Agent 分析</td><td class="note">只读分析</td></tr>
+    <tr><td><input type="checkbox" data-r="yuuouu/WeChat-Bridge"></td><td class="name"><code>yuuouu/WeChat-Bridge</code></td><td class="why">iLink 官方通道 HTTP 化</td><td class="note">官方通道</td></tr>
+    <tr><td><input type="checkbox" data-r="fastclaw-ai/weclaw"></td><td class="name"><code>fastclaw-ai/weclaw</code></td><td class="why">多 Agent 路由器</td><td class="note">官方通道</td></tr>
+    <tr><td><input type="checkbox" data-r="cyhhao/vibe-remote"></td><td class="name"><code>cyhhao/vibe-remote</code></td><td class="why">Agent 中控台看板</td><td class="note">可视化</td></tr>
+    <tr><td><input type="checkbox" data-r="sorrycc/wechatbot"></td><td class="name"><code>sorrycc/wechatbot</code></td><td class="why">超轻量 iLink 直连</td><td class="note">断线重连</td></tr>
+    <tr><td><input type="checkbox" data-r="hicccc77/WeFlow"></td><td class="name"><code>hicccc77/WeFlow</code></td><td class="why">微信数据导出（本机已装）</td><td class="note">你挖出的新仓库</td></tr>
+  </table>
+</section>
+
+<section>
+  <h2><span class="dot" style="background:#993c1d"></span>C 类 · 创作与交互装置</h2>
+  <p class="lead">支撑你手势音乐、声音装置、标注工作流的底层部件。</p>
+  <table>
+    <tr><th style="width:34px"></th><th style="width:230px">项目</th><th>用途</th><th style="width:120px">备注</th></tr>
+    <tr><td><input type="checkbox" data-r="google-ai-edge/mediapipe-samples"></td><td class="name"><code>google-ai-edge/mediapipe-samples</code></td><td class="why">手部关键点识别样例</td><td class="note">Apache-2.0</td></tr>
+    <tr><td><input type="checkbox" data-r="Tonejs/Tone.js"></td><td class="name"><code>Tonejs/Tone.js</code></td><td class="why">音频调度与合成</td><td class="note">MIT</td></tr>
+    <tr><td><input type="checkbox" data-r="doccano/doccano"></td><td class="name"><code>doccano/doccano</code></td><td class="why">本地文本标注平台</td><td class="note">MIT</td></tr>
+  </table>
+</section>
+
+<section>
+  <h2><span class="dot" style="background:#534ab7"></span>D 类 · 你实际克隆用过的工具</h2>
+  <p class="lead">从本机 git clone 痕迹反推。这些你已经动手跑过，属于「用得上」而非「想看看」的范畴。</p>
+  <table>
+    <tr><th style="width:34px"></th><th style="width:230px">项目</th><th>用途</th><th style="width:120px">备注</th></tr>
+    <tr><td><input type="checkbox" data-r="fish2lab/DSCodex"></td><td class="name"><code>fish2lab/DSCodex</code></td><td class="why">DeepSeek 工作流工具</td><td class="note">你在用</td></tr>
+    <tr><td><input type="checkbox" data-r="qiaodogbear/ChatTrace"></td><td class="name"><code>qiaodogbear/ChatTrace</code></td><td class="why">会话归档追踪</td><td class="note">你在用</td></tr>
+    <tr><td><input type="checkbox" data-r="Anil-matcha/Open-Generative-AI"></td><td class="name"><code>Anil-matcha/Open-Generative-AI</code></td><td class="why">开源生成式 AI 工具集</td><td class="note">含子模块</td></tr>
+    <tr><td><input type="checkbox" data-r="Anil-matcha/Open-AI-Design-Agent"></td><td class="name"><code>Anil-matcha/Open-AI-Design-Agent</code></td><td class="why">设计类 Agent</td><td class="note">你在用</td></tr>
+    <tr><td><input type="checkbox" data-r="Anil-matcha/Open-Poe-AI"></td><td class="name"><code>Anil-matcha/Open-Poe-AI</code></td><td class="why">多模型聚合客户端</td><td class="note">你在用</td></tr>
+    <tr><td><input type="checkbox" data-r="deepbeepmeep/Wan2GP"></td><td class="name"><code>deepbeepmeep/Wan2GP</code></td><td class="why">低显存视频生成</td><td class="note">AI 创作</td></tr>
+    <tr><td><input type="checkbox" data-r="Zeejay0/gathered-scenes-zine-skill"></td><td class="name"><code>Zeejay0/gathered-scenes-zine-skill</code></td><td class="why">Zine 制作 Skill</td><td class="note">2026-09-26 关注</td></tr>
+    <tr><td><input type="checkbox" data-r="samuraigpt/vibe-workflow"></td><td class="name"><code>samuraigpt/vibe-workflow</code></td><td class="why">工作流模板</td><td class="note">待核实</td></tr>
+  </table>
+</section>
+
+<section>
+  <h2><span class="dot" style="background:#5f5e5a"></span>E 类 · 开发工具链与其他</h2>
+  <p class="lead">体量小但属于基础设施；另有腾讯 WeKnora（你部署过，仓库地址待核实）与 defacto（2025-09-25 记录）。</p>
+  <table>
+    <tr><th style="width:34px"></th><th style="width:230px">项目</th><th>用途</th><th style="width:120px">备注</th></tr>
+    <tr><td><input type="checkbox" data-r="Marus/cortex-debug"></td><td class="name"><code>Marus/cortex-debug</code></td><td class="why">嵌入式调试扩展</td><td class="note">Arduino 相关</td></tr>
+    <tr><td><input type="checkbox" data-r="serialport/node-serialport"></td><td class="name"><code>serialport/node-serialport</code></td><td class="why">Node 串口通信</td><td class="note">装置硬件</td></tr>
+    <tr><td><input type="checkbox" data-r="Tencent/WeKnora"></td><td class="name"><code>Tencent/WeKnora</code></td><td class="why">RAG + Agent 知识平台</td><td class="note">待核实地址</td></tr>
+    <tr><td><input type="checkbox" data-r="tinnel123666888/defacto"></td><td class="name"><code>tinnel123666888/defacto</code></td><td class="why">2025-09-25 记录的项目</td><td class="note">待核实</td></tr>
+  </table>
+</section>
+
+<section>
+  <h2><span class="dot" style="background:#0f6e56"></span>操作手册 · 五步走完</h2>
+  <p class="lead">全程只需要一次配置，之后备份新项目就是复制粘贴。</p>
+
+  <h3>阶段一 · 配好钥匙（一次性，约 5 分钟）</h3>
+  <ol class="steps">
+    <li><b>把公钥交给 GitHub。</b>打开 <code>github.com/settings/keys</code> → 点 <b>New SSH key</b> → Title 随便填（如「我的笔记本」）→ Key type 选 <b>Authentication Key</b> → 把下面这一整行粘进去 → 点 <b>Add SSH key</b>。
+      <pre><code>ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC94EDOaEEmgfTCA6GQpeXzMuFBnJZHIYkfJVkpYR2k kayleigh_teneturzy@protestant.com</code></pre>
+    </li>
+    <li><b>修正 Git 身份。</b>你现在的全局邮箱是个占位假邮箱，提交记录会认不出是你。改成 GitHub 账号的邮箱：
+      <pre><code>git config --global user.name "你的GitHub用户名"
+git config --global user.email "你的GitHub邮箱"</code></pre>
+    </li>
+    <li><b>验证连通。</b>
+      <pre><code>ssh -T git@github.com</code></pre>
+      看到 <code>Hi 用户名! You've successfully authenticated</code> 就成功了。
+    </li>
+  </ol>
+
+  <h3>阶段二 · 建立你自己的仓库</h3>
+  <ol class="steps">
+    <li>打开 <code>github.com/new</code>。</li>
+    <li>Repository name 填 <code>opensource-backup</code>。</li>
+    <li>Visibility 选 <b>Private</b>（你自己的备份，不必公开）。</li>
+    <li>勾上 <b>Add a README file</b>，点 <b>Create repository</b>。</li>
+  </ol>
+
+  <h3>阶段三 · 备份项目：两条路一起走</h3>
+  <p><b>路线 A · Fork（云端复制）</b>——打开项目页，点右上角 <b>Fork</b> → <b>Create fork</b>。项目就整份进了你的账号，原库删了你的还在。</p>
+  <p><b>路线 B · 镜像克隆（本地存档）</b>——完整拉下所有分支和历史：</p>
+  <pre><code>git clone --mirror https://github.com/owner/repo.git</code></pre>
+
+  <h3>阶段四 · 推送到自己的私有仓库</h3>
+  <p>镜像仓库推上去，才算真正「有主」：</p>
+  <pre><code>cd repo.git
+git remote set-url --push origin git@github.com:你的用户名/repo.git
+git push --mirror</code></pre>
+
+  <h3>阶段五 · 长期维护</h3>
+  <p>上游更新时同步一次即可。这份手册会配套一个一键同步脚本，放在同目录下，双击就能跑。</p>
+
+  <div class="tip warn">
+    <b>一个提醒：</b>Fork 和镜像备份都只覆盖<u>代码</u>。很多项目的大模型权重、训练数据、艺术素材是另外分发的，不在 Git 仓库里。对这类项目，还要单独把模型文件存一份到移动硬盘。
+  </div>
+  <div class="tip">
+    <b>为什么建议两条路都走：</b>Fork 依赖 GitHub 账号可用；本地镜像依赖这块硬盘。两者互为备份——GitHub 被墙、账号被封、硬盘损坏，任何单一故障都不会让你彻底失去项目。
+  </div>
+</section>
+
+<div class="footer">
+  整理自 Obsidian《开源选型》《创作开源案例》《微信分析项目全景》与本机克隆痕迹 · 2026-10-14
+</div>
+
+</div>
+<script>
+function count(){
+  var n=document.querySelectorAll('input[type=checkbox]:checked').length;
+  document.getElementById('n').textContent=n;
+}
+document.querySelectorAll('input[type=checkbox]').forEach(function(c){
+  c.addEventListener('change',count);
+});
+count();
+</script>
+</body>
+</html>

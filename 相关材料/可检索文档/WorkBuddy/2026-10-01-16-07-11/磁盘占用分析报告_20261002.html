@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>磁盘占用与清理分析报告</title>
+<style>
+  :root{--ink:#1f2328;--muted:#6b7280;--line:#e5e7eb;--bg:#f7f7f5;
+    --ok:#0f6e56;--okbg:#e1f5ee;--warn:#854f0b;--warnbg:#faeeda;
+    --wb:#185fa5;--wb-bg:#e6f1fb;--ag:#993c1d;--ag-bg:#faece7;--ds:#534ab7;--ds-bg:#eeedfe;--ot:#5f5e5a;--ot-bg:#f1efea}
+  *{box-sizing:border-box}
+  body{margin:0;padding:44px 30px;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;font-size:14px;line-height:1.65}
+  .wrap{max-width:880px;margin:0 auto}
+  h1{font-size:23px;font-weight:600;margin:0 0 6px}
+  .sub{color:var(--muted);font-size:13px;margin-bottom:28px}
+  h2{font-size:16px;font-weight:600;margin:34px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+  h3{font-size:14px;font-weight:600;margin:22px 0 9px;display:flex;align-items:center;gap:8px}
+  .dot{width:9px;height:9px;border-radius:50%;flex:none}
+  .cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .card{background:#fff;border:1px solid var(--line);border-radius:10px;padding:15px}
+  .card .k{font-size:12px;color:var(--muted);margin-bottom:3px}
+  .card .v{font-size:21px;font-weight:600;letter-spacing:-.02em}
+  table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:10px;overflow:hidden;font-size:13px}
+  th{text-align:left;font-weight:600;font-size:12px;color:var(--muted);padding:9px 13px;background:#fafafa;border-bottom:1px solid var(--line)}
+  td{padding:9px 13px;border-bottom:1px solid #f1f1ef;vertical-align:top}
+  tr:last-child td{border-bottom:none}
+  td.num{font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:500}
+  code{font-family:"SF Mono",Consolas,monospace;font-size:12px;background:#f4f4f2;padding:1px 5px;border-radius:4px;word-break:break-all}
+  .tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:20px;font-weight:500;white-space:nowrap}
+  .t-ok{background:var(--okbg);color:var(--ok)}
+  .t-warn{background:var(--warnbg);color:var(--warn)}
+  .t-keep{background:var(--ot-bg);color:var(--ot)}
+  .note{background:#fff;border-left:3px solid var(--warn);border-radius:0 8px 8px 0;padding:13px 17px;margin:14px 0;font-size:13px}
+  ol{padding-left:20px;margin:9px 0}li{margin:5px 0}
+  .foot{margin-top:40px;padding-top:14px;border-top:1px solid var(--line);color:var(--muted);font-size:12px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <h1>磁盘占用与清理分析报告</h1>
+  <div class="sub">2026-10-02 06:20 · C 盘 · 覆盖 WorkBuddy / 反重力 Antigravity / DeepSeek Harness 及全部 AI 工具</div>
+
+  <div class="cards">
+    <div class="card"><div class="k">总容量</div><div class="v">456 GB</div></div>
+    <div class="card"><div class="k">已使用</div><div class="v">432 GB</div></div>
+    <div class="card"><div class="k">可用</div><div class="v">25 GB</div></div>
+  </div>
+
+  <h2>一、三家工具现状（清理后）</h2>
+
+  <h3><span class="dot" style="background:#378ADD"></span>WorkBuddy AI · 约 5.1 GB</h3>
+  <table>
+    <tr><th>路径</th><th>体积</th><th>状态</th></tr>
+    <tr><td><code>~/.workbuddy-ai/binaries</code></td><td class="num">1.82 G</td><td><span class="tag t-keep">保留（内置运行时）</span></td></tr>
+    <tr><td><code>%LOCALAPPDATA%\Programs\WorkBuddyAI</code></td><td class="num">1.41 G</td><td><span class="tag t-keep">保留（程序本体）</span></td></tr>
+    <tr><td><code>C:\Users\wardc\WorkBuddy AI</code>（23 个工作区）</td><td class="num">0.67 G</td><td><span class="tag t-keep">保留（含产出物）</span></td></tr>
+    <tr><td><code>~/.workbuddy-ai/logs</code></td><td class="num">0.44 G</td><td><span class="tag t-warn">受保护，退出后清</span></td></tr>
+    <tr><td><code>~/.workbuddy-ai/app</code> · mcp-servers · plugins · projects · blobs</td><td class="num">0.51 G</td><td><span class="tag t-keep">保留</span></td></tr>
+    <tr><td><code>~/.workbuddy-ai/tmp</code> · traces · shell-snapshots</td><td class="num">0.02 G</td><td><span class="tag t-warn">受保护，退出后清</span></td></tr>
+    <tr><td><code>~/.workbuddy-ai/workspace</code></td><td class="num">0.06 G</td><td><span class="tag t-keep">保留（已自动瘦身）</span></td></tr>
+  </table>
+
+  <h3><span class="dot" style="background:#D85A30"></span>反重力 Antigravity · 约 2.0 GB</h3>
+  <table>
+    <tr><th>路径</th><th>体积</th><th>状态</th></tr>
+    <tr><td><code>%LOCALAPPDATA%\Programs\Antigravity IDE</code></td><td class="num">1.11 G</td><td><span class="tag t-keep">保留（程序本体）</span></td></tr>
+    <tr><td><code>%LOCALAPPDATA%\Programs\antigravity</code></td><td class="num">0.58 G</td><td><span class="tag t-keep">保留（疑似旧版）</span></td></tr>
+    <tr><td><code>~/.gemini/antigravity*</code></td><td class="num">0.12 G</td><td><span class="tag t-keep">保留（配置）</span></td></tr>
+    <tr><td><code>~/.antigravity-ide</code> + <code>%APPDATA%\Antigravity*</code></td><td class="num">0.18 G</td><td><span class="tag t-keep">保留</span></td></tr>
+    <tr><td><code>%LOCALAPPDATA%\antigravity-updater</code></td><td class="num">0.16 G</td><td><span class="tag t-ok">已清理</span></td></tr>
+  </table>
+
+  <h3><span class="dot" style="background:#7F77DD"></span>DeepSeek Harness · 约 1.1 GB</h3>
+  <table>
+    <tr><th>路径</th><th>体积</th><th>状态</th></tr>
+    <tr><td><code>%LOCALAPPDATA%\Programs\DeepSeek Harness</code></td><td class="num">1.06 G</td><td><span class="tag t-keep">保留（程序本体）</span></td></tr>
+    <tr><td><code>%LOCALAPPDATA%\@deepseek-aidsh-desktop-updater</code></td><td class="num">0.58 G</td><td><span class="tag t-ok">已清理</span></td></tr>
+    <tr><td><code>%APPDATA%\@deepseek-ai</code> · <code>~/.dsh</code></td><td class="num">0.01 G</td><td><span class="tag t-keep">保留（配置）</span></td></tr>
+  </table>
+
+  <h2>二、本轮执行结果</h2>
+  <p><span class="tag t-ok">成功清理约 0.9 GB</span> &nbsp;<code>traces</code> · <code>shell-snapshots</code> · <code>antigravity-updater</code> · <code>@deepseek-aidsh-desktop-updater</code>（其中含同一安装包的两份 289 MB 拷贝）</p>
+  <div class="note">
+    <b>剩余 0.46 GB 无法在运行期删除 —— 被 WorkBuddy 自身的 <code>safe-delete</code> 安全层拦截</b>（日志显示 <code>SAFE_DELETE_FAIL_CLOSED</code>）。<br>
+    受影响：<code>~/.workbuddy-ai/logs</code>（旧日志 309 MB + sandbox 62 MB）、<code>~/.workbuddy-ai/tmp</code>（17 MB）。<br>
+    这是设计如此：应用运行时不接受外部删除其日志目录。<b>退出 WorkBuddy 后即可清除。</b>
+  </div>
+
+  <h2>三、其他大头分析（不属于三家）</h2>
+
+  <h3><span class="dot" style="background:#888780"></span>Ollama · 11.4 GB</h3>
+  <table>
+    <tr><th>模型 / 路径</th><th>体积</th><th>说明</th></tr>
+    <tr><td><code>hermes3:8b</code></td><td class="num">4.34 G</td><td>通用对话模型</td></tr>
+    <tr><td><code>gemma4-heretic-e2b:q4km</code></td><td class="num">3.19 G</td><td>量化版小模型</td></tr>
+    <tr><td><code>nomic-embed-text:latest</code></td><td class="num">0.26 G</td><td>向量嵌入模型（体积小，建议留）</td></tr>
+    <tr><td><code>%LOCALAPPDATA%\Programs\Ollama</code></td><td class="num">2.99 G</td><td>程序本体</td></tr>
+  </table>
+
+  <h3><span class="dot" style="background:#888780"></span>Codex · 4.4 GB</h3>
+  <table>
+    <tr><th>路径</th><th>体积</th><th>可清理性</th></tr>
+    <tr><td><code>~/.codex/sessions</code></td><td class="num">2.67 G</td><td>会话历史，按需保留</td></tr>
+    <tr><td><code>~/.codex/plugins</code></td><td class="num">0.51 G</td><td>插件缓存</td></tr>
+    <tr><td><code>~/.codex/.sandbox-bin</code></td><td class="num">0.49 G</td><td>沙箱二进制，可重装</td></tr>
+    <tr><td><code>~/.codex/.tmp</code></td><td class="num">0.33 G</td><td><span class="tag t-ok">可清</span>（含 4 份 plugins 克隆/备份）</td></tr>
+    <tr><td><code>~/.codex/generated_images</code></td><td class="num">0.29 G</td><td>生成图片，属你的产出</td></tr>
+    <tr><td><code>~/.cache/codex-runtimes</code></td><td class="num">1.31 G</td><td><span class="tag t-ok">可清</span>（可再生运行时）</td></tr>
+    <tr><td><code>~/.codex/cache</code> + <code>rollback-20260808</code></td><td class="num">0.07 G</td><td><span class="tag t-ok">可清</span></td></tr>
+  </table>
+  <p style="font-size:13px;color:var(--muted);margin-top:8px">Codex 可清部分合计约 <b>1.7 GB</b>（.tmp 0.33 + runtimes 1.31 + cache/rollback 0.07）。</p>
+
+  <h3><span class="dot" style="background:#888780"></span>其他</h3>
+  <table>
+    <tr><th>路径</th><th>体积</th><th>说明</th></tr>
+    <tr><td><code>%LOCALAPPDATA%\Programs\Kiro</code></td><td class="num">0.94 G</td><td>Kiro 程序本体</td></tr>
+    <tr><td><code>%LOCALAPPDATA%\Programs\ZCode</code> + <code>~/.zcode</code></td><td class="num">0.94 G</td><td>ZCode 程序 + 数据</td></tr>
+    <tr><td><code>~/.local/bin</code></td><td class="num">0.56 G</td><td>含 <code>claude.exe.old.*</code> 旧版本残留</td></tr>
+    <tr><td><code>~/.vscode/extensions</code></td><td class="num">0.52 G</td><td>VS Code 扩展</td></tr>
+    <tr><td><code>%LOCALAPPDATA%\cursor-updater</code></td><td class="num">0.28 G</td><td><span class="tag t-ok">可清</span>（更新包缓存）</td></tr>
+  </table>
+
+  <h2>四、下一步</h2>
+  <ol>
+    <li>完全退出 WorkBuddy AI（含托盘图标）</li>
+    <li>双击桌面 <code>cleanup_workbuddy_residual.cmd</code> → 清理 <code>logs</code> + <code>tmp</code>（约 0.46 GB）</li>
+    <li><b>清空回收站</b> —— 否则空间不会真正释放</li>
+    <li>如还想腾更多：Codex 缓存 1.7 GB、cursor-updater 0.28 GB、Ollama 不常用模型（最大单个 4.34 GB）</li>
+  </ol>
+
+  <div class="foot">
+    统计方式：robocopy 目录遍历（全量约 30 GB / 1 分钟）。<br>
+    所有删除均经回收站，可在「回收站」还原；受 safe-delete 保护的项需退出应用后处理。
+  </div>
+
+</div>
+</body>
+</html>

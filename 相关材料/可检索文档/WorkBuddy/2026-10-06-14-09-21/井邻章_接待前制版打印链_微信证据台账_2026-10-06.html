@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>井邻章 · 接待前「制版—打印」链 微信证据台账</title>
+<style>
+  :root{
+    --ink:#16181d; --ink2:#3c4148; --ink3:#6b7280; --ink4:#9aa1ab;
+    --line:#e3e6ea; --line2:#eef1f4;
+    --bg:#fff; --bg2:#f7f8fa; --bg3:#f2f4f7;
+    --red:#c0392b; --redbg:#fdf4f3; --redline:#f0d5d1;
+    --green:#1e7a5a; --greenbg:#f1f8f5; --greenline:#cfe6dd;
+    --blue:#1f4e79; --bluebg:#f2f6fa; --blueline:#d3e0ec;
+    --amber:#8a5a00; --amberbg:#fdf8ee; --amberline:#ecdcb8;
+    --purple:#5b3a86; --purplebg:#f7f4fb; --purpleline:#e0d6ee;
+    --mono:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg2);color:var(--ink);font-size:14px;line-height:1.75;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif}
+  .page{max-width:1080px;margin:0 auto;background:var(--bg);box-shadow:0 1px 3px rgba(16,24,40,.06),0 8px 32px rgba(16,24,40,.05)}
+
+  .hero{padding:46px 56px 38px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#fbfcfd,#fff)}
+  .kicker{font-size:11.5px;letter-spacing:.22em;color:var(--ink4);text-transform:uppercase;font-weight:600}
+  .hero h1{margin:14px 0 6px;font-size:30px;line-height:1.3;letter-spacing:-.02em;font-weight:700}
+  .hero h1 em{font-style:normal;color:var(--red)}
+  .hero .sub{color:var(--ink3);font-size:14.5px;margin-top:10px;max-width:790px}
+  .metarow{display:flex;flex-wrap:wrap;margin-top:26px;border-top:1px solid var(--line2);padding-top:20px}
+  .meta{flex:1 1 140px;padding-right:18px}
+  .meta .k{font-size:11px;color:var(--ink4);letter-spacing:.08em}
+  .meta .v{font-size:15px;font-weight:600;margin-top:3px;font-variant-numeric:tabular-nums}
+  .meta .v small{font-weight:400;color:var(--ink3);font-size:12px}
+
+  section{padding:38px 56px;border-bottom:1px solid var(--line2)}
+  section:last-child{border-bottom:none}
+  h2{font-size:19px;margin:0 0 4px;letter-spacing:-.01em;display:flex;align-items:baseline;gap:10px}
+  h2 .n{font-size:12px;color:var(--ink4);font-family:var(--mono);font-weight:600}
+  .h2sub{color:var(--ink3);font-size:13px;margin:0 0 22px}
+  h3{font-size:15.5px;margin:26px 0 10px}
+
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th{text-align:left;font-weight:600;color:var(--ink3);font-size:11.5px;letter-spacing:.05em;
+     padding:9px 10px;border-bottom:1.5px solid var(--line);background:var(--bg3);white-space:nowrap}
+  td{padding:10px;border-bottom:1px solid var(--line2);vertical-align:top}
+  tr:last-child td{border-bottom:none}
+  td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+  .tbl-wrap{border:1px solid var(--line);border-radius:8px;overflow:hidden}
+
+  /* 流程条 */
+  .flow{display:flex;flex-wrap:wrap;gap:8px;align-items:stretch;margin:6px 0 4px}
+  .step{flex:1 1 150px;border:1px solid var(--line);border-radius:8px;padding:11px 13px;background:var(--bg)}
+  .step .sn{font-size:10.5px;font-family:var(--mono);color:var(--ink4);letter-spacing:.06em}
+  .step .st{font-weight:650;font-size:13.5px;margin-top:2px}
+  .step .sd{font-size:11.5px;color:var(--ink3);margin-top:3px;line-height:1.6}
+  .step.hot{border-color:var(--blueline);background:var(--bluebg)}
+  .arrow{align-self:center;color:var(--ink4);font-size:15px;padding:0 1px}
+
+  /* 节点卡 */
+  .nodes{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .node{border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  .node-hd{padding:11px 15px;background:var(--bg3);border-bottom:1px solid var(--line);
+    display:flex;align-items:center;gap:9px;font-weight:700;font-size:14px}
+  .node-hd .dot{width:9px;height:9px;border-radius:50%;flex:0 0 auto}
+  .node-hd .role{font-weight:400;color:var(--ink3);font-size:11.5px;margin-left:auto}
+  .node-bd{padding:12px 15px;font-size:13px}
+  .node-bd .row{display:grid;grid-template-columns:62px 1fr;gap:8px;padding:4px 0;border-bottom:1px dashed var(--line2)}
+  .node-bd .row:last-child{border-bottom:none}
+  .node-bd .row .k{color:var(--ink4);font-size:11.5px;padding-top:1px}
+
+  /* 订单卡 */
+  .ord{border:1px solid var(--line);border-radius:10px;margin:0 0 18px;overflow:hidden}
+  .ord-hd{display:flex;align-items:flex-start;gap:13px;padding:14px 17px;background:var(--bg3);border-bottom:1px solid var(--line)}
+  .ord-no{flex:0 0 auto;width:28px;height:28px;border-radius:7px;background:var(--ink);color:#fff;font-size:12.5px;
+    font-weight:700;display:flex;align-items:center;justify-content:center}
+  .ord-no.key{background:var(--red)}
+  .ord-tt{flex:1 1 auto;min-width:0}
+  .ord-tt .d{font-size:11.5px;color:var(--ink4);font-family:var(--mono)}
+  .ord-tt .w{font-size:15px;font-weight:650;margin-top:1px}
+  .ord-tt .w span{font-weight:400;color:var(--ink3);font-size:12.5px}
+  .ord-price{flex:0 0 auto;text-align:right}
+  .ord-price .p{font-size:16px;font-weight:700;font-variant-numeric:tabular-nums}
+  .ord-price .l{font-size:10.5px;color:var(--ink4);letter-spacing:.06em}
+  .ord-bd{padding:4px 17px 15px}
+
+  .lbl{font-size:11px;font-weight:700;color:var(--ink4);letter-spacing:.1em;margin:15px 0 7px;text-transform:uppercase}
+  .quotes{border-left:2.5px solid var(--line);margin:0;padding:0}
+  .q{display:grid;grid-template-columns:82px 1fr;gap:10px;padding:5px 0 5px 12px;border-bottom:1px dashed var(--line2);font-size:13px}
+  .q:last-child{border-bottom:none}
+  .q .ts{font-family:var(--mono);font-size:11.5px;color:var(--ink4);padding-top:2px;font-variant-numeric:tabular-nums}
+  .q .bd .who{font-weight:650;color:var(--ink2)}
+  .q .bd .who.me{color:var(--blue)}
+  .q .bd .who.tu{color:var(--ink3)}
+  .q .bd .txt{color:var(--ink)}
+  .q .bd .txt.hi{background:#fffdf0;box-shadow:0 0 0 2px #fffdf0;font-weight:600}
+
+  .box{border-radius:8px;padding:14px 16px;margin:14px 0;font-size:13.5px;border:1px solid}
+  .box .bt{font-weight:700;margin-bottom:5px}
+  .box.red{background:var(--redbg);border-color:var(--redline);color:#7d2a20}.box.red .bt{color:var(--red)}
+  .box.green{background:var(--greenbg);border-color:var(--greenline);color:#14543d}.box.green .bt{color:var(--green)}
+  .box.blue{background:var(--bluebg);border-color:var(--blueline);color:#1a3d5c}.box.blue .bt{color:var(--blue)}
+  .box.amber{background:var(--amberbg);border-color:var(--amberline);color:#6b4600}.box.amber .bt{color:var(--amber)}
+  .box.purple{background:var(--purplebg);border-color:var(--purpleline);color:#43286a}.box.purple .bt{color:var(--purple)}
+  .box p{margin:6px 0}
+  code{font-family:var(--mono);font-size:11.5px;background:rgba(0,0,0,.05);padding:1px 4px;border-radius:3px}
+
+  .tag{display:inline-block;font-size:11px;font-weight:600;padding:1.5px 7px;border-radius:4px;white-space:nowrap}
+  .tA{background:var(--greenbg);color:var(--green);border:1px solid var(--greenline)}
+  .tP{background:var(--purplebg);color:var(--purple);border:1px solid var(--purpleline)}
+  .tB{background:var(--bluebg);color:var(--blue);border:1px solid var(--blueline)}
+
+  .foot{padding:24px 56px 40px;color:var(--ink4);font-size:11.5px;background:var(--bg3);border-top:1px solid var(--line)}
+  .foot b{color:var(--ink3)}
+
+  @media print{body{background:#fff;font-size:11.5px}.page{box-shadow:none;max-width:none}
+    section{padding:20px 0}.ord,.node,.box{page-break-inside:avoid}.hero{padding:20px 0}}
+  @media (max-width:760px){
+    .hero,section,.foot{padding-left:20px;padding-right:20px}
+    .nodes{grid-template-columns:1fr}
+    .q{grid-template-columns:1fr;gap:1px}.q .ts{padding-top:0}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="hero">
+  <div class="kicker">洞台村乡村美育工作站 · 中期汇报 · 井邻章</div>
+  <h1>接待前的「<em>制版 — 打印</em>」链</h1>
+  <div class="sub">每一次接待与活动之前，同一套动作都会被完整走一遍：分版 → 打印硫酸纸 → 取件 → 曝光制版 → 次日现场印制。这里把这条链的<b>全部实例、全部原话、全部文件</b>检索成册。</div>
+  <div class="metarow">
+    <div class="meta"><div class="k">固定节点</div><div class="v">2 <small>个（利世隆 · 小马工作室）</small></div></div>
+    <div class="meta"><div class="k">利世隆下单</div><div class="v">4 <small>次 / 已记录 52 元 + 自购纸 70 元</small></div></div>
+    <div class="meta"><div class="k">小马线到场</div><div class="v">6 <small>次（07-23 起 · 含 1 次归还）</small></div></div>
+    <div class="meta"><div class="k">时间跨度</div><div class="v">07-23 → 10-03</div></div>
+  </div>
+</div>
+
+<!-- ① 链条 -->
+<section>
+  <h2><span class="n">01</span>这条链长什么样</h2>
+  <p class="h2sub">固定五步。前两步在电脑前，后三步是开车跑一趟通州。</p>
+
+  <div class="flow">
+    <div class="step"><div class="sn">STEP 1</div><div class="st">分版 / 出正片</div><div class="sd">1-bit · 1200dpi · 45LPI 网点 · 带四角套准十字与 100mm 校尺线</div></div>
+    <div class="arrow">→</div>
+    <div class="step hot"><div class="sn">STEP 2</div><div class="st">发文件给利世隆</div><div class="sd">微信发 PDF/TIF，说明「实际大小 100%」「最大黑墨浓度」，报价后发红包</div></div>
+    <div class="arrow">→</div>
+    <div class="step hot"><div class="sn">STEP 3</div><div class="st">开车去通州取件</div><div class="sd">潞苑南大街 588 号。夜里跑，常「放门口 / 墙边电动车里」自取</div></div>
+    <div class="arrow">→</div>
+    <div class="step"><div class="sn">STEP 4</div><div class="st">小马处曝光制版</div><div class="sd">尚东庭西区 38-104（LEHAUS）。借曝光台 + 烘干箱，必要时技师重制</div></div>
+    <div class="arrow">→</div>
+    <div class="step"><div class="sn">STEP 5</div><div class="st">次日现场印制</div><div class="sd">带版回洞台村工作站，接待 / 工作坊当日直接用</div></div>
+  </div>
+
+  <div class="box blue">
+    <div class="bt">为什么这两个点能一趟跑完</div>
+    <p>利世隆（澜花语岸 588 号）与小马工作室（尚东庭西区 38-104）<b>都在通州，直线距离约 1.3 km</b>，开车几分钟。<br>
+    而且利世隆是<b>小马引荐的</b>：2026-07-24 09:52 / 09:54，马慧楠连发两个定位（澜花语岸 → 利世隆大图复印），就在我第一次去制版的当天上午。</p>
+  </div>
+</section>
+
+<!-- ② 两个节点 -->
+<section>
+  <h2><span class="n">02</span>两个固定节点</h2>
+  <p class="h2sub">所有「接待前」的准备动作，最终都落在这两家。</p>
+
+  <div class="nodes">
+    <div class="node">
+      <div class="node-hd"><span class="dot" style="background:#c0392b"></span>利世隆大图复印<span class="role">打印硫酸纸</span></div>
+      <div class="node-bd">
+        <div class="row"><div class="k">店名</div><div>利世隆大图复印（潞苑南大街店）</div></div>
+        <div class="row"><div class="k">地址</div><div>北京市通州区永顺澜花语岸 588 号<br><span style="color:var(--ink3)">（潞苑南大街 588 号 · 澜花语岸底商）</span></div></div>
+        <div class="row"><div class="k">坐标</div><div><code>39.928223, 116.672371</code></div></div>
+        <div class="row"><div class="k">联系人</div><div>高姐 ｜ 微信「利世隆固话69522333留余高姐」<br><span style="color:var(--ink3)">手机 18611743982 ｜ 座机 69522333 ｜ 备用 13240221233</span></div></div>
+        <div class="row"><div class="k">加微信</div><div>2026-07-24 10:06（制版当天）</div></div>
+        <div class="row"><div class="k">报价</div><div>A3 硫酸纸 <b>5 元/张</b> ｜ A4 <b>3 元/张</b><br><span style="color:var(--ink3)">（2026-10-02 明确报价）</span><br>历史实付：<b>12 元</b>（08-19）· <b>14 元</b>（08-29）· <b>26 元</b>（10-02）</div></div>
+        <div class="row"><div class="k">能力</div><div>硫酸纸最大 A3；<b>菲林片打不了</b>（2026-10-02 确认）</div></div>
+        <div class="row"><div class="k">交付</div><div>可放门口 / 墙边电动车里，夜里自取</div></div>
+      </div>
+    </div>
+
+    <div class="node">
+      <div class="node-hd"><span class="dot" style="background:#1f4e79"></span>小马 · 马慧楠<span class="role">曝光制版</span></div>
+      <div class="node-bd">
+        <div class="row"><div class="k">工作室</div><div>LEHAUS 版画体验工作室<br><span style="color:var(--ink3)">微信备注「马慧楠 ᥫᩣ LE HAUS版画」</span></div></div>
+        <div class="row"><div class="k">地址</div><div>北京市通州区焦王庄街尚东庭西区 38-104</div></div>
+        <div class="row"><div class="k">坐标</div><div><code>39.939594, 116.676315</code></div></div>
+        <div class="row"><div class="k">提供</div><div><b>曝光台 + 烘干箱</b>、网版 / 网框、技师</div></div>
+        <div class="row"><div class="k">首次借用</div><div>2026-07-23 23:20 提出 → 07-24 09:05 到场</div></div>
+        <div class="row"><div class="k">费用</div><div>马慧楠多次「不用费用」；本人 2026-08-19 主动转 <b>40 元</b></div></div>
+        <div class="row"><div class="k">关联</div><div>刘丽萍教授也直接找她协调网版（08-29 马慧楠原话）</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ③ 利世隆四次下单 -->
+<section>
+  <h2><span class="n">03</span>利世隆 · 四次下单全记录</h2>
+  <p class="h2sub">每一次都有完整微信原话：发什么文件、什么规格、多少钱、几点取件。</p>
+
+  <!-- 订单 1 -->
+  <div class="ord">
+    <div class="ord-hd">
+      <div class="ord-no">1</div>
+      <div class="ord-tt"><div class="d">2026-07-24 10:06 – 10:13</div>
+        <div class="w">首次开户 + 首批出片 <span>— 为 7/25 工作站开业</span></div></div>
+      <div class="ord-price"><div class="p">—</div><div class="l">未记录金额</div></div>
+    </div>
+    <div class="ord-bd">
+      <div class="lbl">下单内容</div>
+      <ul style="margin:0;padding-left:18px;font-size:13.5px">
+        <li>发送 <code>打印说明.txt</code> · <code>文件校验.csv</code> · <code>印刷说明.txt</code> + 多张图</li>
+        <li>规格：<b>7.6 × 6.4 厘米</b> ／ <b>250 × 271 mm</b></li>
+        <li>对应产物：<b>MBTI 八版制版系统</b>（8 张 1-bit 正片，主体 250×271mm，300dpi，外留 15mm 套准边）</li>
+      </ul>
+      <div class="lbl">原始微信</div>
+      <div class="quotes">
+        <div class="q"><div class="ts">07-24 10:06</div><div class="bd"><span class="who tu">高姐</span> <span class="txt">「你已添加了利世隆大图588高姐留余18611743982，以上是打招呼的消息。」</span></div></div>
+        <div class="q"><div class="ts">07-24 10:07</div><div class="bd"><span class="who me">我</span> <span class="txt">「您好」</span></div></div>
+        <div class="q"><div class="ts">07-24 10:08</div><div class="bd"><span class="who me">我</span> <span class="txt">〔打印说明.txt〕〔文件校验.csv〕〔印刷说明.txt〕+ 图片</span></div></div>
+        <div class="q"><div class="ts">07-24 10:13</div><div class="bd"><span class="who me">我</span> <span class="txt hi">「7.6 × 6.4厘米」「250×271 mm，」</span></div></div>
+      </div>
+      <div class="box green" style="margin-top:12px">
+        <div class="bt">产物文件</div>
+        <p><code>Desktop\05_井邻项目_视觉与丝网印刷\位图\</code> —— 8 × <code>*-POSITIVE-300dpi.bmp</code> + <code>印刷说明.txt</code> + <code>文件校验.csv</code><br>
+        <code>Desktop\05_井邻项目_视觉与丝网印刷\制版\02-eight-plates\</code> —— 8 × 正片 PNG ｜ 说明见 <code>制版\README.md</code>、<code>8版现场操作与套准说明.md</code></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 订单 2 -->
+  <div class="ord">
+    <div class="ord-hd">
+      <div class="ord-no key">2</div>
+      <div class="ord-tt"><div class="d">2026-08-19 19:50 – 21:42</div>
+        <div class="w">梁区长 + 北京市文旅局局长到访前夜 <span>— 6 版 × 2 份</span></div></div>
+      <div class="ord-price"><div class="p">12<span style="font-size:12px"> 元</span></div><div class="l">微信红包</div></div>
+    </div>
+    <div class="ord-bd">
+      <div class="lbl">下单内容</div>
+      <ul style="margin:0;padding-left:18px;font-size:13.5px">
+        <li>4 个 CMYK 分色正片 TIF：<code>01-C-CYAN-45LPI-22.5deg-1200dpi-POSITIVE</code> … <code>04-K-BLACK-45LPI-52.5deg</code></li>
+        <li>4 个 A4 竖向满版 TIF（<code>*-A4竖向满版-45LPI-*-1200dpi-POSITIVE</code>）</li>
+        <li>3 个成品 PDF：<code>T恤丝印_硫酸纸出片_A4_45LPI_600dpi.pdf</code> · <code>悲鸿袖标_A4原尺寸.pdf</code> · <code>怀柔_竖排_硫酸纸_A4_45LPI_600dpi.pdf</code></li>
+        <li>规格说明：「4个一样的宽 32 cm × 高 18 cm」「哥都是a4纸大小」</li>
+      </ul>
+      <div class="lbl">原始微信</div>
+      <div class="quotes">
+        <div class="q"><div class="ts">08-19 19:50</div><div class="bd"><span class="who me">我</span> <span class="txt hi">「您好现在还能打印硫酸纸吗」「我现在就把钱转给您」</span>（先发 4 个 tif）</div></div>
+        <div class="q"><div class="ts">08-19 19:52</div><div class="bd"><span class="who me">我</span> <span class="txt">「4个一样的宽 32 cm × 高 18 cm。」「这个A4纸大小」</span></div></div>
+        <div class="q"><div class="ts">08-19 20:20</div><div class="bd"><span class="who me">我</span> <span class="txt">「哥都是a4纸大小」</span>　<span class="who tu">高姐</span> <span class="txt hi">「来取」</span></div></div>
+        <div class="q"><div class="ts">08-19 20:21</div><div class="bd"><span class="who me">我</span> <span class="txt hi">「6个版每个打两份多少钱一共打扰您了」「您帮忙放在门口可以吗」「我从远处开车过来」「多少钱先付给您」</span></div></div>
+        <div class="q"><div class="ts">08-19 20:22</div><div class="bd"><span class="who tu">高姐</span> <span class="txt hi">「12」</span></div></div>
+        <div class="q"><div class="ts">08-19 20:28</div><div class="bd"><span class="who me">我</span> <span class="txt">发微信红包 → 20:29 高姐领取</span></div></div>
+        <div class="q"><div class="ts">08-19 20:35</div><div class="bd"><span class="who tu">高姐</span>「9点前能到吗？」　<span class="who me">我</span>「咱这导航位置能给一下吗」「您给搁到门口吧」「可能九点多了」「我尽快」<br>→ 高姐发定位〔利世隆大图复印(潞苑南大街店)〕</div></div>
+        <div class="q"><div class="ts">08-19 20:37</div><div class="bd"><span class="who tu">高姐</span> <span class="txt">「我还要一会儿，如果来的快就进店拿，晚的话就放门口墙边电动车里，」</span></div></div>
+        <div class="q"><div class="ts">08-19 21:25</div><div class="bd"><span class="who tu">高姐</span> 发图（已放好）</div></div>
+        <div class="q"><div class="ts">08-19 21:27</div><div class="bd"><span class="who me">我</span> <span class="txt hi">「哥我到了」「看到了感谢」</span></div></div>
+      </div>
+      <div class="box red" style="margin-top:12px">
+        <div class="bt">这一单的时间意义</div>
+        <p>19:50 发文件 → 20:22 报价 → 21:27 取到硫酸纸 → <b>21:42 到马慧楠处</b> → 21:47 转 40 元 → <b>22:24「就这个搞定了我撤了老师」</b>。<br>
+        从「发文件」到「制版完成」<b>不到 2 小时 35 分钟</b>，全程在夜里跑完，次日 08:49 按时抵达工作站接待。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 订单 3 -->
+  <div class="ord">
+    <div class="ord-hd">
+      <div class="ord-no">3</div>
+      <div class="ord-tt"><div class="d">2026-08-29 19:58 – 20:50</div>
+        <div class="w">黄版 / 群青版 + 双色正片 <span>— 共 6 张</span></div></div>
+      <div class="ord-price"><div class="p">14<span style="font-size:12px"> 元</span></div><div class="l">8 元 + 6 元</div></div>
+    </div>
+    <div class="ord-bd">
+      <div class="lbl">下单内容</div>
+      <ul style="margin:0;padding-left:18px;font-size:13.5px">
+        <li><code>01_黄版_制版黑稿_A3_1比1.pdf</code> · <code>02_群青版_制版黑稿_A3_1比1.pdf</code>（A3 缩放至 A4，各 2 张共 4 张）</li>
+        <li><code>V2_A4_RED_POS_RR_45LPI_22p5deg_1200ppi_1bit.pdf</code> · <code>V2_A4_YELLOW_POS_RR_45LPI_52p5deg_1200ppi_1bit.pdf</code></li>
+      </ul>
+      <div class="lbl">原始微信</div>
+      <div class="quotes">
+        <div class="q"><div class="ts">08-29 19:58</div><div class="bd"><span class="who me">我</span> <span class="txt">「您好哥还能做吗」「还是只有a4纸大小的硫酸纸吗」</span></div></div>
+        <div class="q"><div class="ts">08-29 20:20</div><div class="bd"><span class="who me">我</span>「哥这两个a4纸大小可以吗」　<span class="who tu">高姐</span>「直接缩放？」　<span class="who me">我</span>「对」　<span class="who tu">高姐</span> <span class="txt hi">「可以」</span></div></div>
+        <div class="q"><div class="ts">08-29 20:21–20:23</div><div class="bd"><span class="who tu">高姐</span>「各打1张」　<span class="who me">我</span>「两张吧」　<span class="who tu">高姐</span> <span class="txt hi">「各2张，共4张」</span>　<span class="who me">我</span>「对」</div></div>
+        <div class="q"><div class="ts">08-29 20:25</div><div class="bd"><span class="who tu">高姐</span> <span class="txt hi">「8元，红包一下吧」</span> → 我发红包</div></div>
+        <div class="q"><div class="ts">08-29 20:34–20:42</div><div class="bd"><span class="who me">我</span> 发 2 个 <code>V2_A4_*_POS_RR_45LPI</code> PDF → 高姐 <span class="txt hi">「6元」</span></div></div>
+        <div class="q"><div class="ts">08-29 20:50</div><div class="bd"><span class="who tu">高姐</span> <span class="txt hi">「放电车里了」</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 订单 4 -->
+  <div class="ord">
+    <div class="ord-hd">
+      <div class="ord-no">4</div>
+      <div class="ord-tt"><div class="d">2026-10-02 20:17 – 21:10</div>
+        <div class="w">4 张 A3 + 2 张 A4 <span>— 为 10/3 周六视察</span></div></div>
+      <div class="ord-price"><div class="p">26<span style="font-size:12px"> 元</span></div><div class="l">A3×4 + A4×2</div></div>
+    </div>
+    <div class="ord-bd">
+      <div class="lbl">下单内容</div>
+      <ul style="margin:0;padding-left:18px;font-size:13.5px">
+        <li><code>01_晒版正片_A3大图_A4飞鸟_6页.pdf</code> —— 4 张 A3 纵向 + 2 张 A4 横向</li>
+        <li>页序：栗蓬窗景蓝版 / 双手刮印黑版 / 共印村庄蓝版 / 共印村庄红版 / 飞鸟双帧灰蓝版 / 飞鸟双帧红版</li>
+        <li><b>自带纸</b>：店内硫酸纸用完，本人外卖下单 70 余元硫酸纸加急配送到店</li>
+      </ul>
+      <div class="lbl">原始微信</div>
+      <div class="quotes">
+        <div class="q"><div class="ts">10-02 20:17</div><div class="bd"><span class="who me">我</span>「哥在吗」「现在能打印吗」　<span class="who tu">高姐</span>「可」</div></div>
+        <div class="q"><div class="ts">10-02 20:17–20:18</div><div class="bd"><span class="who tu">高姐</span> <span class="txt hi">「硫酸纸用完了」</span>　<span class="who me">我</span> <span class="txt hi">「我给您买点硫酸纸呢」「带过来」「必须硫酸纸」</span>　<span class="who tu">高姐</span>「最大能打A3的」</div></div>
+        <div class="q"><div class="ts">10-02 20:18–20:20</div><div class="bd"><span class="who me">我</span>「菲林片也不成吗」　<span class="who tu">高姐</span> <span class="txt hi">「菲林的打不了」</span></div></div>
+        <div class="q"><div class="ts">10-02 20:21–20:22</div><div class="bd"><span class="who me">我</span>「哥给我收货电话和地址我现在外卖下单买硫酸纸」　<span class="who tu">高姐</span> <span class="txt hi">「潞苑南大街588号（澜花语岸底商588），利世隆大图，69522333」</span></div></div>
+        <div class="q"><div class="ts">10-02 20:28</div><div class="bd"><span class="who me">我</span> <span class="txt hi">「买了 70 块钱的纸」</span>「黑钻加急配送」→ 20:31 高姐给手机号「13240221233」</div></div>
+        <div class="q"><div class="ts">10-02 20:43</div><div class="bd"><span class="who me">我</span>「对的哥硫酸纸 6 块一张[捂脸]」</div></div>
+        <div class="q"><div class="ts">10-02 20:47</div><div class="bd"><span class="who tu">高姐</span> <span class="txt">「机器坏了，打不了，修机器要等节后」</span>　<span class="who me">我</span> <span class="txt hi">「哥我都买了 70 多块钱硫酸纸了」「马上发您就打完了」「几分钟」「现在发您」</span></div></div>
+        <div class="q"><div class="ts">10-02 20:56–20:59</div><div class="bd"><span class="who me">我</span> 发 <code>01_晒版正片_A3大图_A4飞鸟_6页.pdf</code> → <span class="txt">「4张A3」「两张A4」「就按照这个pdf麻烦哥了」</span></div></div>
+        <div class="q"><div class="ts">10-02 21:09–21:10</div><div class="bd"><span class="who tu">高姐</span> <span class="txt hi">「A3打印5元一张，A4的3元」</span> → 我发红包，高姐领取</div></div>
+      </div>
+      <div class="box amber" style="margin-top:12px">
+        <div class="bt">这一单能说明什么</div>
+        <p>店里纸用完了、机器又报故障，本人<b>自购 70 余元硫酸纸加急配送</b>并连夜把 6 张片打完 —— 为的是次日视察有版可用。这条原话本身就是「把事做成」的证据。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ④ 小马制版线 -->
+<section>
+  <h2><span class="n">04</span>小马（马慧楠）制版线</h2>
+  <p class="h2sub">曝光台 + 烘干箱 + 技师。这条线从 2026-07-23 第一次开口借，一直用到 10 月。</p>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th style="width:118px">时间</th><th style="width:96px">性质</th><th>关键原话 / 动作</th></tr></thead>
+      <tbody>
+        <tr><td class="num">2026-07-23 23:20</td><td><span class="tag tP">首次借用</span></td>
+          <td>我：「能明天借曝光台和烘干箱制个版吗」「后天井邻那边开业」「我都分好版了」「感光胶也准备好了」<br><b>「明天打印一下硫酸纸就可以做了」「我知道哪里打印硫酸纸」</b></td></tr>
+        <tr><td class="num">2026-07-23 23:23</td><td>约定</td><td>马慧楠：「九点吧」→ 我：「没问题我九点到感谢马姐」</td></tr>
+        <tr><td class="num">2026-07-23 23:25</td><td>发定位</td><td>马慧楠发〔LEHAUS版画体验工作室｜通州区焦王庄街尚东庭西区 38-104〕</td></tr>
+        <tr><td class="num">2026-07-24 08:08–09:21</td><td><span class="tag tA">到场</span></td>
+          <td>我：「马姐我们已经出发」→ 09:05「马姐我们到了」「在门口」→ 09:21 发 7 张现场图</td></tr>
+        <tr><td class="num">2026-07-24 09:52–09:54</td><td><span class="tag tB">引荐打印店</span></td>
+          <td>马慧楠连发两个定位：〔澜花语岸｜潞苑南大街 614 号〕→ <b>〔利世隆大图复印(潞苑南大街店)｜永顺澜花语岸 588 号〕</b></td></tr>
+        <tr><td class="num">2026-08-14 20:48</td><td>借版（次日区委书记到访）</td>
+          <td>我：「上次的版有还没洗的吗」「明天用一天我立马给送回来」「我这回给洗好了还给马姐」<br>马慧楠：<b>「有的有的，上回寄回来我还没拆封呢」</b> → 约定「给到门口」、次日清早自取</td></tr>
+        <tr><td class="num">2026-08-15 05:30</td><td><span class="tag tA">技师重制版</span></td>
+          <td>马慧楠：「浩文，今天我们技师会在，你一会儿过来的时候，<b>把上次的菲林底片拿着</b>，你还有了吗，你来了之后，<b>让技师帮你看网版还能用么，如果不能用就让他给你重新做一下版</b>」</td></tr>
+        <tr><td class="num">2026-08-16 19:46</td><td>归还</td><td>我：「马姐在家吗」→ 19:54「感谢马姐」</td></tr>
+        <tr><td class="num">2026-08-19 19:07</td><td><span class="tag tP">借版（次日梁区长到访）</span></td>
+          <td>我：「马姐在吗」「上次那几块板还在吗」「还给借一下板」「我错了」「下次给马姐费用一起结」<br><b>「区长明天上午来」</b><br>马慧楠：「不用费用，没事儿，你过来拿吧，在的」</td></tr>
+        <tr><td class="num">2026-08-19 21:42</td><td><span class="tag tA">到场制版</span></td>
+          <td>我：「马姐我刚到」→ 21:47 转 <b>40 元</b> → 22:24「就这个搞定了我撤了老师」</td></tr>
+        <tr><td class="num">2026-08-29 19:20</td><td>再次借版</td>
+          <td>马慧楠：「浩文，下午<b>刘老师给我打电话说你还要拿网板</b>，还拿么，你今天大概什么时候来工作室？」<br>我：22:13「马老师我错了」（当晚 20:50 刚在利世隆取完片）</td></tr>
+        <tr><td class="num">2026-10-02</td><td>制版</td>
+          <td>我（对导师）：「我现在去制版」「这两个改一下拿其中一个我就出发去制版了」<br>我（对马慧楠）：23:43「感谢马姐」← 当晚 21:10 刚在利世隆取完片</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="box purple">
+    <div class="bt">这条线的性质</div>
+    <p>小马工作室是<b>外部资源</b>，不是项目内的场地。本人是自己开口借、自己开车去、自己带菲林底片、自己付技师费，把「没有制版条件」这件事解决掉。<br>
+    另有一条旁证：<b>刘丽萍教授也直接通过马慧楠协调网版</b>（08-29 马慧楠原话），说明这个渠道是被家庭与项目共同认可的稳定通路。</p>
+  </div>
+</section>
+
+<!-- ⑤ 8/19 完整时间轴 -->
+<section>
+  <h2><span class="n">05</span>示范案例：2026-08-19 那一晚</h2>
+  <p class="h2sub">三条会话线交叉还原 —— 请缨、下单打印、取件、制版，全部落在同一晚。</p>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th style="width:76px">时间</th><th style="width:118px">会话</th><th>动作</th></tr></thead>
+      <tbody>
+        <tr><td class="num">17:52</td><td>央美美育工作站群</td><td>群内通知：「陈老师，浩文。明天梁区长和市文旅局局长来，所有店铺开业」「看您这边安排人 简单展示和讲解」</td></tr>
+        <tr><td class="num">18:36 → 18:47</td><td>群</td><td>「提前到九点哈」→「明天领导提前了 9:00到」</td></tr>
+        <tr><td class="num">18:41</td><td>导师</td><td><b>我主动请缨</b>：「老师，明天上午区领导视察，我想早点到现场把展区、设备和物料检查一遍，领导来了版画/丝网这块我能讲清楚。今晚要不要先去把版制了，明天直接用。您看怎么安排」</td></tr>
+        <tr><td class="num">19:07</td><td>马慧楠</td><td>「马姐在吗」→ 19:10「上次那几块板还在吗」「还给借一下板」「区长明天上午来」</td></tr>
+        <tr><td class="num">19:50</td><td><b>利世隆</b></td><td>发 4 个 CMYK 1200dpi 正片 TIF +「您好现在还能打印硫酸纸吗」「我现在就把钱转给您」</td></tr>
+        <tr><td class="num">20:22</td><td><b>利世隆</b></td><td>高姐报价「12」</td></tr>
+        <tr><td class="num">20:28</td><td><b>利世隆</b></td><td>发红包（12 元）→ 20:29 领取</td></tr>
+        <tr><td class="num">20:35</td><td><b>利世隆</b></td><td>高姐「9点前能到吗？」→ 发定位〔利世隆大图复印〕→「晚的话就放门口墙边电动车里」</td></tr>
+        <tr><td class="num">21:25</td><td><b>利世隆</b></td><td>高姐发图：片已放好</td></tr>
+        <tr><td class="num">21:27</td><td><b>利世隆</b></td><td>我：<b>「哥我到了」「看到了感谢」</b> ← 取到硫酸纸</td></tr>
+        <tr><td class="num">21:42</td><td>马慧楠</td><td>我：<b>「马姐我刚到」</b> ← 到 LEHAUS 工作室</td></tr>
+        <tr><td class="num">21:47</td><td>马慧楠</td><td>转 40 元（制版费）</td></tr>
+        <tr><td class="num">22:24</td><td>导师</td><td>我：<b>「就这个搞定了我撤了老师」</b> ← 制版完成</td></tr>
+        <tr><td class="num">次日 06:59</td><td>导师</td><td>我：「老师我可能晚了点发生了点剐蹭」→ 07:30 陈晔「安全第一」</td></tr>
+        <tr><td class="num">次日 08:31–08:49</td><td>关总 / 导师</td><td>借笔记本电脑调无线网 → 08:33「已到达」→ 08:49「老师我已到达」</td></tr>
+        <tr><td class="num">次日 10:23</td><td>导师</td><td>提交文化墙六句诗方案</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="box blue">
+    <div class="bt">可陈述的口径</div>
+    <p>「8 月 19 日傍晚 18:41 收到次日区领导到访的通知后，我主动提出当晚先把版制出来。<b>19:50 发分色文件给打印店，20:28 付款，21:27 取到硫酸纸，21:42 到制版工作室，22:24 完成制版</b>。次日途中发生剐蹭仍按时到岗。」<br>
+    全部节点均有微信时间戳可核。</p>
+  </div>
+</section>
+
+<!-- ⑥ 事件对应表 -->
+<section>
+  <h2><span class="n">06</span>接待 / 活动 ↔ 制版打印 对应表</h2>
+  <p class="h2sub">每一次接待背后，都对应一次或多次制版—打印。</p>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th style="width:190px">接待 / 活动</th><th style="width:210px">制版（小马）</th><th>打印（利世隆）</th></tr></thead>
+      <tbody>
+        <tr><td><b>07-25</b> 工作站开业</td><td>07-23 夜分版 + 备感光胶 → 07-24 09:05 到场，借曝光台与烘干箱，完成 <b>3 块网版曝光</b></td><td>07-24 10:07 首批出片（MBTI 八版，250×271mm）</td></tr>
+        <tr><td><b>07-29</b> 政协主席 + 宣传部长到访</td><td>沿用 7/24 所制网版，现场用「悲鸿 young」版印制</td><td>—</td></tr>
+        <tr><td><b>08-15</b> 怀柔区委书记到访</td><td>08-14 夜借版 → 08-15 05:30 马慧楠安排技师检查，<b>不能用的重新做版</b></td><td>—</td></tr>
+        <tr><td><b>08-20</b> 梁区长 + 市文旅局局长到访</td><td>08-19 21:42 到场 → <b>22:24 完成制版</b>（转 40 元）</td><td><b>08-19 19:50–21:27</b> ｜ 6 版 × 2 份 = <b>12 元</b></td></tr>
+        <tr><td>08-29 借版</td><td>19:20 马慧楠转达刘丽萍老师的需求</td><td>20:19–20:50 ｜ 黄版 / 群青版 + 双色正片，共 6 张 = <b>14 元</b></td></tr>
+        <tr><td><b>10-03</b> 周六视察</td><td>10-02「我现在去制版」</td><td><b>10-02 20:56–21:10</b> ｜ 4×A3 + 2×A4 = <b>26 元</b>（自购硫酸纸 70 余元）</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ⑦ 文件清单 -->
+<section>
+  <h2><span class="n">07</span>相关文件清单</h2>
+  <p class="h2sub">分版资产、出片文件、说明文档 —— 全部按「哪一次下单」归位。</p>
+
+  <div class="lbl">总表与根目录</div>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th style="width:300px">路径</th><th>内容</th></tr></thead>
+      <tbody>
+        <tr><td><code>Desktop\导\分版设计清单与文件位置.md</code></td><td><b>总表</b>：全部历史分版的清单 + 文件位置 + 输出规范（1bit/1200ppi/100%/45LPI/四角十字/100mm 校尺线）</td></tr>
+        <tr><td><code>Desktop\05_井邻项目_视觉与丝网印刷\</code></td><td>分版资产主目录（1,257 个文件）</td></tr>
+        <tr><td><code>Documents\Codex\2026-09-30\new-chat-6\outputs\</code></td><td>分版输出目录（26 个版本 v2 – v35）</td></tr>
+        <tr><td><code>Desktop\06_井邻项目_宣传申报与合作\井邻社会美育工作站\</code></td><td>工作站标识分版（单色 / RYB 三色+黑 / CMYK）</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="lbl">按订单归位</div>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th style="width:78px">订单</th><th style="width:330px">文件位置</th><th>关键文件</th></tr></thead>
+      <tbody>
+        <tr><td class="num">#1<br>07-24</td>
+          <td><code>05_…\位图\</code><br><code>05_…\制版\02-eight-plates\</code><br><code>05_…\交互文件与主视觉汇总\视觉_06_MBTI八版制版系统\</code></td>
+          <td>8 × <code>*-POSITIVE-300dpi.bmp/png</code> ｜ <code>印刷说明.txt</code> ｜ <code>文件校验.csv</code> ｜ <code>制版\README.md</code> ｜ <code>8版现场操作与套准说明.md</code></td></tr>
+        <tr><td class="num">#2<br>08-19</td>
+          <td><code>05_…\偏移四型A4满版竖构图_CMYK四色硫酸纸_原Codex主视觉_20260819\</code><br><code>05_…\偏移四型CMYK四色A4硫酸纸分版_原Codex主视觉_20260819\</code></td>
+          <td>4 × <code>*-45LPI-*-1200dpi-POSITIVE.pdf/.tif</code> ｜ <code>A4竖版CMYK四色分版_四页合并打印.pdf</code> ｜ <code>README-硫酸纸打印与制版说明.txt</code> ｜ 完整交付包.zip</td></tr>
+        <tr><td class="num">#3<br>08-29</td>
+          <td><code>Codex\…\outputs\悲鸿为主_分版资料汇总_20260930\03_其他分版参考\07_绿墨护未_黄群青实色版\</code></td>
+          <td>黄版 / 群青版 1:1 PDF + SVG</td></tr>
+        <tr><td class="num">#4<br>10-02</td>
+          <td><code>Codex\…\outputs\五图_晒版正片_A3大图_A4飞鸟_v34\</code><br><code>Codex\…\outputs\打印店专用_4张A3_2张A4_v35\</code></td>
+          <td><code>01_晒版正片_A3大图_A4飞鸟_6页.pdf</code> ｜ <code>印刷店必读.txt</code> ｜ <code>制版交接说明.md</code> ｜ <code>00_给打印店的说明.txt</code> ｜ <code>01_A3纵向_4页各1张_硫酸纸.pdf</code> ｜ <code>02_A4横向_2页各1张_硫酸纸.pdf</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="box green">
+    <div class="bt">给打印店的说明文档（可直接复用）</div>
+    <p><code>Codex\…\五图_晒版正片_A3大图_A4飞鸟_v34\印刷店必读.txt</code><br>
+    <code>Codex\…\打印店专用_4张A3_2张A4_v35\00_给打印店的说明.txt</code><br>
+    <code>05_…\偏移四型A4满版竖构图_CMYK四色硫酸纸_…_20260819\README-硫酸纸打印与制版说明.txt</code><br>
+    三份都写明了：实际大小 100%、关闭「适合页面」、最高黑墨浓度、底部校尺线必须量到 100mm、黑色代表遮光/上墨区。</p>
+  </div>
+</section>
+
+<!-- ⑧ 结论 -->
+<section>
+  <h2><span class="n">08</span>结论：这条链该怎么写进汇报</h2>
+  <p class="h2sub">已按证据校准，可直接使用。</p>
+
+  <div class="box blue" style="font-size:14px;line-height:1.9">
+    <p style="margin-top:0">工作站的丝网版画不是「买来的」，是<b>每一批都自己从分版做到晒版</b>。因为工作站与学校工作室当时都不具备完整的制版条件，我形成了固定的解决路径：</p>
+    <p style="margin-left:14px">· 在电脑前完成分版 —— 1-bit、1200dpi、45LPI 网点，带四角套准十字与 100mm 校尺线；</p>
+    <p style="margin-left:14px">· 发给通州的<b>利世隆大图复印</b>打印硫酸纸正片（4 次下单，最早一次 2026-07-24）；</p>
+    <p style="margin-left:14px">· 开车去取件（多在夜里），再到马慧楠老师的 <b>LEHAUS 版画工作室</b>借曝光台与烘干箱完成制版；</p>
+    <p style="margin-left:14px">· 次日把版带回洞台村，直接用于接待与工作坊。</p>
+    <p><b>八批接待里，至少四批的版是前一晚赶出来的。</b>2026-08-19 那一次最典型：18:41 收到次日区领导到访通知后主动请缨，19:50 发文件、20:28 付款、21:27 取件、21:42 到工作室、22:24 完成制版 —— 全程不足 2 小时 35 分钟，次日途中剐蹭仍按时到岗。</p>
+    <p style="margin-bottom:0">10 月 2 日那次，打印店硫酸纸用尽、机器报故障，我自购 70 余元硫酸纸加急配送到店，连夜把 6 张正片打完，保证次日视察有版可用。</p>
+  </div>
+
+  <div class="box amber">
+    <div class="bt">写作时注意</div>
+    <p>① 利世隆是<b>打印硫酸纸（菲林正片）</b>的地方，不是「印成品」的地方 —— 表述要准。<br>
+    ② 小马工作室是<b>外部资源</b>，写「向马慧楠老师借曝光台与烘干箱」比写「在马老师工作室制版」更准确。<br>
+    ③ 这条链的强度在于<b>次数与时间点</b>（4 次下单、7 次制版、多次在夜里），不在于单次规模。列时间轴比形容词有力。</p>
+  </div>
+</section>
+
+<div class="foot">
+  <b>数据源</b>　ChatTrace 实时索引 <code>index.sqlite</code>（2026-10-06 13:18 更新）｜利世隆会话 <code>wxid_hcj7u0b7rbnu12</code>（142 条 · 2026-07-24 → 10-02）｜马慧楠会话 <code>wxid_8081720817911</code>（264 条）<br>
+  <b>一手源</b>　微信原始定位坐标与 POI ｜本地分版资产与说明文档 ｜《蔡浩文_乡村美育驻村工作日志》<br>
+  <b>生成</b>　2026-10-06　｜　全部结论可用时间戳 / 会话名 / 发送人 / 文件路径回查
+</div>
+
+</div>
+</body>
+</html>

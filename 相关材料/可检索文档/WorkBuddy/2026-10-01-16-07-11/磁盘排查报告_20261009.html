@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>磁盘占用排查报告 · 2026-10-09</title>
+<style>
+  :root{
+    --bg:#F7F6F3; --card:#FFFFFF; --line:#E4E2DC; --line2:#CFCCC4;
+    --ink:#1F1E1C; --ink2:#5F5E5A; --ink3:#8C8A84;
+    --blue:#378ADD; --blue-bg:#E6F1FB;
+    --amber:#BA7517; --amber-bg:#FAEEDA;
+    --red:#A32D2D; --red-bg:#FCEBEB;
+    --green:#3B6D11; --green-bg:#EAF3DE;
+    --purple:#534AB7; --purple-bg:#EEEDFE;
+    --coral:#993C1D; --coral-bg:#FAECE7;
+    --gray:#5F5E5A; --gray-bg:#F1EFE8;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+    font-size:14px;line-height:1.7;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:960px;margin:0 auto;padding:48px 32px 80px}
+  header{border-bottom:1px solid var(--line2);padding-bottom:24px;margin-bottom:36px}
+  h1{font-size:26px;font-weight:600;margin:0 0 8px;letter-spacing:-.01em}
+  .sub{color:var(--ink2);font-size:13px}
+  h2{font-size:17px;font-weight:600;margin:44px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+  h2 .n{color:var(--ink3);font-weight:400;margin-right:8px}
+  h3{font-size:14px;font-weight:600;margin:22px 0 8px;color:var(--ink)}
+  p{margin:0 0 12px}
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:20px 0 8px}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px}
+  .kpi .l{font-size:12px;color:var(--ink2);margin-bottom:4px}
+  .kpi .v{font-size:24px;font-weight:600;letter-spacing:-.02em}
+  .kpi .d{font-size:11.5px;color:var(--ink3);margin-top:2px}
+  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:13px}
+  th{text-align:left;font-weight:600;color:var(--ink2);font-size:12px;
+    padding:8px 10px;border-bottom:1px solid var(--line2);white-space:nowrap}
+  td{padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+  td.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:500}
+  tr:last-child td{border-bottom:none}
+  code{background:var(--gray-bg);padding:1.5px 6px;border-radius:4px;
+    font-family:ui-monospace,"SF Mono",Consolas,monospace;font-size:12px;color:#3C3A36}
+  .tag{display:inline-block;font-size:11.5px;padding:1.5px 8px;border-radius:20px;
+    font-weight:500;white-space:nowrap;line-height:1.6}
+  .t-ok{background:var(--green-bg);color:var(--green)}
+  .t-warn{background:var(--amber-bg);color:var(--amber)}
+  .t-lock{background:var(--blue-bg);color:var(--blue)}
+  .t-danger{background:var(--red-bg);color:var(--red)}
+  .t-keep{background:var(--gray-bg);color:var(--gray)}
+  .t-me{background:var(--blue-bg);color:var(--blue)}
+  .t-ag{background:var(--purple-bg);color:var(--purple)}
+  .t-dsh{background:var(--coral-bg);color:var(--coral)}
+  .box{border-radius:10px;padding:16px 20px;margin:18px 0;border:1px solid}
+  .box.danger{background:var(--red-bg);border-color:#F0C6C6}
+  .box.warn{background:var(--amber-bg);border-color:#EDD9A8}
+  .box.info{background:var(--blue-bg);border-color:#C9E0F5}
+  .box .h{font-weight:600;margin-bottom:6px;font-size:13.5px}
+  .box.danger .h{color:var(--red)}
+  .box.warn .h{color:var(--amber)}
+  .box.info .h{color:var(--blue)}
+  .box p:last-child{margin-bottom:0}
+  ul{margin:8px 0 12px;padding-left:22px}
+  li{margin-bottom:5px}
+  .bar{height:6px;border-radius:3px;background:var(--line);overflow:hidden;margin-top:6px}
+  .bar i{display:block;height:100%;border-radius:3px}
+  footer{margin-top:56px;padding-top:20px;border-top:1px solid var(--line);
+    font-size:12px;color:var(--ink3)}
+  .legend{display:flex;flex-wrap:wrap;gap:16px;font-size:12px;color:var(--ink2);margin:10px 0 4px}
+  .legend span{display:flex;align-items:center;gap:6px}
+  .dot{width:10px;height:10px;border-radius:2px;display:inline-block}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>磁盘占用排查报告</h1>
+  <div class="sub">2026-10-09 · C 盘 456 GB / 已用 438 GB / 剩余 19 GB · 上一轮排查为 10-02</div>
+</header>
+
+<div class="kpis">
+  <div class="kpi"><div class="l">C 盘剩余</div><div class="v">19 GB</div><div class="d">占用率 97%</div></div>
+  <div class="kpi"><div class="l">回收站</div><div class="v" style="color:var(--amber)">6.5 GB</div><div class="d">含用户照片原片</div></div>
+  <div class="kpi"><div class="l">WorkBuddy 缓存</div><div class="v" style="color:var(--blue)">3.4 GB</div><div class="d">运行期锁定</div></div>
+  <div class="kpi"><div class="l">安全可清</div><div class="v" style="color:var(--green)">≈ 4.0 GB</div><div class="d">不动用户数据</div></div>
+</div>
+
+<h2><span class="n">01</span>与上一轮的变化</h2>
+<p>一周内情况有变，上一轮的数字已作废，以下是重新扫描的结果。</p>
+<table>
+  <tr><th>项目</th><th class="num">10-02</th><th class="num">10-09</th><th>说明</th></tr>
+  <tr><td>C 盘剩余</td><td class="num">6.1 GB</td><td class="num">19 GB</td><td>清理 + 回收站部分清空生效</td></tr>
+  <tr><td><code>~/.workbuddy-ai/workspace</code></td><td class="num">64 MB</td><td class="num">2967 MB</td><td>新会话 + modify_backup 重新累积</td></tr>
+  <tr><td><code>~/.workbuddy-ai/tmp</code></td><td class="num">17 MB</td><td class="num">1558 MB</td><td>WinGet / 插件市场安装缓存</td></tr>
+  <tr><td><code>~/.workbuddy-ai/logs</code></td><td class="num">447 MB</td><td class="num">1321 MB</td><td>sandbox 目录独占 853 MB</td></tr>
+  <tr><td><code>~/.workbuddy-ai/traces</code></td><td class="num">—</td><td class="num">491 MB</td><td>已重建</td></tr>
+  <tr><td><code>~/.kiro</code></td><td class="num">940 MB</td><td class="num">0 MB</td><td>已被清理</td></tr>
+  <tr><td><code>~/.zcode</code></td><td class="num">770 MB</td><td class="num">176 MB</td><td>已缩减</td></tr>
+  <tr><td>两个更新器缓存</td><td class="num">743 MB</td><td class="num">0 MB</td><td>已清空，未再生成</td></tr>
+  <tr><td>工作区目录数</td><td class="num">23 个</td><td class="num">32 个</td><td>新增 10-03 ~ 10-08 共 9 个</td></tr>
+</table>
+
+<h2><span class="n">02</span>三家工具归属明细</h2>
+<div class="legend">
+  <span><i class="dot" style="background:var(--blue)"></i>我（WorkBuddy）</span>
+  <span><i class="dot" style="background:var(--purple)"></i>反重力 Antigravity</span>
+  <span><i class="dot" style="background:var(--coral)"></i>DeepSeek Harness</span>
+</div>
+
+<h3>我（WorkBuddy）· 合计约 12.0 GB</h3>
+<table>
+  <tr><th>路径</th><th class="num">大小</th><th>状态</th></tr>
+  <tr><td><code>~/.workbuddy-ai/workspace/sessions</code></td><td class="num">2967 MB</td><td><span class="tag t-lock">运行期锁定</span></td></tr>
+  <tr><td><code>~/.workbuddy-ai/tmp</code></td><td class="num">1558 MB</td><td><span class="tag t-ok">可清</span></td></tr>
+  <tr><td><code>~/.workbuddy-ai/logs</code></td><td class="num">1321 MB</td><td><span class="tag t-ok">可清</span></td></tr>
+  <tr><td><code>~/.workbuddy-ai/traces</code></td><td class="num">491 MB</td><td><span class="tag t-ok">可清</span></td></tr>
+  <tr><td><code>~/.workbuddy-ai/binaries</code></td><td class="num">1561 MB</td><td><span class="tag t-keep">内置运行时，保留</span></td></tr>
+  <tr><td><code>~/.workbuddy-ai/projects + mcp-servers + plugins + blobs</code></td><td class="num">637 MB</td><td><span class="tag t-keep">配置，保留</span></td></tr>
+  <tr><td><code>%LOCALAPPDATA%\Programs\WorkBuddyAI</code></td><td class="num">1297 MB</td><td><span class="tag t-keep">程序本体</span></td></tr>
+  <tr><td><code>C:\Users\wardc\WorkBuddy AI</code>（32 个工作区）</td><td class="num">1902 MB</td><td><span class="tag t-warn">含 2 个可清</span></td></tr>
+</table>
+<p style="font-size:12.5px;color:var(--ink2)">工作区里最大的两个：<code>2026-09-28-06-58-18\_tmp</code> <b>1080 MB</b>（PPT 打包素材）、<code>2026-10-01-04-47-38\_diag</code> <b>513 MB</b>（诊断日志）。</p>
+
+<h3>反重力 Antigravity · 合计约 1.83 GB</h3>
+<table>
+  <tr><th>路径</th><th class="num">大小</th><th>状态</th></tr>
+  <tr><td><code>%LOCALAPPDATA%\Programs\Antigravity IDE</code></td><td class="num">1054 MB</td><td><span class="tag t-keep">程序本体</span></td></tr>
+  <tr><td><code>%LOCALAPPDATA%\Programs\antigravity</code></td><td class="num">557 MB</td><td><span class="tag t-warn">疑似旧版并存</span></td></tr>
+  <tr><td><code>~/.gemini/antigravity*</code></td><td class="num">140 MB</td><td><span class="tag t-keep">配置 + 缓存</span></td></tr>
+  <tr><td><code>~/.antigravity-ide</code></td><td class="num">82 MB</td><td><span class="tag t-keep">扩展</span></td></tr>
+</table>
+
+<h3>DeepSeek Harness · 合计约 1.02 GB</h3>
+<table>
+  <tr><th>路径</th><th class="num">大小</th><th>状态</th></tr>
+  <tr><td><code>%LOCALAPPDATA%\Programs\DeepSeek Harness</code></td><td class="num">1014 MB</td><td><span class="tag t-keep">程序本体</span></td></tr>
+  <tr><td><code>%APPDATA%\@deepseek-ai</code> + <code>~/.dsh</code></td><td class="num">10 MB</td><td><span class="tag t-keep">配置</span></td></tr>
+</table>
+<p style="font-size:12.5px;color:var(--ink2)">上一轮反复下载的更新器缓存（579 MB）已消失且未再生成 —— 说明那次更新终于装上了。</p>
+
+<h2><span class="n">03</span>回收站 6.5 GB · 需你确认</h2>
+<div class="box warn">
+  <div class="h">⚠️ 回收站里装的是用户数据，不建议直接清空</div>
+  <p>解析 <code>$I</code> 元数据后，占比最大的几项都是你的文件，不是缓存。</p>
+</div>
+<table>
+  <tr><th>原始路径</th><th class="num">大小</th><th>删除时间</th></tr>
+  <tr><td><code>Desktop\手机相机原片_2026-10-06\_phone_sel.tar</code></td><td class="num">3.97 GB</td><td>10-06 07:00</td></tr>
+  <tr><td><code>Desktop\_im_tmp\wechat-mcp\index.sqlite-wal</code></td><td class="num">864 MB</td><td>10-09 02:16</td></tr>
+  <tr><td><code>Desktop\中期汇报_2026-09\10_照片汇总_2026-10-06</code></td><td class="num">557 MB</td><td>10-06 06:16</td></tr>
+  <tr><td><code>~/.workbuddy-ai/tmp\dfs_epqcd2q8\mirror_sqlite.db</code></td><td class="num">376 MB</td><td>10-04 06:05</td></tr>
+  <tr><td><code>AppData\Local\ChatTrace\...\decrypted\message\*.tmp</code></td><td class="num">78 MB</td><td>10-09 14:03</td></tr>
+  <tr><td>其余（Chrome 缓存 + 照片共 5100+ 个）</td><td class="num">≈ 1.3 GB</td><td>—</td></tr>
+</table>
+<p><b>建议</b>：前两项（手机相机原片 tar + 中期汇报照片汇总）先确认是否已另有备份；确认后再清空，否则可能丢失原始素材。</p>
+
+<h2><span class="n">04</span>其他工具的大头</h2>
+<table>
+  <tr><th>路径</th><th class="num">大小</th><th>可清理性</th></tr>
+  <tr><td><code>~/.ollama/models</code></td><td class="num">7975 MB</td><td><span class="tag t-keep">模型，按需删</span></td></tr>
+  <tr><td><code>~/.codex/sessions</code></td><td class="num">2868 MB</td><td><span class="tag t-keep">历史会话</span></td></tr>
+  <tr><td><code>~/.cache/codex-runtimes</code></td><td class="num">1328 MB</td><td><span class="tag t-ok">可再生缓存</span></td></tr>
+  <tr><td><code>~/.codex/plugins + generated_images</code></td><td class="num">814 MB</td><td><span class="tag t-warn">看是否还需要</span></td></tr>
+  <tr><td><code>~/.local/bin</code>（含 <code>claude.exe.old</code> 320 MB）</td><td class="num">558 MB</td><td><span class="tag t-ok">旧版本残留可清</span></td></tr>
+  <tr><td><code>~/.vscode</code></td><td class="num">500 MB</td><td><span class="tag t-keep">扩展</span></td></tr>
+  <tr><td><code>%LOCALAPPDATA%\Programs\Ollama</code></td><td class="num">2848 MB</td><td><span class="tag t-keep">程序本体</span></td></tr>
+  <tr><td><code>%LOCALAPPDATA%\Programs\Kiro</code></td><td class="num">895 MB</td><td><span class="tag t-warn">数据已清，程序还在</span></td></tr>
+  <tr><td><code>%LOCALAPPDATA%\Programs\ZCode</code></td><td class="num">729 MB</td><td><span class="tag t-keep">程序本体</span></td></tr>
+</table>
+<p style="font-size:12.5px;color:var(--ink2)">Ollama 模型构成：<code>hermes3:8b</code> 4.34 GB · <code>gemma4-heretic-e2b:q4km</code> 3.19 GB · <code>nomic-embed-text</code> 0.26 GB。</p>
+
+<h2><span class="n">05</span>建议的清理顺序</h2>
+<div class="box info">
+  <div class="h">按「零风险 → 需确认」排序</div>
+  <ul style="margin-bottom:0">
+    <li><b>零风险，运行期即可清（≈ 3.4 GB）</b>：<code>logs</code>（旧日期目录 + sandbox）、<code>traces</code>、<code>tmp</code>（WinGet / 插件市场安装缓存）、工作区两个 <code>_tmp</code>/<code>_diag</code></li>
+    <li><b>零风险，可立即清（≈ 1.6 GB）</b>：<code>~/.cache/codex-runtimes</code> 1.33 GB、<code>~/.local/bin/claude.exe.old</code> 320 MB</li>
+    <li><b>需你确认</b>：回收站 6.5 GB（含手机原片 tar + 中期汇报照片）、<code>antigravity</code> 557 MB（疑似旧版）、Codex 历史会话 2.87 GB</li>
+    <li><b>需退出应用</b>：<code>workspace/sessions</code> 的 modify_backup（2568 MB）—— 运行期被锁定</li>
+  </ul>
+</div>
+
+<footer>
+  数据来源：robocopy 字节级统计 + 回收站 $I 元数据解析 · 扫描时间 2026-10-09 22:28<br>
+  本报告仅为只读排查结果，未执行任何删除操作。
+</footer>
+
+</div>
+</body>
+</html>

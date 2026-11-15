@@ -1,0 +1,201 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+<meta name="wb-stamp" content="20261005-041500|2026-10-04|2026-10-05 04:15:00|v1-migrate-20261004">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>第二轮 · 工作台 · 时间盲测 · 隐私核对</title><style>
+:root{--bg:#f7f7f5;--card:#fff;--ink:#1c1c1e;--ink2:#4a4a4f;--ink3:#8a8a90;--line:#e5e5e2;
+--red:#c0392b;--red-bg:#fdf2f0;--blue:#1f5c8b;--blue-bg:#eff5fa;--green:#1e7a52;--green-bg:#eef7f2;
+--amber:#9a6b00;--amber-bg:#fdf6e6;--purple:#5b4b8a;--purple-bg:#f2effa}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.75 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
+.wrap{max-width:1040px;margin:0 auto;padding:48px 28px 80px}
+h1{font-size:30px;line-height:1.3;margin:0 0 6px;letter-spacing:-.4px}
+.sub{color:var(--ink3);font-size:13.5px;margin-bottom:34px}
+h2{font-size:20px;margin:44px 0 14px;padding-bottom:9px;border-bottom:2px solid var(--ink)}
+h3{font-size:15.5px;margin:26px 0 10px;color:var(--ink2)}
+p{margin:10px 0}
+.lead{background:var(--card);border-left:4px solid var(--red);border-radius:0 10px 10px 0;padding:18px 22px;margin:20px 0 30px}
+.lead b{color:var(--red)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin:14px 0}
+table{width:100%;border-collapse:collapse;font-size:13px;margin:12px 0}
+th{text-align:left;background:#fafaf8;color:var(--ink2);font-weight:600;padding:8px 9px;border-bottom:2px solid var(--line);white-space:nowrap}
+td{padding:7px 9px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:last-child td{border-bottom:none}
+.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+code{background:#f2f2ef;padding:1px 5px;border-radius:4px;font-size:12.5px;font-family:"SFMono-Regular",Consolas,monospace}
+pre{background:#1e1e22;color:#e8e8ea;padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:12.5px;line-height:1.65}
+.tag{display:inline-block;padding:1px 8px;border-radius:20px;font-size:11px;font-weight:600;white-space:nowrap}
+.t-red{background:var(--red-bg);color:var(--red)}.t-blue{background:var(--blue-bg);color:var(--blue)}
+.t-green{background:var(--green-bg);color:var(--green)}.t-amber{background:var(--amber-bg);color:var(--amber)}
+.t-purple{background:var(--purple-bg);color:var(--purple)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:12px;margin:16px 0}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.kpi .v{font-size:24px;font-weight:700;letter-spacing:-.5px;line-height:1.2}
+.kpi .k{font-size:12px;color:var(--ink3);margin-top:3px}
+.foot{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);color:var(--ink3);font-size:12px}
+ul{margin:8px 0 8px 4px;padding-left:18px}li{margin:5px 0}
+.ok{color:var(--green);font-weight:600}.no{color:var(--red);font-weight:600}
+</style></head><body><div class="wrap">
+
+<h1>第二轮：工作台 · 时间盲测 · 隐私核对</h1>
+<div class="sub">Obsidian Bases 四视图 · 5 项盲测 + 3 个真实案例 · 9 项隐私核对 ｜ 2026-10-05 ｜ run_id <code>20261005-041500</code></div>
+
+<div class="lead">
+<b>一句话：</b>四视图建好了（260 篇笔记 + 4 个 <code>.base</code>，零插件依赖）；盲测 5 项全过、<b>79 个人名 × 203 组比对零时间倒流</b>；隐私核对挖出 <b>3 个真问题</b>，其中 <b>1 个已修</b>（Ollama 曾监听所有网卡）、<b>2 个等你拍板</b>（知识库里 57 处手机号/身份证/银行卡，11 个还是写在文件名里）。
+</div>
+
+<div class="grid">
+<div class="kpi"><div class="v">4</div><div class="k">Bases 工作视图<br>260 篇笔记支撑</div></div>
+<div class="kpi"><div class="v">5/5</div><div class="k">时间盲测通过<br>零时间倒流</div></div>
+<div class="kpi"><div class="v">9</div><div class="k">隐私核对项<br>3 个真问题</div></div>
+<div class="kpi"><div class="v">57</div><div class="k">知识库敏感串<br>25 个文件</div></div>
+</div>
+
+<h2>一、Obsidian Bases 四视图（工作台）</h2>
+<p>把分析库里的 <b>58 条结论</b> 和 <b>203 条 A 级事件</b>铺成 Obsidian 笔记，用 <b>Obsidian 原生 Bases</b>（核心插件，你已启用）做视图 —— <b>不需要任何社区插件</b>。</p>
+
+<h3>四个视图</h3>
+<table>
+<tr><th>文件</th><th>用途</th><th>内含视图</th><th class="num">条目</th></tr>
+<tr><td><code>① 待本人确认.base</code></td><td>需要你本人拍板 / 复核的</td><td>「结论 · 待拍板」+「事件 · 待复核（A 级）」</td><td class="num">14 + 203</td></tr>
+<tr><td><code>② 最近更新.base</code></td><td>最近发生 / 最近改动</td><td>「最近事件（按日期倒序）」+「最近改动（按修改时间）」</td><td class="num">203 / 260</td></tr>
+<tr><td><code>③ 证据不足或矛盾.base</code></td><td>证据链不牢的</td><td>「证据薄弱的事件」+「带反例 / 红线的结论」</td><td class="num">58 + 47</td></tr>
+<tr><td><code>④ 当前行动.base</code></td><td>计划中 / 进行中</td><td>「计划中 / 进行中（2026-07 之后）」</td><td class="num">40</td></tr>
+</table>
+
+<h3>关键设计：把筛选条件预计算成属性</h3>
+<p>Bases 的表达式语法在不同 Obsidian 版本上有差异。所以 <b>条件全部在生成时算好</b>，<code>.base</code> 里只写最简单的 <code>x == true</code> —— <b>版本无关，不会因为语法变动失效</b>。</p>
+<table>
+<tr><th>属性</th><th>含义</th></tr>
+<tr><td><code>need_confirm</code></td><td>需要你本人确认（结论：待核实或有效但未确认；事件：A 级且未复核）</td></tr>
+<tr><td><code>weak_evidence</code></td><td>证据薄弱（A 级事件里证据质量为「低」或「无」）</td></tr>
+<tr><td><code>has_counter</code></td><td>结论带反例 / 红线</td></tr>
+<tr><td><code>action</code></td><td>事件性质是「计划」或「进行中」，且日期 ≥ 2026-07-01</td></tr>
+<tr><td><code>evidence_quality</code></td><td>高 / 中 / 低 / 无（按回链结果算）</td></tr>
+</table>
+<p><b>用法</b>：Obsidian 里直接点开 <code>.base</code> 文件 → 就是一张可排序、可筛选、可导出 CSV 的表。也能嵌进别的笔记：<code>![[① 待本人确认.base#结论 · 待拍板]]</code>。</p>
+<p>校验：<b>260 篇笔记 + 4 个 .base 全部 YAML 合法</b>（PyYAML 逐个解析）。</p>
+
+<h2>二、时间盲测：有没有「偷看未来」</h2>
+<p>盲测的意思是：<b>只给截至某日的资料，把之后的藏起来</b>，看结论还能不能成立。做了 5 项自动检查 + 3 个真实案例。</p>
+
+<h3>5 项自动检查（全过）</h3>
+<table>
+<tr><th>#</th><th>检查</th><th>结果</th></tr>
+<tr><td>①</td><td>结论的成立时间 ≥ 它引用的证据日期</td><td><span class="ok">时间倒流 0 条</span></td></tr>
+<tr><td>②</td><td>事件的日期与原始消息时间同窗口（±3 天）</td><td><span class="ok">1,471 条证据，越窗 0 条</span>（±0 天 1,333 · ±1 天 138）</td></tr>
+<tr><td>③</td><td>报告的数据截至 ≥ 库内最新事件</td><td><span class="ok">报告 2026-10-04 ｜ 库 2026-10-04</span></td></tr>
+<tr><td>④</td><td>时间可定位率</td><td><span class="ok">确定 99.2% · 无日期仅 0.80%</span></td></tr>
+<tr><td>⑤</td><td><b>结论提到的人，在聊天数据里首次出现的时间</b></td><td><span class="ok">79 个人名 × 203 组比对，时间倒流 0 组</span></td></tr>
+</table>
+<p><span class="tag t-amber">WARN</span> 但有一处<b>必须说清楚</b>：只有 <b>1 / 58 = 1.7%</b> 的结论同时绑定了「支持证据的事件 ID」和「成立时间」。也就是说，<b>绝大多数结论的「什么时候、依据什么成立」目前无法自动对证</b>。这是下一轮要补的。</p>
+
+<h3>3 个真实案例（人工判定）</h3>
+<table>
+<tr><th>结论</th><th>成立日</th><th>截止日前的数据</th><th>判定</th></tr>
+<tr><td>债务 = 结构性现金流缺口</td><td>2026-09-29</td><td>网贷 27 条（最早 2025-03-06）· 逾期 44 条（最早 2024-11-19）· 余额不足 17 条（最早 2025-02-08）</td><td><span class="tag t-green">数据可推 · 无泄漏</span></td></tr>
+<tr><td>父亲冲突链 = 车 + 泡妞</td><td>2026-09-29</td><td>买车 38 条（最早 2024-11-10）· 泡妞 3 条（最早 2026-07-15）</td><td><span class="tag t-green">数据可推 · 无泄漏</span></td></tr>
+<tr><td>考央美 = 家庭关系网兜底</td><td>2026-09-29</td><td>章燕紫 23 条（最早 2025-01-07）· 冯梦波 34 条（2024-11-26）· 武宏 93 条（2025-05-03）<br><b>但「央美退休教授」「最低等学位没法找工作」在数据里 0 条</b></td><td><span class="tag t-blue">依据是本人自述 · 无泄漏</span></td></tr>
+</table>
+<p>第三条值得单独说：它的人名在聊天数据里<b>早于结论日一年多就出现了</b>，但「她是我妈的老朋友 / 是我的学生」这层<b>关系定性</b>、以及「只拿到最低等学位没法找工作」，聊天数据里<b>一条都没有</b> —— 那是<b>本人自述</b>。按铁律 0（人工锚点 &gt; 一切机器推断）这条结论成立，但<b>不可由数据独立复现</b>。盲测把这个区别标出来了，这正是它该做的事。</p>
+
+<h2>三、隐私核对：9 项</h2>
+
+<h3>3.1 ★ 已修复：Ollama 曾监听所有网卡</h3>
+<div class="card">
+<p><b>发现</b>：用户环境变量 <code>OLLAMA_HOST = 0.0.0.0</code>。<code>0.0.0.0</code> 不是默认值 —— 二进制里写得很清楚：<code>IP Address for the ollama server (default 127.0.0.1:11434)</code>。</p>
+<p><b>影响</b>：Ollama API <b>没有鉴权</b>。绑定 0.0.0.0 意味着同一 WiFi 下任何设备都能：列模型、跑推理（吃你的 GPU）、拉模型（占满磁盘）。日志里 2026-08-22 确实出现过 <code>Listening on [::]:11434</code>。</p>
+<p><b>但</b>：翻遍 262 条请求记录，<b>全部来自 127.0.0.1，一次外部访问都没有</b> —— 说明这个设置<b>从未被真正用上</b>，是遗留配置。</p>
+<p><b>处置</b>：已改为 <code>127.0.0.1:11434</code>（重启 Ollama 后生效）。<br>
+<b>想改回去</b>：<code>setx OLLAMA_HOST 0.0.0.0</code>（若你确实要从手机/别的电脑访问，请同时加防火墙规则）。</p>
+</div>
+
+<h3>3.2 ★ 已修复：Ollama 云功能</h3>
+<p>写入 <code>C:\Users\wardc\.ollama\server.json</code> → <code>{"disable_ollama_cloud": true}</code>。<b>实测启动日志确认生效</b>：</p>
+<pre>msg="server config" env="map[... OLLAMA_NO_CLOUD:true ...]"
+msg="Ollama cloud disabled: true"
+msg="Listening on 127.0.0.1:11434 (version 0.32.1)"</pre>
+<p>另外说明：日志里仍有对 <code>github.com</code>（19 次）和 <code>ollama.com</code>（2 次）的请求 —— 那是<b>版本更新检查</b>，<b>不含聊天内容</b>。关掉云功能不影响它，也不需要关。</p>
+
+<h3>3.3 Obsidian Sync：未启用，但有两个隐患</h3>
+<table>
+<tr><th>检查</th><th>结果</th></tr>
+<tr><td><code>.obsidian\sync</code> 目录</td><td><span class="tag t-green">不存在</span> → Sync 从未配置</td></tr>
+<tr><td>账号 / 设备痕迹（Local Storage / IndexedDB）</td><td><span class="tag t-green">无</span></td></tr>
+<tr><td>sync 核心插件开关</td><td><span class="tag t-amber">已开启</span>（这是默认状态，不代表已登录）</td></tr>
+<tr><td>社区插件</td><td><span class="tag t-green">0 个</span> —— 最大的隐私面是干净的</td></tr>
+</table>
+<p><b>结论：现在没有数据在往云端走。</b>但如果你将来开 Sync，<b>务必先排除</b> <code>03_微信聊天分析</code>、<code>04_工作台</code>、<code>01_个人信息</code>、<code>02_文件名录</code>。</p>
+<p><b>⚠️ 关键机制</b>：Sync 的「排除文件夹」是<b>事后生效</b>的 —— 先加排除<b>不会移除已经同步上去的文件</b>。顺序必须是：<b>先设排除，再开同步</b>。</p>
+
+<h3>3.4 ★ 待你拍板：知识库里 57 处手机号 / 身份证 / 银行卡</h3>
+<p>全库 899 篇笔记扫完，命中 <b>25 个文件 / 57 个敏感串</b>：</p>
+<table>
+<tr><th>文件</th><th>命中</th></tr>
+<tr><td><code>03_微信聊天分析\01_人物档案\_低价值联系人索引.md</code></td><td>手机号 13</td></tr>
+<tr><td><code>02_文件名录\全部文件位置清单.csv</code></td><td>手机号 10 · 银行卡 1</td></tr>
+<tr><td><code>03_微信聊天分析\_附件\距离档复核清单_2026-10-04.csv</code></td><td>手机号 4 · 银行卡 1</td></tr>
+<tr><td><code>03_微信聊天分析\01_人物档案\新增人物案例.md</code></td><td>手机号 4 <b>+ 137 处聊天流水原文</b></td></tr>
+<tr><td><code>02_文件名录\文档内容速览.csv</code></td><td>手机号 1 · 身份证 2</td></tr>
+<tr><td>其余 20 个文件</td><td>手机号 1 各（含 <code>04_工作台</code> 1 篇）</td></tr>
+</table>
+<p><b>更隐蔽的一层</b>：其中 <b>11 个文件的文件名里就直接带手机号</b>，例如：</p>
+<pre>A.王亮15120001241.md
+太平洋王曙光-18513523320（夜班）.md
+都阳丝印-张俪15383838815.md
+幸福时光酒店18085024486.md   …</pre>
+<p>Obsidian <b>连文件名一起同步</b> —— 光改正文没用。</p>
+<div class="card">
+<p><b>我的处置：没有动任何文件。</b> 只写了工具，先给你看清单：</p>
+<pre>python tools\sanitize_vault_pii.py          # 只读清单（默认，已跑过）
+python tools\sanitize_vault_pii.py --apply  # 真正脱敏（会先整库备份）</pre>
+<p><b>为什么没直接做</b>：① 脱敏会改动内容（比如把 4S 店电话抹掉，以后可能要用）；② 文件名那一层得改名，而<b>改名会断 wikilink</b> —— 更稳的做法是<b>靠 Sync 排除目录</b>，而不是改名。</p>
+</div>
+<p><b>精度说明</b>：第一版正则扫出 133 个命中，抽样一看<b>全是误报</b>（缓存文件名哈希、时间戳、<code>wxid_</code>）。收紧成「非字母数字边界 + 身份证校验位 + 银行卡 Luhn」后降到 57 个 —— 全部复核过是真的。<b>宁可少报，不虚报。</b></p>
+
+<h3>3.5 其余 4 项</h3>
+<table>
+<tr><th>检查</th><th>结果</th></tr>
+<tr><td>Ollama 历史外部访问</td><td><span class="ok">零</span>（127.0.0.1 × 262）</td></tr>
+<tr><td>知识库有无聊天流水原文</td><td><span class="no">1 篇</span>（<code>新增人物案例.md</code>，137 处时间戳）</td></tr>
+<tr><td>分析脚本是否只读打开原始库</td><td><span class="ok">50 个脚本全部 mode=ro</span>（3 个白名单写库脚本除外）</td></tr>
+<tr><td>Obsidian 社区插件</td><td><span class="ok">0 个</span></td></tr>
+</table>
+
+<h2>四、我改了什么 / 没改什么</h2>
+<table>
+<tr><th>动作</th><th>对象</th><th>可逆性</th></tr>
+<tr><td><span class="tag t-green">已改</span></td><td><code>~\.ollama\server.json</code> 新增 <code>disable_ollama_cloud: true</code></td><td>删掉该文件即恢复</td></tr>
+<tr><td><span class="tag t-green">已改</span></td><td>用户环境变量 <code>OLLAMA_HOST</code>：<code>0.0.0.0</code> → <code>127.0.0.1:11434</code></td><td><code>setx OLLAMA_HOST 0.0.0.0</code></td></tr>
+<tr><td><span class="tag t-blue">已加</span></td><td>Vault 新增 <code>04_工作台\</code>（260 篇 + 4 个 .base + 说明）</td><td>删目录即恢复</td></tr>
+<tr><td><span class="tag t-blue">已加</span></td><td><code>🏠主页.md</code> 增加工作台入口一行</td><td>删该行</td></tr>
+<tr><td><span class="tag t-amber">未动</span></td><td><b>知识库里任何文件</b>（PII 脱敏只出清单）</td><td>—</td></tr>
+<tr><td><span class="tag t-amber">未动</span></td><td><b>任何带手机号的文件名</b>（改名会断链，建议走 Sync 排除）</td><td>—</td></tr>
+</table>
+
+<h2>五、新增脚本</h2>
+<table>
+<tr><th>脚本</th><th>作用</th></tr>
+<tr><td><code>tools/build_workbench.py</code></td><td>生成 Bases 工作台（260 篇笔记 + 4 个 .base）</td></tr>
+<tr><td><code>tools/blind_test.py</code></td><td>时间盲测（5 项自动 + <code>--case</code> 导出盲测资料包）</td></tr>
+<tr><td><code>tools/privacy_audit.py</code></td><td>隐私核对 9 项（<code>--fix</code> 可修 Ollama 监听地址）</td></tr>
+<tr><td><code>tools/sanitize_vault_pii.py</code></td><td>知识库 PII 脱敏（默认只读；<code>--apply</code> 才写，且先整库备份）</td></tr>
+</table>
+<p>四者都已接进 <code>tools\regenerate_all.py</code> —— 现在跑一次管线 = 分析库 + 主表 + HTML + Obsidian + 数字基准 + <b>工作台</b> + 验收 + <b>盲测</b> + <b>隐私核对</b>。</p>
+
+<h2>六、下一轮</h2>
+<table>
+<tr><th>优先级</th><th>事项</th><th>为什么</th></tr>
+<tr><td><span class="tag t-red">高</span></td><td>给每条结论补 <code>evidence_refs</code>（事件 ID）+ <code>valid_from</code></td><td>盲测 ① 覆盖率只有 1.7% —— 结论的「成立时间 / 依据」现在无法自动对证</td></tr>
+<tr><td><span class="tag t-red">高</span></td><td>Ollama JSON Schema + Pydantic 结构化抽取</td><td>补 2026-08 之后的缺口（抽取源只跑到 2026-07）</td></tr>
+<tr><td><span class="tag t-amber">中</span></td><td>FTS5 + 人物别名表</td><td><code>persons</code> / <code>aliases</code> 表已建好但还是空的</td></tr>
+<tr><td><span class="tag t-amber">中</span></td><td>决定知识库 PII 怎么办</td><td>要么脱敏，要么永久不开 Sync（二选一即可）</td></tr>
+<tr><td><span class="tag t-blue">低</span></td><td><code>load_self</code> 本人感受</td><td>仍是全空 —— 只有你本人能填，脚本永不覆盖</td></tr>
+</table>
+
+<div class="foot">
+生成 2026-10-05 ｜ 数据截至 2026-10-04 ｜ run_id 20261005-041500<br>
+本报告含真人姓名与关系判断，<b>不得外传</b>。原始聊天数据全程本地处理，未上传第三方。
+</div>
+
+</div></body></html>

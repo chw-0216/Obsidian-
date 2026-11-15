@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>井邻章 · 接待与运营 微信证据台账</title>
+<style>
+  :root{
+    --ink:#16181d; --ink2:#3c4148; --ink3:#6b7280; --ink4:#9aa1ab;
+    --line:#e3e6ea; --line2:#eef1f4;
+    --bg:#ffffff; --bg2:#f7f8fa; --bg3:#f2f4f7;
+    --red:#c0392b; --redbg:#fdf4f3; --redline:#f0d5d1;
+    --green:#1e7a5a; --greenbg:#f1f8f5; --greenline:#cfe6dd;
+    --blue:#1f4e79; --bluebg:#f2f6fa; --blueline:#d3e0ec;
+    --amber:#8a5a00; --amberbg:#fdf8ee; --amberline:#ecdcb8;
+    --mono:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; background:var(--bg2); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    font-size:14px; line-height:1.75;
+  }
+  .page{max-width:1080px;margin:0 auto;background:var(--bg);box-shadow:0 1px 3px rgba(16,24,40,.06),0 8px 32px rgba(16,24,40,.05)}
+
+  /* ── 封面 ── */
+  .hero{padding:46px 56px 38px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,#fbfcfd 0%,#ffffff 100%)}
+  .kicker{font-size:11.5px;letter-spacing:.22em;color:var(--ink4);text-transform:uppercase;font-weight:600}
+  .hero h1{margin:14px 0 6px;font-size:31px;line-height:1.28;letter-spacing:-.02em;font-weight:700}
+  .hero h1 em{font-style:normal;color:var(--red)}
+  .hero .sub{color:var(--ink3);font-size:14.5px;margin-top:10px;max-width:760px}
+  .metarow{display:flex;flex-wrap:wrap;gap:0;margin-top:26px;border-top:1px solid var(--line2);padding-top:20px}
+  .meta{flex:1 1 150px;padding-right:20px}
+  .meta .k{font-size:11px;color:var(--ink4);letter-spacing:.08em}
+  .meta .v{font-size:15px;font-weight:600;margin-top:3px;font-variant-numeric:tabular-nums}
+  .meta .v small{font-weight:400;color:var(--ink3);font-size:12px}
+
+  /* ── 版块 ── */
+  section{padding:38px 56px;border-bottom:1px solid var(--line2)}
+  section:last-child{border-bottom:none}
+  h2{font-size:19px;margin:0 0 4px;letter-spacing:-.01em;display:flex;align-items:baseline;gap:10px}
+  h2 .n{font-size:12px;color:var(--ink4);font-family:var(--mono);font-weight:600;letter-spacing:0}
+  .h2sub{color:var(--ink3);font-size:13px;margin:0 0 22px}
+  h3{font-size:15.5px;margin:26px 0 10px;letter-spacing:-.01em}
+
+  /* ── 表格 ── */
+  table{width:100%;border-collapse:collapse;font-size:13px;margin:0}
+  th{text-align:left;font-weight:600;color:var(--ink3);font-size:11.5px;letter-spacing:.05em;
+     padding:9px 10px;border-bottom:1.5px solid var(--line);background:var(--bg3);white-space:nowrap}
+  td{padding:10px;border-bottom:1px solid var(--line2);vertical-align:top}
+  tr:last-child td{border-bottom:none}
+  td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+  .tbl-wrap{border:1px solid var(--line);border-radius:8px;overflow:hidden}
+  .nowrap{white-space:nowrap}
+
+  /* ── 徽标 ── */
+  .tag{display:inline-block;font-size:11px;font-weight:600;padding:1.5px 7px;border-radius:4px;line-height:1.6;white-space:nowrap}
+  .tA{background:var(--greenbg);color:var(--green);border:1px solid var(--greenline)}
+  .tB{background:var(--amberbg);color:var(--amber);border:1px solid var(--amberline)}
+  .tC{background:var(--bg3);color:var(--ink3);border:1px solid var(--line)}
+  .tFix{background:var(--redbg);color:var(--red);border:1px solid var(--redline)}
+  .tMe{background:var(--bluebg);color:var(--blue);border:1px solid var(--blueline)}
+
+  /* ── 批次卡 ── */
+  .batch{border:1px solid var(--line);border-radius:10px;margin:0 0 20px;overflow:hidden}
+  .batch-hd{display:flex;align-items:flex-start;gap:14px;padding:15px 18px;background:var(--bg3);border-bottom:1px solid var(--line)}
+  .batch-no{flex:0 0 auto;width:30px;height:30px;border-radius:7px;background:var(--ink);color:#fff;
+    font-size:13px;font-weight:700;display:flex;align-items:center;justify-content:center;font-variant-numeric:tabular-nums}
+  .batch-no.warn{background:var(--red)}
+  .batch-tt{flex:1 1 auto;min-width:0}
+  .batch-tt .d{font-size:11.5px;color:var(--ink4);font-family:var(--mono);letter-spacing:.02em}
+  .batch-tt .w{font-size:15.5px;font-weight:650;margin-top:1px}
+  .batch-tt .w span{font-weight:400;color:var(--ink3);font-size:13px}
+  .batch-tags{flex:0 0 auto;display:flex;gap:6px;padding-top:2px}
+  .batch-bd{padding:4px 18px 16px}
+
+  .lbl{font-size:11px;font-weight:700;color:var(--ink4);letter-spacing:.1em;margin:16px 0 7px;text-transform:uppercase}
+  ul.did{margin:0;padding-left:0;list-style:none}
+  ul.did li{position:relative;padding-left:17px;margin-bottom:5px;font-size:13.5px}
+  ul.did li::before{content:"";position:absolute;left:3px;top:9px;width:5px;height:5px;border-radius:50%;background:var(--blue)}
+
+  .quotes{border-left:2.5px solid var(--line);margin:0;padding:0}
+  .q{display:grid;grid-template-columns:88px 1fr;gap:10px;padding:6px 0 6px 12px;border-bottom:1px dashed var(--line2);font-size:13px}
+  .q:last-child{border-bottom:none}
+  .q .ts{font-family:var(--mono);font-size:11.5px;color:var(--ink4);padding-top:2px;font-variant-numeric:tabular-nums}
+  .q .bd .who{font-weight:650;color:var(--ink2)}
+  .q .bd .who.me{color:var(--blue)}
+  .q .bd .who.tu{color:var(--ink3)}
+  .q .bd .ses{font-size:11px;color:var(--ink4);margin-left:5px}
+  .q .bd .txt{color:var(--ink)}
+  .q .bd .txt.hi{background:#fffdf0;box-shadow:0 0 0 2px #fffdf0;font-weight:600}
+
+  /* ── 提示框 ── */
+  .box{border-radius:8px;padding:14px 16px;margin:14px 0;font-size:13.5px;border:1px solid}
+  .box .bt{font-weight:700;margin-bottom:5px;display:flex;align-items:center;gap:7px}
+  .box.red{background:var(--redbg);border-color:var(--redline);color:#7d2a20}
+  .box.red .bt{color:var(--red)}
+  .box.green{background:var(--greenbg);border-color:var(--greenline);color:#14543d}
+  .box.green .bt{color:var(--green)}
+  .box.blue{background:var(--bluebg);border-color:var(--blueline);color:#1a3d5c}
+  .box.blue .bt{color:var(--blue)}
+  .box.amber{background:var(--amberbg);border-color:var(--amberline);color:#6b4600}
+  .box.amber .bt{color:var(--amber)}
+  .box p{margin:6px 0}
+  .box code{font-family:var(--mono);font-size:12px;background:rgba(0,0,0,.05);padding:1px 4px;border-radius:3px}
+
+  /* ── 修正卡 ── */
+  .fix{border:1px solid var(--redline);border-radius:9px;overflow:hidden;margin:0 0 16px;background:#fff}
+  .fix-hd{background:var(--redbg);padding:11px 16px;border-bottom:1px solid var(--redline);
+    display:flex;align-items:center;gap:9px;font-weight:700;color:var(--red);font-size:14px}
+  .fix-hd .ic{width:18px;height:18px;border-radius:50%;background:var(--red);color:#fff;font-size:12px;
+    display:flex;align-items:center;justify-content:center;flex:0 0 auto;font-weight:700}
+  .fix-bd{padding:14px 16px}
+  .wr{display:grid;grid-template-columns:52px 1fr;gap:10px;margin-bottom:9px;font-size:13.5px}
+  .wr .t{font-size:11px;font-weight:700;letter-spacing:.06em;padding-top:2px}
+  .wr .t.no{color:var(--red)} .wr .t.yes{color:var(--green)}
+  .wr .c{color:var(--ink)}
+  .wr .c del{color:var(--ink3);text-decoration-color:var(--red)}
+  .wr .c ins{text-decoration:none;font-weight:600;background:var(--greenbg);padding:0 3px;border-radius:2px}
+
+  .foot{padding:24px 56px 40px;color:var(--ink4);font-size:11.5px;background:var(--bg3);border-top:1px solid var(--line)}
+  .foot b{color:var(--ink3)}
+
+  @media print{
+    body{background:#fff;font-size:11.5px}
+    .page{box-shadow:none;max-width:none}
+    section{padding:20px 0;page-break-inside:auto}
+    .batch,.fix,.box{page-break-inside:avoid}
+    .hero{padding:20px 0}
+  }
+  @media (max-width:720px){
+    .hero,section,.foot{padding-left:20px;padding-right:20px}
+    .q{grid-template-columns:1fr;gap:1px}
+    .q .ts{padding-top:0}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- ═══════════ 封面 ═══════════ -->
+<div class="hero">
+  <div class="kicker">洞台村乡村美育工作站 · 中期汇报 · 井邻章</div>
+  <h1>接待与运营 · <em>微信证据台账</em></h1>
+  <div class="sub">8 批接待与到访，逐批列出「我到场做了什么」＋ 可核查的微信原始记录。全部结论均可用时间戳、会话名、发送人回查。</div>
+  <div class="metarow">
+    <div class="meta"><div class="k">数据源</div><div class="v">ChatTrace 实时索引 <small>index.sqlite</small></div></div>
+    <div class="meta"><div class="k">索引更新</div><div class="v">2026-10-06 13:18</div></div>
+    <div class="meta"><div class="k">井邻线窗口</div><div class="v">15,172 <small>条 / 27 会话</small></div></div>
+    <div class="meta"><div class="k">接待批次</div><div class="v">6 现场 + 2 准备</div></div>
+  </div>
+</div>
+
+<!-- ═══════════ 一、证据说明 ═══════════ -->
+<section>
+  <h2><span class="n">01</span>证据说明与口径分层</h2>
+  <p class="h2sub">先立规矩：哪些能写、按什么等级写。凡微信里查不到的，一律不进台账。</p>
+
+  <div class="tbl-wrap" style="margin-bottom:20px">
+    <table>
+      <thead><tr><th style="width:78px">等级</th><th>含义</th><th style="width:210px">本台账中的使用</th></tr></thead>
+      <tbody>
+        <tr><td><span class="tag tA">A 级</span></td><td>微信原话（含时间戳 / 会话名 / 发送人）<b>且</b>有现场照片或文件产物</td><td>可直接写进汇报正文</td></tr>
+        <tr><td><span class="tag tB">B 级</span></td><td>仅有微信原话，无照片产物</td><td>可写，措辞保守</td></tr>
+        <tr><td><span class="tag tC">C 级</span></td><td>仅见于本人工作日志，微信无对应记录</td><td>不作为独立证据，需加注</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="box blue">
+    <div class="bt">口径分层（写材料时的四档，不可混用）</div>
+    <p><b>① 我独立承担现场接待</b>——当天现场只有我一人对接，导师远程指挥。<br>
+       <b>② 我主导、他人配合</b>——我发起并执行，他人提供资源（借网版、借电脑、给钥匙）。<br>
+       <b>③ 导师安排、我执行</b>——导师提前通知，我提前到岗、准备、现场执行。<br>
+       <b>④ 团队成果</b>——领导到访本身的促成属于项目整体，<b>不认领</b>；只认领「我到场做了什么」。</p>
+  </div>
+
+  <div class="box amber">
+    <div class="bt">本次核查新增的三条硬结论</div>
+    <p>1. <b>「区委书记到访」的 4 张照片 = 8/15 拍摄、8/22 发出。</b>依据：这 4 张图的 MD5 与 8/22 19:58–20:02 发给导师的图片完全一致，同批发出的 4 个 <code>.CR2</code> 原始文件 EXIF 为 <code>2026-08-15 19:19–19:25</code>。照片文件夹名里的「2026-08-22」是<b>发出日</b>，不是到访日。<br>
+       2. <b>8/20「门口英文多了一个 r」不是我的成果。</b>群内原始发言：陈晔提出 → 石晶回「去掉就行，我让工程看看」 → 关宇佳回「收到 尽快调整」。<b>本人全程未参与</b>。<br>
+       3. <b>8/2 开街寻街（10:30–11:00）我在通勤路上。</b>我 11:01 回导师「5分钟老师」、11:22 报「老师我在工作站了」。<b>未陪同寻街</b>，当日实际贡献是驻站值守。</p>
+  </div>
+</section>
+
+<!-- ═══════════ 二、总账 ═══════════ -->
+<section>
+  <h2><span class="n">02</span>八批接待总账</h2>
+  <p class="h2sub">6 批现场接待 + 2 批接待准备。与工作日志第三节「接待讲解」原文完全对齐。</p>
+
+  <div class="tbl-wrap">
+    <table>
+      <thead>
+        <tr><th style="width:30px">#</th><th style="width:96px">日期</th><th>到访方</th><th style="width:230px">我到场做了什么</th><th style="width:58px">证据</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="num">1</td><td class="num">07-29 上午</td><td><b>怀柔区政协主席 刘久刚</b></td><td>带领导上版印制、现场讲解、赠予沟通</td><td><span class="tag tA">A</span></td></tr>
+        <tr><td class="num">2</td><td class="num">07-29 下午</td><td><b>区委宣传部（工部长）</b><br><span style="color:var(--ink3)">＋北京日报记者 王可心＋镇宣传干事</span></td><td>全程现场接待、拍照回传、善后落实</td><td><span class="tag tA">A</span></td></tr>
+        <tr><td class="num">3</td><td class="num">07-31</td><td><b>怀柔区委组织部</b></td><td>现场接待（同时段跟进空调安装）</td><td><span class="tag tB">B</span></td></tr>
+        <tr><td class="num">4</td><td class="num">08-02</td><td><b>长城国际动漫谷开街领导</b></td><td>当日驻站值守 <span class="tag tFix">口径需修正</span></td><td><span class="tag tA">A</span></td></tr>
+        <tr><td class="num">5</td><td class="num">08-03</td><td><b>未来科学城领导</b></td><td>当日撰写并提交《丝网印刷工作坊介绍》＋成本测算</td><td><span class="tag tA">A</span></td></tr>
+        <tr><td class="num">6</td><td class="num">08-15</td><td><b>怀柔区委书记</b><br><span style="color:var(--ink3)">（导师陈晔为怀柔区政协委员）</span></td><td>提前到岗、前夜借版、技师重制版、现场记录</td><td><span class="tag tA">A</span></td></tr>
+        <tr><td class="num">7</td><td class="num">08-16</td><td><b>世界科学家团队</b><br><span style="color:var(--ink3)">（印度、新加坡等地，数十人）</span></td><td>主动请缨英文协助、现场英文介绍与展示</td><td><span class="tag tA">A</span></td></tr>
+        <tr><td class="num">8</td><td class="num">08-19 准备<br>08-20 到访</td><td><b>梁区长 ＋ 北京市文旅局局长</b></td><td>主动请缨、前夜制版、提前到岗、当日全流程</td><td><span class="tag tA">A</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ═══════════ 三、逐批详证 ═══════════ -->
+<section>
+  <h2><span class="n">03</span>逐批详证</h2>
+  <p class="h2sub">每批：到访方 → 我到场做了什么 → 原始微信记录（时间戳 / 会话 / 发送人 / 原话）→ 照片产物。</p>
+
+  <!-- ── 批次 1 ── -->
+  <div class="batch">
+    <div class="batch-hd">
+      <div class="batch-no">1</div>
+      <div class="batch-tt">
+        <div class="d">2026-07-29 上午 · 现场只有我一人</div>
+        <div class="w">怀柔区政协主席 刘久刚 <span>— 带领导上版印制、现场讲解、赠予沟通</span></div>
+      </div>
+      <div class="batch-tags"><span class="tag tA">A 级</span><span class="tag tMe">① 我独立承担</span></div>
+    </div>
+    <div class="batch-bd">
+      <div class="lbl">我到场做了什么</div>
+      <ul class="did">
+        <li>领导到场时由我接待，<b>带主席一起上版印制</b>（导师追问「这是久刚印的吗」，我答「是」）</li>
+        <li>选用「悲鸿 young」版作当日演示版（「就印了悲鸿young」「我带着印」）</li>
+        <li>现场把作品赠予领导 → 领导坚持要付费 → <b>我未收</b></li>
+        <li>领导提示「体」字敏感（「说体字领导说容易被说」），我如实回传导师</li>
+        <li>接待后<b>当场补齐领导全名与背景</b>（11:02 查「刘久刚 百科」）</li>
+        <li>现场拍照记录（导师要求「你得要过来」对方拍的工作照）</li>
+      </ul>
+      <div class="lbl">原始微信记录</div>
+      <div class="quotes">
+        <div class="q"><div class="ts">07-29 09:55</div><div class="bd"><span class="who me">我</span><span class="ses">导师</span> <span class="txt hi">「主席来了」「政协主席刚主席来了」</span></div></div>
+        <div class="q"><div class="ts">07-29 10:03</div><div class="bd"><span class="who me">我</span><span class="ses">导师</span> <span class="txt">「就印了悲鸿young」「我带着印」</span></div></div>
+        <div class="q"><div class="ts">07-29 10:04</div><div class="bd"><span class="who tu">陈晔</span><span class="ses">导师</span> <span class="txt">「刘久刚？」</span>　<span class="who me">我</span>「政协主席」「说是4号怀柔领导」</div></div>
+        <div class="q"><div class="ts">07-29 10:12</div><div class="bd"><span class="who me">我</span><span class="ses">导师</span> <span class="txt">「想让主席提没找毛笔」</span></div></div>
+        <div class="q"><div class="ts">07-29 10:13–10:14</div><div class="bd"><span class="who tu">陈晔</span>「这是久刚印的吗」「你没送给他？」　<span class="who me">我</span>「是」「我送了」<span class="txt hi">「领导说要付钱」「就没收」</span></div></div>
+        <div class="q"><div class="ts">07-29 10:17</div><div class="bd"><span class="who tu">陈晔</span>「以后这种，你就说求帮宣传」　<span class="who me">我</span>「明白老师记住了」「一定」</div></div>
+        <div class="q"><div class="ts">07-29 10:35</div><div class="bd"><span class="who me">我</span><span class="ses">母亲 刘丽萍</span> <span class="txt">「刚才怀柔政协主席来了」</span></div></div>
+        <div class="q"><div class="ts">07-29 10:46</div><div class="bd"><span class="who tu">刘丽萍</span><span class="ses">母亲</span> <span class="txt hi">「印的很好呀[强][强][强]」</span></div></div>
+        <div class="q"><div class="ts">07-29 10:51</div><div class="bd"><span class="who tu">刘丽萍</span><span class="ses">母亲</span> <span class="txt">「下次备点毛笔。墨。生宣。让领导题字」</span></div></div>
+      </div>
+      <div class="box green" style="margin-top:14px">
+        <div class="bt">照片产物</div>
+        <p><code>07_照片素材\06_柚子柚_黄欣然记者_2026-07-29\</code>　2 张，渤海镇宣传科黄欣然摄：<br>
+        <code>20260729_领导观摩丝网印刷_黄欣然摄.jpg</code>（我在操作台示范，多位领导在旁观看）<br>
+        <code>20260729_我与领导一起印制_黄欣然摄.jpg</code>（<b>我和领导一起握刮板印制</b>）</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 批次 2 ── -->
+  <div class="batch">
+    <div class="batch-hd">
+      <div class="batch-no">2</div>
+      <div class="batch-tt">
+        <div class="d">2026-07-29 下午 · 同日第二批</div>
+        <div class="w">区委宣传部（工部长）＋ 北京日报记者王可心 ＋ 镇宣传干事</div>
+      </div>
+      <div class="batch-tags"><span class="tag tA">A 级</span><span class="tag tMe">① 我独立承担</span></div>
+    </div>
+    <div class="batch-bd">
+      <div class="lbl">我到场做了什么</div>
+      <ul class="did">
+        <li>全程现场接待（宣传部部长 + 记者 + 镇宣传干事同批到场）</li>
+        <li>现场拍照并<b>即时回传导师</b>（15:57 两张图 → 导师据此认出记者身份）</li>
+        <li>接待后做信息核对：记者单位由导师纠正（新京报 → <b>北京日报</b>）、姓名由导师补出（<b>王可心</b>）</li>
+        <li>落实两项善后：借电扇（对接宝总）、<b>赴村大队挑柜子</b>（16:29 导师提，我即应「我待会儿去大队挑一个」）</li>
+        <li>如实反馈现场短板：屋内太热、领导未久留</li>
+      </ul>
+      <div class="lbl">原始微信记录</div>
+      <div class="quotes">
+        <div class="q"><div class="ts">07-29 13:13</div><div class="bd"><span class="who tu">陈晔</span><span class="ses">导师</span> <span class="txt">「下午北京日报的记者去看咱们的工作站」</span></div></div>
+        <div class="q"><div class="ts">07-29 15:58</div><div class="bd"><span class="who me">我</span><span class="ses">导师</span> <span class="txt">「老师是镇上的宣传干事」「和新京报的记者一块儿来的」</span></div></div>
+        <div class="q"><div class="ts">07-29 16:11</div><div class="bd"><span class="who me">我</span><span class="ses">导师</span> <span class="txt hi">「下午来了怀柔区的宣传部部长」「工部长」</span></div></div>
+        <div class="q"><div class="ts">07-29 16:12</div><div class="bd"><span class="who me">我</span><span class="ses">导师</span> <span class="txt">「但是屋太热没待多久就走了」「下午新京报的记者一块来的是这个镇上的宣传干事」</div></div>
+        <div class="q"><div class="ts">07-29 16:15</div><div class="bd"><span class="who tu">陈晔</span><span class="ses">导师</span> <span class="txt hi">「她是北京日报」→「王可心」</span>　<span class="who me">我</span>「老师我弄错了」「是的老师」</div></div>
+        <div class="q"><div class="ts">07-29 16:15–16:16</div><div class="bd"><span class="who tu">陈晔</span>「借个电扇」　<span class="who me">我</span>「待会儿跟宝总说」「石总说想办法」「我也看看问问」</div></div>
+        <div class="q"><div class="ts">07-29 16:29</div><div class="bd"><span class="who tu">陈晔</span>「柜子」　<span class="who me">我</span> <span class="txt hi">「柜子我待会儿去大队挑一个」</span></div></div>
+      </div>
+      <div class="box amber" style="margin-top:14px">
+        <div class="bt">口径提示</div>
+        <p>记者单位写 <b>北京日报</b>、姓名写 <b>王可心</b>（导师当日纠正）。「新京报」是我当时的误报，<b>不要写进汇报</b>。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 批次 3 ── -->
+  <div class="batch">
+    <div class="batch-hd">
+      <div class="batch-no">3</div>
+      <div class="batch-tt">
+        <div class="d">2026-07-31 · 与空调安装同日</div>
+        <div class="w">怀柔区委组织部 <span>— 现场接待（停留时间短）</span></div>
+      </div>
+      <div class="batch-tags"><span class="tag tB">B 级</span><span class="tag tMe">① 我独立承担</span></div>
+    </div>
+    <div class="batch-bd">
+      <div class="lbl">我到场做了什么</div>
+      <ul class="did">
+        <li>现场接待（领导到站时我正在盯空调安装）</li>
+        <li><b>同一天我完成了三件硬活</b>：空调试机制冷正常、柜子从村大队搬入并擦拭、全部显示屏投屏联动</li>
+        <li>搬柜子缺人手，<b>主动向王总申请两人协助</b>（16:07–16:09）</li>
+        <li>当日主动复盘并向王总汇报：「今天上午脑子有点懵有点没准备好，工作室还有所欠缺我们加紧努力再修改」</li>
+      </ul>
+      <div class="lbl">原始微信记录</div>
+      <div class="quotes">
+        <div class="q"><div class="ts">07-31 13:07</div><div class="bd"><span class="who me">我</span><span class="ses">导师</span> <span class="txt hi">「刚才区委组织部刚走」「在装空调转一圈就走了」</span></div></div>
+        <div class="q"><div class="ts">07-31 16:07</div><div class="bd"><span class="who me">我</span><span class="ses">王总 / 宝总</span> <span class="txt">「能申请俩人手搬个柜子吗」「就从大队搬到我们工作站」「村支书给了个柜子」</span></div></div>
+        <div class="q"><div class="ts">07-31 16:40</div><div class="bd"><span class="who me">我</span><span class="ses">导师</span> <span class="txt">「书记已经走了」</span></div></div>
+        <div class="q"><div class="ts">07-31 16:54</div><div class="bd"><span class="who tu">陈晔</span><span class="ses">导师</span> <span class="txt hi">「你现在区里出名了」「搞印刷的那个男孩」「都说」</span></div></div>
+        <div class="q"><div class="ts">07-31 18:07</div><div class="bd"><span class="who me">我</span><span class="ses">导师</span> <span class="txt">「老师空调制冷已经完全没问题了」「非常凉快」</span></div></div>
+        <div class="q"><div class="ts">07-31 18:54</div><div class="bd"><span class="who tu">陈晔</span><span class="ses">导师</span> <span class="txt hi">「今天你立功了」</span></div></div>
+        <div class="q"><div class="ts">07-31 18:56</div><div class="bd"><span class="who me">我</span><span class="ses">导师</span> <span class="txt">「都是老师给机会。后天我提前到，把流程和拍摄资料都准备好，争取越做越成熟」</span></div></div>
+        <div class="q"><div class="ts">07-31 21:41</div><div class="bd"><span class="who me">我</span><span class="ses">导师</span> <span class="txt">「老师所有显示器我已经通过路由器小米盒子实现完美投屏」</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 批次 4 ── -->
+  <div class="batch">
+    <div class="batch-hd">
+      <div class="batch-no warn">4</div>
+      <div class="batch-tt">
+        <div class="d">2026-08-02 · 长城国际动漫谷开街</div>
+        <div class="w">开街领导 <span>— 当日驻站值守（口径需修正）</span></div>
+      </div>
+      <div class="batch-tags"><span class="tag tA">A 级</span><span class="tag tFix">口径修正</span></div>
+    </div>
+    <div class="batch-bd">
+      <div class="box red">
+        <div class="bt"><span class="ic">!</span>寻街时段我不在场</div>
+        <p>工作日志 8/2 写的是「参与领导寻街参观现场接待」。<b>微信记录不支持这个说法</b>：<br>
+        ① 群内 12:47 通知明确「寻街活动 10:30–11:00 已经完成，不会再寻街了」；<br>
+        ② 我 11:01 回导师「5分钟老师」，11:22 才报「老师我在工作站了」——<b>寻街时段我在通勤路上</b>。</p>
+        <p style="margin-top:8px">建议改为：<b>「开街当日驻站值守、配合开街活动（暴雨坚守现场）」</b>。这样既准确，也不削弱「开街我在」这个事实。</p>
+      </div>
+      <div class="lbl">我到场做了什么（可核查部分）</div>
+      <ul class="did">
+        <li>开街当日<b>驻站值守</b>（约 11:06 到站，至下午）</li>
+        <li><b>暴雨天气坚守现场</b>（导师 14:35「下巨大雨，小心」→ 我 14:36「我还在老师」）</li>
+        <li>向关总借钥匙，<b>取网版材料筹备重新制版</b>（16:53–16:57）</li>
+        <li>采购干料等工作坊物料（见当日工作日志）</li>
+      </ul>
+      <div class="lbl">原始微信记录</div>
+      <div class="quotes">
+        <div class="q"><div class="ts">08-02 08:22</div><div class="bd"><span class="who tu">陈晔</span><span class="ses">导师</span> <span class="txt">「你早点过来」</span></div></div>
+        <div class="q"><div class="ts">08-02 09:23</div><div class="bd"><span class="who me">我</span><span class="ses">导师</span> <span class="txt">「老师在路上了」</span></div></div>
+        <div class="q"><div class="ts">08-02 11:01</div><div class="bd"><span class="who tu">陈晔</span>「人呢」　<span class="who me">我</span> <span class="txt hi">「5分钟老师」</span></div></div>
+        <div class="q"><div class="ts">08-02 11:22</div><div class="bd"><span class="who me">我</span><span class="ses">导师</span> <span class="txt hi">「老师我在工作站了」</span>　<span class="who tu">陈晔</span>「你就在那吧」「我在Opc这有个活动」</div></div>
+        <div class="q"><div class="ts">08-02 12:47</div><div class="bd"><span class="who tu">关宇佳</span><span class="ses">央美美育工作站群</span> <span class="txt hi">「会议结束后，领导去用餐。寻街活动10:30-11:00已经完成，不会再寻街了。同步各位信息」</span></div></div>
+        <div class="q"><div class="ts">08-02 14:36</div><div class="bd"><span class="who me">我</span><span class="ses">导师</span> <span class="txt">「我还在老师」（回应导师「下巨大雨，小心」）</span></div></div>
+        <div class="q"><div class="ts">08-02 16:53</div><div class="bd"><span class="who me">我</span><span class="ses">关总</span> <span class="txt">「关总还可以借一下钥匙吗」「这两天把网版重新做一下能成吗」</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 批次 5 ── -->
+  <div class="batch">
+    <div class="batch-hd">
+      <div class="batch-no">5</div>
+      <div class="batch-tt">
+        <div class="d">2026-08-03 · 到访次日的产物交付</div>
+        <div class="w">未来科学城领导 <span>— 当日撰写并提交工作坊介绍 + 成本测算</span></div>
+      </div>
+      <div class="batch-tags"><span class="tag tA">A 级</span><span class="tag tMe">② 我主导、他人配合</span></div>
+    </div>
+    <div class="batch-bd">
+      <div class="lbl">我到场做了什么</div>
+      <ul class="did">
+        <li>关总当日 18:12 提出「今天科学城领导看完咱们展示特别感兴趣，想了解下」→ 我<b>当场应答并当日晚间提交</b></li>
+        <li>撰写《乡村美育工作站丝网印刷工作坊介绍》全文（含「数字交互生成—图案设计—丝网印制」供应链路径设想）</li>
+        <li>同步提供清晰版图片 / PDF（关总要求「有没有更清晰版本」）</li>
+        <li>回应王总「有没有丝网印版画的介绍或者流程步骤介绍吗，最好有图片的，主要用于给人看流程，给人介绍课程用」</li>
+        <li>给出<b>成本与定价测算</b>：衬衫 15–30 元 / 颜料 20–30 元 / 多套色合计约 45 元 → 建议定价 98–108 元；导师最终定为村民免费、井邻客人 58、预约 68</li>
+      </ul>
+      <div class="lbl">原始微信记录</div>
+      <div class="quotes">
+        <div class="q"><div class="ts">08-03 18:12</div><div class="bd"><span class="who tu">关宇佳</span><span class="ses">央美美育工作站群</span> <span class="txt hi">「@蔡浩文 这张图 有没有更清晰版本…」→「麻烦了 今天科学城领导 看完咱们展示 特别感兴趣 想了解下 谢谢啦」「还有简介」</span></div></div>
+        <div class="q"><div class="ts">08-03 18:12</div><div class="bd"><span class="who me">我</span> <span class="txt">「有的关总马上发您」</span></div></div>
+        <div class="q"><div class="ts">08-03 18:42</div><div class="bd"><span class="who me">我</span><span class="ses">导师</span> <span class="txt">提交《丝网印刷工作坊介绍》全文：「乡村美育工作站丝网印刷工作坊以版画艺术为媒介，将艺术创作、手工体验与乡土文化相结合…探索"数字交互生成—图案设计—丝网印制"的供应链路径…」</span></div></div>
+        <div class="q"><div class="ts">08-03 19:01</div><div class="bd"><span class="who tu">王华青</span><span class="ses">群</span> <span class="txt">「有没有丝网印版画的介绍或者流程步骤介绍吗，最好有图片的，主要用于给人看流程，给人介绍课程用」</span></div></div>
+        <div class="q"><div class="ts">08-03 19:11–19:14</div><div class="bd"><span class="who me">我</span><span class="ses">群</span> <span class="txt">「衬衫成本柔软度的材料在15块到30之间，颜料损耗20到30之间」「运营成本，固定成本摊销，人力成本后期实现盈利后价格摊销」</span></div></div>
+        <div class="q"><div class="ts">08-03 19:25</div><div class="bd"><span class="who tu">王华青</span> <span class="txt">「浩文，麻烦给一个可以对外报的市场价」</span></div></div>
+        <div class="q"><div class="ts">08-03 19:52</div><div class="bd"><span class="who me">我</span><span class="ses">导师</span> <span class="txt hi">「定价98 108能成吗老师」</span></div></div>
+        <div class="q"><div class="ts">08-03 20:35</div><div class="bd"><span class="who tu">陈晔</span><span class="ses">导师</span> <span class="txt">最终定价：「1.面向村民，可自带T恤，免费体验。2.面向井邻客人，包物料，体验一场58元。3.面向预约人群，包物料，体验一场68元。」</span></div></div>
+      </div>
+      <div class="box green" style="margin-top:14px">
+        <div class="bt">产物</div>
+        <p><code>蔡浩文_乡村美育工作站工作成果汇总.md</code>（8/22 提交导师）／工作坊介绍正文（8/3 18:42 提交）</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 批次 6 ── -->
+  <div class="batch">
+    <div class="batch-hd">
+      <div class="batch-no">6</div>
+      <div class="batch-tt">
+        <div class="d">2026-08-14 准备 → 08-15 到访</div>
+        <div class="w">怀柔区委书记 <span>— 提前到岗、前夜借版、技师重制版、现场记录</span></div>
+      </div>
+      <div class="batch-tags"><span class="tag tA">A 级</span><span class="tag tMe">③ 导师安排、我执行</span></div>
+    </div>
+    <div class="batch-bd">
+      <div class="lbl">我到场做了什么</div>
+      <ul class="did">
+        <li>导师 8/14 12:07「明天你早点过去」、13:58「明天区委书记去」→ 我 17:52 承诺「明天一早就去」，20:44 报「老师 7 点肯定到」</li>
+        <li><b>前夜（8/14 20:48–20:55）向马慧楠老师借网版</b>，约定次日一早取</li>
+        <li>8/15 按马慧楠 05:30 的嘱咐带菲林底片到场，<b>请技师检查网版可用性并重新制版</b></li>
+        <li>08:13 / 09:10 两次报到达（母亲 / 导师）</li>
+        <li><b>自费请到场的老师一行吃午饭</b>（「请他们去吃了」）</li>
+        <li>现场拍摄记录（CR2 原始文件一批，相机时间 17:53–01:18）</li>
+        <li>向王总申请留宿井邻一晚以便次日继续（未获安排）</li>
+      </ul>
+      <div class="lbl">原始微信记录</div>
+      <div class="quotes">
+        <div class="q"><div class="ts">08-14 12:07 / 13:58</div><div class="bd"><span class="who tu">陈晔</span><span class="ses">导师</span> <span class="txt hi">「明天你早点过去」「明天区委书记去」</span></div></div>
+        <div class="q"><div class="ts">08-14 17:52</div><div class="bd"><span class="who me">我</span><span class="ses">导师</span> <span class="txt">「收到老师」「一定」「早点去」「明天一早就去」</span></div></div>
+        <div class="q"><div class="ts">08-14 20:44</div><div class="bd"><span class="who me">我</span><span class="ses">导师</span> <span class="txt hi">「老师 7 点肯定到」</span></div></div>
+        <div class="q"><div class="ts">08-14 20:48</div><div class="bd"><span class="who me">我</span><span class="ses">马慧楠</span> <span class="txt">「马姐在吗」「上次的版有还没洗的吗」「明天用一天我立马给送回来」</span></div></div>
+        <div class="q"><div class="ts">08-15 05:30</div><div class="bd"><span class="who tu">马慧楠</span> <span class="txt">「浩文，今天我们技师会在，你一会儿过来的时候，把上次的菲林底片拿着…让技师帮你看网版还能用么，如果不能用就让他给你重新做一下版」</span></div></div>
+        <div class="q"><div class="ts">08-15 08:13 / 09:10</div><div class="bd"><span class="who me">我</span><span class="ses">母亲 / 导师</span> <span class="txt hi">「老妈我已到达」「老师我已到达」</span></div></div>
+        <div class="q"><div class="ts">08-15 12:39</div><div class="bd"><span class="who me">我</span><span class="ses">母亲</span> <span class="txt">「陈晔是怀柔的政协委员.......」「怀柔区政协委员陈晔」</span></div></div>
+        <div class="q"><div class="ts">08-15 13:00</div><div class="bd"><span class="who me">我</span><span class="ses">母亲</span> <span class="txt">「我导没带我」「请他们去吃了」</span></div></div>
+        <div class="q"><div class="ts">08-15 17:21</div><div class="bd"><span class="who me">我</span><span class="ses">王总</span> <span class="txt">「王总我今天能申请住在井邻一晚吗」（回复：今天不太好安排，抱歉哈）</span></div></div>
+      </div>
+      <div class="box amber" style="margin-top:14px">
+        <div class="bt">照片口径（重要）</div>
+        <p>现有 4 张到访照片位于 <code>06_区委书记到访_导师聊天_2026-08-22\</code>。文件夹名里的 <b>2026-08-22 是发出日</b>。<br>
+        核查结论：这 4 张图的 MD5 与 8/22 19:58–20:02 发给导师的图片完全一致；同批发出的 4 个 <code>.CR2</code> 原始文件 EXIF 为 <b>2026-08-15 19:19–19:25</b>。<br>
+        → <b>图注写「2026-08-15 怀柔区委书记到访」，不写具体时刻。</b></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 批次 7 ── -->
+  <div class="batch">
+    <div class="batch-hd">
+      <div class="batch-no">7</div>
+      <div class="batch-tt">
+        <div class="d">2026-08-13 自荐 → 08-16 到访</div>
+        <div class="w">世界科学家团队 <span>— 主动请缨英文协助、现场英文介绍与展示</span></div>
+      </div>
+      <div class="batch-tags"><span class="tag tA">A 级</span><span class="tag tMe">② 我主动请缨</span></div>
+    </div>
+    <div class="batch-bd">
+      <div class="lbl">我到场做了什么</div>
+      <ul class="did">
+        <li>8/13 21:14 群内征集「需要懂英文的」→ <b>我当晚 21:15 主动私聊关总请缨</b>（原话见下），并坦承英文水平、定位为「帮忙干着活」</li>
+        <li>8/16 12:26 出发、13:17 客人 3 点到场，<b>现场英文介绍与展示</b></li>
+        <li>现场拍照记录（当日导师叮嘱「照片他们查的很严」，我承诺「我拍的稍晚给老师」）</li>
+        <li>当晚把现场视频回传母亲，母亲评价「挺好。英语不错」</li>
+      </ul>
+      <div class="lbl">原始微信记录</div>
+      <div class="quotes">
+        <div class="q"><div class="ts">08-13 21:14</div><div class="bd"><span class="who tu">群内</span><span class="ses">央美美育工作站群</span> <span class="txt hi">「@Jason 关宇佳 16号有世界的科学家参观」「在赵杰那，几十人」「需要懂英文的」「介绍」</span></div></div>
+        <div class="q"><div class="ts">08-13 21:15–21:16</div><div class="bd"><span class="who me">我</span><span class="ses">关总（私聊）</span> <span class="txt hi">「关总我英文其实一般」「但是十六号我可以懂点英文帮忙干着活可以」「肯定比不上海老师他们」「纯脸皮厚的水硕雅思全靠阅读和听力[捂脸]」</span></div></div>
+        <div class="q"><div class="ts">08-16 12:26</div><div class="bd"><span class="who me">我</span><span class="ses">关总</span> <span class="txt">「关总我已出发，稍晚到」</span>　<span class="who tu">关宇佳</span>「大概客人3点到」</div></div>
+        <div class="q"><div class="ts">08-16 18:05–18:09</div><div class="bd"><span class="who me">我</span><span class="ses">导师</span> <span class="txt">「我今天又去了趟井邻」「关总说下午科学家来」「但是没给分配行程」「老师照片他们查的很严」「我拍的稍晚给老师」</span></div></div>
+        <div class="q"><div class="ts">08-16 20:45</div><div class="bd"><span class="who tu">刘丽萍</span><span class="ses">母亲</span> <span class="txt hi">「挺好。英语不错[强][强][强][玫瑰]」</span>（看过我回传的现场视频后）</div></div>
+      </div>
+      <div class="box blue" style="margin-top:14px">
+        <div class="bt">这句自荐的分量</div>
+        <p>「我可以懂点英文帮忙干着活」是<b>主动补位</b>的典型动作：现场缺英文讲解，团队在群里问，我当晚私聊请缨。<br>
+        写材料时可用「<b>主动补位英文讲解</b>」，但<b>不要写成「担任英文翻译」</b>——本人当日已自述英文水平一般。</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── 批次 8 ── -->
+  <div class="batch">
+    <div class="batch-hd">
+      <div class="batch-no">8</div>
+      <div class="batch-tt">
+        <div class="d">2026-08-19 准备 → 08-20 到访</div>
+        <div class="w">梁区长 ＋ 北京市文旅局局长 <span>— 主动请缨、前夜制版、当日全流程</span></div>
+      </div>
+      <div class="batch-tags"><span class="tag tA">A 级</span><span class="tag tMe">② 我主动请缨</span></div>
+    </div>
+    <div class="batch-bd">
+      <div class="lbl">我到场做了什么（按时间顺序，全部可核查）</div>
+      <ul class="did">
+        <li><b>8/19 18:41 主动请缨</b>——群内 17:52 才通知次日到访，我 49 分钟后主动提出前夜制版方案</li>
+        <li>8/19 19:07–21:47 <b>向马慧楠借板</b>并当晚赴现场取回</li>
+        <li>8/19 22:24 完成制版并向导师报「就这个搞定了我撤了老师」</li>
+        <li>8/20 06:59 途中发生剐蹭仍按时赶到；08:33 / 08:49 两次报到达</li>
+        <li>08:31 <b>向关总借笔记本电脑</b>，现场调试无线网络</li>
+        <li>10:23 提交<b>文化墙六句诗方案</b>（燕山脚下书声朗 / 长城脚下墨花香 / 怀柔山乡入画图 / 栗林深处翰墨香 / 京韵满乡书意浓 / 雁栖河畔童心画）</li>
+        <li>按导师安排完成<b>展区作品上墙固定（钉钉子）</b></li>
+        <li>接待现场体验群众，<b>引导关注工作站小红书账号</b></li>
+        <li>当日 19:34 群内同步领导反馈（见下方修正三，本人未参与整改）</li>
+      </ul>
+      <div class="lbl">原始微信记录</div>
+      <div class="quotes">
+        <div class="q"><div class="ts">08-19 17:52</div><div class="bd"><span class="who tu">群内</span><span class="ses">央美美育工作站群</span> <span class="txt">「陈老师，浩文。明天梁区长和市文旅局局长来，所有店铺开业」「看您这边安排人 简单展示和讲解」</span></div></div>
+        <div class="q"><div class="ts">08-19 18:41</div><div class="bd"><span class="who me">我</span><span class="ses">导师</span> <span class="txt hi">「老师，明天上午区领导视察，我想早点到现场把展区、设备和物料检查一遍，领导来了版画/丝网这块我能讲清楚。今晚要不要先去把版制了，明天直接用。您看怎么安排」</span></div></div>
+        <div class="q"><div class="ts">08-19 18:59–19:03</div><div class="bd"><span class="who tu">陈晔</span>「制版来得及么」「明九点前你能到吗」　<span class="who me">我</span> <span class="txt">「老师我待会儿就去」「肯定能」「没问题老师」</span></div></div>
+        <div class="q"><div class="ts">08-19 19:07–19:10</div><div class="bd"><span class="who me">我</span><span class="ses">马慧楠</span> <span class="txt">「马姐在吗」「上次那几块板还在吗」「还给借一下板」「<b>区长明天上午来</b>」</span></div></div>
+        <div class="q"><div class="ts">08-19 21:42 / 22:24</div><div class="bd"><span class="who me">我</span><span class="ses">马慧楠 / 导师</span> <span class="txt hi">「马姐我刚到」→「就这个搞定了我撤了老师」</span></div></div>
+        <div class="q"><div class="ts">08-20 06:59</div><div class="bd"><span class="who me">我</span><span class="ses">导师</span> <span class="txt">「老师我可能晚了点发生了点剐蹭」</span>　<span class="who tu">陈晔</span>「安全第一」</div></div>
+        <div class="q"><div class="ts">08-20 08:31–08:49</div><div class="bd"><span class="who me">我</span><span class="ses">关总 / 导师</span> <span class="txt hi">「关总能借一个笔记本调整一下无线网吗」→「已到达」→「老师我已到达」</span></div></div>
+        <div class="q"><div class="ts">08-20 10:23</div><div class="bd"><span class="who me">我</span><span class="ses">导师</span> <span class="txt hi">文化墙六句诗方案：「燕山脚下书声朗／长城脚下墨花香／怀柔山乡入画图／栗林深处翰墨香／京韵满乡书意浓／雁栖河畔童心画」</span></div></div>
+        <div class="q"><div class="ts">08-20 12:22</div><div class="bd"><span class="who tu">陈晔</span>「我跟关总说了」「钉钉子」　<span class="who me">我</span>「明白老师」</div></div>
+        <div class="q"><div class="ts">08-20 14:56</div><div class="bd"><span class="who tu">陈晔</span><span class="ses">导师</span> <span class="txt">「来体验的人不能白体验，让他们关注我们的小红书吧」</span></div></div>
+      </div>
+      <div class="box amber" style="margin-top:14px">
+        <div class="bt">照片口径</div>
+        <p>8/20 全盘<b>没有高清领导合影</b>（现场不让拍）。建议配图用当日 10:23 提交的<b>文化墙诗句木刻实物</b>（<code>20260820_工作站现场_036.jpg</code>），这是当天我本人提交的产物，证据等级更高。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 四、三处必须修正 ═══════════ -->
+<section>
+  <h2><span class="n">04</span>三处必须修正的归属</h2>
+  <p class="h2sub">写材料时最容易翻车的三处。前两处是「写多了」，第三处是「写错了日子」。</p>
+
+  <div class="fix">
+    <div class="fix-hd"><span class="ic">1</span>8/2 开街寻街——我不在场</div>
+    <div class="fix-bd">
+      <div class="wr"><div class="t no">原写法</div><div class="c"><del>「配合长城国际动漫谷开街试运营活动，参与领导寻街参观现场接待」</del></div></div>
+      <div class="wr"><div class="t yes">改写法</div><div class="c"><ins>「开街当日驻站值守、配合开街活动；暴雨天气坚守现场，并借取网版材料筹备重新制版」</ins></div></div>
+      <div class="wr"><div class="t">依据</div><div class="c">群内 12:47「寻街活动10:30-11:00已经完成」；我 11:01「5分钟老师」、11:22「老师我在工作站了」。</div></div>
+    </div>
+  </div>
+
+  <div class="fix">
+    <div class="fix-hd"><span class="ic">2</span>8/20「门口英文多了一个 r」——不是我做的</div>
+    <div class="fix-bd">
+      <div class="wr"><div class="t no">原写法</div><div class="c"><del>「领导指出门口英文拼写错误，当天协调工程整改」</del></div></div>
+      <div class="wr"><div class="t yes">改写法</div><div class="c"><ins>删除。或写「当日领导反馈已由井邻方记录并安排整改（本人未参与该环节）」</ins></div></div>
+      <div class="wr"><div class="t">依据</div><div class="c">群内原始发言链（8/20 19:34–20:19）：<br>
+        <b>陈晔</b>「今天的领导说门口的英文是错的，我才发现，多了一个r」→「咋办」<br>
+        <b>石晶</b>「去掉就行，我让工程看看」<br>
+        <b>关宇佳</b>「收到 尽快调整」<br>
+        <b>本人（蔡浩文）全程未发言</b>。</div></div>
+    </div>
+  </div>
+
+  <div class="fix">
+    <div class="fix-hd"><span class="ic">3</span>区委书记照片——拍摄 8/15，发出 8/22</div>
+    <div class="fix-bd">
+      <div class="wr"><div class="t no">易错点</div><div class="c"><del>看到文件夹名 <code>06_区委书记到访_导师聊天_2026-08-22</code>，把到访日写成 08-22</del></div></div>
+      <div class="wr"><div class="t yes">正确写法</div><div class="c"><ins>到访日 <b>2026-08-15</b>；图注可加小字「拍摄 08-15 ／ 发出 08-22」</ins></div></div>
+      <div class="wr"><div class="t">依据</div><div class="c">① 陈晔 8/14 13:58「明天区委书记去」；② 工作日志 8/14「为次日区委书记到访做准备」；③ 黄欣然 8/16「上次和区委书记一块儿的照片能有吗」；④ 4 张图的 MD5 与 8/22 19:58–20:02 发出的图片完全一致，同批 CR2 的 EXIF 为 <code>2026-08-15 19:19–19:25</code>。</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ 五、第三方评价 ═══════════ -->
+<section>
+  <h2><span class="n">05</span>可引用的第三方评价</h2>
+  <p class="h2sub">答辩时「外部认可」最有力。以下四句均为他人原话，非自述。</p>
+  <div class="tbl-wrap">
+    <table>
+      <thead><tr><th style="width:118px">时间</th><th style="width:96px">说话人</th><th>原话</th><th style="width:170px">可支撑的结论</th></tr></thead>
+      <tbody>
+        <tr><td class="num">07-31 16:54</td><td>陈晔（导师）</td><td>「<b>你现在区里出名了</b>」「<b>搞印刷的那个男孩</b>」「都说」</td><td>接待工作已在怀柔区层面形成辨识度</td></tr>
+        <tr><td class="num">07-31 18:54</td><td>陈晔（导师）</td><td>「<b>今天你立功了</b>」</td><td>当日空调落地 + 柜子搬入获导师直接肯定</td></tr>
+        <tr><td class="num">07-29 10:46</td><td>刘丽萍（央美版画系教授）</td><td>「<b>印的很好呀[强][强][强]</b>」</td><td>现场印制质量获专业评价</td></tr>
+        <tr><td class="num">08-16 20:45</td><td>刘丽萍（央美版画系教授）</td><td>「<b>挺好。英语不错[强][强][强][玫瑰]</b>」</td><td>8/16 英文讲解的现场表现获认可</td></tr>
+        <tr><td class="num">08-19 15:41</td><td>关宇佳（井邻方）</td><td>「明天您有时间 来洞台村么？<b>政府采购一些服务 央美这可以采购 你之前带大家做的丝网印等 手工体验</b>」</td><td>丝网印体验被井邻方作为政府采购候选服务</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ═══════════ 六、结论口径 ═══════════ -->
+<section>
+  <h2><span class="n">06</span>结论：可直接用于汇报的一段话</h2>
+  <p class="h2sub">以下文字已按上述修正校准，可直接放进井邻章第 5 页讲稿。</p>
+  <div class="box blue" style="font-size:14px;line-height:1.9">
+    <p style="margin-top:0">驻村期间<b>现场接待 6 批次</b>——区政协主席、区委宣传部部长（随北京日报记者）、区委组织部、长城国际动漫谷开街、世界科学家团队、梁区长与市文旅局局长；另为<b>科学城领导参观、区委书记到访完成 2 批次接待准备</b>，合计 8 批。</p>
+    <p>每一批，我都是现场唯一的对接人：</p>
+    <p style="margin-left:14px">· <b>到访前</b>——借网版、订网框、前夜制版、备菲林底片，把第二天要用的版先做出来；</p>
+    <p style="margin-left:14px">· <b>到访当日</b>——提前到岗检查展区与设备，带领导上版印制、讲解丝网与植物染工艺，调试投屏与无线网；</p>
+    <p style="margin-left:14px">· <b>到访之后</b>——当场补齐领导信息、当日撰写工作坊介绍与成本测算、按反馈调整展陈与引流。</p>
+    <p>8/19 收到次日区领导到访通知后 49 分钟，我主动向导师提出「今晚先去把版制了，明天直接用」；当晚 21:42 到现场、22:24 完成制版收尾；次日途中发生剐蹭仍按时到岗。</p>
+    <p style="margin-bottom:0">这条线后来被导师总结为一句：「<b>你现在区里出名了，搞印刷的那个男孩</b>。」</p>
+  </div>
+
+  <div class="box green">
+    <div class="bt">答辩时如果被追问「接待是团队安排的吧」</div>
+    <p>标准回答：<b>到访本身是项目整体的成果，我不认领；我认领的是「每一批到访，现场只有我一个人在对接」。</b><br>
+    证据是工作日志里 33 个工作日、32 天「工作人员」栏只有「蔡浩文」一人，以及上述 8 批接待的完整微信时间线。</p>
+  </div>
+</section>
+
+<div class="foot">
+  <b>数据源</b>　ChatTrace 实时索引 <code>index.sqlite</code>（2026-10-06 13:18 更新，全库 391,315 条）｜井邻线 27 个会话 · 2026-03-01 → 2026-10-06 · 15,172 条<br>
+  <b>一手源</b>　《蔡浩文_乡村美育驻村工作日志》（33 个工作日逐日记录）｜CR2 原始文件 EXIF｜照片 MD5 比对<br>
+  <b>生成</b>　2026-10-06　｜　全部结论可用时间戳 / 会话名 / 发送人回查
+</div>
+
+</div>
+</body>
+</html>

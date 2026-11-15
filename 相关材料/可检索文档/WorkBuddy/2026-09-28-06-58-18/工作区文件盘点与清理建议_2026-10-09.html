@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>工作区文件盘点与清理建议 · 2026-10-09</title>
+<style>
+:root{
+  --bg:#f7f7f5; --card:#ffffff; --line:#e4e3df; --line2:#d3d1c7;
+  --ink:#2c2c2a; --ink2:#5f5e5a; --ink3:#888780;
+  --blue:#185fa5; --blue-bg:#e6f1fb; --blue-line:#b5d4f4;
+  --amber:#854f0b; --amber-bg:#faeeda; --amber-line:#fac775;
+  --red:#a32d2d; --red-bg:#fcebeb; --red-line:#f7c1c1;
+  --green:#3b6d11; --green-bg:#eaf3de; --green-line:#c0dd97;
+  --gray-bg:#f1efe8;
+}
+*{box-sizing:border-box}
+body{margin:0;padding:32px 20px 64px;background:var(--bg);color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+  font-size:14px;line-height:1.7}
+.wrap{max-width:1000px;margin:0 auto}
+h1{font-size:24px;font-weight:600;margin:0 0 6px;letter-spacing:-.01em}
+.sub{color:var(--ink2);font-size:13px;margin:0 0 4px}
+.meta{color:var(--ink3);font-size:12px;margin:0 0 28px}
+h2{font-size:16px;font-weight:600;margin:34px 0 12px;padding-bottom:7px;border-bottom:1px solid var(--line)}
+h3{font-size:14px;font-weight:600;margin:20px 0 8px}
+p{margin:8px 0}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin:16px 0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.card .n{font-size:22px;font-weight:600;letter-spacing:-.02em}
+.card .l{font-size:12px;color:var(--ink2);margin-top:2px}
+.card .d{font-size:12px;color:var(--ink3);margin-top:6px}
+.callout{border-radius:10px;padding:13px 16px;margin:14px 0;border:1px solid}
+.c-red{background:var(--red-bg);border-color:var(--red-line);color:#501313}
+.c-amber{background:var(--amber-bg);border-color:var(--amber-line);color:#412402}
+.c-blue{background:var(--blue-bg);border-color:var(--blue-line);color:#042c53}
+.c-green{background:var(--green-bg);border-color:var(--green-line);color:#173404}
+.callout b{font-weight:600}
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13px;background:var(--card);
+  border:1px solid var(--line);border-radius:10px;overflow:hidden}
+th{background:var(--gray-bg);text-align:left;font-weight:600;font-size:12px;color:var(--ink2);
+  padding:9px 12px;border-bottom:1px solid var(--line)}
+td{padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:last-child td{border-bottom:none}
+td.num{font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:600}
+.tag{display:inline-block;font-size:11px;padding:1px 7px;border-radius:5px;border:1px solid;white-space:nowrap}
+.t-a{background:var(--green-bg);border-color:var(--green-line);color:#173404}
+.t-b{background:var(--blue-bg);border-color:var(--blue-line);color:#042c53}
+.t-c{background:var(--amber-bg);border-color:var(--amber-line);color:#412402}
+.t-x{background:var(--red-bg);border-color:var(--red-line);color:#501313}
+code{background:var(--gray-bg);padding:1px 5px;border-radius:4px;font-size:12.5px;
+  font-family:ui-monospace,SFMono-Regular,Consolas,monospace}
+.mono{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:12.5px}
+.foot{margin-top:40px;padding-top:14px;border-top:1px solid var(--line);color:var(--ink3);font-size:12px}
+ul{margin:8px 0;padding-left:22px}
+li{margin:5px 0}
+.hl{background:#fff3c4;padding:0 3px;border-radius:3px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>工作区文件盘点与清理建议</h1>
+<p class="sub">工作区 <code>C:\Users\wardc\WorkBuddy AI\2026-09-28-06-58-18\</code></p>
+<p class="meta">2026-10-09 22:35 · <b>本次仅扫描，未删除任何文件</b> · 明细见 <code>_tmp\scan_20261009_222758\workspace_scan.csv</code></p>
+
+<div class="callout c-red">
+<b>⚠️ 先看这条约束 —— 决定了哪些现在绝对不能删</b><br>
+<b>中期汇报 ＝「研二综合测评汇报」已定档 2026-10-13（周二）13:00</b>（研究生群 10-09 12:19 通知）。
+→ <code>_tmp\ppt_packs\</code> 的正式素材包（01–26）与 <code>_tmp\sheets\</code>（EXP01–EXP22）是<b>经历页 PPT 素材</b>；
+<code>_tmp\陈晔视频_20261008\</code> 与 <b>10-11 版画工坊视频死线</b>相关。
+<b>这三类 10-13 之前一律保留。</b>
+</div>
+
+<h2>一、工作区总览</h2>
+<div class="cards">
+  <div class="card"><div class="n">1.0 G</div><div class="l">工作区合计</div></div>
+  <div class="card"><div class="n">1.0 G</div><div class="l">_tmp 中间文件</div><div class="d">262 个一级项</div></div>
+  <div class="card"><div class="n">4 M</div><div class="l">tools 正式工具</div><div class="d">137 个脚本</div></div>
+  <div class="card"><div class="n">64 M</div><div class="l">顶层产出</div><div class="d">103 个文件</div></div>
+</div>
+
+<h2>二、三档分类</h2>
+
+<h3><span class="tag t-a">A 档</span> 可重建 / 纯缓存 &nbsp;<b>≈ 891 M</b> &nbsp;← 建议清理</h3>
+<table>
+<thead><tr><th style="width:34%">项目</th><th style="width:12%">大小</th><th style="width:12%">数量</th><th>为什么可删</th></tr></thead>
+<tbody>
+<tr><td><code>_tmp\batch\chunks</code> · <code>text</code> · <code>weeks</code></td><td class="num">473 M</td><td>3 目录</td><td>批处理<b>中间产物</b>；源头 <code>batch.sqlite</code> 与源数据都在，可重跑生成</td></tr>
+<tr><td><code>_tmp\ppt_packs\</code> 打包中间产物</td><td class="num">191 M</td><td>18 目录</td><td>时间戳目录（<code>20261006-*</code>）与 <code>b3-*</code> 为多轮打包残留；<b>最终 .pptx 已在顶层</b></td></tr>
+<tr><td><code>_tmp\readable_full\</code></td><td class="num">110 M</td><td>1,393 txt</td><td>微信<b>全文文本导出</b>；可由 <code>index.sqlite</code> 重新导出</td></tr>
+<tr><td><code>_tmp\hevc_cache\</code></td><td class="num">109 M</td><td>557 图</td><td><b>纯转码缓存</b>（hash 命名），源图未动，可重新生成</td></tr>
+<tr><td><code>_tmp\</code> 一级零散文件</td><td class="num">14 M</td><td>237 个</td><td>84 个一次性 <code>.py</code>（<code>probe*</code>/<code>shrink_memory*</code>/<code>q_*</code>）· 62 个 <code>.out</code> 探测输出 · 47 <code>.txt</code> · 17 <code>.csv</code> · 13 <code>.log</code></td></tr>
+<tr><td><code>_tmp\readable\</code> · <code>peek\</code></td><td class="num">981 K</td><td>93 个</td><td>小规模导出与 2 张探视图</td></tr>
+</tbody>
+</table>
+<div class="callout c-blue">
+<b>注</b>：<code>_tmp</code> 一级的 84 个 <code>.py</code> 中，只有 3 个已归档进 <code>tools\</code>（<code>fix_fts_orphans.py</code> / <code>probe_server_id_conflict.py</code> / <code>upgrade_placeholder_content.py</code>）；
+其余为一次性脚本。<b>删除前建议先把「可能还要用」的挑出来归档</b>。
+</div>
+
+<h3><span class="tag t-b">B 档</span> 备份 &nbsp;<b>31 M</b> &nbsp;← 必须保留</h3>
+<table>
+<thead><tr><th style="width:46%">项目</th><th style="width:14%">大小</th><th>用途</th></tr></thead>
+<tbody>
+<tr><td><code>_tmp\_backup_db_*</code>（7 个）</td><td class="num">≈ 20 M</td><td>analysis.sqlite 历史备份（10-05 / 10-08）</td></tr>
+<tr><td><code>_tmp\noise_backup_20261009_100422\</code></td><td class="num">7.7 M</td><td>两刷单群 4,121 条清理前备份</td></tr>
+<tr><td><code>_tmp\fts_orphan_backup_20261009_220737\</code></td><td class="num">25 K</td><td>FTS 孤儿 33 条清理前备份</td></tr>
+<tr><td><code>_tmp\memory_backup_*\</code></td><td class="num">16 K</td><td>MEMORY.md 压缩前备份</td></tr>
+<tr><td><code>_tmp\placeholder_backup_20261009_220640\</code></td><td class="num">5 K</td><td>占位符升级前 6 行备份</td></tr>
+</tbody>
+</table>
+
+<h3><span class="tag t-c">C 档</span> 素材 / 工程资产 &nbsp;<b>159 M</b> &nbsp;← <span class="hl">10-13 前不动</span>，之后再议</h3>
+<table>
+<thead><tr><th style="width:40%">项目</th><th style="width:12%">大小</th><th>说明</th></tr></thead>
+<tbody>
+<tr><td><code>_tmp\batch\batch.sqlite</code></td><td class="num">67 M</td><td>工程资产：materials 64,109 / weeks 81 / experiences 2,207</td></tr>
+<tr><td><code>_tmp\ppt_packs\</code> 正式素材包（01–26）</td><td class="num">46 M</td><td><b>经历页 PPT 素材</b> → 10-13 汇报用</td></tr>
+<tr><td><code>_tmp\sheets\</code></td><td class="num">33 M</td><td>EXP01–EXP22 的 csv + jpg → 同上</td></tr>
+<tr><td><code>_tmp\陈晔视频_20261008\</code></td><td class="num">12 M</td><td>含 11 M mp4 + 联系表 → 与 10-11 视频死线相关</td></tr>
+<tr><td><code>_tmp\cinema\</code> · <code>pii\</code> · <code>batch\digests</code> · <code>dossiers</code></td><td class="num">≈ 2.3 M</td><td>运镜 demo · <b>PII 分流报告（重要）</b> · 摘要与档案</td></tr>
+</tbody>
+</table>
+
+<h2>三、建议动作（分两批）</h2>
+
+<h3>第一批 · 现在就能删（零风险 · ≈ 300 M）</h3>
+<ul>
+<li><code>_tmp\hevc_cache\</code> &nbsp;<b>109 M</b> —— 纯缓存</li>
+<li><code>_tmp\ppt_packs\</code> 打包中间产物（18 个时间戳 / <code>b3-</code> 目录）&nbsp;<b>191 M</b> —— 最终 pptx 已在顶层</li>
+<li><code>_tmp\peek\</code> · 空的 <code>adbtmp\</code> <code>phone_test\</code> · 本次 <code>scan_*\</code> &nbsp;<b>&lt; 1 M</b></li>
+</ul>
+<div class="callout c-green">
+这 300 M <b>不涉及任何备份、素材或产出</b>，删了不影响 10-11 视频与 10-13 汇报。
+</div>
+
+<h3>第二批 · 建议 10-13 之后再删（≈ 590 M）</h3>
+<ul>
+<li><code>_tmp\batch\{chunks,text,weeks}</code> &nbsp;<b>473 M</b> —— 可重跑生成</li>
+<li><code>_tmp\readable_full\</code> + <code>readable\</code> &nbsp;<b>111 M</b> —— 可重新导出</li>
+<li><code>_tmp\</code> 一级 84 个一次性 <code>.py</code> + 62 个 <code>.out</code> + 零散 txt/csv/log &nbsp;<b>≈ 14 M</b> —— 建议<b>先归档 3–5 个还想留的</b></li>
+</ul>
+
+<div class="callout c-amber">
+<b>删除方式</b>：全部走 <code>tools\recycle.py</code>（进回收站，可还原）· 本机闸门 <code>SAFE_DELETE_BULK_CONFIRM_REQUIRED</code> 限制 <b>50 项/轮</b>，会分多轮执行。
+</div>
+
+<div class="foot">
+本报告仅为盘点结果，<b>未执行任何删除</b>。请确认要清理的范围后再动手。<br>
+关联：<code>自我理解引擎·打通页</code> · <code>三·补·59</code>（中期汇报定档）
+</div>
+
+</div>
+</body>
+</html>

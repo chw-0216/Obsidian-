@@ -1,0 +1,186 @@
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8">
+<title>PII 分流报告 · 2026-10-06</title><style>
+*{box-sizing:border-box}body{margin:0;background:#f7f6f3;color:#22201d;
+font:15px/1.75 -apple-system,"Segoe UI","Microsoft YaHei",sans-serif}
+.wrap{max-width:1040px;margin:0 auto;padding:38px 26px 80px}
+h1{font-size:25px;margin:0 0 6px}h2{font-size:17px;margin:32px 0 10px;
+padding-bottom:7px;border-bottom:2px solid #e5e1da}
+table{border-collapse:collapse;width:100%;font-size:13px;margin:10px 0}
+th,td{border:1px solid #e5e1da;padding:6px 9px;text-align:left;vertical-align:top}
+th{background:#efece6;font-weight:600}
+.bad{background:#fdeeee;border-left:4px solid #c0392b;padding:11px 15px;border-radius:0 6px 6px 0;margin:14px 0;font-size:13.5px}
+.warn{background:#fff8e6;border-left:4px solid #e0a800;padding:11px 15px;border-radius:0 6px 6px 0;margin:14px 0;font-size:13.5px}
+.ok{background:#eef7ef;border-left:4px solid #3f9d54;padding:11px 15px;border-radius:0 6px 6px 0;margin:14px 0;font-size:13.5px}
+code{background:#efece6;padding:1px 5px;border-radius:3px;font-size:12.5px}
+.foot{margin-top:50px;padding-top:14px;border-top:1px solid #ddd9d2;font-size:12.5px;color:#6b6660}
+</style></head><body><div class="wrap">
+<h1>PII 分流报告</h1>
+<p style="color:#6b6660;font-size:13px">生成 2026-10-06 08:59 ｜ 知识库 <code>C:\Users\wardc\Documents\Obsidian Vault</code></p>
+<div class="bad"><b>★ 本报告只做分流，不改动任何原文件。</b>要真正脱敏知识库，另跑 <code>python tools\sanitize_vault_pii.py --apply</code>（会先备份）。</div>
+<h2>一、总览</h2>
+<table><tr><th>项</th><th>值</th></tr><tr><td>知识库命中</td><td><b>109 处</b>（25 个文件）</td></tr><tr><td>其中文件名本身含 PII</td><td>13 处（★ Obsidian 文件列表会直接显示）</td></tr><tr><td>对外产物命中</td><td><b>25 处</b></td></tr><tr><td>类型分布</td><td>手机号 101 ｜ 身份证 5 ｜ 银行卡 3</td></tr></table>
+<h2>二、按分类（内部分析 vs 可公开）</h2>
+<table><tr><th>分类</th><th>处数</th><th>处置</th></tr>
+<tr><td><b>C 工具自动索引</b></td><td>53</td><td>脚本产物 → 可整表脱敏或排除外发</td></tr>
+<tr><td><b>A 内部分析必需</b></td><td>40</td><td>保留在库；外发材料一律剔除（★ 文件名需一并改名）</td></tr>
+<tr><td><b>B 不可公开</b></td><td>16</td><td>保留在库；**外发一律脱敏**</td></tr>
+</table>
+<div class="warn"><b>分流原则</b>：<b>A 内部分析必需</b> = 本地分析要用来识别联系人/核对事件，<b>保留在库，但永不出库</b>；<b>B 不可公开</b> = 真人 PII / 身份证 / 银行卡，任何外发材料<b>一律不得含</b>；<b>C 工具自动索引</b> = 脚本扫出来的清单，PII 是顺带进来的，<b>可整表脱敏或排除外发</b>。</div>
+<h2>三、★ 对外产物里的 PII（最需要处理）</h2>
+<table><tr><th>文件</th><th>类型</th><th>值（已打码）</th></tr>
+<tr><td>Obsidian打通与进度盘点_2026-09-29.html</td><td>手机号</td><td>151****1241</td></tr>
+<tr><td>事件复核台.html</td><td>手机号</td><td>158****6690</td></tr>
+<tr><td>事件复核台.html</td><td>手机号</td><td>151****1789</td></tr>
+<tr><td>事件复核台.html</td><td>手机号</td><td>186****1961</td></tr>
+<tr><td>事件复核台.html</td><td>手机号</td><td>158****6690</td></tr>
+<tr><td>全量语料重跑与清理_2026-10-04.html</td><td>手机号</td><td>184****8614</td></tr>
+<tr><td>去重处置与索引重建_2026-10-04.html</td><td>手机号</td><td>184****8614</td></tr>
+<tr><td>数据源全景与深度分析路线图_2026-10-04.html</td><td>手机号</td><td>137****8520</td></tr>
+<tr><td>第二轮_工作台_盲测_隐私核对_2026-10-05.html</td><td>手机号</td><td>151****1241</td></tr>
+<tr><td>第二轮_工作台_盲测_隐私核对_2026-10-05.html</td><td>手机号</td><td>185****3320</td></tr>
+<tr><td>第二轮_工作台_盲测_隐私核对_2026-10-05.html</td><td>手机号</td><td>153****8815</td></tr>
+<tr><td>第二轮_工作台_盲测_隐私核对_2026-10-05.html</td><td>手机号</td><td>180****4486</td></tr>
+<tr><td>自我理解引擎_统一排查台_2026-10-05.html</td><td>手机号</td><td>185****3320</td></tr>
+<tr><td>自我理解引擎_统一排查台_2026-10-05.html</td><td>手机号</td><td>185****5277</td></tr>
+<tr><td>自我理解引擎_统一排查台_2026-10-05.html</td><td>手机号</td><td>153****8815</td></tr>
+<tr><td>自我理解引擎_统一排查台_2026-10-05.html</td><td>手机号</td><td>151****1638</td></tr>
+<tr><td>这一年_车与家教线_2026-10-04.html</td><td>手机号</td><td>151****1638</td></tr>
+<tr><td>这一年_车与家教线_2026-10-04.html</td><td>银行卡</td><td>1371********4461</td></tr>
+<tr><td>这两年重要的事_2024-11至2026-10_2026-10-04.html</td><td>身份证</td><td>110101********5313</td></tr>
+<tr><td>逐日全维整合_2024-11至2026-10_2026-10-04.html</td><td>手机号</td><td>185****3320</td></tr>
+<tr><td>自我理解引擎_统一排查台_2026-10-05.html</td><td>手机号</td><td>185****3320</td></tr>
+<tr><td>自我理解引擎_统一排查台_2026-10-05.html</td><td>手机号</td><td>185****5277</td></tr>
+<tr><td>自我理解引擎_统一排查台_2026-10-05.html</td><td>手机号</td><td>153****8815</td></tr>
+<tr><td>自我理解引擎_统一排查台_2026-10-05.html</td><td>手机号</td><td>151****1638</td></tr>
+<tr><td>逐日全维整合_2024-11至2026-10_2026-10-04.html</td><td>手机号</td><td>185****3320</td></tr>
+</table>
+<h2>四、逐处清单</h2>
+<table><tr><th>位置</th><th>文件</th><th>类型</th><th>值</th><th>分类</th><th>风险</th></tr>
+<tr><td>正文</td><td>01_个人信息\📅今日关注的项目_2026-09-26.md</td><td>手机号</td><td><code>151****4281</code></td><td>B 不可公开</td><td>高</td></tr>
+<tr><td>正文</td><td>02_文件名录\全部文件位置清单.csv</td><td>手机号</td><td><code>134****1419</code></td><td>C 工具自动索引</td><td>中</td></tr>
+<tr><td>正文</td><td>02_文件名录\全部文件位置清单.csv</td><td>手机号</td><td><code>135****2507</code></td><td>C 工具自动索引</td><td>中</td></tr>
+<tr><td>正文</td><td>02_文件名录\全部文件位置清单.csv</td><td>手机号</td><td><code>152****3029</code></td><td>C 工具自动索引</td><td>中</td></tr>
+<tr><td>正文</td><td>02_文件名录\全部文件位置清单.csv</td><td>手机号</td><td><code>141****0430</code></td><td>C 工具自动索引</td><td>中</td></tr>
+<tr><td>正文</td><td>02_文件名录\全部文件位置清单.csv</td><td>手机号</td><td><code>155****3874</code></td><td>C 工具自动索引</td><td>中</td></tr>
+<tr><td>正文</td><td>02_文件名录\全部文件位置清单.csv</td><td>手机号</td><td><code>145****3875</code></td><td>C 工具自动索引</td><td>中</td></tr>
+<tr><td>正文</td><td>02_文件名录\全部文件位置清单.csv</td><td>手机号</td><td><code>180****0580</code></td><td>C 工具自动索引</td><td>中</td></tr>
+<tr><td>正文</td><td>02_文件名录\全部文件位置清单.csv</td><td>手机号</td><td><code>144****6606</code></td><td>C 工具自动索引</td><td>中</td></tr>
+<tr><td>正文</td><td>02_文件名录\全部文件位置清单.csv</td><td>手机号</td><td><code>154****8434</code></td><td>C 工具自动索引</td><td>中</td></tr>
+<tr><td>正文</td><td>02_文件名录\全部文件位置清单.csv</td><td>手机号</td><td><code>191****1761</code></td><td>C 工具自动索引</td><td>中</td></tr>
+<tr><td>正文</td><td>02_文件名录\全部文件位置清单.csv</td><td>手机号</td><td><code>134****1419</code></td><td>C 工具自动索引</td><td>中</td></tr>
+<tr><td>正文</td><td>02_文件名录\全部文件位置清单.csv</td><td>手机号</td><td><code>135****2507</code></td><td>C 工具自动索引</td><td>中</td></tr>
+<tr><td>正文</td><td>02_文件名录\全部文件位置清单.csv</td><td>手机号</td><td><code>152****3029</code></td><td>C 工具自动索引</td><td>中</td></tr>
+<tr><td>正文</td><td>02_文件名录\全部文件位置清单.csv</td><td>手机号</td><td><code>141****0430</code></td><td>C 工具自动索引</td><td>中</td></tr>
+<tr><td>正文</td><td>02_文件名录\全部文件位置清单.csv</td><td>手机号</td><td><code>155****3874</code></td><td>C 工具自动索引</td><td>中</td></tr>
+<tr><td>正文</td><td>02_文件名录\全部文件位置清单.csv</td><td>手机号</td><td><code>145****3875</code></td><td>C 工具自动索引</td><td>中</td></tr>
+<tr><td>正文</td><td>02_文件名录\全部文件位置清单.csv</td><td>手机号</td><td><code>180****0580</code></td><td>C 工具自动索引</td><td>中</td></tr>
+<tr><td>正文</td><td>02_文件名录\全部文件位置清单.csv</td><td>手机号</td><td><code>144****6606</code></td><td>C 工具自动索引</td><td>中</td></tr>
+<tr><td>正文</td><td>02_文件名录\全部文件位置清单.csv</td><td>手机号</td><td><code>154****8434</code></td><td>C 工具自动索引</td><td>中</td></tr>
+<tr><td>正文</td><td>02_文件名录\全部文件位置清单.csv</td><td>手机号</td><td><code>191****1761</code></td><td>C 工具自动索引</td><td>中</td></tr>
+<tr><td>正文</td><td>02_文件名录\全部文件位置清单.csv</td><td>银行卡</td><td><code>3300********0959</code></td><td>C 工具自动索引</td><td>中</td></tr>
+<tr><td>正文</td><td>02_文件名录\文档内容速览.csv</td><td>手机号</td><td><code>151****1638</code></td><td>C 工具自动索引</td><td>中</td></tr>
+<tr><td>正文</td><td>02_文件名录\文档内容速览.csv</td><td>手机号</td><td><code>151****1638</code></td><td>C 工具自动索引</td><td>中</td></tr>
+<tr><td>正文</td><td>02_文件名录\文档内容速览.csv</td><td>手机号</td><td><code>151****1638</code></td><td>C 工具自动索引</td><td>中</td></tr>
+<tr><td>正文</td><td>02_文件名录\文档内容速览.csv</td><td>手机号</td><td><code>151****1638</code></td><td>C 工具自动索引</td><td>中</td></tr>
+<tr><td>正文</td><td>02_文件名录\文档内容速览.csv</td><td>手机号</td><td><code>151****1638</code></td><td>C 工具自动索引</td><td>中</td></tr>
+<tr><td>正文</td><td>02_文件名录\文档内容速览.csv</td><td>手机号</td><td><code>151****1638</code></td><td>C 工具自动索引</td><td>中</td></tr>
+<tr><td>正文</td><td>02_文件名录\文档内容速览.csv</td><td>手机号</td><td><code>151****1638</code></td><td>C 工具自动索引</td><td>中</td></tr>
+<tr><td>正文</td><td>02_文件名录\文档内容速览.csv</td><td>手机号</td><td><code>151****1638</code></td><td>C 工具自动索引</td><td>中</td></tr>
+<tr><td>正文</td><td>02_文件名录\文档内容速览.csv</td><td>手机号</td><td><code>151****1638</code></td><td>C 工具自动索引</td><td>中</td></tr>
+<tr><td>正文</td><td>02_文件名录\文档内容速览.csv</td><td>手机号</td><td><code>151****1638</code></td><td>C 工具自动索引</td><td>中</td></tr>
+<tr><td>正文</td><td>02_文件名录\文档内容速览.csv</td><td>手机号</td><td><code>151****1638</code></td><td>C 工具自动索引</td><td>中</td></tr>
+<tr><td>正文</td><td>02_文件名录\文档内容速览.csv</td><td>手机号</td><td><code>151****1638</code></td><td>C 工具自动索引</td><td>中</td></tr>
+<tr><td>正文</td><td>02_文件名录\文档内容速览.csv</td><td>手机号</td><td><code>151****1638</code></td><td>C 工具自动索引</td><td>中</td></tr>
+<tr><td>正文</td><td>02_文件名录\文档内容速览.csv</td><td>手机号</td><td><code>151****1638</code></td><td>C 工具自动索引</td><td>中</td></tr>
+<tr><td>正文</td><td>02_文件名录\文档内容速览.csv</td><td>手机号</td><td><code>151****1638</code></td><td>C 工具自动索引</td><td>中</td></tr>
+<tr><td>正文</td><td>02_文件名录\文档内容速览.csv</td><td>手机号</td><td><code>151****1638</code></td><td>C 工具自动索引</td><td>中</td></tr>
+<tr><td>正文</td><td>02_文件名录\文档内容速览.csv</td><td>手机号</td><td><code>151****1638</code></td><td>C 工具自动索引</td><td>中</td></tr>
+<tr><td>正文</td><td>02_文件名录\文档内容速览.csv</td><td>手机号</td><td><code>151****1638</code></td><td>C 工具自动索引</td><td>中</td></tr>
+<tr><td>正文</td><td>02_文件名录\文档内容速览.csv</td><td>身份证</td><td><code>110101********5313</code></td><td>C 工具自动索引</td><td>中</td></tr>
+<tr><td>正文</td><td>02_文件名录\文档内容速览.csv</td><td>身份证</td><td><code>110101********5313</code></td><td>C 工具自动索引</td><td>中</td></tr>
+<tr><td>正文</td><td>02_文件名录\文档内容速览.csv</td><td>身份证</td><td><code>110101********4048</code></td><td>C 工具自动索引</td><td>中</td></tr>
+<tr><td>正文</td><td>02_文件名录\文档内容速览.csv</td><td>身份证</td><td><code>110101********5313</code></td><td>C 工具自动索引</td><td>中</td></tr>
+<tr><td>正文</td><td>03_微信聊天分析\01_人物档案\_低价值联系人索引.md</td><td>手机号</td><td><code>176****3358</code></td><td>A 内部分析必需</td><td>中（商家/服务联系人）</td></tr>
+<tr><td>正文</td><td>03_微信聊天分析\01_人物档案\_低价值联系人索引.md</td><td>手机号</td><td><code>186****1961</code></td><td>A 内部分析必需</td><td>中（商家/服务联系人）</td></tr>
+<tr><td>正文</td><td>03_微信聊天分析\01_人物档案\_低价值联系人索引.md</td><td>手机号</td><td><code>158****6690</code></td><td>A 内部分析必需</td><td>中（商家/服务联系人）</td></tr>
+<tr><td>正文</td><td>03_微信聊天分析\01_人物档案\_低价值联系人索引.md</td><td>手机号</td><td><code>180****4486</code></td><td>A 内部分析必需</td><td>中（商家/服务联系人）</td></tr>
+<tr><td>正文</td><td>03_微信聊天分析\01_人物档案\_低价值联系人索引.md</td><td>手机号</td><td><code>138****6661</code></td><td>A 内部分析必需</td><td>中（商家/服务联系人）</td></tr>
+<tr><td>正文</td><td>03_微信聊天分析\01_人物档案\_低价值联系人索引.md</td><td>手机号</td><td><code>150****8835</code></td><td>A 内部分析必需</td><td>中（商家/服务联系人）</td></tr>
+<tr><td>正文</td><td>03_微信聊天分析\01_人物档案\_低价值联系人索引.md</td><td>手机号</td><td><code>166****4982</code></td><td>A 内部分析必需</td><td>中（商家/服务联系人）</td></tr>
+<tr><td>正文</td><td>03_微信聊天分析\01_人物档案\_低价值联系人索引.md</td><td>手机号</td><td><code>171****4223</code></td><td>A 内部分析必需</td><td>中（商家/服务联系人）</td></tr>
+<tr><td>正文</td><td>03_微信聊天分析\01_人物档案\_低价值联系人索引.md</td><td>手机号</td><td><code>185****3320</code></td><td>A 内部分析必需</td><td>中（商家/服务联系人）</td></tr>
+<tr><td>正文</td><td>03_微信聊天分析\01_人物档案\_低价值联系人索引.md</td><td>手机号</td><td><code>153****8815</code></td><td>A 内部分析必需</td><td>中（商家/服务联系人）</td></tr>
+<tr><td>正文</td><td>03_微信聊天分析\01_人物档案\_低价值联系人索引.md</td><td>手机号</td><td><code>157****8167</code></td><td>A 内部分析必需</td><td>中（商家/服务联系人）</td></tr>
+<tr><td>正文</td><td>03_微信聊天分析\01_人物档案\_低价值联系人索引.md</td><td>手机号</td><td><code>151****1241</code></td><td>A 内部分析必需</td><td>中（商家/服务联系人）</td></tr>
+<tr><td>正文</td><td>03_微信聊天分析\01_人物档案\_低价值联系人索引.md</td><td>手机号</td><td><code>135****6557</code></td><td>A 内部分析必需</td><td>中（商家/服务联系人）</td></tr>
+<tr><td>正文</td><td>03_微信聊天分析\01_人物档案\人工标注锚点.md</td><td>手机号</td><td><code>176****3358</code></td><td>B 不可公开</td><td>高（真人联系方式）</td></tr>
+<tr><td>正文</td><td>03_微信聊天分析\01_人物档案\人工标注锚点.md</td><td>手机号</td><td><code>176****3358</code></td><td>B 不可公开</td><td>高（真人联系方式）</td></tr>
+<tr><td>正文</td><td>03_微信聊天分析\01_人物档案\新增人物案例.md</td><td>手机号</td><td><code>150****7670</code></td><td>B 不可公开</td><td>高（真人联系方式）</td></tr>
+<tr><td>正文</td><td>03_微信聊天分析\01_人物档案\新增人物案例.md</td><td>手机号</td><td><code>151****1638</code></td><td>B 不可公开</td><td>高（真人联系方式）</td></tr>
+<tr><td>正文</td><td>03_微信聊天分析\01_人物档案\新增人物案例.md</td><td>手机号</td><td><code>139****9928</code></td><td>B 不可公开</td><td>高（真人联系方式）</td></tr>
+<tr><td>正文</td><td>03_微信聊天分析\01_人物档案\新增人物案例.md</td><td>手机号</td><td><code>137****8912</code></td><td>B 不可公开</td><td>高（真人联系方式）</td></tr>
+<tr><td>正文</td><td>03_微信聊天分析\01_人物档案\新增人物案例.md</td><td>手机号</td><td><code>151****1638</code></td><td>B 不可公开</td><td>高（真人联系方式）</td></tr>
+<tr><td>正文</td><td>03_微信聊天分析\01_人物档案\新增人物案例.md</td><td>手机号</td><td><code>151****1638</code></td><td>B 不可公开</td><td>高（真人联系方式）</td></tr>
+<tr><td>正文</td><td>03_微信聊天分析\01_人物档案\新增人物案例.md</td><td>手机号</td><td><code>151****1638</code></td><td>B 不可公开</td><td>高（真人联系方式）</td></tr>
+<tr><td>正文</td><td>03_微信聊天分析\01_人物档案\韩云峰.md</td><td>手机号</td><td><code>159****8772</code></td><td>B 不可公开</td><td>高（真人联系方式）</td></tr>
+<tr><td>正文</td><td>03_微信聊天分析\01_人物档案\_低价值联系人\A 豫友图文广告13521586557.md</td><td>手机号</td><td><code>135****6557</code></td><td>A 内部分析必需</td><td>中（商家/服务联系人）</td></tr>
+<tr><td>文件名</td><td>03_微信聊天分析\01_人物档案\_低价值联系人\A 豫友图文广告13521586557.md</td><td>手机号</td><td><code>135****6557</code></td><td>A 内部分析必需</td><td>中（商家/服务联系人）</td></tr>
+<tr><td>正文</td><td>03_微信聊天分析\01_人物档案\_低价值联系人\A.王亮15120001241.md</td><td>手机号</td><td><code>151****1241</code></td><td>A 内部分析必需</td><td>中（商家/服务联系人）</td></tr>
+<tr><td>文件名</td><td>03_微信聊天分析\01_人物档案\_低价值联系人\A.王亮15120001241.md</td><td>手机号</td><td><code>151****1241</code></td><td>A 内部分析必需</td><td>中（商家/服务联系人）</td></tr>
+<tr><td>正文</td><td>03_微信聊天分析\01_人物档案\_低价值联系人\A极狐汽车首为店齐琳-16633994982.md</td><td>手机号</td><td><code>166****4982</code></td><td>A 内部分析必需</td><td>中（商家/服务联系人）</td></tr>
+<tr><td>文件名</td><td>03_微信聊天分析\01_人物档案\_低价值联系人\A极狐汽车首为店齐琳-16633994982.md</td><td>手机号</td><td><code>166****4982</code></td><td>A 内部分析必需</td><td>中（商家/服务联系人）</td></tr>
+<tr><td>正文</td><td>03_微信聊天分析\01_人物档案\_低价值联系人\A红太阳图文快印 15010508835.md</td><td>手机号</td><td><code>150****8835</code></td><td>A 内部分析必需</td><td>中（商家/服务联系人）</td></tr>
+<tr><td>文件名</td><td>03_微信聊天分析\01_人物档案\_低价值联系人\A红太阳图文快印 15010508835.md</td><td>手机号</td><td><code>150****8835</code></td><td>A 内部分析必需</td><td>中（商家/服务联系人）</td></tr>
+<tr><td>正文</td><td>03_微信聊天分析\01_人物档案\_低价值联系人\京城出行-小刘18611141961.md</td><td>手机号</td><td><code>186****1961</code></td><td>A 内部分析必需</td><td>中（商家/服务联系人）</td></tr>
+<tr><td>文件名</td><td>03_微信聊天分析\01_人物档案\_低价值联系人\京城出行-小刘18611141961.md</td><td>手机号</td><td><code>186****1961</code></td><td>A 内部分析必需</td><td>中（商家/服务联系人）</td></tr>
+<tr><td>正文</td><td>03_微信聊天分析\01_人物档案\_低价值联系人\代录代下载15711528167.md</td><td>手机号</td><td><code>157****8167</code></td><td>A 内部分析必需</td><td>中（商家/服务联系人）</td></tr>
+<tr><td>正文</td><td>03_微信聊天分析\01_人物档案\_低价值联系人\代录代下载15711528167.md</td><td>手机号</td><td><code>157****8167</code></td><td>A 内部分析必需</td><td>中（商家/服务联系人）</td></tr>
+<tr><td>文件名</td><td>03_微信聊天分析\01_人物档案\_低价值联系人\代录代下载15711528167.md</td><td>手机号</td><td><code>157****8167</code></td><td>A 内部分析必需</td><td>中（商家/服务联系人）</td></tr>
+<tr><td>正文</td><td>03_微信聊天分析\01_人物档案\_低价值联系人\天逸图文广告17191194223.md</td><td>手机号</td><td><code>171****4223</code></td><td>A 内部分析必需</td><td>中（商家/服务联系人）</td></tr>
+<tr><td>文件名</td><td>03_微信聊天分析\01_人物档案\_低价值联系人\天逸图文广告17191194223.md</td><td>手机号</td><td><code>171****4223</code></td><td>A 内部分析必需</td><td>中（商家/服务联系人）</td></tr>
+<tr><td>正文</td><td>03_微信聊天分析\01_人物档案\_低价值联系人\太平洋王曙光-18513523320（夜班）.md</td><td>手机号</td><td><code>185****3320</code></td><td>A 内部分析必需</td><td>中（商家/服务联系人）</td></tr>
+<tr><td>文件名</td><td>03_微信聊天分析\01_人物档案\_低价值联系人\太平洋王曙光-18513523320（夜班）.md</td><td>手机号</td><td><code>185****3320</code></td><td>A 内部分析必需</td><td>中（商家/服务联系人）</td></tr>
+<tr><td>正文</td><td>03_微信聊天分析\01_人物档案\_低价值联系人\小超汽车钥匙手表钥匙17611293358.md</td><td>手机号</td><td><code>176****3358</code></td><td>A 内部分析必需</td><td>中（商家/服务联系人）</td></tr>
+<tr><td>文件名</td><td>03_微信聊天分析\01_人物档案\_低价值联系人\小超汽车钥匙手表钥匙17611293358.md</td><td>手机号</td><td><code>176****3358</code></td><td>A 内部分析必需</td><td>中（商家/服务联系人）</td></tr>
+<tr><td>正文</td><td>03_微信聊天分析\01_人物档案\_低价值联系人\幸福时光酒店18085024486.md</td><td>手机号</td><td><code>180****4486</code></td><td>A 内部分析必需</td><td>中（商家/服务联系人）</td></tr>
+<tr><td>文件名</td><td>03_微信聊天分析\01_人物档案\_低价值联系人\幸福时光酒店18085024486.md</td><td>手机号</td><td><code>180****4486</code></td><td>A 内部分析必需</td><td>中（商家/服务联系人）</td></tr>
+<tr><td>正文</td><td>03_微信聊天分析\01_人物档案\_低价值联系人\李兰亭13801026661.md</td><td>手机号</td><td><code>138****6661</code></td><td>A 内部分析必需</td><td>中（商家/服务联系人）</td></tr>
+<tr><td>文件名</td><td>03_微信聊天分析\01_人物档案\_低价值联系人\李兰亭13801026661.md</td><td>手机号</td><td><code>138****6661</code></td><td>A 内部分析必需</td><td>中（商家/服务联系人）</td></tr>
+<tr><td>正文</td><td>03_微信聊天分析\01_人物档案\_低价值联系人\王教练15810476690.md</td><td>手机号</td><td><code>158****6690</code></td><td>A 内部分析必需</td><td>中（商家/服务联系人）</td></tr>
+<tr><td>文件名</td><td>03_微信聊天分析\01_人物档案\_低价值联系人\王教练15810476690.md</td><td>手机号</td><td><code>158****6690</code></td><td>A 内部分析必需</td><td>中（商家/服务联系人）</td></tr>
+<tr><td>正文</td><td>03_微信聊天分析\01_人物档案\_低价值联系人\都阳丝印-张俪15383838815.md</td><td>手机号</td><td><code>153****8815</code></td><td>A 内部分析必需</td><td>中（商家/服务联系人）</td></tr>
+<tr><td>文件名</td><td>03_微信聊天分析\01_人物档案\_低价值联系人\都阳丝印-张俪15383838815.md</td><td>手机号</td><td><code>153****8815</code></td><td>A 内部分析必需</td><td>中（商家/服务联系人）</td></tr>
+<tr><td>正文</td><td>03_微信聊天分析\03_事件库\车与家教线·2026-10-04.md</td><td>手机号</td><td><code>151****1638</code></td><td>B 不可公开</td><td>★最高（含身份证）</td></tr>
+<tr><td>正文</td><td>03_微信聊天分析\03_事件库\车与家教线·2026-10-04.md</td><td>银行卡</td><td><code>1371********4461</code></td><td>B 不可公开</td><td>★最高（含身份证）</td></tr>
+<tr><td>正文</td><td>03_微信聊天分析\03_事件库\这两年·2024-11至2026-10 全窗口时间轴.md</td><td>身份证</td><td><code>110101********5313</code></td><td>B 不可公开</td><td>★最高（含身份证）</td></tr>
+<tr><td>正文</td><td>03_微信聊天分析\04_方法论\微信数据分析·工具链与数据源全景.md</td><td>手机号</td><td><code>184****8614</code></td><td>C 工具自动索引</td><td>低</td></tr>
+<tr><td>正文</td><td>03_微信聊天分析\_附件\距离档复核清单_2026-10-04.csv</td><td>手机号</td><td><code>186****2178</code></td><td>C 工具自动索引</td><td>中</td></tr>
+<tr><td>正文</td><td>03_微信聊天分析\_附件\距离档复核清单_2026-10-04.csv</td><td>手机号</td><td><code>186****2178</code></td><td>C 工具自动索引</td><td>中</td></tr>
+<tr><td>正文</td><td>03_微信聊天分析\_附件\距离档复核清单_2026-10-04.csv</td><td>手机号</td><td><code>176****3358</code></td><td>C 工具自动索引</td><td>中</td></tr>
+<tr><td>正文</td><td>03_微信聊天分析\_附件\距离档复核清单_2026-10-04.csv</td><td>手机号</td><td><code>176****3358</code></td><td>C 工具自动索引</td><td>中</td></tr>
+<tr><td>正文</td><td>03_微信聊天分析\_附件\距离档复核清单_2026-10-04.csv</td><td>手机号</td><td><code>153****8815</code></td><td>C 工具自动索引</td><td>中</td></tr>
+<tr><td>正文</td><td>03_微信聊天分析\_附件\距离档复核清单_2026-10-04.csv</td><td>手机号</td><td><code>153****8815</code></td><td>C 工具自动索引</td><td>中</td></tr>
+<tr><td>正文</td><td>03_微信聊天分析\_附件\距离档复核清单_2026-10-04.csv</td><td>手机号</td><td><code>134****5285</code></td><td>C 工具自动索引</td><td>中</td></tr>
+<tr><td>正文</td><td>03_微信聊天分析\_附件\距离档复核清单_2026-10-04.csv</td><td>手机号</td><td><code>134****5285</code></td><td>C 工具自动索引</td><td>中</td></tr>
+<tr><td>正文</td><td>03_微信聊天分析\_附件\距离档复核清单_2026-10-04.csv</td><td>银行卡</td><td><code>2598********2175</code></td><td>C 工具自动索引</td><td>中</td></tr>
+<tr><td>正文</td><td>04_工作台\事件\EVT-20260410-001 我方主动发起购车咨询.md</td><td>手机号</td><td><code>151****1241</code></td><td>B 不可公开</td><td>高</td></tr>
+<tr><td>正文</td><td>04_工作台\事件\EVT-20260410-001 我方主动发起购车咨询.md</td><td>手机号</td><td><code>151****1241</code></td><td>B 不可公开</td><td>高</td></tr>
+</table>
+<h2>五、公开版（汇报展示用）</h2>
+<p>已生成 <b>12</b> 份脱敏副本 → <code>_tmp\pii\公开版\</code>：</p>
+<table><tr><th>文件</th><th>脱敏处数</th></tr>
+<tr><td>Obsidian打通与进度盘点_2026-09-29.html</td><td>1</td></tr>
+<tr><td>事件复核台.html</td><td>4</td></tr>
+<tr><td>全量语料重跑与清理_2026-10-04.html</td><td>1</td></tr>
+<tr><td>去重处置与索引重建_2026-10-04.html</td><td>1</td></tr>
+<tr><td>数据源全景与深度分析路线图_2026-10-04.html</td><td>1</td></tr>
+<tr><td>第二轮_工作台_盲测_隐私核对_2026-10-05.html</td><td>4</td></tr>
+<tr><td>自我理解引擎_统一排查台_2026-10-05.html</td><td>4</td></tr>
+<tr><td>这一年_车与家教线_2026-10-04.html</td><td>2</td></tr>
+<tr><td>这两年重要的事_2024-11至2026-10_2026-10-04.html</td><td>1</td></tr>
+<tr><td>逐日全维整合_2024-11至2026-10_2026-10-04.html</td><td>1</td></tr>
+<tr><td>自我理解引擎_统一排查台_2026-10-05.html</td><td>4</td></tr>
+<tr><td>逐日全维整合_2024-11至2026-10_2026-10-04.html</td><td>1</td></tr>
+</table>
+<div class="foot">工具 <code>tools\pii_split.py</code> ｜ 真脱敏用 <code>tools\sanitize_vault_pii.py --apply</code> ｜ 原文件未被改动</div>
+</div></body></html>

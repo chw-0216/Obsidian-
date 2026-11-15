@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>10-03 到访 · 全部可查信息与全部可能性</title>
+<style>
+:root{
+  --bg:#f7f7f5; --card:#fff; --ink:#1c1c1e; --ink2:#4a4a4f; --ink3:#8a8a90;
+  --line:#e5e5e2; --red:#c0392b; --red-bg:#fdf2f0; --red-line:#f0c8c2;
+  --blue:#1f5c8b; --blue-bg:#eff5fa; --blue-line:#cfe0ef;
+  --green:#1e7a52; --green-bg:#eef7f2; --green-line:#c8e5d5;
+  --amber:#9a6b00; --amber-bg:#fdf6e6; --amber-line:#f0e0b0;
+  --purple:#5b4b8a; --purple-bg:#f2effa;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.75 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
+.wrap{max-width:1060px;margin:0 auto;padding:46px 28px 90px}
+h1{font-size:29px;line-height:1.3;margin:0 0 6px;letter-spacing:-.4px}
+.sub{color:var(--ink3);font-size:13.5px;margin-bottom:30px}
+h2{font-size:20px;margin:46px 0 6px;padding-bottom:9px;border-bottom:2px solid var(--ink);letter-spacing:-.2px}
+h2 .n{font-size:12px;color:var(--ink3);font-weight:600;margin-right:8px;letter-spacing:.08em}
+.h2sub{color:var(--ink3);font-size:13px;margin:8px 0 16px}
+h3{font-size:15.5px;margin:24px 0 8px;color:var(--ink2)}
+table{width:100%;border-collapse:collapse;font-size:13.5px;margin:12px 0}
+th{text-align:left;background:#fafaf8;color:var(--ink2);font-weight:600;padding:9px 10px;border-bottom:2px solid var(--line)}
+td{padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:last-child td{border-bottom:none}
+.tag{display:inline-block;padding:1px 8px;border-radius:20px;font-size:11.5px;font-weight:600;white-space:nowrap}
+.t-ok{background:var(--green-bg);color:var(--green)}
+.t-cond{background:var(--amber-bg);color:var(--amber)}
+.t-no{background:var(--red-bg);color:var(--red)}
+.t-new{background:var(--red);color:#fff}
+.t-grey{background:#f0f0ee;color:var(--ink3)}
+.t-blue{background:var(--blue-bg);color:var(--blue)}
+.lead{background:var(--card);border-left:4px solid var(--red);border-radius:0 10px 10px 0;padding:18px 22px;margin:18px 0 26px}
+.lead b{color:var(--red)}
+.box{border-radius:9px;padding:14px 18px;margin:14px 0;font-size:13.5px}
+.box .bh{font-weight:700;font-size:14px;margin-bottom:6px}
+.box.green{background:var(--green-bg);border:1px solid var(--green-line)} .box.green .bh{color:var(--green)}
+.box.amber{background:var(--amber-bg);border:1px solid var(--amber-line)} .box.amber .bh{color:var(--amber)}
+.box.red{background:var(--red-bg);border:1px solid var(--red-line)} .box.red .bh{color:var(--red)}
+.box.blue{background:var(--blue-bg);border:1px solid var(--blue-line)} .box.blue .bh{color:var(--blue)}
+.tl{font-family:Consolas,Menlo,monospace;font-size:12.5px;color:var(--ink3);white-space:nowrap}
+.q{display:grid;grid-template-columns:118px 1fr;gap:10px;padding:6px 0;border-bottom:1px dashed var(--line);font-size:13.5px}
+.q:last-child{border-bottom:none}
+.q .who{font-size:11.5px;color:var(--ink3);padding-top:3px}
+.quote{background:#fafaf8;border-left:3px solid var(--ink3);padding:10px 14px;margin:8px 0;font-size:13.5px;border-radius:0 6px 6px 0}
+code{background:#f0f0ee;padding:1px 5px;border-radius:4px;font-size:12.5px;word-break:break-all}
+ul,ol{padding-left:21px;margin:8px 0} li{margin:5px 0}
+.imgs{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:14px 0}
+@media(max-width:760px){.imgs{grid-template-columns:1fr 1fr}}
+.imgs figure{margin:0;background:var(--card);border:1px solid var(--line);border-radius:9px;overflow:hidden}
+.imgs img{width:100%;display:block}
+.imgs figcaption{padding:8px 10px;font-size:12px;color:var(--ink3);line-height:1.5}
+.foot{margin-top:52px;padding-top:20px;border-top:1px solid var(--line);color:var(--ink3);font-size:12.5px}
+.conf{display:inline-block;font-size:11px;font-weight:700;padding:1px 6px;border-radius:4px;color:#fff}
+.c-hi{background:var(--green)} .c-mid{background:var(--amber)} .c-lo{background:var(--ink3)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>10 月 3 日「领导到访」——全部可查信息与全部可能性</h1>
+<div class="sub">2026-10-09 ｜ 证据来源：微信全库 392,198 条（2024-11-10 → 2026-10-09）· Codex 本地会话 · 微信图片缓存解码 · 公开政府信息<br>本页只做一件事：<b>把能查到的全部查到，把查不到的全部标注</b>。核实前，级别与姓名不得进入汇报正文。</div>
+
+<div class="lead">
+<b>一句话结论：</b>「当天下午 16:00–17:14 确实有一批领导到访，我全程值守」——<b>这一条证据链完整、可回查</b>。<br>
+而「<b>副国级</b>」这个级别，<b>全库 39.2 万条消息里只有你自己说过两次</b>，没有任何第三方、任何公开渠道佐证。姓名则<b>完全查无</b>。
+</div>
+
+<h2><span class="n">01</span>10-03 当天：完整时间线（逐条带出处）</h2>
+<p class="h2sub">本次新增了三条关键记录，其中 <b>16:00 接待开始时间</b> 和 <b>17:14 接待结束时间</b> 是首次定位到分钟级。</p>
+
+<table>
+<tr><th style="width:92px">时间</th><th style="width:150px">来源</th><th>内容</th></tr>
+<tr><td class="tl">07:23</td><td>陈晔（导师）</td><td>陈「你出发了吗」→ 你「刚出发老师」→ 陈「注意安全」</td></tr>
+<tr><td class="tl">07:26</td><td>央美美育工作站群</td><td>「9:00 左右麻烦您开下门 @Jason 关宇佳 谢谢」→ 关「好的」</td></tr>
+<tr><td class="tl">09:07</td><td>关宇佳</td><td>你「关总堵死了还来得及吗」「是不是已经不用来了」「还有 10 公里」</td></tr>
+<tr><td class="tl">09:58</td><td>陈晔</td><td><b>你「老师我已到达」「人还没来」</b> ← 到场时领导尚未到</td></tr>
+<tr><td class="tl">10:01</td><td>陈晔</td><td>陈「那你收拾收拾」「试下版吧」</td></tr>
+<tr><td class="tl">10:40–10:53</td><td>陈晔</td><td>你连发 4 段视频：「老师这个是上次让我做的那个手势交互小孩儿在玩」</td></tr>
+<tr><td class="tl">10:48–10:50</td><td>关宇佳</td><td><b>关「走的时候跟我说，安排同事去锁门」「今天我没在」</b> ← 关总当天不在现场</td></tr>
+<tr><td class="tl">12:01</td><td>笑一</td><td><b>你「老公下午 4 点开始有接待，估计要忙到晚上」</b> ★ 首次定位接待开始时间</td></tr>
+<tr><td class="tl">13:35</td><td>刘丽萍（母）</td><td>北京交警挪车通知：车停在「怀柔区渤海镇 X008（南铁路）附近」</td></tr>
+<tr><td class="tl">14:08</td><td>陈晔</td><td>你发图 +「老师没问题」「<b>丝网版能用的</b>」← 试版确认完成</td></tr>
+<tr style="background:var(--red-bg)"><td class="tl"><b>16:00</b></td><td>—</td><td><b>接待开始</b>（据 12:01 预告）</td></tr>
+<tr style="background:var(--red-bg)"><td class="tl"><b>16:11</b></td><td>陈晔</td><td><b>你「领导看一下」「问了一下丙烯就走了」「〔现场照片〕」「问了一下书法」「不给照片」</b> ★ 核心记录</td></tr>
+<tr><td class="tl">16:33</td><td>陈晔</td><td>陈「有人体验吗」</td></tr>
+<tr><td class="tl">16:44</td><td>吴🌟曼曼</td><td>新加好友：「我是吴🌟曼曼」</td></tr>
+<tr><td class="tl">16:46 / 16:47</td><td>陈晔</td><td>你「付费体验没咋有人」「<b>领导没体验</b>」</td></tr>
+<tr style="background:var(--red-bg)"><td class="tl"><b>17:14</b></td><td>笑一</td><td><b>你「老公接待忙完了，现在往回走」</b> ★ 首次定位接待结束时间</td></tr>
+<tr><td class="tl">17:22</td><td>陈晔</td><td>陈「收拾收拾吧」「你请关总锁门」「关灯关窗关空调」</td></tr>
+<tr><td class="tl">17:29 / 17:30 / 17:36</td><td>陈晔 / 关宇佳</td><td>你「好的老师…大概六点走」→「关总，我这边收拾好了，这就走。麻烦您安排同事锁门」→ 关「好的好的」</td></tr>
+<tr><td class="tl">18:56–18:57</td><td>吴🌟曼曼</td><td>发来 5 张照片 + 3 段视频（见第 05 节）</td></tr>
+<tr><td class="tl">22:00</td><td>刘丽萍（母）</td><td>你「老妈在吗，能申请下这个月剩下的生活费吗」</td></tr>
+</table>
+
+<div class="box green">
+<div class="bh">✓ 由此可以确定的三件事</div>
+<ul>
+<li><b>接待窗口 = 16:00 – 17:14</b>，约 1 小时 15 分钟。你从 09:58 到场到 17:30 离开，<b>全天在岗</b>。</li>
+<li><b>你做了两件事</b>：① 14:08 前完成丝网版试印确认（「丝网版能用的」）；② 领导到场时引导讲解。</li>
+<li><b>关宇佳（关总）当天不在现场</b>，锁门由他安排同事完成 —— 所以他<b>未必亲眼见过到访者</b>，问他之前要先确认他当天是否在场。</li>
+</ul>
+</div>
+
+<h2><span class="n">02</span>现场照片：已经解出来了</h2>
+<p class="h2sub">你 16:11 发给陈晔老师的那张照片，从本机微信图片缓存中解码取出（微信 4.x V2 格式，AES-128-ECB + 尾部异或）。<b>原图 2276×1024。</b></p>
+
+<div class="imgs">
+<figure>
+  <img src="14_10-03现场与参与者回声_2026-10-09/01_领导到访现场_10-03_1611_全景.jpg" alt="10-03 现场">
+  <figcaption><b>10-03 16:11 现场照</b>（你发给陈晔老师的那张，原图 2276×1024）<br>左起：绿夹克男子 / 红上衣男子 / <b>深藏青外套灰发年长男子（背对镜头）</b> / 黑衣长发女性（背对） / <b>持专业相机的摄影师</b>。墙面为书法作品 —— 与「问了一下书法」吻合。</figcaption>
+</figure>
+</div>
+
+<div class="box amber">
+<div class="bh">⚠ 这张照片能说明什么、不能说明什么</div>
+<ul>
+<li><b>能说明</b>：当天现场有 <b>随行专业摄影师</b>（这与你说「不给照片」完全吻合 —— 官方摄影不出片）。画面里有书法作品，与「问了一下书法」吻合。画面里有一位年长男性背对镜头，是画面中最可能的主宾。</li>
+<li><b>不能说明</b>：<b>没有任何人露正脸，没有任何文字标识（无横幅、无单位牌、无桌牌）</b>。这张照片<b>无法用于识别身份</b>，也<b>不宜放进汇报</b>（涉及他人肖像且信息量为零）。</li>
+<li><b>但是</b>：它证明了一件事 —— <b>你手上有当天的一手影像</b>。汇报里可以写「现场留有影像记录」，不必出示。</li>
+</ul>
+</div>
+
+<h2><span class="n">03</span>消息传播链：这句话是怎么变成「副国级」的</h2>
+<p class="h2sub">全库 392,198 条消息里，出现「国级」二字的只有 <b>2 条</b>，且<b>都是你自己发的</b>。</p>
+
+<table>
+<tr><th style="width:100px">时间</th><th style="width:130px">对象</th><th>原话</th></tr>
+<tr><td class="tl">09-30 14:43</td><td>陈晔 → 你</td><td>「说是 10.3 会有<b>大大领导</b>来」← <b>无级别、无姓名</b></td></tr>
+<tr><td class="tl">10-01 14:36</td><td>陈晔 → 你</td><td>「10 月 3 日<b>大大大领导</b>去」← <b>仍无级别、无姓名</b></td></tr>
+<tr style="background:var(--red-bg)"><td class="tl">10-02 20:24</td><td><b>你 → Parapluie</b></td><td>「明天我去山上应迎接一个<b>副国级的领导</b>」「文旅项目有领导视察」「给盯班」</td></tr>
+<tr style="background:var(--red-bg)"><td class="tl">10-02 22:59</td><td><b>你 → 笑一</b></td><td>「明天有个<b>副国级的领导</b>视察」→ 对方回「你好好接待啊」</td></tr>
+<tr><td class="tl">10-03 12:01</td><td>你 → 笑一</td><td>「老公下午 4 点开始有接待」← <b>不再提级别</b></td></tr>
+<tr><td class="tl">10-03 16:11</td><td>你 → 陈晔</td><td>「领导看一下…」← <b>现场记录里只写「领导」</b></td></tr>
+</table>
+
+<div class="box red">
+<div class="bh">✗ 关键事实：「副国级」是单向输出，没有任何回流确认</div>
+<ul>
+<li><b>上游（陈晔）</b>说的是「大大领导」——这是口语化的强调，不是级别。</li>
+<li><b>下游（Parapluie / 笑一）</b>只是接收，没有能力也没有义务去核对。</li>
+<li><b>你自己的现场记录（10-03 16:11）</b>写的是「领导」，<b>没有写级别</b>。</li>
+<li><b>全库检索「副国」「正国」「国级」</b> → 仅上述 2 条，均为你本人发出。</li>
+<li><b>公开渠道</b>（怀柔区政府 / 首都之窗 / 新华网 / 人民网 / 中国政协网）：<b>无任何退休副国级领导 2026-10-03 到访怀柔的报道</b>。</li>
+</ul>
+</div>
+
+<h2><span class="n">04</span>全部可能性：5 种解释，各自的依据与可信度</h2>
+<p class="h2sub">按「能被现有证据支持的程度」排序。每条都给出<b>如何验证</b>。<b>不做任何个人身份推测。</b></p>
+
+<h3>可能性 A · 到访者是<b>市级或以上</b>领导，区级陪同　<span class="conf c-mid">中</span></h3>
+<table>
+<tr><td style="width:110px"><b>支持依据</b></td><td>① 你说「张强（区委书记）陪同」——在职区委书记<b>通常不会</b>陪同退休的区级老领导，陪同意味着来访者<b>高于区级</b>；② 现场<b>有随行专业摄影师</b>（区级以下到访一般不带专职摄影）；③ 陈晔用「大大大领导」这种叠词。</td></tr>
+<tr><td><b>反对依据</b></td><td>① 公开记录显示<b>张强 10-03 全天在雁栖湖片区</b>（火车站 / 雁栖小镇 / 雁栖湖公园 / 阿那亚雁栖小镇），通稿<b>无渤海镇、无洞台村、无井邻</b>；② 若真有副国级到访，通常会发通稿。</td></tr>
+<tr><td><b>如何验证</b></td><td>问石总 / 关总 / 陈晔要<b>姓名或职务</b>；查 10-04 至 10-08 的怀柔区融媒体内部报道。</td></tr>
+</table>
+
+<h3>可能性 B · 到访者是<b>怀柔区级</b>领导或退休区级老领导　<span class="conf c-lo">低</span></h3>
+<table>
+<tr><td style="width:110px"><b>支持依据</b></td><td>你自己说过「应该是从怀柔区政府出去的」。</td></tr>
+<tr><td><b>反对依据</b></td><td>① <b>怀柔区现任四套班子 37 人无一人姓石</b>；② <b>区委书记 8 任、区长 8 任、县人大主任 5 人、区人大主任、区政协主席的历届公开名单，同样无石姓</b>；③ 区级领导到访，在职区委书记<b>不必</b>出面陪同；④ 怀柔区「高层」的天花板就是<b>正厅级</b>，与「副国级」差 3 级以上。</td></tr>
+<tr><td><b>如何验证</b></td><td>直接问石总本人。<b>但请注意：石总的家庭背景属于她的私事，不宜作为汇报素材或反复追问。</b></td></tr>
+</table>
+
+<h3>可能性 C · 到访者是<b>投资方 / 合作方 / 设计专家</b>等非官员　<span class="conf c-mid">中</span></h3>
+<table>
+<tr><td style="width:110px"><b>支持依据</b></td><td>你在 10-01 12:58 说过一句关键的话：「是个<b>专业的设计专家</b>和<b>正国级视察</b>国家投资的文旅乡村振兴的一个项目」—— 这句话<b>有两种断句</b>：<br>① 「（来的是）专业的设计专家」＋「（这是一个）正国级视察过的、国家投资的文旅乡村振兴项目」<br>② 「专业的设计专家和正国级（领导）视察……」<br><b>若是断句 ①，则当天到访的可能是设计专家，而不是副国级领导</b>；「正国级」是用来形容这个项目的分量。</td></tr>
+<tr><td><b>反对依据</b></td><td>陈晔明确说的是「领导」，且用了叠词强调。</td></tr>
+<tr><td><b>如何验证</b></td><td>回看 10-01 12:58 那段对话的上下文（Codex 会话可查）。</td></tr>
+</table>
+
+<h3>可能性 D · <b>没有正式「视察」，是国庆假期客流中的一次顺路到访</b>　<span class="conf c-mid">中</span></h3>
+<table>
+<tr><td style="width:110px"><b>支持依据</b></td><td>① 10-03 是国庆假期第 3 天，洞台村属长城国际动漫谷商街，<b>本身就有客流</b>；② 你的现场描述是「领导看一下」「问了一下丙烯<b>就走了</b>」——停留极短；③ 「问了一下丙烯」「问了一下书法」是<b>看展式的随口询问</b>，不是调研式提问；④ 同一天还有普通游客（吴曼曼）在站内。</td></tr>
+<tr><td><b>反对依据</b></td><td>「不给照片」说明对方有明确的影像管控要求 —— 这不像普通游客。</td></tr>
+<tr><td><b>如何验证</b></td><td>回忆当天是否有<b>车队、随行人员规模、是否有警戒</b>。你可以直接问自己：当时站里有几个人、有没有穿制服的。</td></tr>
+</table>
+
+<h3>可能性 E · <b>「副国级」是当时的误判或夸大</b>　<span class="conf c-hi">中高</span></h3>
+<table>
+<tr><td style="width:110px"><b>支持依据</b></td><td>① 唯一来源是你自己；② 陈晔从未给级别；③ 你自己在 10-03 当天的记录里只写「领导」；④ <b>你自己已经主动修正过一次</b>（10-09：「不对岁数对不上，退休的没有那么高」）；⑤ 无公开报道。</td></tr>
+<tr><td><b>反对依据</b></td><td>无 —— 没有任何证据能反驳这一解释。</td></tr>
+<tr><td><b>如何验证</b></td><td>不需要验证。<b>这条本身就是最安全的处理方式</b>：不写级别。</td></tr>
+</table>
+
+<div class="box blue">
+<div class="bh">· 综合判断（可直接作为汇报口径决策依据）</div>
+<b>证据最强的部分是「有领导到访 + 你全程值守 + 你做了引导讲解」，最弱的部分是「副国级」。</b><br>
+所以：<b>写前者，不写后者。</b>这不是保守，是把可回查的事实和不可回查的传闻分开 —— 汇报的可信度取决于这个分界画得干不干净。
+</div>
+
+<h2><span class="n">05</span>意外收获：参与者回声素材（补齐 7 页 PPT 最大空白）</h2>
+<p class="h2sub">你现有 7 页 PPT 第 3 页的「参与者回声」一直空着。10-03 傍晚 18:56，一位叫「吴🌟曼曼」的微信好友发来 <b>5 张照片 + 3 段视频</b> —— 全部是<b>儿童在站内参与丝网印制、并举起自己作品合影</b>的现场。已全部解码导出。</p>
+
+<div class="imgs">
+<figure>
+  <img src="14_10-03现场与参与者回声_2026-10-09/02_参与者回声_女童持作品_全分辨率1280x1708.jpg" alt="女童持作品">
+  <figcaption><b>全分辨率 1280×1708</b>（从微信 wxgf/HEVC 原图解码）<br>女童手持自己印制的作品，作品上有栗子/栗叶红色图形与工作站标识</figcaption>
+</figure>
+<figure>
+  <img src="14_10-03现场与参与者回声_2026-10-09/03_参与者回声_儿童印制中.jpg" alt="儿童印制中">
+  <figcaption><b>儿童正在操作台刮印</b><br>操作台上可见多张已印好的作品</figcaption>
+</figure>
+<figure>
+  <img src="14_10-03现场与参与者回声_2026-10-09/04_参与者回声_四个孩子持作品.jpg" alt="四孩合影">
+  <figcaption><b>四个孩子举起各自作品在墙前合影</b><br>同场景另有 2 张（B / C）</figcaption>
+</figure>
+</div>
+
+<div class="box green">
+<div class="bh">✓ 这批素材的价值</div>
+<ul>
+<li><b>补上「参与者回声」</b>——这是 7 页 PPT 唯一完全空白的板块，也是「参与式艺术」最需要的证据：<b>作品被带走、参与者自愿合影</b>。</li>
+<li><b>时间点特殊</b>：10-03 是国庆假期，说明工作站<b>在假期照常开放且有真实参与者</b>，与「付费体验没咋有人」并不矛盾 —— 村民与儿童是免费档，这恰好印证了<b>三档定价中「村民免费」这一档在起作用</b>。</li>
+<li><b>有全分辨率原图</b>（1280×1708），可直接进 PPT，不需要再找素材。</li>
+</ul>
+</div>
+
+<div class="box green">
+<div class="bh">✓ 肖像授权：已获授权（2026-10-09 确认）</div>
+<div style="font-size:13px">拍摄方已明确同意使用。<b>→ 本组照片可直接用于中期汇报 PPT 及后续申报材料。</b><br>
+<span style="color:var(--ink3)">存档备注：授权取得时间 2026-10-09；授权范围按「汇报展示与申报材料使用」理解，如需商业用途请另行确认。</span></div>
+</div>
+
+<div class="box amber">
+<div class="bh">⚠ 仍需你确认一件事：拍摄日期</div>
+<div style="font-size:13px">对方 16:44 加你好友、18:56 发图，从时间上推断是 <b>10-03 当天</b>；但照片本身无时间戳。请回忆确认 —— 若为其他日期，图注需相应调整。</div>
+</div>
+
+<div class="box blue">
+<div class="bh">· 分辨率提醒：只有 1 张能直接进 PPT</div>
+<div style="font-size:13px">
+<b>02（女童持作品）已是全分辨率 1280×1708，可直接使用。</b><br>
+<b>03 / 04 / 05 / 06 目前只有 157×210 缩略图</b> —— 放进 PPT 会糊。微信只对「点开看过」的图片保留全分辨率缓存，所以：<br>
+<span style="color:var(--ink2)">→ 请在微信里把这几张<b>逐张点开原图</b>，我再用同一套方法解一遍，即可拿到全分辨率版本。</span>
+</div>
+</div>
+
+<h2><span class="n">06</span>全部导出文件</h2>
+<table>
+<tr><th>文件</th><th>内容</th><th style="width:110px">规格</th></tr>
+<tr><td><code>14_10-03现场与参与者回声_2026-10-09\01_领导到访现场_10-03_1611_全景.jpg</code></td><td>10-03 现场照（你 16:11 发给陈晔的那张）</td><td>2276×1024</td></tr>
+<tr><td><code>…\02_参与者回声_女童持作品_全分辨率1280x1708.jpg</code></td><td>女童手持作品</td><td>1280×1708</td></tr>
+<tr><td><code>…\03_参与者回声_儿童印制中.jpg</code></td><td>儿童操作台刮印</td><td>157×210</td></tr>
+<tr><td><code>…\04 / 05 / 06_参与者回声_四个孩子持作品 A/B/C.jpg</code></td><td>四个孩子举起作品合影（3 张同场景）</td><td>157×210</td></tr>
+</table>
+<p style="font-size:13px;color:var(--ink3)">说明：微信只对「点击查看过」的图片保留全分辨率缓存，其余仅存 157×210 缩略图。<b>若你需要 03–06 的全分辨率版本，请在微信里逐张点开原图，我再用同样方法解出。</b></p>
+
+<h2><span class="n">07</span>下一步：三条路，按性价比排序</h2>
+<table>
+<tr><th style="width:34%">动作</th><th>怎么做</th><th style="width:110px">能拿到什么</th></tr>
+<tr>
+<td><b>① 问陈晔（最省事）</b></td>
+<td>他是消息源头，且你 16:11 已经把现场照片发给了他。<br><span class="quote" style="margin-top:6px">「老师，10 月 3 日那天下午到工作站的领导，我中期汇报里想记一笔到访。您这边方便告诉我大概是哪个单位、什么职务吗？」</span></td>
+<td>单位 + 职务<br>（级别可能仍不给）</td>
+</tr>
+<tr>
+<td><b>② 问石总（最权威）</b></td>
+<td>她是项目主理人、怀柔区政协委员，接待规格她最清楚。<br><b>只问工作层面，不问家事。</b><br><span class="quote" style="margin-top:6px">「石总，10 月 3 日到工作站的那位领导，我想在中期汇报里如实记一笔到访。请问方便告知是哪位吗？或者有没有当天的接待通知可以参考？」</span></td>
+<td>姓名 + 职务<br>+ 接待记录</td>
+</tr>
+<tr>
+<td><b>③ 直接用零风险口径（最稳）</b></td>
+<td>不写级别、不写姓名、不写陪同。<br><span class="quote" style="margin-top:6px">「10 月 3 日国庆期间有领导到访工作站，我全程值守并做引导讲解。当天工作站照常开放，我完成了丝网版试印确认与设备检查。」</span></td>
+<td>被追问也不失分</td>
+</tr>
+</table>
+
+<div class="box red">
+<div class="bh">✗ 不要做的两件事</div>
+<ul>
+<li><b>不要顺着「家世 → 身份」反推</b>。怀柔区历届四套班子名单已逐条比对，无石姓；即便有，级别上限也只有正厅级。推不出、证不了、也不合适。</li>
+<li><b>不要在汇报里写「副国级」</b>。全库 39.2 万条里只有你自己说过两次，无第三方、无公开报道。一旦老师追问「哪位领导」，答不上来会把整场汇报的可信度一起带下去。</li>
+</ul>
+</div>
+
+<div class="foot">
+<b>证据范围</b>：微信索引库 392,198 条（2024-11-10 04:12 → 2026-10-09 22:03，实测）· 10-02～10-04 逐条全量导出 1,712 条 · Codex 本地会话（2026-07 起）· 微信 4.x 图片缓存解码（<code>C:\Users\wardc\xwechat_files\</code>）· 怀柔区政府官网 / 首都之窗 / 新华网 / 人民网 / 中国政协网 / 中国经济网 / 千龙网 / 新京报 / 名单网 /《怀柔县人大志》。<br>
+<b>原则</b>：有出处才写；无出处单列标注；不推测具体个人；名单类空白处标「待补」而非「无」。<br>
+<b>口径边界</b>：10-03 到访不写姓名、级别与陪同关系。<b>内部资料，含真人姓名与现场影像，不得外传。</b><br>
+生成：2026-10-09 ｜ 配套：<code>井邻_10-03领导到访_核实清单_2026-10-09.html</code> · <code>井邻章_中期汇报可用信息总表_2026-10-09.html</code>
+</div>
+
+</div>
+</body>
+</html>

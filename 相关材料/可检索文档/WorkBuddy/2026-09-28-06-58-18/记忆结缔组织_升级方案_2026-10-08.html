@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>记忆结缔组织 · 升级方案（2026-10-08）</title>
+<style>
+  :root{
+    --bg:#f6f7f9; --card:#ffffff; --bd:#e4e7ec; --bd2:#d0d5dd;
+    --tx:#1f2937; --tx2:#475467; --mu:#667085;
+    --blue:#1d4ed8; --blue-bg:#eef2ff;
+    --teal:#0f766e; --teal-bg:#ecfdf5;
+    --amber:#b45309; --amber-bg:#fffbeb;
+    --red:#b91c1c; --red-bg:#fef2f2;
+    --gray-bg:#f2f4f7;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; padding:36px 18px 80px;
+    background:var(--bg); color:var(--tx);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei","PingFang SC",sans-serif;
+    font-size:15px; line-height:1.72;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1000px;margin:0 auto}
+  header.top{
+    background:var(--card);border:1px solid var(--bd);border-radius:14px;
+    padding:26px 30px;margin-bottom:22px;
+  }
+  header.top h1{margin:0 0 6px;font-size:24px;letter-spacing:-.3px}
+  header.top .sub{color:var(--mu);font-size:13px}
+  header.top .base{
+    margin-top:14px;padding:12px 14px;background:var(--gray-bg);
+    border-radius:8px;font-size:12.5px;color:var(--tx2);line-height:1.9;
+  }
+  header.top .base b{color:var(--tx)}
+  section{
+    background:var(--card);border:1px solid var(--bd);border-radius:14px;
+    padding:24px 30px;margin-bottom:18px;
+  }
+  h2{
+    font-size:19px;margin:0 0 4px;padding-bottom:10px;
+    border-bottom:2px solid var(--bd);letter-spacing:-.2px;
+  }
+  h2 .no{color:var(--blue);font-weight:800;margin-right:8px}
+  h3{font-size:15.5px;margin:22px 0 8px;color:var(--tx)}
+  h3:first-of-type{margin-top:14px}
+  p{margin:9px 0}
+  ul,ol{margin:9px 0;padding-left:22px}
+  li{margin:5px 0}
+  code{
+    background:var(--gray-bg);padding:1.5px 6px;border-radius:5px;
+    font-family:"Cascadia Code",Consolas,"Courier New",monospace;
+    font-size:12.5px;color:#b91c1c;
+  }
+  pre{
+    background:#0f172a;color:#e2e8f0;padding:16px 18px;border-radius:10px;
+    overflow-x:auto;font-size:12.5px;line-height:1.65;
+    font-family:"Cascadia Code",Consolas,"Courier New",monospace;
+  }
+  pre .k{color:#7dd3fc}
+  pre .c{color:#94a3b8}
+  pre .s{color:#86efac}
+  table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13.5px}
+  th,td{border:1px solid var(--bd);padding:9px 11px;text-align:left;vertical-align:top}
+  th{background:var(--gray-bg);font-weight:700;color:var(--tx);white-space:nowrap}
+  tbody tr:nth-child(even){background:#fafbfc}
+  .tag{
+    display:inline-block;padding:1px 8px;border-radius:20px;
+    font-size:11.5px;font-weight:700;white-space:nowrap;
+  }
+  .t-ok{background:var(--teal-bg);color:var(--teal)}
+  .t-wait{background:var(--amber-bg);color:var(--amber)}
+  .t-no{background:var(--red-bg);color:var(--red)}
+  .t-info{background:var(--blue-bg);color:var(--blue)}
+  .box{
+    border-left:4px solid var(--blue);background:var(--blue-bg);
+    padding:13px 16px;border-radius:0 8px 8px 0;margin:14px 0;
+  }
+  .box.ok{border-color:var(--teal);background:var(--teal-bg)}
+  .box.warn{border-color:var(--amber);background:var(--amber-bg)}
+  .box.danger{border-color:var(--red);background:var(--red-bg)}
+  .box .t{font-weight:800;margin-bottom:4px;font-size:13.5px}
+  .lead{font-size:15.5px;font-weight:600;color:var(--tx)}
+  .kv{display:grid;grid-template-columns:130px 1fr;gap:6px 14px;font-size:13.5px;margin:10px 0}
+  .kv .k{color:var(--mu);font-weight:600}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .card-s{border:1px solid var(--bd);border-radius:10px;padding:14px 16px;background:#fcfcfd}
+  .card-s .h{font-weight:800;font-size:13.5px;margin-bottom:6px;color:var(--blue)}
+  .muted{color:var(--mu);font-size:12.5px}
+  footer{text-align:center;color:var(--mu);font-size:12.5px;padding:26px 0 0}
+  svg{max-width:100%;height:auto;display:block;margin:14px auto}
+  .mono{font-family:"Cascadia Code",Consolas,monospace;font-size:12.5px}
+  @media(max-width:720px){
+    .grid2{grid-template-columns:1fr}
+    .kv{grid-template-columns:1fr}
+    body{padding:18px 10px 60px}
+    section,header.top{padding:18px 16px}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <h1>记忆结缔组织 · 升级方案</h1>
+  <div class="sub">选型核实 + 架构重构 · 2026-10-08 · 仅方案，未安装</div>
+  <div class="base">
+    <b>本机基线（今日实测）</b>　
+    索引库 <b>392,803 条</b> / 1,805 会话 ·
+    <code>analysis.sqlite</code>：events <b>2,864</b> · evidence <b>5,463</b> · conclusions <b>64</b> · revisions <b>4</b> ·
+    <code>aliases 0</code> · <code>persons 0</code>（空表）　
+    <br><code>batch.sqlite</code>：materials <b>64,109</b> · experiences <b>2,207</b> · weeks 81 · photos <b>68,158</b>　
+    Obsidian <b>607</b> 篇（人物档案 458） · 已装 MCP 4 个（dbhub-wechat / context7 / memory / filesystem） · 16GB 内存 · 本地 Ollama
+  </div>
+</header>
+
+<!-- ===================== 0 ===================== -->
+<section>
+  <h2><span class="no">0</span>结论先行</h2>
+
+  <p class="lead">你的底座不用换。缺的不是工具，是「结缔组织」——让同一件事不被重复算成多份证据、让旧结论会失效、让你的人工纠正机器可读。</p>
+
+  <p><b>首版只装 1 个新东西</b>（QMD 中文检索层），其余全部在现有 <code>analysis.sqlite</code> 上加表实现。</p>
+
+  <h3>五条核心判断</h3>
+  <ol>
+    <li><b>工具不缺，缺连接。</b>你已经有了对的那套骨架——<code>conclusions</code> 表里<b>本来就有</b> <code>counter_examples</code> / <code>verdict</code> / <code>self_confirmed</code> / <code>valid_from</code> / <code>valid_to</code> 五个字段。问题不在表设计，在于<b>没人往里写</b>（64 条结论、4 条修订，而 <code>persons</code>/<code>aliases</code> 是 0 行）。</li>
+    <li><b>只装一个。</b>Graphiti / Cognee / LightRAG / HippoRAG / Second Me 全部<b>缓装</b>——它们解决的是"文档问答"或"对话缓存"，不是"39 万条人生记录 + 人工裁定"。</li>
+    <li><b>图谱先用 SQLite 表达。</b>双时态（事实带有效期）你表里已有两列，补一个"失效触发"逻辑就够，不必上 Neo4j。</li>
+    <li><b>「更激进」= 溯因引擎，零安装。</b>把「一个结论」改成「3 个竞争假设 + 各自反证 + 判别观测」。这是纯流程改造。</li>
+    <li><b>统一入口 = 阅读包 + MCP。</b>所有 harness 从同一处取状态、交结论；人工纠正单独存，不被下一轮生成覆盖。</li>
+  </ol>
+
+  <div class="box danger">
+    <div class="t">一句话纠正你粘贴那版方案</div>
+    它把重点放在"装什么工具"上。但按实测，你<b>最大的技术缺口是 <code>persons</code> / <code>aliases</code> 两张空表</b>——你的"人"现在只活在 Obsidian 笔记和 CSV 里，数据库里根本没有。这就是"信息配合不起来"的根因。<b>不修这个，装什么检索层都白搭。</b>
+  </div>
+
+  <h3>总表：装 / 缓 / 不装</h3>
+  <table>
+    <thead><tr><th>项目</th><th>裁定</th><th>理由</th></tr></thead>
+    <tbody>
+      <tr><td><b>QMD 中文版</b></td><td><span class="tag t-ok">首版装</span></td><td>中文检索是你最大缺口；MCP 现成；本地跑；有中文增强分支</td></tr>
+      <tr><td>Basic Memory</td><td><span class="tag t-wait">二选一</span></td><td>与 QMD 功能重叠。若你更想「记忆写成 Markdown 直接看」，选它而非 QMD</td></tr>
+      <tr><td>Graphiti</td><td><span class="tag t-wait">缓</span></td><td>要 Neo4j/FalkorDB；双时态先用 SQLite 两列替代</td></tr>
+      <tr><td>Cognee</td><td><span class="tag t-wait">缓</span></td><td>官方自述内置抽取器属演示级，中文文档站有，但生产化另有条件</td></tr>
+      <tr><td>LightRAG</td><td><span class="tag t-wait">缓</span></td><td>强在跨文档问答，不对口"人生分析"</td></tr>
+      <tr><td>HippoRAG</td><td><span class="tag t-wait">缓</span></td><td>只借鉴其「联想检索」思路，不整套部署</td></tr>
+      <tr><td>LangGraph</td><td><span class="tag t-wait">缓</span></td><td>流程复杂到需要暂停/恢复/回溯时再上</td></tr>
+      <tr><td>mem0 / Letta / Zep</td><td><span class="tag t-no">不装</span></td><td>三者都是"对话记忆层"。你的记忆是 39 万条原文 + 人工裁定，不是会话缓存</td></tr>
+      <tr><td>Second Me（心识宇宙）</td><td><span class="tag t-wait">观察</span></td><td>与「像一个人来分析」最贴（三层记忆 + 自我对齐），但要本地训练，16GB 内存吃紧</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ===================== 1 ===================== -->
+<section>
+  <h2><span class="no">1</span>联网核实：各项目真实状态</h2>
+  <p class="muted">下面每一项我都核过官方仓库/文档。标注的是「本机可行性」，不是「理论能力」。</p>
+
+  <table>
+    <thead><tr><th>项目</th><th>官方来源</th><th>它真正解决什么</th><th>Win / 16G / 本地</th><th>中文</th><th>MCP</th><th>裁定</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><b>QMD</b></td>
+        <td class="mono">pypi.org/project/qmd</td>
+        <td>Markdown/文档的<b>关键词+语义+重排</b>三合一检索，CLI + MCP</td>
+        <td>✅ Python 包，本地嵌入 0.6B 可跑</td>
+        <td><b>✅ 有中文增强分支</b><br><span class="muted">qmd-chinese：中文分词 + BGE-M3</span></td>
+        <td>✅ 有</td>
+        <td><span class="tag t-ok">首版装</span></td>
+      </tr>
+      <tr>
+        <td>Basic Memory</td>
+        <td class="mono">github.com/basicmachines-co/basic-memory</td>
+        <td>把知识存成<b>纯 Markdown 知识图谱</b>，经 MCP 给任意 AI 读写；可直接指向 Obsidian 库</td>
+        <td>✅ AGPL-3.0 · Python MCP server · 本地优先</td>
+        <td>取决于嵌入模型选择</td>
+        <td>✅ 原生 MCP</td>
+        <td><span class="tag t-wait">二选一</span></td>
+      </tr>
+      <tr>
+        <td>Graphiti</td>
+        <td class="mono">github.com/getzep/graphiti</td>
+        <td><b>双时态知识图谱</b>——每条事实带有效期，记录"何时成立/何时被推翻"</td>
+        <td>⚠️ 需 Neo4j / FalkorDB</td>
+        <td>抽取靠 LLM，可换中文模型</td>
+        <td>✅（experimental）</td>
+        <td><span class="tag t-wait">缓</span></td>
+      </tr>
+      <tr>
+        <td>Cognee</td>
+        <td class="mono">docs.cognee.cn（有中文站）</td>
+        <td>把文档/对话整理成<b>跨会话可检索的图谱</b>与长期记忆</td>
+        <td>✅ 有 cognee-mcp；本地免密钥路径可用</td>
+        <td>中文文档齐</td>
+        <td>✅ cognee-mcp</td>
+        <td><span class="tag t-wait">缓</span></td>
+      </tr>
+      <tr>
+        <td>LightRAG</td>
+        <td class="mono">github.com/HKUDS/LightRAG</td>
+        <td>图 + 向量结合，<b>跨文档关联问答</b>、增量处理</td>
+        <td>✅ 可本地</td>
+        <td>可换嵌入</td>
+        <td>间接</td>
+        <td><span class="tag t-wait">缓</span></td>
+      </tr>
+      <tr>
+        <td>HippoRAG</td>
+        <td class="mono">github.com/OSU-NLP-Group/HippoRAG</td>
+        <td>模拟海马体的<b>联想检索</b>，把分散文档的线索连起来</td>
+        <td>✅ 可本地</td>
+        <td>可换嵌入</td>
+        <td>—</td>
+        <td><span class="tag t-wait">缓</span></td>
+      </tr>
+      <tr>
+        <td>LangGraph</td>
+        <td class="mono">langchain-ai/langgraph</td>
+        <td>把分析编排成<b>可暂停/恢复/检查/回溯</b>的步骤图</td>
+        <td>✅ 纯 Python</td>
+        <td>与语言无关</td>
+        <td>—</td>
+        <td><span class="tag t-wait">缓</span></td>
+      </tr>
+      <tr>
+        <td>Second Me</td>
+        <td class="mono">心识宇宙 Mindverse</td>
+        <td><b>开源 AI 身份系统</b>：三层记忆建模 + 自我对齐，构建只与你一人对齐的数字分身</td>
+        <td>⚠️ 需本地训练，16GB 内存紧张</td>
+        <td>原生中文项目</td>
+        <td>—</td>
+        <td><span class="tag t-wait">观察</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="box ok">
+    <div class="t">★ 本次核实最大的一个增量</div>
+    QMD 有社区中文增强分支（<code>G0-0000/qmd-chinese</code>）：<b>重写中文分词与分块 + 底层换成 BGE-M3</b>。原版 QMD 官方明确提示"默认嵌入模型中文覆盖有限"，这个分支正好补上。<b>你要装的是中文版，不是原版。</b>
+  </div>
+</section>
+
+<!-- ===================== 2 ===================== -->
+<section>
+  <h2><span class="no">2</span>开源方案数据库（去哪持续找新的）</h2>
+  <p>不用每次自己翻 GitHub。下面这些是<b>持续维护的清单</b>，当"雷达"用。</p>
+  <table>
+    <thead><tr><th>库</th><th>内容</th><th>用法</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">IAAR-Shanghai/<br>Awesome-AI-Memory</td><td>LLM 长期记忆的学术向全景（论文 + 项目）</td><td>看方向，看有没有新范式</td></tr>
+      <tr><td class="mono">TeleAI-UAGI/<br>Awesome-Agent-Memory</td><td>Agent 记忆工程清单，含 MCP 类项目（如 Memorix）</td><td>找"能直接接进来"的</td></tr>
+      <tr><td class="mono">topoteretes/<br>awesome-ai-memory</td><td>cognee 团队维护，工程视角</td><td>看落地案例</td></tr>
+      <tr><td class="mono">awesome-quantified-self</td><td>个人数据可视化与分析工具</td><td>看"人"这一侧的工具</td></tr>
+      <tr><td>论文侧</td><td>arXiv 2604.08016《Wiring the "Why"》溯因推理综述 · CoALA · ACE(2025)</td><td>给「更激进」找理论依据</td></tr>
+    </tbody>
+  </table>
+  <div class="box">
+    <div class="t">筛选闸门（只收三条都满足的）</div>
+    <b>① 有 MCP　② 能本地跑　③ 中文可用。</b>三条缺一，直接跳过。每季度扫一次，不要天天看。
+  </div>
+</section>
+
+<!-- ===================== 3 ===================== -->
+<section>
+  <h2><span class="no">3</span>参考模式：不装工具也能用的 7 条</h2>
+  <p>工具会过时，<b>模式不会</b>。下面每一条都能在你现有 SQLite 上直接实现。</p>
+  <table>
+    <thead><tr><th>模式</th><th>出处</th><th>在你系统里怎么落</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><b>双时态</b><br><span class="muted">事实带有效期</span></td>
+        <td>Graphiti</td>
+        <td><code>conclusions</code> <b>已有</b> <code>valid_from</code>/<code>valid_to</code> → 只需补「失效触发」：新事件进来时，扫哪些结论的前提被推翻</td>
+      </tr>
+      <tr>
+        <td><b>来源唯一</b><br><span class="muted">同一事实只算一次</span></td>
+        <td>数据溯源</td>
+        <td><code>evidence</code> 加 <code>source_root</code> + <code>content_hash</code> → 一段原文被 3 个报告引用，仍然只算 <b>1 个独立来源</b></td>
+      </tr>
+      <tr>
+        <td><b>假设竞争</b><br><span class="muted">不提前合并</span></td>
+        <td>溯因推理</td>
+        <td><code>conclusions</code> 加 <code>kind = hypothesis | ruling</code>；hypothesis 允许并存，你确认后才升 ruling</td>
+      </tr>
+      <tr>
+        <td><b>从反馈修正</b></td>
+        <td>ACE（2025）</td>
+        <td><code>revisions</code> 表已有 → 扩展成「结果回填 → 触发重审」</td>
+      </tr>
+      <tr>
+        <td><b>记忆分层</b></td>
+        <td>CoALA</td>
+        <td>你已有情景（07）/语义（01,04）/工作（会话）；<b>缺「程序记忆」</b>——"怎么查、怎么验"的套路 → 补 <code>procedures</code> 表</td>
+      </tr>
+      <tr>
+        <td><b>系统架构分工</b></td>
+        <td>VSM（Stafford Beer）</td>
+        <td>映射到 harness 分工（见 §6）——核心是「当前能力」与「未来机会」持续对话</td>
+      </tr>
+      <tr>
+        <td><b>双环学习</b></td>
+        <td>Argyris / Schön</td>
+        <td>第一环调计划（这周没做完怎么改），第二环调「为什么做这件事」→ <b>每月复盘跑一次</b></td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ===================== 4 ===================== -->
+<section>
+  <h2><span class="no">4</span>结缔组织：analysis.sqlite v2</h2>
+
+  <h3>4.1 现状诊断（实测，非推测）</h3>
+  <table>
+    <thead><tr><th>表</th><th>行数</th><th>诊断</th></tr></thead>
+    <tbody>
+      <tr><td class="mono">events</td><td>2,864</td><td>✅ 健康</td></tr>
+      <tr><td class="mono">evidence</td><td>5,463</td><td>🟡 有 <code>confidence</code>，但<b>无来源去重字段</b></td></tr>
+      <tr><td class="mono">conclusions</td><td>64</td><td>🟡 字段设计<b>已经对了</b>（有 <code>counter_examples</code>/<code>verdict</code>/<code>valid_from</code>），但只有 64 条，且没区分"假设/裁定"</td></tr>
+      <tr><td class="mono">revisions</td><td>4</td><td>🟡 机制在，几乎没在用</td></tr>
+      <tr><td class="mono">persons</td><td><b>0</b></td><td>🔴 <b>空表</b>——你的"人"不在数据库里</td></tr>
+      <tr><td class="mono">aliases</td><td><b>0</b></td><td>🔴 <b>空表</b>——别名/备注名映射没建</td></tr>
+    </tbody>
+  </table>
+  <p class="lead">结论：<b>表结构基本是对的，缺的是"往里写"和两张空表。</b>不需要推倒重来。</p>
+
+  <h3>4.2 要补的 4 张表</h3>
+<pre><span class="c">-- ① 来源登记：一切去重的根</span>
+<span class="k">create table if not exists</span> sources(
+  source_id    text <span class="k">primary key</span>,
+  kind         text,   <span class="c">-- wechat|obsidian|file|web|photo|audio</span>
+  path         text,   <span class="c">-- 文件/会话定位</span>
+  content_hash text,   <span class="c">-- 正文哈希 → 去重</span>
+  first_seen   text,
+  last_ok      text,   <span class="c">-- ★ 最后成功读取时间（必须对外显示）</span>
+  privacy      text    <span class="c">-- local_only | masked_ok</span>
+);
+
+<span class="c">-- ② 假设：与结论分离，允许多条并存</span>
+<span class="k">create table if not exists</span> hypotheses(
+  hyp_id             text <span class="k">primary key</span>,
+  statement          text,   <span class="c">-- 假设本身</span>
+  about_event        text,   <span class="c">-- 针对哪件事</span>
+  supports           text,   <span class="c">-- 支持证据</span>
+  counters           text,   <span class="c">-- ★ 反证（必填）</span>
+  discriminating_obs text,   <span class="c">-- ★ 判别观测：看到什么能区分真假</span>
+  status             text,   <span class="c">-- open|supported|refuted|merged</span>
+  created_at text, updated_at text
+);
+
+<span class="c">-- ③ 决策卡</span>
+<span class="k">create table if not exists</span> decisions(
+  dec_id     text <span class="k">primary key</span>,
+  question   text,   <span class="c">-- 当时问的是什么</span>
+  goal       text,   <span class="c">-- 服务哪个目标</span>
+  options    text,   <span class="c">-- 备选</span>
+  chosen     text,   <span class="c">-- 实际选了哪个</span>
+  why        text,
+  expected   text,   <span class="c">-- 预期结果</span>
+  outcome    text,   <span class="c">-- ★ 实际结果（回填）</span>
+  reviewed_at text
+);
+
+<span class="c">-- ④ 程序记忆：怎么查、怎么验</span>
+<span class="k">create table if not exists</span> procedures(
+  proc_id  text <span class="k">primary key</span>,
+  trigger  text,   <span class="c">-- 什么情况下触发</span>
+  steps    text,
+  source   text,   <span class="c">-- 人工|复盘|论文</span>
+  applied  <span class="k">integer</span>, success <span class="k">integer</span>
+);</pre>
+
+  <div class="box warn">
+    <div class="t">最高优先级：回填 persons / aliases</div>
+    这是<b>治本</b>的一步，且零安装。你的 Obsidian 有 458 份人物档案、引擎有 <code>距离地图.csv</code>（98 人）——把这些灌进 <code>persons</code>/<code>aliases</code>，数据库里才第一次"有人"。之后任何检索都能按人聚合，而不是按关键词瞎撞。
+  </div>
+
+  <h3>4.3 目标结构</h3>
+  <svg viewBox="0 0 940 300" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI,Microsoft YaHei,sans-serif">
+    <rect x="0" y="0" width="940" height="300" fill="#ffffff"/>
+    <!-- 原始层 -->
+    <rect x="20" y="30" width="200" height="240" rx="10" fill="#f2f4f7" stroke="#d0d5dd"/>
+    <text x="120" y="56" font-size="13" font-weight="700" fill="#475467" text-anchor="middle">原始来源层</text>
+    <text x="120" y="80" font-size="11.5" fill="#667085" text-anchor="middle">index.sqlite 39万条</text>
+    <text x="120" y="100" font-size="11.5" fill="#667085" text-anchor="middle">Obsidian 607 篇</text>
+    <text x="120" y="120" font-size="11.5" fill="#667085" text-anchor="middle">photos 68,158</text>
+    <text x="120" y="140" font-size="11.5" fill="#667085" text-anchor="middle">batch 64,109 材料</text>
+    <text x="120" y="170" font-size="11.5" fill="#1d4ed8" text-anchor="middle" font-weight="700">＋ sources 表</text>
+    <text x="120" y="190" font-size="10.5" fill="#667085" text-anchor="middle">登记·哈希·有效期·隐私</text>
+
+    <!-- 箭头 -->
+    <path d="M225 150 L285 150" stroke="#98a2b3" stroke-width="2" marker-end="url(#a1)"/>
+
+    <!-- 结缔组织层 -->
+    <rect x="290" y="20" width="330" height="260" rx="10" fill="#eef2ff" stroke="#1d4ed8"/>
+    <text x="455" y="46" font-size="13" font-weight="700" fill="#1d4ed8" text-anchor="middle">结缔组织层（新增）</text>
+    <rect x="310" y="60" width="290" height="34" rx="7" fill="#ffffff" stroke="#c7d2fe"/>
+    <text x="455" y="82" font-size="11.5" fill="#1f2937" text-anchor="middle">events 2,864 ＋ evidence 5,463（去重）</text>
+    <rect x="310" y="102" width="290" height="34" rx="7" fill="#ffffff" stroke="#c7d2fe"/>
+    <text x="455" y="124" font-size="11.5" fill="#1f2937" text-anchor="middle">persons ＋ aliases（★回填 458 份档案）</text>
+    <rect x="310" y="144" width="290" height="34" rx="7" fill="#ffffff" stroke="#c7d2fe"/>
+    <text x="455" y="166" font-size="11.5" fill="#1f2937" text-anchor="middle">hypotheses（假设并存·带反证）</text>
+    <rect x="310" y="186" width="290" height="34" rx="7" fill="#ffffff" stroke="#c7d2fe"/>
+    <text x="455" y="208" font-size="11.5" fill="#1f2937" text-anchor="middle">conclusions（双时态·可失效）</text>
+    <rect x="310" y="228" width="290" height="34" rx="7" fill="#ffffff" stroke="#c7d2fe"/>
+    <text x="455" y="250" font-size="11.5" fill="#1f2937" text-anchor="middle">decisions ＋ procedures（决策·程序）</text>
+
+    <!-- 箭头 -->
+    <path d="M625 150 L685 150" stroke="#98a2b3" stroke-width="2" marker-end="url(#a1)"/>
+
+    <!-- 消费层 -->
+    <rect x="690" y="30" width="230" height="240" rx="10" fill="#ecfdf5" stroke="#0f766e"/>
+    <text x="805" y="56" font-size="13" font-weight="700" fill="#0f766e" text-anchor="middle">统一入口</text>
+    <text x="805" y="84" font-size="11.5" fill="#475467" text-anchor="middle">QMD 中文检索</text>
+    <text x="805" y="106" font-size="11.5" fill="#475467" text-anchor="middle">MCP（4 个已装 + 新增）</text>
+    <text x="805" y="128" font-size="11.5" fill="#475467" text-anchor="middle">阅读包（MD/JSON）</text>
+    <text x="805" y="158" font-size="11" fill="#0f766e" text-anchor="middle" font-weight="700">↓ 各 harness</text>
+    <text x="805" y="180" font-size="11.5" fill="#475467" text-anchor="middle">本会话 / Codex / Claude</text>
+    <text x="805" y="202" font-size="11.5" fill="#475467" text-anchor="middle">本地 Ollama</text>
+    <text x="805" y="232" font-size="11" fill="#b45309" text-anchor="middle" font-weight="700">↺ 结论回写 → 重审</text>
+
+    <defs><marker id="a1" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M0 0 L9 4.5 L0 9 z" fill="#98a2b3"/></marker></defs>
+  </svg>
+</section>
+
+<!-- ===================== 5 ===================== -->
+<section>
+  <h2><span class="no">5</span>让分析「更激进」：溯因引擎</h2>
+  <p class="lead">「激进」不是把假设当事实说死，而是<b>多提假设、强制找反证、强制跨域</b>。这是零安装的流程改造。</p>
+
+  <div class="box danger">
+    <div class="t">先立红线：激进 ≠ 违规</div>
+    你引擎里有 12 条红线（不得推断未裁定项、不得污名化同门、不得把「父母冷战」当数据事实…）。<b>「更激进」只作用在"提假设"这一步，不作用在"下裁定"这一步。</b>AI 产出一律先登记为 <code>hypothesis</code>，你确认后才升 <code>ruling</code>。
+  </div>
+
+  <h3>5.1 六步流程</h3>
+  <svg viewBox="0 0 940 210" xmlns="http://www.w3.org/2000/svg" font-family="Segoe UI,Microsoft YaHei,sans-serif">
+    <rect x="0" y="0" width="940" height="210" fill="#ffffff"/>
+    <g>
+      <rect x="14" y="60" width="130" height="72" rx="9" fill="#eef2ff" stroke="#1d4ed8"/>
+      <text x="79" y="86" font-size="12" font-weight="700" fill="#1d4ed8" text-anchor="middle">① 定目标</text>
+      <text x="79" y="106" font-size="10.5" fill="#475467" text-anchor="middle">不是定关键词</text>
+      <text x="79" y="122" font-size="10.5" fill="#475467" text-anchor="middle">服务哪个目标？</text>
+
+      <rect x="166" y="60" width="130" height="72" rx="9" fill="#eef2ff" stroke="#1d4ed8"/>
+      <text x="231" y="86" font-size="12" font-weight="700" fill="#1d4ed8" text-anchor="middle">② 我执检索</text>
+      <text x="231" y="106" font-size="10.5" fill="#475467" text-anchor="middle">按四根轴捞</text>
+      <text x="231" y="122" font-size="10.5" fill="#475467" text-anchor="middle">不按问题里的词</text>
+
+      <rect x="318" y="60" width="130" height="72" rx="9" fill="#eef2ff" stroke="#1d4ed8"/>
+      <text x="383" y="86" font-size="12" font-weight="700" fill="#1d4ed8" text-anchor="middle">③ ≥3 假设</text>
+      <text x="383" y="106" font-size="10.5" fill="#475467" text-anchor="middle">互斥·并存</text>
+      <text x="383" y="122" font-size="10.5" fill="#475467" text-anchor="middle">不提前合并</text>
+
+      <rect x="470" y="60" width="130" height="72" rx="9" fill="#fffbeb" stroke="#b45309"/>
+      <text x="535" y="86" font-size="12" font-weight="700" fill="#b45309" text-anchor="middle">④ 强制反证</text>
+      <text x="535" y="106" font-size="10.5" fill="#475467" text-anchor="middle">每条1反证</text>
+      <text x="535" y="122" font-size="10.5" fill="#475467" text-anchor="middle">+1 判别观测</text>
+
+      <rect x="622" y="60" width="130" height="72" rx="9" fill="#ecfdf5" stroke="#0f766e"/>
+      <text x="687" y="86" font-size="12" font-weight="700" fill="#0f766e" text-anchor="middle">⑤ 三档方案</text>
+      <text x="687" y="106" font-size="10.5" fill="#475467" text-anchor="middle">稳妥/进取/探索</text>
+      <text x="687" y="122" font-size="10.5" fill="#475467" text-anchor="middle">比可逆性</text>
+
+      <rect x="774" y="60" width="152" height="72" rx="9" fill="#ecfdf5" stroke="#0f766e"/>
+      <text x="850" y="86" font-size="12" font-weight="700" fill="#0f766e" text-anchor="middle">⑥ 最小信息行动</text>
+      <text x="850" y="106" font-size="10.5" fill="#475467" text-anchor="middle">能改变判断的</text>
+      <text x="850" y="122" font-size="10.5" fill="#475467" text-anchor="middle">低成本动作</text>
+    </g>
+    <path d="M144 96 L164 96" stroke="#98a2b3" stroke-width="1.6" marker-end="url(#a2)"/>
+    <path d="M296 96 L316 96" stroke="#98a2b3" stroke-width="1.6" marker-end="url(#a2)"/>
+    <path d="M448 96 L468 96" stroke="#98a2b3" stroke-width="1.6" marker-end="url(#a2)"/>
+    <path d="M600 96 L620 96" stroke="#98a2b3" stroke-width="1.6" marker-end="url(#a2)"/>
+    <path d="M752 96 L772 96" stroke="#98a2b3" stroke-width="1.6" marker-end="url(#a2)"/>
+    <text x="470" y="176" font-size="11.5" fill="#667085" text-anchor="middle">结果回收 → 回填 decisions.outcome → 触发重审（双环学习）</text>
+    <path d="M850 140 Q850 165 470 165" stroke="#b45309" stroke-width="1.4" fill="none" stroke-dasharray="4 3"/>
+    <defs><marker id="a2" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M0 0 L8 4 L0 8 z" fill="#98a2b3"/></marker></defs>
+  </svg>
+
+  <h3>5.2 每次分析的固定输出模板</h3>
+<pre>问题：……
+服务目标：……（学业 / 现金流 / 创作 / 关系，只选一个主目标）
+
+假设 A：……    支持：……    反证：……    判别观测：……
+假设 B：……    支持：……    反证：……    判别观测：……
+假设 C：……    支持：……    反证：……    判别观测：……
+<span class="c">（≥3 条，必须互斥；至少 1 条与直觉相反）</span>
+
+跨域检查：本次覆盖了【钱 / 关系 / 学业 / 作品 / 身体 / 时间】中的 __ 个域
+<span class="c">（&lt;2 个域 = 分析未完成）</span>
+
+稳妥方案：……    进取方案：……    探索方案：……
+<span class="c">（比：收益 · 投入 · 机会成本 · 可逆性 · 对其他目标的影响）</span>
+
+最小行动：……    观察什么：……    什么情况下改判：……
+置信度：高 / 中 / 低（依据：……）
+<span class="c">（未校准前，禁止写"87% 概率"这类精确数字）</span></pre>
+
+  <h3>5.3 「激进」的三个具体化</h3>
+  <div class="grid2">
+    <div class="card-s">
+      <div class="h">① 跨域强制</div>
+      每次分析必须跨 <b>≥2 个域</b>（钱/关系/学业/作品/身体/时间）。只谈一个域的结论，一律退回重做。这是防"只看到关键词命中"。
+    </div>
+    <div class="card-s">
+      <div class="h">② 人格模拟</div>
+      写一段「<b>如果我是他，我会怎么想</b>」的第一人称推演——但<b>必须标注为假设</b>，不得当事实。这是"像一个人来分析"的落地形式。
+    </div>
+    <div class="card-s">
+      <div class="h">③ 反直觉假设</div>
+      每次至少 1 条与直觉相反的假设。例如："你持续开新项目，不是因为你贪多，而是因为<b>整理旧成果会让你面对'它们还不成形'</b>。"
+    </div>
+    <div class="card-s">
+      <div class="h">④ 反证优先</div>
+      先找反证，再写结论。每个结论必须挂 ≥1 条 <code>counter_examples</code>（你表里已有这个字段，只是没填）。
+    </div>
+  </div>
+
+  <h3>5.4 一个用它自己的料做的示例</h3>
+  <div class="box">
+    <div class="t">待验证假设</div>
+    <p><b>假设：你已有部分项目材料尚未转化成可清楚展示、复用、对外介绍的成果，所以继续开新项目的边际收益可能偏低。</b></p>
+    <div class="kv">
+      <div class="k">支持</div><div><code>batch.sqlite</code> 有 materials <b>64,109</b> / experiences <b>2,207</b>，但「成果线索_首轮.csv」条目很少 → 原料多、成品少</div>
+      <div class="k">反证</div><div>你近 3 个月重心在<b>央美美术馆实习</b>（一个新项目）——如果这条本身是主线，则不成立</div>
+      <div class="k">判别观测</div><div>数一数「能直接进作品集的<b>完整案例</b>」有几个。若 ≥3 个，本假设证伪</div>
+      <div class="k">最小行动</div><div>把一个案例整理成 1 页，看它是否<b>同时</b>能用于中期汇报 + 作品集 + 对外介绍</div>
+      <div class="k">改判条件</div><div>若该页被 3 个场景中 2 个直接采用 → 本假设成立，建议优先"整理"而非"开新"</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 6 ===================== -->
+<section>
+  <h2><span class="no">6</span>跨 harness 统一入口</h2>
+  <p>你现在装了 4 个 MCP，其中 <code>memory</code>（<code>@modelcontextprotocol/server-memory</code>）目前是个几乎没用的 JSON 知识图谱——<b>它正好可以升级成"公共状态"的出口</b>。</p>
+
+  <h3>6.1 统一入口要提供 6 件事</h3>
+  <ol>
+    <li>搜原文、定位证据</li>
+    <li>查人物 / 项目 / 事件时间线</li>
+    <li>取当前目标、约束、待办</li>
+    <li>取<b>相互矛盾</b>或<b>已过期</b>的信息</li>
+    <li>为一个问题生成<b>阅读包</b></li>
+    <li>提交新分析、人工修正、行动结果</li>
+  </ol>
+
+  <div class="box warn">
+    <div class="t">阅读包（给不支持 MCP 的 harness）</div>
+    固定头部必须写四项：<b>数据截止时间 · 来源 · 遗漏 · 未解矛盾</b>。不同 harness 生成的结论先登记为 <code>hypothesis</code>，经校验后才更新公共状态；<b>人工修正存独立字段，避免被下一轮生成覆盖</b>。
+  </div>
+
+  <h3>6.2 VSM 映射：谁干哪一段</h3>
+  <table>
+    <thead><tr><th>VSM 功能</th><th>在你系统里谁承担</th></tr></thead>
+    <tbody>
+      <tr><td>执行</td><td>各 harness 干活（写稿、查数、做图）</td></tr>
+      <tr><td>协调</td><td>统一入口查时间冲突 / 重复劳动 / 依赖</td></tr>
+      <tr><td>内部管理</td><td><code>analysis.sqlite</code> 的当前状态</td></tr>
+      <tr><td>外部探索</td><td>联网搜索 / 每季度扫 awesome 库</td></tr>
+      <tr><td><b>目标与价值</b></td><td><b>你本人</b>——AI 只能指出目标冲突，不能代你改</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ===================== 7 ===================== -->
+<section>
+  <h2><span class="no">7</span>三步落地（含验收标准）</h2>
+  <table>
+    <thead><tr><th>阶段</th><th>交付内容</th><th>完成标准</th><th>要装什么</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><b>一 · 找得准</b></td>
+        <td>sources 表 + 证据去重 + QMD 中文检索 + 阅读包模板</td>
+        <td>一个问题能准确定位原文；同一事实只算 1 个独立来源；能说出当前资料的<b>覆盖与缺口</b></td>
+        <td><span class="tag t-ok">QMD 中文版</span></td>
+      </tr>
+      <tr>
+        <td><b>二 · 更新对</b></td>
+        <td>persons/aliases 回填 + hypotheses 表 + 失效触发 + 修订机制</td>
+        <td>一处信息变化后，相关结论自动进<b>重审队列</b>；人工纠正持续生效</td>
+        <td><span class="tag t-info">零安装</span></td>
+      </tr>
+      <tr>
+        <td><b>三 · 能复盘</b></td>
+        <td>decisions 卡 + 结果回填 + procedures + 月度双环复盘</td>
+        <td>能明确指出「上次建议哪里有效、哪里判断错了、这次为什么改」</td>
+        <td><span class="tag t-info">零安装</span></td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="box ok">
+    <div class="t">首版范围（我建议）</div>
+    <b>只做阶段一 + 只装 QMD 中文版。</b>阶段二、三零安装，可以并行开工。三周内能跑通一个完整闭环，再决定要不要上图谱。
+  </div>
+
+  <h3>首轮选型验证（用真实问题，不用玩具数据）</h3>
+  <ul>
+    <li>「本周几个项目怎么排序？」</li>
+    <li>「哪些成果能进作品集？」</li>
+    <li>「哪些旧判断已经被我纠正过？」</li>
+  </ul>
+  <p class="muted">先用这三题测检索质量，中文检索与来源追溯<b>优先达标</b>，再考虑加模型和图数据库。</p>
+</section>
+
+<!-- ===================== 8 ===================== -->
+<section>
+  <h2><span class="no">8</span>红线与风险</h2>
+  <table>
+    <thead><tr><th>#</th><th>风险</th><th>对策</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td><b>隐私外发</b>：本地 MCP 把原文返回给云端模型时，内容仍然外发</td><td><code>sources.privacy</code> 分 <code>local_only</code> / <code>masked_ok</code>；深度分析走本地 Ollama</td></tr>
+      <tr><td>2</td><td><b>算力</b>：16GB 内存</td><td>不跑本地大模型全量抽取；嵌入模型 0.6B 级可跑</td></tr>
+      <tr><td>3</td><td><b>中文效果</b>不确定</td><td>先用真实问题小样本测，达标再常驻；<b>检索分数 = 相关度，不等于事实可信度</b></td></tr>
+      <tr><td>4</td><td><b>精确概率</b>误导</td><td>未校准前不写「87% 概率」这类数字</td></tr>
+      <tr><td>5</td><td><b>「装了就会理解」的幻觉</b></td><td>没有任何工具能保证"安装即理解一个人"。决定效果的是建模 / 连接 / 纠错 / 反馈</td></tr>
+      <tr><td>6</td><td><b>AI 结论污染人工锚点</b></td><td>AI 产出先登记 <code>hypothesis</code>，你确认后才升 <code>ruling</code></td></tr>
+      <tr><td>7</td><td><b>增量更新拖垮机器</b></td><td>现有全量生成脚本不能每次存笔记就跑；拆出轻量增量，避免扫描自身输出</td></tr>
+    </tbody>
+  </table>
+
+  <h3>更新节奏（三档）</h3>
+  <ul>
+    <li><b>文件变化后</b>：合并短时间连续修改 → 更新文件清单 / 版本 / 检索索引</li>
+    <li><b>电脑空闲时</b>：抽新增事件 → 发现别名与重复来源 → 检查矛盾 → 标记受影响结论</li>
+    <li><b>定期复盘时</b>：重估目标 / 未完成承诺 / 资源冲突 / 决策结果，<b>只推有实质影响的变化</b></li>
+  </ul>
+  <p class="muted">每个数据源都要显示「最后成功读取时间」。上游聊天导出没更新，系统必须承认资料停在旧日期。</p>
+</section>
+
+<!-- ===================== 9 ===================== -->
+<section>
+  <h2><span class="no">9</span>待你拍板</h2>
+  <p class="lead">首版先做哪件？</p>
+  <table>
+    <thead><tr><th>选项</th><th>做什么</th><th>代价</th><th>见效</th></tr></thead>
+    <tbody>
+      <tr><td><b>A</b></td><td>装 QMD 中文版检索层</td><td>半天，需下嵌入模型</td><td>快（检索立刻变好）</td></tr>
+      <tr><td><b>B</b></td><td>回填 persons/aliases + 建 4 张新表</td><td>零安装，1–2 天</td><td>中（治本，但不"看得见"）</td></tr>
+      <tr><td><b>C</b></td><td><b>先 B 再 A</b></td><td>约一周</td><td>慢一点，但地基对</td></tr>
+      <tr><td><b>D</b></td><td>先只跑溯因流程（§5）</td><td>零安装，今天就能用</td><td>最快，但不解决检索</td></tr>
+    </tbody>
+  </table>
+  <div class="box ok">
+    <div class="t">我的推荐：C</div>
+    先补数据库的地基（B，零安装），再上检索层（A）。理由：<b>现在检索层上了也没东西可检索</b>——<code>persons</code>/<code>aliases</code> 是空的，检索出来的人对不上号。地基一天，检索半天。
+  </div>
+</section>
+
+<footer>
+  记忆结缔组织 · 升级方案 · 2026-10-08 ｜ 数据基线：index 392,803 条 / analysis.sqlite events 2,864 ｜ 仅方案，未安装
+</footer>
+
+</div>
+</body>
+</html>

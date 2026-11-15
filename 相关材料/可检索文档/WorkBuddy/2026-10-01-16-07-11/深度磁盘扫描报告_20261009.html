@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>深度磁盘扫描 · 结合 Obsidian 全盘分析 · 2026-10-09</title>
+<style>
+  :root{
+    --bg:#F7F6F3; --card:#FFFFFF; --line:#E4E2DC; --line2:#CFCCC4;
+    --ink:#1F1E1C; --ink2:#5F5E5A; --ink3:#8C8A84;
+    --blue:#378ADD; --blue-bg:#E6F1FB;
+    --amber:#BA7517; --amber-bg:#FAEEDA;
+    --red:#A32D2D; --red-bg:#FCEBEB;
+    --green:#3B6D11; --green-bg:#EAF3DE;
+    --purple:#534AB7; --purple-bg:#EEEDFE;
+    --coral:#993C1D; --coral-bg:#FAECE7;
+    --gray:#5F5E5A; --gray-bg:#F1EFE8;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;
+    font-size:14px;line-height:1.72;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1000px;margin:0 auto;padding:48px 32px 80px}
+  header{border-bottom:1px solid var(--line2);padding-bottom:24px;margin-bottom:32px}
+  h1{font-size:26px;font-weight:600;margin:0 0 8px;letter-spacing:-.01em}
+  .sub{color:var(--ink2);font-size:13px}
+  h2{font-size:17px;font-weight:600;margin:46px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+  h2 .n{color:var(--ink3);font-weight:400;margin-right:8px}
+  h3{font-size:14px;font-weight:600;margin:24px 0 8px}
+  p{margin:0 0 12px}
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:20px 0 8px}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 18px}
+  .kpi .l{font-size:12px;color:var(--ink2);margin-bottom:4px}
+  .kpi .v{font-size:24px;font-weight:600;letter-spacing:-.02em}
+  .kpi .d{font-size:11.5px;color:var(--ink3);margin-top:2px}
+  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:13px}
+  th{text-align:left;font-weight:600;color:var(--ink2);font-size:12px;
+    padding:8px 10px;border-bottom:1px solid var(--line2);white-space:nowrap}
+  td{padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+  td.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;font-weight:500}
+  tr:last-child td{border-bottom:none}
+  tfoot td{font-weight:600;background:var(--gray-bg);border-top:1px solid var(--line2)}
+  code{background:var(--gray-bg);padding:1.5px 6px;border-radius:4px;
+    font-family:ui-monospace,"SF Mono",Consolas,monospace;font-size:12px;color:#3C3A36;
+    word-break:break-all}
+  .tag{display:inline-block;font-size:11.5px;padding:1.5px 8px;border-radius:20px;
+    font-weight:500;white-space:nowrap;line-height:1.6}
+  .t-ok{background:var(--green-bg);color:var(--green)}
+  .t-warn{background:var(--amber-bg);color:var(--amber)}
+  .t-lock{background:var(--blue-bg);color:var(--blue)}
+  .t-danger{background:var(--red-bg);color:var(--red)}
+  .t-keep{background:var(--gray-bg);color:var(--gray)}
+  .t-new{background:var(--purple-bg);color:var(--purple)}
+  .box{border-radius:10px;padding:16px 20px;margin:18px 0;border:1px solid}
+  .box.danger{background:var(--red-bg);border-color:#F0C6C6}
+  .box.warn{background:var(--amber-bg);border-color:#EDD9A8}
+  .box.info{background:var(--blue-bg);border-color:#C9E0F5}
+  .box.good{background:var(--green-bg);border-color:#CFE2AE}
+  .box .h{font-weight:600;margin-bottom:6px;font-size:13.5px}
+  .box.danger .h{color:var(--red)}
+  .box.warn .h{color:var(--amber)}
+  .box.info .h{color:var(--blue)}
+  .box.good .h{color:var(--green)}
+  .box p:last-child,.box ul:last-child{margin-bottom:0}
+  ul{margin:8px 0 12px;padding-left:22px}
+  li{margin-bottom:5px}
+  .bar{display:inline-block;height:7px;border-radius:4px;background:var(--blue);
+    vertical-align:middle;margin-right:8px;min-width:3px}
+  footer{margin-top:56px;padding-top:20px;border-top:1px solid var(--line);
+    font-size:12px;color:var(--ink3)}
+  .split{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0}
+  @media(max-width:720px){.split{grid-template-columns:1fr}}
+  .mini{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+  .mini .h{font-size:13px;font-weight:600;margin-bottom:8px}
+  .mini ul{margin:0;padding-left:18px;font-size:12.5px;color:var(--ink2)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>深度磁盘扫描 · 全盘 + Obsidian 交叉分析</h1>
+  <div class="sub">2026-10-09 · C 盘 456 GB / 已用 438 GB / 剩余 19 GB（97%）· 扫描范围：全盘顶层 → 三级目录 → 文件数</div>
+</header>
+
+<div class="kpis">
+  <div class="kpi"><div class="l">零风险可清</div><div class="v" style="color:var(--green)">≈ 36 GB</div><div class="d">缓存 / 残留 / 临时</div></div>
+  <div class="kpi"><div class="l">系统级可省</div><div class="v" style="color:var(--blue)">≈ 17 GB</div><div class="d">休眠 + 页面文件 + 回收站</div></div>
+  <div class="kpi"><div class="l">可搬移冷数据</div><div class="v" style="color:var(--amber)">≈ 43 GB</div><div class="d">需外接硬盘</div></div>
+  <div class="kpi"><div class="l">文件数灾难</div><div class="v" style="color:var(--red)">30.4 万</div><div class="d">仅 Documents\Codex</div></div>
+</div>
+
+<div class="box warn">
+  <div class="h">本次为只读扫描，未删除任何文件</div>
+  <p>所有数据经 <code>robocopy</code> 字节级统计验证，与 Obsidian 库中 <code>磁盘梳理与清理方案.md</code>（2026-10-09 22:36 更新）逐条对照，标注了「已有方案覆盖」与「本次新增发现」。</p>
+</div>
+
+<h2><span class="n">01</span>空间去向 · 顶层</h2>
+<table>
+  <tr><th>位置</th><th class="num">占用</th><th>性质</th><th>说明</th></tr>
+  <tr><td><code>C:\Users\wardc\AppData</code></td><td class="num">62.4 GB</td><td><span class="tag t-warn">多数可清</span></td><td>Local 39.3 + Roaming 22.2 + LocalLow</td></tr>
+  <tr><td><code>Desktop</code></td><td class="num">60.3 GB</td><td><span class="tag t-keep">工作资产</span></td><td>10 个编号目录体系</td></tr>
+  <tr><td><code>Documents</code></td><td class="num">53.3 GB</td><td><span class="tag t-warn">含 35.5G AI-archive</span></td><td>Codex / WeChat / WPSDrive</td></tr>
+  <tr><td><code>C:\Program Files</code></td><td class="num">72.5 GB</td><td><span class="tag t-keep">程序本体</span></td><td>Adobe 20.7 · Derivative 8.9 · BorisFX 7.6</td></tr>
+  <tr><td><code>C:\Windows</code></td><td class="num">54.2 GB</td><td><span class="tag t-keep">系统</span></td><td>—</td></tr>
+  <tr><td><code>xwechat_files</code></td><td class="num">16.8 GB</td><td><span class="tag t-keep">微信实时数据</span></td><td>msg 12.7 + db_storage 3.6</td></tr>
+  <tr><td><code>C:\Program Files (x86)</code></td><td class="num">12.2 GB</td><td><span class="tag t-keep">程序本体</span></td><td>—</td></tr>
+  <tr><td><code>C:\ProgramData</code></td><td class="num">9.3 GB</td><td><span class="tag t-warn">含插件+缓存</span></td><td>Adobe 2.0 · BorisFX 1.8 · RubberMonkey 1.1</td></tr>
+  <tr><td><code>Pictures</code></td><td class="num">4.6 GB</td><td><span class="tag t-keep">照片</span></td><td>—</td></tr>
+  <tr><td><code>C:\$Recycle.Bin</code></td><td class="num">6.5 GB</td><td><span class="tag t-warn">需确认</span></td><td>含手机原片 tar 3.97 G</td></tr>
+</table>
+
+<h2><span class="n">02</span>系统级 · 改设置即可（≈17 GB）</h2>
+<table>
+  <tr><th>项</th><th class="num">现在</th><th>动作</th><th>省</th></tr>
+  <tr><td><code>C:\hiberfil.sys</code></td><td class="num">6.3 GB</td><td><code>powercfg -h off</code>（失去休眠，睡眠不受影响）</td><td class="num">6.3 GB</td></tr>
+  <tr><td><code>C:\pagefile.sys</code></td><td class="num">13.0 GB</td><td>改为固定 8–16 GB（需先确认物理内存）</td><td class="num">≈ 5 GB</td></tr>
+  <tr><td>回收站</td><td class="num">6.5 GB</td><td>确认内容后清空</td><td class="num">6.5 GB</td></tr>
+</table>
+<div class="box info">
+  <div class="h">回收站内容（已解析 $I 元数据）</div>
+  <p><code>Desktop\手机相机原片_2026-10-06\_phone_sel.tar</code> <b>3.97 GB</b> ｜ <code>Desktop\_im_tmp\wechat-mcp\index.sqlite-wal</code> 864 MB ｜ <code>Desktop\中期汇报_2026-09\10_照片汇总</code> 557 MB ｜ <code>~/.workbuddy-ai\tmp\...\mirror_sqlite.db</code> 376 MB ｜ 其余 5100+ 个小文件（Chrome 缓存 + 照片）</p>
+  <p style="margin-bottom:0"><b>前两项是你的照片原始素材，确认另有备份再清。</b></p>
+</div>
+
+<h2><span class="n">03</span>零风险可清 · 缓存与残留（≈36 GB）</h2>
+
+<h3>3.1 纯缓存 / 可重建 —— 删了零影响</h3>
+<table>
+  <tr><th>路径</th><th class="num">大小</th><th>是什么</th><th>来源</th></tr>
+  <tr><td><code>AppData\Local\Google\Chrome\User Data\OptGuideOnDeviceModel</code></td><td class="num">4.07 GB</td><td>Chrome 内置 Gemini Nano 本地模型</td><td><span class="tag t-keep">已有方案</span></td></tr>
+  <tr><td><code>AppData\Roaming\Adobe\Common\Motion Graphics Templates</code></td><td class="num">3.84 GB</td><td>Premiere 动态图形模板（可重新下载）</td><td><span class="tag t-new">本次新增</span></td></tr>
+  <tr><td><code>AppData\Local\Google\DriveFS</code></td><td class="num">3.68 GB</td><td>Google 云端硬盘本地缓存</td><td><span class="tag t-new">本次新增</span></td></tr>
+  <tr><td><code>~/.workbuddy-ai/tmp</code></td><td class="num">1.56 GB</td><td>WinGet 687 M + 插件市场安装缓存 ~300 M</td><td><span class="tag t-new">本次新增</span></td></tr>
+  <tr><td><code>~/.cache/codex-runtimes</code></td><td class="num">1.33 GB</td><td>Codex 运行时缓存（可再生）</td><td><span class="tag t-keep">已有方案</span></td></tr>
+  <tr><td><code>~/.workbuddy-ai/logs</code></td><td class="num">1.32 GB</td><td>sandbox 853 M + 按日期日志</td><td><span class="tag t-new">本次新增</span></td></tr>
+  <tr><td><code>Desktop\_im_tmp</code></td><td class="num">1.22 GB</td><td>导入中转目录</td><td><span class="tag t-new">本次新增</span></td></tr>
+  <tr><td><code>~/.workbuddy-ai/traces</code></td><td class="num">0.49 GB</td><td>追踪日志</td><td><span class="tag t-new">本次新增</span></td></tr>
+  <tr><td><code>ProgramData\Package Cache</code></td><td class="num">0.39 GB</td><td>安装包缓存</td><td><span class="tag t-new">本次新增</span></td></tr>
+  <tr><td><code>~/.local/bin/claude.exe.old.1789153916002</code></td><td class="num">0.32 GB</td><td>Claude CLI 旧版本残留</td><td><span class="tag t-new">本次新增</span></td></tr>
+  <tr><td><code>AppData\Local\Temp</code> + <code>CrashDumps</code></td><td class="num">0.20 GB</td><td>临时文件 + 崩溃转储</td><td><span class="tag t-keep">已有方案</span></td></tr>
+  <tr><td><code>Desktop\10_个人资料与旧文件\杂</code></td><td class="num">2.27 GB</td><td>旧杂项</td><td><span class="tag t-keep">已有方案</span></td></tr>
+</table>
+
+<h3>3.2 C 盘根目录残留 —— 疑似卸载不干净</h3>
+<table>
+  <tr><th>路径</th><th class="num">大小</th><th>判断</th></tr>
+  <tr><td><code>C:\Foxmail 7.2</code></td><td class="num">489 MB</td><td>Foxmail 7.2 老版本目录（现用新版？需确认）</td></tr>
+  <tr><td><code>C:\ATS</code></td><td class="num">362 MB</td><td>不明目录，需确认</td></tr>
+  <tr><td><code>C:\v2rayN-new</code></td><td class="num">312 MB</td><td>代理工具，可能仍在用</td></tr>
+  <tr><td><code>C:\fdhbs-bj-15</code></td><td class="num">280 MB</td><td>不明目录，需确认</td></tr>
+  <tr><td><code>C:\i4Tools7</code></td><td class="num">200 MB</td><td>苹果刷机工具（爱思助手）</td></tr>
+  <tr><td><code>C:\数据蛙 Temp</code></td><td class="num">90 MB</td><td>数据恢复软件临时目录</td></tr>
+  <tr><td><code>C:\Apps</code></td><td class="num">79 MB</td><td>需确认</td></tr>
+  <tr><td><code>C:\迅雷云盘</code> <code>C:\迅雷下载</code> <code>C:\tmp</code> <code>C:\project</code></td><td class="num">0 MB</td><td>空目录，可删</td></tr>
+</table>
+
+<h3>3.3 应用数据 —— 需判断是否还在用</h3>
+<table>
+  <tr><th>路径</th><th class="num">大小</th><th>说明</th></tr>
+  <tr><td><code>AppData\Local\ChatTrace</code></td><td class="num">3.59 GB</td><td>微信取证解密数据（你的分析资产，<b>勿删</b>）</td></tr>
+  <tr><td><code>AppData\Local\JianyingPro</code></td><td class="num">2.48 GB</td><td>🔴 <b>剪映程序本体，不能删</b>（Obsidian 已更正）</td></tr>
+  <tr><td><code>AppData\Roaming\adspower_global\cwd_global</code></td><td class="num">2.00 GB</td><td>AdsPower 指纹浏览器配置</td></tr>
+  <tr><td><code>AppData\Local\Doubao</code></td><td class="num">1.96 GB</td><td>豆包客户端</td></tr>
+  <tr><td><code>AppData\Roaming\baidu\BaiduNetdisk</code></td><td class="num">1.94 GB</td><td>百度网盘缓存/配置</td></tr>
+  <tr><td><code>AppData\Roaming\TDAppDesktop</code></td><td class="num">1.61 GB</td><td>TouchDesigner 配置 + WebApp</td></tr>
+  <tr><td><code>AppData\Local\Feishu</code></td><td class="num">1.57 GB</td><td>飞书缓存</td></tr>
+  <tr><td><code>AppData\Roaming\kingsoft\wps</code></td><td class="num">1.37 GB</td><td>WPS 配置/云文档</td></tr>
+  <tr><td><code>AppData\Roaming\Tencent\xwechat + WeChat + WeMeet</code></td><td class="num">3.30 GB</td><td>腾讯系客户端数据</td></tr>
+</table>
+
+<div class="box danger">
+  <div class="h">⚠️ 千万别删（Obsidian 与本次扫描双重确认）</div>
+  <ul style="margin-bottom:0">
+    <li><code>Desktop\10_个人资料与旧文件\工作日志\</code> <b>3.87 GB</b> —— 驻村 33 天日志，中期汇报证据</li>
+    <li><code>Desktop\04_证件与健康\</code> 内 <b>蔡峰峰心脏 / 造影</b> —— 你的永久保护项</li>
+    <li><code>...\10_DeepSeek-v3分析工作区\data\scale\wechat-analysis-scale.sqlite3</code> —— 71,550 条标注主库</li>
+    <li><code>Documents\Obsidian Vault\</code> —— 949 篇笔记的知识库，建议单独备份</li>
+    <li><code>Program Files\BorisFX</code> 7.6 G · <code>Red Giant</code> 3.3 G · <code>ProgramData\RubberMonkey</code> 1.1 G —— 都是<b>视频特效插件</b>，不是缓存</li>
+  </ul>
+</div>
+
+<h2><span class="n">04</span>文件数灾难 · Codex 30 万文件</h2>
+<div class="box danger">
+  <div class="h">Documents\Codex 一个目录 = 304,471 个文件 / 8.04 GB</div>
+  <p>其中 <code>2026-08-21\</code> <b>单目录 274,661 个文件</b>（全是 <code>.ts/.js/.map</code> 编译产物）。这会持续拖慢文件搜索、杀毒扫描、备份和资源管理器。</p>
+  <p style="margin-bottom:0"><b>建议</b>：<code>2026-08-21</code> 直接删（2.05 GB / 27 万文件，纯编译垃圾）；7–8 月旧会话搬硬盘；<code>2026-09-22\digital-human-design</code> 先确认是否与「交互数字人-版印肖像」项目相关。</p>
+</div>
+<table>
+  <tr><th>日期目录</th><th class="num">大小</th><th>文件数</th><th>建议</th></tr>
+  <tr><td><code>2026-08-21</code></td><td class="num">2055 MB</td><td class="num">274,661</td><td><span class="tag t-ok">删（编译垃圾）</span></td></tr>
+  <tr><td><code>2026-09-22</code></td><td class="num">1461 MB</td><td>3,648</td><td><span class="tag t-warn">先查 digital-human-design</span></td></tr>
+  <tr><td><code>2026-10-01</code></td><td class="num">1032 MB</td><td>—</td><td><span class="tag t-keep">活跃期，留</span></td></tr>
+  <tr><td><code>2026-09-30</code></td><td class="num">834 MB</td><td>—</td><td><span class="tag t-keep">活跃期，留</span></td></tr>
+  <tr><td><code>2026-09-21</code></td><td class="num">563 MB</td><td>20,913</td><td><span class="tag t-warn">碎文件多，可搬</span></td></tr>
+  <tr><td><code>2026-07-24</code> 及更早</td><td class="num">≈ 900 MB</td><td>—</td><td><span class="tag t-warn">搬硬盘</span></td></tr>
+</table>
+
+<h2><span class="n">05</span>大件用户数据 · 需硬盘（≈43 GB）</h2>
+<div class="box warn">
+  <div class="h">检测不到 D:/E: 盘 —— 搬移方案暂不可执行</div>
+  <p style="margin-bottom:0">以下项目体量大但都是你的资产，只能「搬」不能「删」。接上外接硬盘后执行。</p>
+</div>
+<table>
+  <tr><th>路径</th><th class="num">大小</th><th>判断</th></tr>
+  <tr><td><code>Desktop\07_聊天记录分析\微信聊天记录清理\07_WeFlow原始导出_2026-07-24</code></td><td class="num">31.67 GB</td><td>🟢 2026-07-24 全量快照，已被实时 API 覆盖 → <b>纯冷数据，首选搬走</b></td></tr>
+  <tr><td><code>Documents\New project gpt\AI-archive\apps</code></td><td class="num">23.08 GB</td><td>🟡 28 个软件，含 deepseek-harness 4.4 G（活跃）</td></tr>
+  <tr><td><code>Documents\New project gpt\AI-archive\outputs</code></td><td class="num">7.83 GB</td><td>🟡 历史产物，可搬</td></tr>
+  <tr><td><code>Desktop\DSH工作区\04_会话归档</code></td><td class="num">3.21 GB</td><td>🟢 归档性质，可搬</td></tr>
+  <tr><td><code>Desktop\DSH工作区\02_项目</code></td><td class="num">4.26 GB</td><td>🟡 活跃，先留</td></tr>
+  <tr><td><code>Desktop\微信照片_最新</code></td><td class="num">2.73 GB</td><td>🟢 照片，可搬</td></tr>
+  <tr><td><code>Documents\New project gpt\AI-archive\tmp</code></td><td class="num">2.07 GB</td><td><span class="tag t-ok">临时目录，可清</span></td></tr>
+</table>
+
+<h2><span class="n">06</span>Obsidian 既有方案 vs 本次新增</h2>
+<div class="split">
+  <div class="mini">
+    <div class="h">✅ 已有方案已覆盖</div>
+    <ul>
+      <li>Chrome 本地模型 4.1 G</li>
+      <li>hiberfil.sys 6.3 G</li>
+      <li>pagefile.sys 13 G</li>
+      <li>07_WeFlow原始导出 31.8 G</li>
+      <li>Codex 会话历史</li>
+      <li>剪映不能删（已更正）</li>
+      <li>回收站 7.61 → 6.5 G</li>
+    </ul>
+  </div>
+  <div class="mini">
+    <div class="h">🆕 本次深度扫描新增</div>
+    <ul>
+      <li>Adobe 动态图形模板 3.84 G</li>
+      <li>Google DriveFS 缓存 3.68 G</li>
+      <li>WorkBuddy tmp+logs+traces 3.37 G</li>
+      <li>C 盘根目录残留 ~1.73 G</li>
+      <li>claude.exe.old 320 M</li>
+      <li>ChatTrace 3.59 G（勿删，是资产）</li>
+      <li>桌面 _im_tmp 1.22 G</li>
+    </ul>
+  </div>
+</div>
+
+<h2><span class="n">07</span>执行顺序建议</h2>
+<div class="box good">
+  <div class="h">按「零风险 → 需确认 → 需硬件」三档推进</div>
+  <ul style="margin-bottom:0">
+    <li><b>第 1 档 · 现在就能做（≈36 GB）</b>：Chrome 模型 4.07 G、Adobe MOGRT 3.84 G、DriveFS 3.68 G、WorkBuddy tmp/logs/traces 3.37 G、_im_tmp 1.22 G、codex-runtimes 1.33 G、C 盘根目录残留 1.73 G、claude.exe.old 0.32 G、Codex 2026-08-21 编译垃圾 2.05 G</li>
+    <li><b>第 2 档 · 需你点头（≈17 GB）</b>：<code>powercfg -h off</code> 6.3 G、pagefile 调小 ~5 G、回收站 6.5 G（先确认手机原片 tar）</li>
+    <li><b>第 3 档 · 需外接硬盘（≈43 GB）</b>：07_WeFlow原始导出 31.7 G、AI-archive outputs 7.8 G、DSH 会话归档 3.2 G</li>
+  </ul>
+</div>
+
+<footer>
+  扫描方法：robocopy <code>/L /S /NJH /BYTES /XJ</code> 字节级统计 + 回收站 <code>$I</code> 元数据解析 + 文件数递归计数<br>
+  交叉来源：Obsidian Vault · 01_个人信息/磁盘梳理与清理方案.md · 02_文件名录/ · 桌面体系总图.md<br>
+  扫描时间 2026-10-09 22:35–22:50 · 本报告仅为只读分析，未执行任何删除
+</footer>
+
+</div>
+</body>
+</html>

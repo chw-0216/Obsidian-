@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>索引「内容层」两个真 bug · 2026-10-09</title>
+<style>
+  :root{
+    --bg:#f6f7f9; --card:#ffffff; --ink:#16181d; --ink2:#3f4550;
+    --muted:#767d8a; --line:#e6e8ec; --line2:#f0f1f4;
+    --red:#c0392b; --red-bg:#fdf2f1; --red-line:#f3d6d3;
+    --amber:#a86a12; --amber-bg:#fdf7ec; --amber-line:#f2e2c4;
+    --green:#1d7a52; --green-bg:#f0f9f4; --green-line:#cfe9db;
+    --blue:#1f5fa8; --blue-bg:#f1f6fc; --blue-line:#d3e3f5;
+    --mono:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; padding:44px 20px 72px; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    font-size:15px; line-height:1.72; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:940px;margin:0 auto}
+
+  header{border-bottom:2px solid var(--ink);padding-bottom:20px;margin-bottom:34px}
+  .kicker{font-size:12px;letter-spacing:.14em;color:var(--muted);text-transform:uppercase;margin-bottom:10px}
+  h1{font-size:27px;line-height:1.35;margin:0 0 10px;letter-spacing:-.01em}
+  .sub{color:var(--ink2);font-size:14.5px;margin:0}
+  .meta{margin-top:14px;font-size:12.5px;color:var(--muted);font-family:var(--mono)}
+
+  h2{font-size:18px;margin:42px 0 14px;padding-left:12px;border-left:3px solid var(--ink)}
+  h3{font-size:15px;margin:24px 0 10px;color:var(--ink2)}
+  p{margin:0 0 12px}
+
+  .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:18px 0 6px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:15px 16px}
+  .card .n{font-size:22px;font-weight:700;font-family:var(--mono);letter-spacing:-.02em;line-height:1.2}
+  .card .l{font-size:12px;color:var(--muted);margin-top:5px;line-height:1.5}
+  .card.ok .n{color:var(--green)}
+  .card.bad .n{color:var(--red)}
+
+  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:13.5px;background:var(--card);
+        border:1px solid var(--line);border-radius:10px;overflow:hidden}
+  th{background:#fafbfc;text-align:left;font-weight:600;font-size:12.5px;color:var(--ink2);
+     padding:10px 13px;border-bottom:1px solid var(--line)}
+  td{padding:10px 13px;border-bottom:1px solid var(--line2);vertical-align:top}
+  tr:last-child td{border-bottom:none}
+  td.num,th.num{font-family:var(--mono);text-align:right;white-space:nowrap}
+
+  code{font-family:var(--mono);font-size:12.5px;background:#f2f3f6;padding:1.5px 5px;border-radius:4px;color:#2c3038}
+  pre{background:#1c1f26;color:#e6e8ec;padding:15px 17px;border-radius:10px;overflow-x:auto;
+      font-family:var(--mono);font-size:12.5px;line-height:1.65;margin:14px 0}
+  pre code{background:none;color:inherit;padding:0}
+
+  .callout{border-radius:10px;padding:14px 17px;margin:16px 0;border:1px solid}
+  .callout p:last-child{margin-bottom:0}
+  .callout .t{font-weight:700;font-size:13.5px;margin-bottom:7px;letter-spacing:.01em}
+  .c-red{background:var(--red-bg);border-color:var(--red-line)} .c-red .t{color:var(--red)}
+  .c-amber{background:var(--amber-bg);border-color:var(--amber-line)} .c-amber .t{color:var(--amber)}
+  .c-green{background:var(--green-bg);border-color:var(--green-line)} .c-green .t{color:var(--green)}
+  .c-blue{background:var(--blue-bg);border-color:var(--blue-line)} .c-blue .t{color:var(--blue)}
+
+  .tag{display:inline-block;font-size:11.5px;padding:2px 8px;border-radius:20px;font-weight:600;
+       font-family:var(--mono);white-space:nowrap}
+  .t-fix{background:var(--green-bg);color:var(--green);border:1px solid var(--green-line)}
+  .t-bad{background:var(--red-bg);color:var(--red);border:1px solid var(--red-line)}
+  .t-wait{background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-line)}
+
+  .quote{background:var(--card);border:1px solid var(--line);border-left:3px solid var(--ink);
+         border-radius:0 10px 10px 0;padding:14px 18px;margin:16px 0}
+  .quote .who{font-size:12.5px;color:var(--muted);margin-bottom:6px;font-family:var(--mono)}
+  .quote .txt{font-size:15.5px;font-weight:600;line-height:1.6}
+
+  ul,ol{margin:10px 0 14px;padding-left:22px}
+  li{margin-bottom:6px}
+  .muted{color:var(--muted)}
+  hr{border:none;border-top:1px solid var(--line);margin:34px 0}
+  footer{margin-top:46px;padding-top:18px;border-top:1px solid var(--line);
+         font-size:12px;color:var(--muted);font-family:var(--mono);line-height:1.8}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="kicker">微信索引链路 · 根因修复报告</div>
+  <h1>索引「内容层」两个真 bug：占位符永久化 + FTS 孤儿行</h1>
+  <p class="sub">一次「看起来完全成功」的同步，掩盖了两个已经潜伏多轮的数据缺陷 —— 并且顺手恢复了笑一 10-07 的原话。</p>
+  <div class="meta">2026-10-09 22:07 ｜ 触发：本人「更新聊天记录同步信息」</div>
+</header>
+
+<h2>一、一句话结论</h2>
+
+<div class="callout c-green">
+  <div class="t">✅ 两个 bug 已修，且是同一类问题的第 3、4 次现形</div>
+  <p><strong>「看起来正常」≠「数据完整」。</strong> 第②层 <code>--reconcile</code> 每轮都报「新增 10 条 / 并入 +0」，
+  上一轮把它判为「命中唯一键，属预期行为」放过了。本轮查实：<strong>占位符内容永久修不上</strong> +
+  <strong>FTS 累积 33 条孤儿行</strong>。</p>
+  <p>修复后 <code>--reconcile</code> <strong>历史第一次报全零</strong>。判别手段统一为
+  <strong>跨表交叉对账</strong>（源库↔索引、<code>messages</code>↔<code>messages_fts</code>），而不是单表 <code>count</code>。</p>
+</div>
+
+<div class="cards">
+  <div class="card ok"><div class="n">0</div><div class="l">修复后 <code>--reconcile</code> 新增条数</div></div>
+  <div class="card ok"><div class="n">392,198</div><div class="l">messages = messages_fts<br><span class="muted">1:1 · 孤儿 0</span></div></div>
+  <div class="card bad"><div class="n">65 → 6</div><div class="l">占位符总数 → 实际可升级</div></div>
+  <div class="card bad"><div class="n">33</div><div class="l">FTS 孤儿行（已清）</div></div>
+</div>
+
+<h2>二、三层同步实测（22:03–22:07）</h2>
+
+<table>
+  <thead><tr><th>层</th><th>命令</th><th>结果</th></tr></thead>
+  <tbody>
+    <tr><td>① 解密</td><td><code>chattrace.cli data decrypt</code> ×2</td><td>第 1 次 <code>3 decrypted, 19 fresh</code> · 第 2 次 <code>0 decrypted, 22 fresh</code></td></tr>
+    <tr><td>② 增量</td><td><code>index-incremental.py</code></td><td><code>+0 条</code>（3.3 秒）</td></tr>
+    <tr><td>② 对账</td><td><code>index-incremental.py --reconcile</code></td><td><span class="tag t-bad">新增 10 条 / 并入 +0</span> ← 异常信号</td></tr>
+    <tr><td>③ 实时</td><td><code>gen_live_json.py</code></td><td>水位已更新</td></tr>
+  </tbody>
+</table>
+
+<div class="callout c-blue">
+  <div class="t">★ mtime 判据通过（第①层「跑两次」的唯一判据）</div>
+  <p>源库 <code>message_1.db</code> <strong>21:59:22</strong> / <code>biz_message_0.db</code> <strong>21:59:21</strong>
+  &lt; 解密产物 <strong>22:01:41</strong> → <strong>skip 安全，无静默丢数据</strong>。</p>
+</div>
+
+<h2>三、Bug 1 · 占位符永久化</h2>
+
+<p><code>[type&lt;local_type&gt;]</code> 是<strong>旧解码器</strong>解不出文本时的兜底占位符。解码逻辑升级后本已能解出真实文本，
+但唯一键 <code>ux_msg(session_key, server_id)</code> 让 <code>INSERT OR IGNORE</code> <strong>永远修不上</strong>
+—— 内容永久停在占位符，且<strong>每次 reconcile 都重新报一遍</strong>。</p>
+
+<p>全库 <strong>65 条</strong> <code>[type%]</code>（占 0.017%）。逐条从源库重算后：</p>
+
+<table>
+  <thead><tr><th>分类</th><th class="num">条数</th><th>处理</th></tr></thead>
+  <tbody>
+    <tr><td>可升级（解出真实文本）</td><td class="num"><strong>6</strong></td><td><span class="tag t-fix">已升级</span></td></tr>
+    <tr><td>新版也解不出（system / 非文本）</td><td class="num">56</td><td><span class="tag t-wait">保留占位符</span></td></tr>
+    <tr><td>解出来是垃圾（含未洗净 XML 实体）</td><td class="num">3</td><td><span class="tag t-wait">保留占位符</span></td></tr>
+  </tbody>
+</table>
+
+<h3>★★★ 恢复出的最重要一条：笑一 10-07 18:55:40</h3>
+
+<div class="quote">
+  <div class="who">笑一（<code>wxid_wdnk6ue9kiyn22</code>）· 2026-10-07 18:55:40 · 长期只存为 <code>[type244813135921]</code></div>
+  <div class="txt">[引用「我也有情绪问题」] + 「跟家人就是这样的」</div>
+</div>
+
+<p>恢复后拉上下文，<strong>10-07 的真实语境第一次完整</strong>：</p>
+
+<table>
+  <thead><tr><th>时间</th><th>谁</th><th>内容</th></tr></thead>
+  <tbody>
+    <tr><td class="num">18:44</td><td>他</td><td>「今天心情好些了吗？昨天听你说又跟妈妈闹了一顿…我还有点心疼你」</td></tr>
+    <tr><td class="num">18:54</td><td>他</td><td>「别自己消化这些，难受就跟我讲」/ <strong>「我也有情绪问题」</strong></td></tr>
+    <tr><td class="num">18:54</td><td>她</td><td>★「<strong>那你也没少让我自己消化</strong>」/ ★「<strong>消失不见的每一天</strong>」</td></tr>
+    <tr><td class="num">18:55:40</td><td><strong>她</strong></td><td>★★ <strong>[引用「我也有情绪问题」] + 「跟家人就是这样的」</strong></td></tr>
+    <tr><td class="num">18:56</td><td>她</td><td>★「<strong>看不出来</strong>」/ ★「<strong>感觉在逃避什么</strong>」</td></tr>
+    <tr><td class="num">18:57</td><td>他</td><td>「更像是救火队员四处灭火」</td></tr>
+    <tr><td class="num">18:58</td><td>他</td><td>「之前那个 tripo 的比赛，其实昨天截止」</td></tr>
+  </tbody>
+</table>
+
+<div class="callout c-amber">
+  <div class="t">三条读法（都不越界）</div>
+  <ol>
+    <li>她的核心指控是「<strong>消失不见</strong>」与「<strong>让我自己消化</strong>」—— 不是抽象的「你说话做不到」，而是<strong>具体的缺席</strong>。</li>
+    <li>「<strong>感觉在逃避什么</strong>」—— 她把他自陈的「我也有情绪问题」读成<strong>逃避的借口</strong>（她 18:56「看不出来」）。</li>
+    <li>★ <strong>次日（10-08）他就出现了</strong>：16:40 约 → 17:13 见 → 凌晨 1:18 送回。
+        <strong>「消失不见」→「出现」是同一组对话的直接延续</strong> —— 这把「她要可验证的行动」从判断变成了<strong>有前后文的实证</strong>。</li>
+  </ol>
+</div>
+
+<div class="callout c-red">
+  <div class="t">⚠️ 红线</div>
+  <p>这是<strong>引用消息</strong>，<code> | </code> 是解码器的拼接符 —— 前半「跟家人就是这样的」是<strong>她的新话</strong>、
+  后半「我也有情绪问题」是<strong>被引用的他的话</strong>，<strong>不得混读成她的自述</strong>；
+  也不得补写她与母亲冲突的具体细节。</p>
+</div>
+
+<h2>四、Bug 2 · FTS 孤儿行</h2>
+
+<p><code>ins_msg</code> 用 <code>INSERT OR IGNORE</code>，而 <code>ins_fts</code> <strong>无条件</strong> <code>executemany</code>。
+当解码升级使去重 key 变化时：<code>messages</code> 被唯一键忽略、<strong><code>fts</code> 照样插入</strong> → 累积孤儿行。</p>
+
+<p>实测 <strong>33 条孤儿</strong>，呈<strong>清晰三批</strong>（<code>rowid</code> 395782-395791 / 395800-395809 / 396343-396352 各 10 条 + 早期 3 条）
+—— <strong>与历次 <code>--reconcile</code> 报的「新增 10 条」一一对应</strong>，根因铁证。</p>
+
+<h3>完整性校验（修复前）</h3>
+
+<table>
+  <thead><tr><th>检查项</th><th class="num">结果</th><th>判读</th></tr></thead>
+  <tbody>
+    <tr><td><code>fts</code> 有 / <code>messages</code> 无</td><td class="num">33</td><td><span class="tag t-bad">孤儿</span></td></tr>
+    <tr><td><code>messages</code> 有 / <code>fts</code> 无</td><td class="num">0</td><td><span class="tag t-fix">无漏检</span></td></tr>
+    <tr><td>两边都有但内容不同</td><td class="num">0</td><td><span class="tag t-fix">对齐</span></td></tr>
+    <tr><td>两边都有但会话不同</td><td class="num">0</td><td><span class="tag t-fix">对齐</span></td></tr>
+  </tbody>
+</table>
+
+<p><strong>结论：<code>rowid</code> 完全对齐，检索结果从未错配；孤儿只造成重复结果，未造成漏检。</strong></p>
+
+<h2>五、修复与验证</h2>
+
+<table>
+  <thead><tr><th class="num">#</th><th>位置</th><th>改动</th></tr></thead>
+  <tbody>
+    <tr><td class="num">1</td><td><code>tools\upgrade_placeholder_content.py</code>（新建）</td><td>65 条占位符逐条重算 → 升级 6 条（先备份）</td></tr>
+    <tr><td class="num">2</td><td><code>tools\fix_fts_orphans.py</code>（新建）</td><td>删 33 条孤儿（备份含 sha256）</td></tr>
+    <tr><td class="num">3</td><td><code>index-incremental.py</code> · 去重</td><td>新增 <code>seen_srv</code> 预载 —— 唯一键已存在的行不再进 batch</td></tr>
+    <tr><td class="num">4</td><td><code>index-incremental.py</code> · 插入</td><td>逐行 <code>execute</code> + <code>rowcount</code> 分流：<strong>真插入的才建 FTS</strong></td></tr>
+  </tbody>
+</table>
+
+<div class="callout c-red">
+  <div class="t">★ 第 4 项曾误伤，已回滚</div>
+  <p>首版条件写成 <code>content LIKE '[%]'</code>，把 <code>[图片]</code> 也算成待升级对象
+  → 2 条图片占位符被 <code>&lt;img hdlength=...&gt;</code> 覆盖。
+  <strong>条件已收紧为 <code>'[type%]'</code></strong> —— <code>[type…]</code> 是「解码失败」标志；
+  <code>[图片]/[视频]/[语音]</code> 是<strong>有意的语义占位符</strong>，不得被 XML 覆盖。</p>
+</div>
+
+<h3>验证结果</h3>
+
+<pre><code>index-incremental.py --reconcile
+  message_0.db: +0 条 · message_1.db: +0 条 · biz_message_0.db: +0 条 …
+  新增 0 条, 涉及 0 个会话        耗时 19.1 秒
+  ← 历史第一次全零（此前每轮固定报「新增 10 条」）
+
+messages 392,198 = messages_fts 392,198 ｜ 孤儿 0 ｜ 剩余 [type%] 59</code></pre>
+
+<h2>六、口径与教训</h2>
+
+<table>
+  <thead><tr><th>项</th><th>值</th></tr></thead>
+  <tbody>
+    <tr><td>索引库总条数（10-09 22:07）</td><td><strong>392,198</strong>（10:05 清理后 391,663 → +535 为 10-09 全天新消息）</td></tr>
+    <tr><td>会话总数</td><td><strong>1,805</strong></td></tr>
+    <tr><td>最新消息</td><td><strong>2026-10-09 22:03</strong></td></tr>
+    <tr><td>★ 新增校验项</td><td><code>messages</code> ↔ <code>messages_fts</code> <strong>必须 1:1</strong></td></tr>
+  </tbody>
+</table>
+
+<div class="callout c-blue">
+  <div class="t">★ 这是同一类问题的第 3、4 次现形</div>
+  <p>与「第①层解密要跑两次」「第②层水位过滤丢迟到消息」<strong>完全同源</strong>：
+  流程全绿、界面无异常，数据却在悄悄丢。</p>
+  <p><strong>统一判别手段：跨表交叉对账</strong> —— 源库↔索引、<code>messages</code>↔<code>messages_fts</code>。
+  单表 <code>count</code> 永远发现不了。</p>
+</div>
+
+<footer>
+  生成于 2026-10-09 22:07 ｜ 工具：<code>tools\upgrade_placeholder_content.py</code> · <code>tools\fix_fts_orphans.py</code> · <code>tools\probe_server_id_conflict.py</code><br>
+  备份：<code>_tmp\placeholder_backup_20261009_220640\</code> · <code>_tmp\fts_orphan_backup_20261009_220737\</code><br>
+  引擎落点：<code>05-纠偏层.md</code> 三·补·57 · <code>00-真相源·数字基准.md</code> §一 · Obsidian <code>打通页.md</code> / <code>笑一.md</code>
+</footer>
+
+</div>
+</body>
+</html>

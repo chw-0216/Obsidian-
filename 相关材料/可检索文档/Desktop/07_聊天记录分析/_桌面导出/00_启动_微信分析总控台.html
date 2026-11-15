@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>微信分析总控台 · 一键拉起全部成果</title>
+<style>
+:root{
+  --bg:#f6f7f9; --card:#ffffff; --line:#e5e7eb; --txt:#1f2328; --dim:#6b7280;
+  --blue:#2563eb; --green:#16a34a; --amber:#d97706; --red:#dc2626; --purple:#7c3aed;
+  --shadow:0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04);
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--txt);
+  font:14px/1.65 -apple-system,"Segoe UI","Microsoft YaHei",sans-serif;}
+.wrap{max-width:1180px;margin:0 auto;padding:28px 22px 60px}
+header{margin-bottom:26px}
+h1{font-size:24px;margin:0 0 6px;letter-spacing:-.3px}
+.sub{color:var(--dim);font-size:13px}
+.sub b{color:var(--txt)}
+.bar{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.bar button{
+  border:1px solid var(--line);background:#fff;color:var(--txt);
+  padding:8px 14px;border-radius:8px;font-size:13px;cursor:pointer;
+  transition:.15s;font-family:inherit;box-shadow:var(--shadow);
+}
+.bar button:hover{border-color:var(--blue);color:var(--blue);transform:translateY(-1px)}
+.bar button.go{background:var(--blue);color:#fff;border-color:var(--blue)}
+.bar button.go:hover{background:#1d4ed8;color:#fff}
+h2{font-size:15px;margin:34px 0 12px;padding-left:10px;border-left:3px solid var(--blue);
+   display:flex;align-items:center;gap:8px}
+h2 span.cnt{font-size:12px;color:var(--dim);font-weight:400}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px}
+.card{
+  background:var(--card);border:1px solid var(--line);border-radius:10px;
+  padding:14px 16px;box-shadow:var(--shadow);cursor:pointer;transition:.15s;
+  position:relative;overflow:hidden;
+}
+.card:hover{border-color:var(--blue);transform:translateY(-2px);
+  box-shadow:0 4px 12px rgba(37,99,235,.12)}
+.card .t{font-weight:600;font-size:13.5px;margin-bottom:4px;padding-right:52px}
+.card .d{color:var(--dim);font-size:12px;line-height:1.5}
+.card .tag{
+  position:absolute;top:12px;right:12px;font-size:10.5px;padding:2px 7px;
+  border-radius:20px;font-weight:600;letter-spacing:.2px;
+}
+.tag.html{background:#eff6ff;color:var(--blue)}
+.tag.dir{background:#f0fdf4;color:var(--green)}
+.tag.note{background:#faf5ff;color:var(--purple)}
+.tag.api{background:#fffbeb;color:var(--amber)}
+.card .path{font-size:11px;color:#9ca3af;margin-top:8px;
+  font-family:Consolas,monospace;word-break:break-all;
+  border-top:1px dashed var(--line);padding-top:7px}
+.empty{color:var(--dim);font-size:13px;padding:14px;background:#fff;border-radius:8px;
+  border:1px dashed var(--line)}
+/* macOS 风格提示条 */
+.hint{
+  background:#fff;border:1px solid var(--line);border-left:3px solid var(--amber);
+  border-radius:8px;padding:12px 16px;margin-top:14px;font-size:12.5px;color:var(--dim);
+}
+.hint b{color:var(--txt)}
+code{background:#f3f4f6;padding:1.5px 6px;border-radius:4px;
+  font-family:Consolas,monospace;font-size:11.5px;color:#b91c1c}
+.status{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--dim)}
+.dot{width:7px;height:7px;border-radius:50%;background:#d1d5db}
+.dot.on{background:var(--green)}
+.dot.off{background:#d1d5db}
+footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);
+  color:#9ca3af;font-size:11.5px;line-height:1.8}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>📊 微信分析总控台</h1>
+  <div class="sub">全部产出的一键入口 · 生成于 2026-09-26 · <b>548 篇笔记 / 9 份 HTML 报告 / 11 个脚本</b></div>
+  <div class="bar">
+    <button class="go" onclick="openObsidian()">🚀 打开 Obsidian 知识库</button>
+    <button onclick="openAll()">📂 全部 HTML 报告一次打开</button>
+    <button onclick="upd()">🔄 更新聊天记录（WeFlow）</button>
+    <button onclick="check_()">🔍 检查数据源状态</button>
+  </div>
+  <div class="hint">
+    <b>提示：</b>本页是本地控制台，<b>点任意卡片即可打开</b>。
+    因浏览器安全限制，无法直接调起本机程序 —— 若要一键启动服务，请配合使用桌面上的
+    <code>启动_微信总控台.cmd</code>。
+  </div>
+</header>
+
+<h2>🎯 核心入口 <span class="cnt">3 项</span></h2>
+<div class="grid" id="core"></div>
+
+<h2>🖥️ 总索引与随身手册 <span class="cnt">Obsidian 内</span></h2>
+<div class="grid" id="index"></div>
+
+<h2>📊 HTML 报告 · 双击即开 <span class="cnt">9 份</span></h2>
+<div class="grid" id="reports"></div>
+
+<h2>⚙️ 数据管道与脚本 <span class="cnt">实时更新</span></h2>
+<div class="grid" id="pipes"></div>
+
+<h2>🗃️ 原始数据与资产 <span class="cnt">勿动 · 只读</span></h2>
+<div class="grid" id="raw"></div>
+
+<footer>
+  微信分析总控台 · 所有数据 100% 本地处理，不上传第三方<br>
+  Obsidian 库：<code>C:\Users\wardc\Documents\Obsidian Vault</code> ｜
+  报告目录：<code>…\2026-09-26-19-38-06\wechat-analysis</code> ｜
+  技能：<code>~\.workbuddy-ai\skills\wechat-data-forensics</code>
+</footer>
+
+</div>
+
+<script>
+const HOME = "C:\\Users\\wardc";
+const WS   = "C:\\Users\\wardc\\WorkBuddy AI\\2026-09-26-19-38-06\\wechat-analysis";
+const VAULT= "C:\\Users\\wardc\\Documents\\Obsidian Vault";
+const LIVE = "C:\\Users\\wardc\\Desktop\\07_聊天记录分析\\weflow_live";
+
+function f(p){ return "file:///" + encodeURI(p.replace(/\\/g,"/")); }
+function openP(p){ window.open(f(p)); }
+
+function card(el, o){
+  const d = document.createElement("div");
+  d.className = "card";
+  d.innerHTML = `<div class="tag ${o.tag}">${o.tagText}</div>
+    <div class="t">${o.title}</div>
+    <div class="d">${o.desc}</div>
+    ${o.path?`<div class="path">${o.path}</div>`:""}`;
+  d.onclick = o.action;
+  el.appendChild(d);
+}
+function openObsidian(){
+  // 已注册的 vault id
+  location.href = "obsidian://open?vault=Obsidian%20Vault";
+}
+
+/* ---------- 核心入口 ---------- */
+const core = document.getElementById("core");
+card(core,{tag:"note",tagText:"知识库",title:"🚀 Obsidian 知识库主页",
+  desc:"548 篇笔记全部互相链接，断链 0。所有分析的最终归宿。",
+  path:VAULT+"\\🏠主页.md", action:openObsidian});
+card(core,{tag:"html",tagText:"总索引",title:"🎯 全部成果总索引",
+  desc:"5 个存放位置 + 9 份报告 + 11 脚本 + 必读清单，一页看全。",
+  path:VAULT+"\\03_微信聊天分析\\🎯成果总索引.md",
+  action:()=>openP(VAULT+"\\03_微信聊天分析\\🎯成果总索引.md")});
+card(core,{tag:"note",tagText:"随身",title:"📱 微信决策手册",
+  desc:"微信里只开这一份就够：人物速查 + 事件判断 + 数据更新。",
+  path:VAULT+"\\03_微信聊天分析\\📱微信决策手册.md",
+  action:()=>openP(VAULT+"\\03_微信聊天分析\\📱微信决策手册.md")});
+
+/* ---------- 索引 ---------- */
+const idx = document.getElementById("index");
+const notes = [
+  ["00_微信聊天分析总览","六大板块总览 · 核心人物速查"],
+  ["机器画像失效模式","⚠️ 必读 · 3 种失效机制（性别读反/窗口截断/工具误报）"],
+  ["噪音群清理方案","✅ 已执行 · 群聊 641→87"],
+  ["_情感线总谱","15 人情感关系全谱"],
+  ["_核心人物","imp ≥ 9 的 16 人"],
+  ["人工标注锚点","你手标的 55 人 · 最高优先级"],
+];
+notes.forEach(([n,d])=>card(idx,{tag:"note",tagText:"笔记",title:n,desc:d,
+  path:VAULT+"\\03_微信聊天分析", action:openObsidian}));
+
+/* ---------- 9 份 HTML ---------- */
+const rep = document.getElementById("reports");
+const reps = [
+  ["人物画像总览.html","472 人全量画像可视化","208 KB"],
+  ["人物画像_核心16人.html","最重要 16 人详版","75 KB"],
+  ["聊天记录深度分析报告.html","总体结论 + 6 张图表","26 KB"],
+  ["微信全量数据金矿.html","数据资产盘点","17 KB"],
+  ["全盘资产总图.html","7 条流水线 · 10 个数据源","27 KB"],
+  ["人物分析归档总表.html","归档汇总","15 KB"],
+  ["全人物资产总览.html","全人物资产","17 KB"],
+  ["噪音群清理方案.html","✅ 已执行版","19 KB"],
+  ["笑一_WPRISM延续分析V4.html","W-PRISM 框架","19 KB"],
+];
+reps.forEach(([fn,d,sz])=>card(rep,{tag:"html",tagText:sz,title:fn.replace(".html",""),
+  desc:d, path:WS+"\\"+fn, action:()=>openP(WS+"\\"+fn)}));
+
+/* ---------- 管道 ---------- */
+const pipe = document.getElementById("pipes");
+card(pipe,{tag:"api",tagText:"实时",title:"🔄 WeFlow 增量同步",
+  desc:"拉取最新聊天记录到本地。需 WeFlow 正在运行（127.0.0.1:5031）。",
+  path:"python sync_weflow.py", action:()=>alert(
+    "请在终端运行：\n\ncd \"" + WS + "\"\npython sync_weflow.py\n\n或使用桌面上的「启动_微信总控台.cmd」")});
+card(pipe,{tag:"dir",tagText:"数据",title:"📁 实时数据落点 weflow_live",
+  desc:"增量同步的聊天记录（含水位 _sync_state.json）。",
+  path:LIVE, action:()=>openP(LIVE)});
+card(pipe,{tag:"html",tagText:"脚本",title:"⚙️ 分析脚本目录",
+  desc:"build_obsidian_vault / link_reports / clean_noise_groups / purge_orphans …",
+  path:WS, action:()=>openP(WS)});
+card(pipe,{tag:"dir",tagText:"技能",title:"🧠 可复用技能 skill",
+  desc:"wechat-data-forensics：脚本 + 方法论 + WeFlow API 文档，下次自动加载。",
+  path:HOME+"\\.workbuddy-ai\\skills\\wechat-data-forensics",
+  action:()=>openP(HOME+"\\.workbuddy-ai\\skills\\wechat-data-forensics")});
+card(pipe,{tag:"api",tagText:"检索",title:"🔍 跨工具 AI 会话库",
+  desc:"20,293 条 Codex/Claude/DSH 会话 · Datasette UI @ 127.0.0.1:8001",
+  path:"…\\AI-archive\\conversations\\unified.db", action:()=>window.open("http://127.0.0.1:8001")});
+
+/* ---------- 原始数据 ---------- */
+const raw = document.getElementById("raw");
+card(raw,{tag:"dir",tagText:"原始",title:"🗃️ 微信记录清理区（已瘦身）",
+  desc:"原始导出 + DeepSeek-v3 主力库（188MB SQLite）+ 472 人画像。",
+  path:"C:\\Users\\wardc\\Desktop\\07_聊天记录分析\\微信聊天记录清理",
+  action:()=>openP("C:\\Users\\wardc\\Desktop\\07_聊天记录分析\\微信聊天记录清理")});
+card(raw,{tag:"dir",tagText:"单人",title:"💬 笑一聊天记录原始 JSON",
+  desc:"5,625 条原始记录 + 实时同步 5,759 条。",
+  path:"C:\\Users\\wardc\\Desktop\\笑一", action:()=>openP("C:\\Users\\wardc\\Desktop\\笑一")});
+card(raw,{tag:"dir",tagText:"全盘",title:"🗺️ 07_聊天记录分析 全盘",
+  desc:"所有聊天分析的磁盘根目录。",
+  path:"C:\\Users\\wardc\\Desktop\\07_聊天记录分析",
+  action:()=>openP("C:\\Users\\wardc\\Desktop\\07_聊天记录分析")});
+
+/* ---------- 按钮 ---------- */
+function openAll(){
+  reps.forEach(([fn],i)=>setTimeout(()=>openP(WS+"\\"+fn), i*260));
+}
+function upd(){
+  alert("更新聊天记录请在终端运行：\n\ncd \"" + WS + "\"\npython sync_weflow.py\n\n" +
+    "或双击桌面「启动_微信总控台.cmd」选 [3]");
+}
+async function check_(){
+  const items = [
+    ["Obsidian 库", ()=>true],
+  ];
+  let msg = "数据源状态检查\n\n";
+  // 用图片探测法只能测 http；本地文件无法探测
+  try{
+    const r = await fetch("http://127.0.0.1:5031/health",{mode:"no-cors"});
+    msg += "✅ WeFlow API (5031)  在线\n";
+  }catch(e){
+    msg += "❌ WeFlow API (5031)  离线（请启动 WeFlow）\n";
+  }
+  try{
+    await fetch("http://127.0.0.1:8001/",{mode:"no-cors"});
+    msg += "✅ 会话库 Datasette (8001)  在线\n";
+  }catch(e){
+    msg += "⚠️ 会话库 Datasette (8001)  未启动\n";
+  }
+  msg += "\n📊 9 份 HTML 报告\n📁 Obsidian 548 篇笔记\n⚙️ 11 个脚本\n\n" +
+         "（本地文件路径需用 .cmd 启动器检查）";
+  alert(msg);
+}
+</script>
+</body>
+</html>

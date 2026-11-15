@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>决策中枢 · 全事务同步 · 2026-10-07</title>
+<style>
+  :root{
+    --ink:#14181f; --ink2:#3d4757; --ink3:#6b7688; --line:#e3e7ee; --line2:#f0f3f8;
+    --bg:#f7f8fa; --card:#ffffff; --accent:#1f4e8c; --accent2:#0d6b5f;
+    --warn:#a8541b; --warnbg:#fff8ef; --danger:#a32020; --dangerbg:#fdf2f2;
+    --ok:#186a3b; --okbg:#f1faf4; --info:#2c4b8f; --infobg:#f2f6fd;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    font-size:15px; line-height:1.72; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:900px;margin:0 auto;padding:0 18px 90px}
+  header{padding:44px 0 26px;border-bottom:2px solid var(--ink)}
+  .kicker{font-size:12px;letter-spacing:.16em;color:var(--ink3);text-transform:uppercase;font-weight:600}
+  h1{margin:10px 0 6px;font-size:27px;letter-spacing:-.02em;line-height:1.3}
+  .sub{color:var(--ink2);font-size:14px}
+  h2{
+    margin:46px 0 16px;font-size:19px;letter-spacing:-.01em;
+    padding-bottom:9px;border-bottom:1px solid var(--line);display:flex;align-items:baseline;gap:10px
+  }
+  h2 .n{
+    font-size:12px;font-weight:700;color:#fff;background:var(--ink);
+    min-width:22px;height:22px;line-height:22px;text-align:center;border-radius:4px;flex:none
+  }
+  h3{margin:26px 0 10px;font-size:15.5px;color:var(--ink)}
+  p{margin:10px 0}
+  ul,ol{margin:10px 0;padding-left:22px}
+  li{margin:5px 0}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:18px 20px;margin:14px 0}
+  .card.tight{padding:14px 16px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  @media(max-width:640px){.grid2{grid-template-columns:1fr}}
+  table{width:100%;border-collapse:collapse;margin:12px 0;font-size:13.5px}
+  th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line2);vertical-align:top}
+  th{background:#fafbfd;font-weight:600;color:var(--ink2);font-size:12.5px;letter-spacing:.02em;border-bottom:1px solid var(--line)}
+  tr:last-child td{border-bottom:none}
+  code{background:#f3f5f9;padding:1px 5px;border-radius:3px;font-size:12.5px;font-family:ui-monospace,Consolas,monospace;color:#1c3f6e}
+  .tag{display:inline-block;font-size:11.5px;font-weight:700;padding:2px 8px;border-radius:20px;letter-spacing:.02em;white-space:nowrap}
+  .t-now{background:#e8f0fb;color:var(--info)}
+  .t-do{background:#fdf0e6;color:var(--warn)}
+  .t-ok{background:#e7f6ed;color:var(--ok)}
+  .t-stop{background:#fbecec;color:var(--danger)}
+  .t-new{background:#eef7f4;color:var(--accent2)}
+  .box{border-left:3px solid var(--accent);background:var(--infobg);padding:12px 16px;border-radius:0 6px 6px 0;margin:14px 0}
+  .box.warn{border-color:var(--warn);background:var(--warnbg)}
+  .box.danger{border-color:var(--danger);background:var(--dangerbg)}
+  .box.ok{border-color:var(--ok);background:var(--okbg)}
+  .box b{color:var(--ink)}
+  .kpi{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:16px 0}
+  @media(max-width:640px){.kpi{grid-template-columns:repeat(2,1fr)}}
+  .kpi div{background:var(--card);border:1px solid var(--line);border-radius:7px;padding:12px 13px}
+  .kpi .v{font-size:20px;font-weight:700;letter-spacing:-.02em;line-height:1.25}
+  .kpi .l{font-size:11.5px;color:var(--ink3);margin-top:2px}
+  .quote{border-left:3px solid var(--line);padding:2px 0 2px 14px;color:var(--ink2);font-size:13.5px;margin:10px 0}
+  .muted{color:var(--ink3);font-size:13px}
+  .hr{height:1px;background:var(--line);margin:34px 0}
+  .toc{background:var(--card);border:1px solid var(--line);border-radius:8px;padding:16px 20px;margin:22px 0}
+  .toc ol{margin:6px 0 0;padding-left:20px;columns:2;column-gap:26px}
+  @media(max-width:640px){.toc ol{columns:1}}
+  .toc a{color:var(--ink2);text-decoration:none;border-bottom:1px solid transparent}
+  .toc a:hover{border-color:var(--ink3)}
+  footer{margin-top:50px;padding-top:20px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink3)}
+  .chain{font-family:ui-monospace,Consolas,monospace;font-size:12.5px;color:var(--ink2);line-height:2}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="kicker">决策中枢 · Decision Hub</div>
+  <h1>全事务同步台</h1>
+  <div class="sub">2026-10-07（周三）10:30 · 覆盖 6 条并行线 · 数据截至 10-07 09:26</div>
+</header>
+
+<div class="toc">
+  <strong style="font-size:13px;color:var(--ink2)">目录</strong>
+  <ol>
+    <li><a href="#s0">今天先做哪三件</a></li>
+    <li><a href="#s1">极狐 · 安鹏「包维修拿钱」</a></li>
+    <li><a href="#s2">柯益盈（新入档）</a></li>
+    <li><a href="#s3">Tripo 积分（纠偏）</a></li>
+    <li><a href="#s4">何一莎的任务</a></li>
+    <li><a href="#s5">两个模式</a></li>
+    <li><a href="#s6">昨晚饭局：数据印证</a></li>
+    <li><a href="#s7">笑一线</a></li>
+    <li><a href="#s8">钱（10-04 至今）</a></li>
+    <li><a href="#s9">要你确认的三件事</a></li>
+  </ol>
+</div>
+
+<!-- ================= 0 ================= -->
+<h2 id="s0"><span class="n">0</span>今天先做哪三件</h2>
+
+<div class="kpi">
+  <div><div class="v">3</div><div class="l">极狐事故笔数（返款未到账）</div></div>
+  <div><div class="v">11 个月</div><div class="l">柯益盈消息空窗</div></div>
+  <div><div class="v">0 条</div><div class="l">你在 Tripothon 群的发言</div></div>
+  <div><div class="v">9 条</div><div class="l">与何一沙的全部往来</div></div>
+</div>
+
+<div class="card">
+<table>
+  <tr><th style="width:30px">#</th><th style="width:104px">动作</th><th>说明</th><th style="width:66px">成本</th></tr>
+  <tr>
+    <td>1</td><td><span class="tag t-do">立刻</span></td>
+    <td><b>通过 王义（安鹏服务·天津）</b> —— 他今早 09:26 主动加你。<br>
+    一句话把三笔一起问：「07-02 / 08-20 / 09-26 三次事故，分别走到哪一步、返款预计什么时候到账、还缺什么材料」</td>
+    <td>免费 · 3 分钟</td>
+  </tr>
+  <tr>
+    <td>2</td><td><span class="tag t-do">今天</span></td>
+    <td><b>把 09-26 第三次剐蹭的资料发给安鹏</b> —— 售后 09-26 16:15 原话就是「你发给安鹏吧」，之后没有你发出的记录。<br>
+    ⚠️ 注意：车主是你母亲，资料含她的身份证 / 银行卡 → 只走安鹏官方通道。</td>
+    <td>免费 · 10 分钟</td>
+  </tr>
+  <tr>
+    <td>3</td><td><span class="tag t-new">今天</span></td>
+    <td><b>去央美美术馆拍科普展素材</b>（何一沙 09-24 的原话：「这几天你有空就在美术馆看看展」「可以拍点科普展的素材」）<br>
+    这是你已录用实习的第一份任务，<b>不要拖</b>。带相机，先拍一轮。</td>
+    <td>免费 · 半天</td>
+  </tr>
+</table>
+</div>
+
+<div class="box warn">
+  <b>★ 一句话总览</b>：六条线里，<b>只有一条是「现在不做就会变糟」的</b> —— 极狐返款（卡在 09-26 那笔没提交）。
+  其余五条（柯益盈 / Tripo / 何一沙 / 两个模式 / 笑一）都是<b>「推进型」</b>，早做晚做都不致命。
+  今天上午优先第 1、2 件。
+</div>
+
+<!-- ================= 1 ================= -->
+<h2 id="s1"><span class="n">1</span>极狐 · 安鹏「包维修拿钱」</h2>
+
+<p class="muted">这不是修车问题，是一条 <b>「增值服务保险 → 安鹏公司代办理赔 → 返款打到你卡上」</b> 的收款流程。
+你 10-06 说的「安鹏包维修拿钱」是对这条链路的准确直觉。</p>
+
+<h3>1.1 完整链路（全部有会话实证）</h3>
+<div class="card tight">
+<div class="chain">
+2026-04-28　入群 T5-刘丽萍（蔡先生）极狐专属服务群186134（北汽鹏龙 10 人）<br>
+2026-05-16　付款　·　05-18 临牌<br>
+<b>2026-05-19　提车日</b>　APP订单号 AF20260425110229039　VIN LNBMC14K0SZ186134<br>
+　　　　　　车型 αT5 660（铁锂高压）元境神行版　<b>户名：刘丽萍（母亲）</b><br>
+2026-07-02　<b>① 第一次事故报案</b> → 太平洋 <code>C110106VEH26010697</code><br>
+2026-07-16　取车<br>
+2026-08-09　你主动问：「咱们这边无忧售后大概什么时候返款啊」<br>
+<b>2026-08-09 21:34　安鹏公司「享权服务专员」发来五类资料清单</b><br>
+2026-08-10　太平洋授权签字 + 理赔专员 韩璧钧 18513525277<br>
+2026-08-20　「哥／又刮了／我错了／这两天来定损」　<b>② 第二次事故</b><br>
+2026-09-08　第二次报案授权 → <code>C110106VEH26016840</code>（理赔专员 18516570826）<br>
+2026-09-16→17　第二次修车 → 取车<br>
+<b>2026-09-26 16:15　③ 第三次剐蹭</b>　售后原话：「<b>你发给安鹏吧</b>」（附 30 余张图）<br>
+2026-09-26 16:32　售后答上班/值班时间　<b>—— 对话在此中断</b><br>
+<b>2026-10-07 09:26　企业微信：「邀请人：安鹏服务（天津）的王义」</b> ← 现在这里
+</div>
+</div>
+
+<h3>1.2 三个角色，别搞混</h3>
+<table>
+  <tr><th style="width:150px">角色</th><th>做什么</th><th style="width:150px">怎么联系</th></tr>
+  <tr><td><b>金盏好修养极狐售后</b></td><td>修车本体、定损对接、告诉你「发给安鹏」</td><td>微信 <code>wxid_vk33qtlz3yyn22</code>（153 条，26-07-06 起）</td></tr>
+  <tr><td><b>安鹏公司</b>（享权服务专员）</td><td><b>替你跑理赔 + 追返款</b>。资料清单、进度、到账都找他</td><td>王义（安鹏·天津）今早加你；原专员在极狐售后会话内</td></tr>
+  <tr><td><b>太平洋保险</b></td><td>出险、定损单、赔付。报案号 + 授权签字</td><td>95500；理赔专员电话见上</td></tr>
+</table>
+
+<div class="box danger">
+  <b>⚠️ 三个硬事实，不要脑补成别的</b>
+  <ol style="margin:8px 0 0">
+    <li><b>没有任何一笔返款到账的记录</b>。你 08-09 问过一次，之后再无回执 —— 三笔都可能还挂着。</li>
+    <li><b>09-26 那笔资料大概率还没提交</b>。售后让你发给安鹏，但你的会话里没有「已发」的痕迹。</li>
+    <li><b>「极狐 小于儿」那条线已经闭环了</b>（26-01-06「那啥我那部分先退了姐」→ 当天 14:24「退完了」）。
+        <b>那是另一件事</b>（更早的购车退款），别和极狐返款混在一起算。</li>
+  </ol>
+</div>
+
+<h3>1.3 给王义的开场（可直接复制）</h3>
+<div class="quote">
+王义老师您好，我是京ACP0263 极狐 αT5 的车主家属蔡浩文（车主是我母亲刘丽萍）。<br>
+之前有位享权服务专员联系过我，我这边有三笔事故需要确认返款进度：<br>
+① 2026-07-02 报案 C110106VEH26010697<br>
+② 2026-08-20 报案 C110106VEH26016840<br>
+③ 2026-09-26 剐蹭（售后让我直接发给安鹏）<br>
+麻烦您帮我查一下三笔分别到哪一步了、还缺哪些材料、预计什么时候返款。资料我可以随时补。
+</div>
+<p class="muted">⚠️ 别在微信里直接发母亲身份证/银行卡原图给个人号 —— 先问清走哪个官方通道。</p>
+
+<!-- ================= 2 ================= -->
+<h2 id="s2"><span class="n">2</span>柯益盈 <span class="tag t-new">新入档</span></h2>
+
+<p>你 10-06 明确标注：<b>「柯益盈也是我认为可以结婚的对象」</b>，今早给她点赞。已写进引擎人工锚点层，权重最高。</p>
+
+<div class="grid2">
+  <div class="card tight">
+    <div class="muted" style="font-size:12px;font-weight:600;letter-spacing:.04em">身份</div>
+    <p style="margin:6px 0 0">高中同学 · 备注「<b>柯益盈高中三班</b>」<br>
+    <span class="muted">不在 <code>gay学现场</code> 那个四人局里 —— 同为高中同学，但从未同框。</span></p>
+  </div>
+  <div class="card tight">
+    <div class="muted" style="font-size:12px;font-weight:600;letter-spacing:.04em">数据</div>
+    <p style="margin:6px 0 0"><b>251 条</b> · 2025-08-08 → <b>2025-11-08</b><br>
+    <span class="muted">之后 <b>零消息，空窗约 11 个月</b>。</span></p>
+  </div>
+</div>
+
+<h3>2.1 你俩的全部接触，就两次</h3>
+<table>
+  <tr><th style="width:112px">时间</th><th>发生了什么</th><th style="width:82px">性质</th></tr>
+  <tr>
+    <td>2025-08-08</td>
+    <td>你：「柯总在吗／你有 gpt 账号吗／<b>有偿借一下改个图的颜色</b>」（校友会闲差改图）<br>她：「有的」「你发我吧」</td>
+    <td>工具性</td>
+  </tr>
+  <tr>
+    <td>2025-11-08</td>
+    <td><b>崇礼 · 唯一一次线下。</b>央美/中传/北体滑雪 + 派对。你<b>开车</b>（自嘲「巨破的奥德赛」）从山麓酒店开 40 分钟去<b>富龙夜场</b>找她。<br>
+    你全程自嘲：「我是菜鸟哈哈哈」「我都胖成 200 斤了」「最像猪头的那个」；你<b>摔了、爬坡下不来、雪杖丢了</b>。<br>
+    她全程笑你：「哈哈哈哈哈哈」「你刚太搞笑了」「你怎么知道我还在笑」。<br>
+    结尾：<b>她把一副护手腕落在你衣服上</b>，你说「我寄给你吧」。</td>
+    <td>她看你出丑<br>觉得好笑</td>
+  </tr>
+</table>
+
+<div class="box warn">
+  <b>★ 两个必须并列记住的事实</b>
+  <ol style="margin:8px 0 0">
+    <li><b>点赞之后，消息库里零新增</b>。点赞发生在朋友圈，消息库测不到 —— 也就是说，<b>这次点赞没有换来任何对话</b>。</li>
+    <li><b>上一次实质接触是 11 个月前</b>，而且那次的记忆点是你最狼狈的样子。</li>
+  </ol>
+  <p style="margin:10px 0 0"><b>结论</b>：这是<b>「你希望它是」</b>的关系，不是<b>「它现在就是」</b>的关系。两条线要分开记，否则判断会偏。</p>
+</div>
+
+<h3>2.2 如果重启，怎么开口</h3>
+<div class="box ok">
+  <b>不要提滑雪翻车</b> —— 那是你记忆里最狼狈的一次，提它等于把「她笑你」的画面再放一遍。<br>
+  <b>从中性事务切入最自然</b>：校友会 / 工作 / 高中同学的近况 / 顺手问一句她最近忙不忙。<br>
+  她已经自己说过「我现在就在去上班的路上呢」「我每周可能就这么一两天能滑」→ <b>她是在职状态</b>，聊工作不突兀。
+</div>
+<p class="muted">⚠️ 不推断她的年龄 / 身份 / 职业细节。⚠️ 不要和笑一那条线做成「二选一」——两条线并存。</p>
+
+<!-- ================= 3 ================= -->
+<h2 id="s3"><span class="n">3</span>Tripo 积分 <span class="tag t-stop">纠偏</span></h2>
+
+<div class="box danger">
+  <b>★ 先纠一个错</b>：你以为自己在 Tripothon 群里问过积分问题 —— <b>不是。</b><br>
+  <code>Tripothon S1 中国赛区2群</code>（1,865 条）里，<b>你本人 role=me 的消息数 = 0</b>。你是纯潜水者。<br>
+  群里满屏的「<b>@Tripo 伊森 积分问题附参赛邮箱</b>」是<b>群内客服关键词模板</b>，由上百个不同参赛者发出，
+  <b>和你没关系</b>。
+</div>
+
+<h3>3.1 你真实做的事（10-05 下午，全部有原文）</h3>
+<table>
+  <tr><th style="width:96px">时间</th><th>你说了什么</th></tr>
+  <tr>
+    <td>17:21–17:35</td>
+    <td>找汪伊俊：「你有 workbudy 有偿价格好商量注册个 workbudy 能成吗」「临时转个 pdf」「<b>36 元或者更高</b>」<br>
+    「需要 100 积分」「有个任务卡在 workbudy 没积分写个交接文档」「<b>我手欠用不免费的把积分用光了就不让我用了</b>」「舍不得 10 刀」<br>
+    → 转账 36 元，他注册成功，你：「<b>活了活了</b>」「收了钱」「买杯奶茶」「还是你靠谱」</td>
+  </tr>
+  <tr>
+    <td>17:42–17:58</td>
+    <td>你反过来拉他：「临时搞 trip 吗」「<b>比赛有免费额度明天截止薅点额度</b>」「tripo 大赛」<br>
+    「<b>我有他们总助微信发的朋友圈可以参与</b>」「比 Hyper 调用更好用点」「<b>薅点积分也成</b>」「给 1 万」「<b>积分报名就给</b>」「一年有效期」<br>
+    → 拉他进群 → 「组个队咱们赶快先把积分申请了」→ 发 Participation Form 链接</td>
+  </tr>
+</table>
+
+<div class="box">
+  <b>★ 裁定</b>：你对 Tripo 的真实诉求 = <b>薅免费额度用于三维建模</b>，<b>不是参赛、不是领奖</b>。<br>
+  所谓「提交作品截止 10-06 19:59」「线下场次延到 17 号」——<b>都和你无关</b>（你从未提交过作品）。<br>
+  <b>要做的是</b>：确认你有没有真的拿到那份积分（Tripo Studio 或 API 各 2w5）。没拿到就问入口；拿到了就直接用。
+</div>
+
+<div class="box ok">
+  <b>顺带记一笔你的真实模式</b>（这是数据里第一次这么完整地看到）：<br>
+  <b>用 36 元现金 → 换别人一次注册 → 换 100 积分 → 解锁一个卡住的任务。</b>
+  以及<b>「我有他们总助的微信」</b>这种把弱关系当资源用的习惯。
+  这不是缺点，是你现在手里<b>唯一能低成本调动的资源类型</b>。
+</div>
+
+<!-- ================= 4 ================= -->
+<h2 id="s4"><span class="n">4</span>何一莎的任务</h2>
+
+<div class="box warn">
+  <b>★ 说明：这是推断，不是已确认事实。</b> 数据里查不到任务书、截止时间、交付形式。<b>需要你补一句。</b>
+</div>
+
+<h3>4.1 何一沙是谁</h3>
+<div class="card tight">
+<p style="margin:0"><b>何一沙</b> · 微信昵称 <code>Yisharlot🍬</code> · <b>央美美术馆媒体部主任</b>（2026-09-24 17:30 自述）<br>
+<span class="muted">私聊<b>只有 9 条</b>（09-24 17:30 → 09-25 16:20），全部内容如下：</span></p>
+<table style="margin:10px 0 0">
+  <tr><td style="width:104px;color:var(--ink3)">09-24 17:30</td><td>她：我是央美美术馆媒体部主任何一沙</td></tr>
+  <tr><td style="color:var(--ink3)">17:31</td><td>你：何主任好，我是前两天面试的实习生蔡浩文</td></tr>
+  <tr><td style="color:var(--ink3)">17:32</td><td>你：岗位是拍摄及视频制作助理实习生，学生蔡浩文，电话15101151638，中秋期间全程在京，感谢主任！！！</td></tr>
+  <tr><td style="color:var(--ink3)">17:34</td><td>她：你好浩文 <b>这几天你有空就在美术馆看看展</b></td></tr>
+  <tr><td style="color:var(--ink3)">17:35</td><td>她：<b>可以拍点科普展的素材</b></td></tr>
+  <tr><td style="color:var(--ink3)">17:37</td><td>你：明白主任 / 收到明白</td></tr>
+  <tr><td style="color:var(--ink3)">09-25 16:20</td><td>你：何老师，中秋快乐！借着节日向您问个好…</td></tr>
+</table>
+</div>
+
+<h3>4.2 推断（标注为推断）</h3>
+<p>「何一莎的任务」＝<b>给央美美术馆拍科普展素材</b>。
+你把它和 Tripo 积分并列说，<b>很可能意味着你想用 3D / AI 工具来产出</b>（也就是你说的「建模」那个模式）。</p>
+
+<div class="box ok">
+  <b>建议动作（今天就能做，零成本）</b>：带相机去美术馆，先按她的原话拍一轮科普展素材。
+  拍完把 3–5 张成片发给她，附一句「何老师，先拍了一组，您看方向对不对」。<br>
+  <b>为什么先做这个</b>：这是你<b>已录用实习</b>的第一份任务。第一次交付的速度，会决定后面她给你多大的活。
+</div>
+
+<!-- ================= 5 ================= -->
+<h2 id="s5"><span class="n">5</span>两个模式</h2>
+
+<p>你说的「我之前有过两个模式，一个是建模我在跟老师对过，一个是数字人的交互」—— 数据侧对应如下。</p>
+
+<table>
+  <tr><th style="width:132px">你的说法</th><th>数据里找到的对应物</th><th style="width:78px">状态</th></tr>
+  <tr>
+    <td><b>建模</b><br><span class="muted">（跟老师对过）</span></td>
+    <td><b>Tripo + Blender 三维建模</b>。<br>
+    证据：09-09 Eloise「<b>学调用 tripo 和 blender</b>」；09-11「他们还有别的课<b>建模</b> unity 相关的」。<br>
+    → <b>和「薅 Tripo 积分」是同一件事</b>。<br>
+    ⚠️ 但「跟老师对过」的痕迹<b>没找到</b>。</td>
+    <td><span class="tag t-do">缺材料</span></td>
+  </tr>
+  <tr>
+    <td><b>数字人的交互</b></td>
+    <td>✅ <b>有实产</b>：<br>
+    · 2026-09-26 给母亲的《<b>在场与回应</b>》副标题「<b>从社会美育现场到情境化数字交互</b>」<br>
+    · 2026-03-09 <b>北京台主持人的数字人</b><br>
+    · 2026-01-28 <code>首经数字人红衣.prproj</code><br>
+    · 2026-01-29 与「王小2」讨论「对话为主用数字人 / 后期对口型」</td>
+    <td><span class="tag t-ok">已定位</span></td>
+  </tr>
+</table>
+
+<div class="box">
+  <b>★ 一条线索</b>：两个模式不是并列的，<b>是串起来的</b> ——
+  「建模」（Tripo/Blender）是<b>工具</b>，「数字人交互」是<b>成品形态</b>，
+  而「何一沙的任务」（美术馆科普素材）很可能是<b>这两者第一次合起来的落点</b>。
+  如果成立，这就是你中期汇报里「技术赋能」那一页缺的那块拼图。
+</div>
+
+<!-- ================= 6 ================= -->
+<h2 id="s6"><span class="n">6</span>昨晚饭局：数据印证</h2>
+
+<p class="muted">你 10-06 的描述，逐条对上了。以下全部是会话原文，不是转述。</p>
+
+<div class="grid2">
+  <div class="card tight">
+    <div class="muted" style="font-size:12px;font-weight:600">你说：送王逸伦回家了</div>
+    <p style="margin:6px 0 0" class="muted">→ <code>gay学现场</code> 01:18:36 王逸伦：「<b>等待二爷回家中</b>」<br>01:21:43 他：「<b>严酷的监工</b>」</p>
+  </div>
+  <div class="card tight">
+    <div class="muted" style="font-size:12px;font-weight:600">你说：舒泽林带我用他家车库水管洗车</div>
+    <p style="margin:6px 0 0" class="muted">→ 01:19:23 王若彤：「<b>伦哥强迫看了20分钟洗车</b>」<br>01:22:17 他：「<b>光顾着赶快洗了</b>」<br>→ 你 10-07 00:12 对母亲说：「<b>我洗个车</b>」（她问「在哪洗？」）</p>
+  </div>
+</div>
+
+<h3>6.1 当晚时间线</h3>
+<div class="card tight">
+<div class="chain">
+10-06 10:31–10:36　王若彤连发三家餐厅比价<br>
+10-06 14:03　王逸伦：「我都行」<br>
+10-06 14:12　舒泽林：「要么他俩定呢」「晚上要是天气好找个地方带你们坐坐」<br>
+10-06 14:15　王若彤：「<b>舒哥你定吧，他俩拿主意就太晚了</b>」<br>
+10-06 14:33　定四季餐厅（航天桥 阜成路101号）17:30 集合<br>
+10-06 14:49　你：「起了起了舒哥」「没问题」<br>
+10-06 17:20–17:40　陆续到齐<br>
+10-06 19:51　舒泽林：「影潭花园南门」<br>
+10-06 20:12　你发〔图〕+「舒哥我们在外面」<br>
+10-07 00:43　王若彤发〔视频〕<br>
+10-07 00:45　你：[抱拳]<br>
+10-07 01:06　王若彤：「我到家了」<br>
+10-07 01:18–01:22　王逸伦/王若彤到家接龙 + 洗车梗<br>
+10-07 02:09　你：「辛苦舒哥哈哈哈」「我也到了」「各位哥早点休息」<br>
+10-07 00:46　（私聊舒泽林）你：「<b>今天感谢舒哥</b>」→ 他：「<b>好好开车注意安全吧</b>」<br>
+10-07 09:11　你：〔表情〕
+</div>
+</div>
+
+<div class="box ok">
+  <b>★ 一个值得注意的点</b>：饭局全程 <b>王逸伦只在 01:18 和 01:21 说了两句话</b>，加起来 11 个字（「等待二爷回家中」「严酷的监工」）。
+  王若彤私聊 10-06 12:00 之后 <b>0 条</b>。<br>
+  <b>群在 02:09 之后彻底安静</b> —— 这个四人局的规律没变：<b>只在「要聚会」时活，聚完就静</b>。
+</div>
+
+<div class="box warn">
+  <b>⚠️ 关于「无意中反驳了舒泽林几次」</b>：<br>
+  我把 10-06 全天到 10-08 的 <code>gay学现场</code> 群（41 条）+ 舒泽林私聊（3 条）逐条过了一遍 ——
+  <b>群里你只发了 4 条</b>：14:49 两条（「起了起了舒哥」「没问题」）、20:12 一条（图 +「舒哥我们在外面」）、00:45 一个抱拳、02:09 三条收尾。
+  <b>没有任何一句可以认定为「反驳」</b>。<br>
+  → 要么发生在<b>线下（饭桌上）</b>，要么在<b>别的时间段</b>。你说个大概时刻或原话，我再定位。
+</div>
+
+<!-- ================= 7 ================= -->
+<h2 id="s7"><span class="n">7</span>笑一线</h2>
+
+<p class="muted">这条不在你列的任务里，但 10-06 晚上有一条值得单独说。</p>
+
+<div class="card tight">
+<div class="chain">
+10-06 20:34　你发〔图〕<br>
+10-06 20:35　你：「<b>跟兄弟鼓楼来喝茶</b>」「<b>来接你吗</b>」<br>
+10-06 20:44　她：「<b>跟我妈又闹了一顿</b>」「现在才调理好」「准备直接睡觉了我」「你先惬意着」<br>
+10-06 20:56　你：「啊」「宝贝」「你先睡」<br>
+10-06 20:57　你：「<b>可以认识认识我朋友有机会</b>」「别太伤心了」<br>
+10-06 21:06　她：「好」「那我先睡了宝贝」<br>
+10-06 21:17　你：「睡吧宝贝我在有事叫我」
+</div>
+</div>
+
+<div class="box">
+  <b>怎么读这件事</b>：你在跟高中同学喝茶的时候，<b>主动问要不要来接她</b>，并且说了「<b>可以认识认识我朋友</b>」——
+  这是<b>把她往核心圈里带</b>的动作，方向是明确的。<br>
+  她<b>没来</b>，原因是<b>她自己那边刚跟母亲吵完架</b>（她自己说的），不是你做错了什么。<br>
+  ⚠️ <b>不要</b>把这次读成「她拒绝你」。她拒绝的是<b>出门</b>，不是<b>你</b>。
+</div>
+<p class="muted">⚠️ 不推断她的年龄 / 身份 / 职业。⚠️ 这条与柯益盈那条并存，不做比较、不做取舍。</p>
+
+<!-- ================= 8 ================= -->
+<h2 id="s8"><span class="n">8</span>钱（10-04 至今，来自会话原文）</h2>
+
+<table>
+  <tr><th style="width:120px">时间</th><th style="width:80px">方向</th><th style="width:78px">金额</th><th>语境</th></tr>
+  <tr><td>2026-10-02 21:09</td><td>母亲 → 你</td><td>¥25</td><td>零钱</td></tr>
+  <tr><td>2026-10-02 21:10</td><td>母亲 → 你</td><td>¥500</td><td>「搞定了」→「妈我吃点东西，稍晚转回来」</td></tr>
+  <tr><td>2026-10-04 09:59</td><td>母亲 → 你</td><td><b>¥2,500</b></td><td>你 10-03 22:00：「能申请下这个月剩下的生活费吗」→ 她 10-04 03:01「可以」</td></tr>
+  <tr><td>2026-10-05 16:25</td><td>母亲 → 你</td><td>¥200</td><td>—</td></tr>
+  <tr><td>2026-10-06 14:49</td><td>母亲 → 你</td><td>¥200</td><td>饭局当天</td></tr>
+</table>
+
+<div class="box warn">
+  <b>★ 口径提醒</b>：母亲转来的钱<b>是代付性质，不是生活费</b>（这条已经在引擎里裁定过）。
+  你 10-04 确认过<b>目前没有稳定收入</b>。10-04 那笔 2,500 是你<b>主动开口要的「这个月剩下的生活费」</b> ——
+  这是数据里少见的一次<b>把用途说清楚</b>的开口，值得记一笔。
+</div>
+<p class="muted">⚠️ 关于王逸伦那 500（2026-08-11 借）：10-06 已确认仍<b>未还</b>。按当时定的策略，<b>今天一个字不提</b>，也不做新承诺。</p>
+
+<!-- ================= 9 ================= -->
+<h2 id="s9"><span class="n">9</span>要你确认的三件事</h2>
+
+<div class="card">
+<ol>
+  <li><b>09-26 第三次剐蹭的资料，你发给安鹏了吗？</b><br>
+      <span class="muted">会话里看不到你发出的记录。如果没发 → 今天发；如果发了 → 我按「等返款」跟进。</span></li>
+  <li><b>「何一莎的任务」具体是什么？</b><br>
+      <span class="muted">拍素材？剪片？做 3D？截止什么时候？交付给谁？（数据里只有她那句「拍点科普展的素材」）</span></li>
+  <li><b>「建模」那个模式的材料在哪？跟哪位老师对过？</b><br>
+      <span class="muted">数字人那条已经找到了（《在场与回应》副标题 + 北京台主持人数字人）。建模这条缺材料。</span></li>
+</ol>
+<p style="margin:14px 0 0" class="muted">另外一件小事：<b>「无意中反驳舒泽林」</b>—— 群里和私聊都没找到，你说个大概时刻或原话我再定位。</p>
+</div>
+
+<footer>
+  <b>数据来源</b>：微信本地索引库（ChatTrace 解密 + 索引，截至 2026-10-07 09:26）· 会话原文逐条核对，未做转述。<br>
+  <b>口径</b>：本人 2026-10-06 11:35 / 11:52 两次通过文件传输助手下达的同步指令；引擎裁定见 <code>05-纠偏层.md</code> 三·补·48。<br>
+  <b>红线</b>：涉及母亲（车主）的身份证 / 银行卡 / 行驶证 / 车架号 —— 仅本地留存，不得外传、不进任何对外材料。
+</footer>
+
+</div>
+</body>
+</html>

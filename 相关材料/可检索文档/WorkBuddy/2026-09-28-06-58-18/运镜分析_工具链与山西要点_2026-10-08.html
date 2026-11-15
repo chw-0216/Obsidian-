@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>运镜分析 · 工具链与山西要点（2026-10-08）</title>
+<style>
+  :root{
+    --ink:#1b1f26; --ink2:#464d59; --ink3:#7d8695; --ink4:#a8b0bd;
+    --line:#e3e7ee; --line2:#f0f3f8;
+    --bg:#f6f7fa; --card:#fff;
+    --accent:#1f5fd6; --accent-bg:#eef4ff; --accent-line:#cddffb;
+    --ok:#15803d; --ok-bg:#f0fdf4; --ok-line:#bbf7d0;
+    --warn:#b45309; --warn-bg:#fffbeb; --warn-line:#fde68a;
+    --red:#b91c1c; --red-bg:#fef2f2; --red-line:#fecaca;
+    --gold:#8a6d1f; --gold-bg:#fdf9ec; --gold-line:#eadfae;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;padding:44px 20px 90px;background:var(--bg);color:var(--ink);
+    font-family:"Segoe UI","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+    font-size:15px;line-height:1.78;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:1000px;margin:0 auto}
+  header{border-bottom:2px solid var(--ink);padding-bottom:20px;margin-bottom:10px}
+  h1{font-size:27px;margin:0 0 8px;letter-spacing:.2px;line-height:1.35}
+  .sub{color:var(--ink3);font-size:13.5px}
+  .sub code{background:#eef1f6;padding:1px 6px;border-radius:4px;font-size:12.5px}
+  h2{font-size:19px;margin:44px 0 6px;padding-left:13px;border-left:4px solid var(--ink);line-height:1.35}
+  h2 .n{display:inline-block;background:var(--ink);color:#fff;border-radius:6px;
+    padding:1px 9px;font-size:13px;margin-right:10px;vertical-align:2px}
+  h3{font-size:16px;margin:26px 0 8px;color:var(--ink)}
+  .lead{color:var(--ink2);font-size:14px;margin:10px 0 16px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px 22px;margin:14px 0}
+  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:13.5px;background:var(--card)}
+  th,td{border:1px solid var(--line);padding:9px 11px;text-align:left;vertical-align:top}
+  th{background:#f1f4f9;font-weight:600;color:var(--ink2);font-size:13px;white-space:nowrap}
+  td.c{text-align:center;white-space:nowrap}
+  .tag{display:inline-block;font-size:11.5px;padding:1px 8px;border-radius:20px;line-height:1.7;white-space:nowrap}
+  .t-star{background:var(--gold-bg);color:var(--gold);border:1px solid var(--gold-line)}
+  .t-ok{background:var(--ok-bg);color:var(--ok);border:1px solid var(--ok-line)}
+  .t-mid{background:var(--warn-bg);color:var(--warn);border:1px solid var(--warn-line)}
+  .t-no{background:var(--red-bg);color:var(--red);border:1px solid var(--red-line)}
+  .box{border-radius:10px;padding:15px 19px;margin:14px 0;font-size:13.8px}
+  .box b{font-weight:700}
+  .b-blue{background:var(--accent-bg);border:1px solid var(--accent-line);color:#17458f}
+  .b-ok{background:var(--ok-bg);border:1px solid var(--ok-line);color:#14532d}
+  .b-warn{background:var(--warn-bg);border:1px solid var(--warn-line);color:#78350f}
+  .b-red{background:var(--red-bg);border:1px solid var(--red-line);color:#7f1d1d}
+  .b-gold{background:var(--gold-bg);border:1px solid var(--gold-line);color:#5c4714}
+  ul,ol{margin:9px 0;padding-left:22px}
+  li{margin:5px 0}
+  .k{font-weight:700;color:var(--ink)}
+  .mono{font-family:ui-monospace,Consolas,"Courier New",monospace;font-size:12.5px;
+    background:#f2f4f8;padding:1px 6px;border-radius:4px;border:1px solid #e6eaf0}
+  pre{background:#1d2128;color:#e6e9ef;padding:15px 18px;border-radius:10px;
+    overflow-x:auto;font-size:12.5px;line-height:1.62;margin:12px 0;
+    font-family:ui-monospace,Consolas,monospace}
+  pre .c{color:#7f8b9c}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .kv{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+  .kv .kk{font-size:12px;color:var(--ink3);letter-spacing:.4px}
+  .kv .vv{font-size:17px;font-weight:700;margin-top:3px}
+  .cov{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0}
+  .cov figure{margin:0;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .cov img{width:100%;display:block}
+  .cov figcaption{padding:10px 14px;font-size:12.5px;color:var(--ink2);border-top:1px solid var(--line2)}
+  .shot{display:inline-block;background:#eef1f6;border:1px solid #dde3ec;border-radius:6px;
+    padding:1px 8px;font-size:12.5px;font-weight:600;color:var(--ink2)}
+  footer{margin-top:52px;padding-top:18px;border-top:1px solid var(--line);color:var(--ink3);font-size:12.5px}
+  .hr{height:1px;background:var(--line);margin:34px 0}
+  @media(max-width:760px){.grid2,.cov{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>运镜分析 · 工具链与山西要点</h1>
+  <div class="sub">
+    2026-10-08 ｜ 起因：陈晔今早 07:43 发来视频号短片《绝对者》并说「去山西做东西要考慮运镜」<br>
+    权威依据：<b>CameraBench</b>（NeurIPS 2025 Spotlight · arXiv 2504.15376）｜ 自建引擎：<code>tools/cinema_shot_analyzer.py</code>
+  </div>
+</header>
+
+<div class="box b-blue">
+  <b>结论先行</b>
+  <ol style="margin-bottom:0">
+    <li><b>她发的是视频号短片《"假如AI绝对正确" — 原创科幻伦理短片《绝对者》》</b>，作者 San1Junipero，<b>13 分 06 秒</b>，<b>1280×720 横屏</b>。视频本体不在本机（token 已过期、无缓存）——<b>需要你把它给我，才能逐镜分析</b>（见第 7 节，3 条路径）。</li>
+    <li><b>运镜这件事已经有权威分类学了</b>——CameraBench 与职业电影摄影师共建了 <b>50+ 运动原语</b>，分 3 个参照系、5 个族。它明确解决了一个关键混淆：<b>变焦（改焦距）≠ 前推（相机前移）</b>。这正是「要注意运镜」这句话的技术落点。</li>
+    <li><b>我已经把可跑的引擎搭好并实测通过了</b>（纯本地、不联网）。它能把一段视频切成镜头、逐镜判定运镜类型、算景别。<b>把《绝对者》给我，当天就能出全片逐镜表</b>。</li>
+  </ol>
+</div>
+
+<h2><span class="n">1</span>她发的那条，到底是什么</h2>
+<div class="lead">从微信原始消息里挖出来的（不是猜的）：<span class="mono">message_1.db → Msg_f349341f…d91 · local_id=770</span></div>
+
+<div class="grid2">
+  <div class="kv"><div class="kk">来源</div><div class="vv">微信视频号</div><div style="font-size:12.5px;color:var(--ink3)">作者 San1Junipero</div></div>
+  <div class="kv"><div class="kk">标题</div><div class="vv" style="font-size:14px">「"假如AI绝对正确」<br>原创科幻伦理短片《绝对者》</div></div>
+  <div class="kv"><div class="kk">时长</div><div class="vv">786 秒 <span style="font-size:13px;font-weight:400;color:var(--ink3)">= 13 分 06 秒</span></div></div>
+  <div class="kv"><div class="kk">画幅</div><div class="vv">1280 × 720 <span style="font-size:13px;font-weight:400;color:var(--ink3)">16:9 横屏</span></div></div>
+</div>
+
+<div class="cov">
+  <figure>
+    <img src="_tmp/cover_try.jpg" alt="《绝对者》封面一">
+    <figcaption><b>封面 A</b> · 黑袍法官在暗调环境里调眼镜，背景 bokeh 光斑。<br>低照度 + 浅景深 + 中近景 —— 典型的「权威 / 审判」视觉母题。</figcaption>
+  </figure>
+  <figure>
+    <img src="_tmp/cover2.jpg" alt="《绝对者》封面二">
+    <figcaption><b>封面 B</b> · 教堂内景，顶光光柱（god rays）斜射，满座老人手持打开的书。<br>烧入<b>中英双语字幕</b>「能被正确地照顾 / to be looked after correctly」。</figcaption>
+  </figure>
+</div>
+
+<div class="box b-warn">
+  <b>两条硬事实</b>
+  <ul style="margin-bottom:0">
+    <li><b>视频本体不在本机。</b>全盘扫描（225 秒，覆盖微信目录 / Tencent / Documents / Temp）确认：<b>没有</b>该文件。视频号播放器 <span class="mono">XPlayer</span> 插件目录下也没有缓存 → <b>说明这条还没在电脑上播过</b>。</li>
+    <li><b>XML 里的下载地址已失效</b>（实测 HTTP 400，token 过期）；且 <span class="mono">&lt;url&gt;</span> 字段本身被截断。→ 只能靠重新取链或录屏。</li>
+  </ul>
+</div>
+
+<h2><span class="n">2</span>权威依据：CameraBench 分类学</h2>
+<div class="lead">
+  <b>Towards Understanding Camera Motions in Any Video</b> · NeurIPS 2025 <b>Spotlight</b> · CMU / UMass / USC / Emerson / Adobe / Harvard / MIT-IBM<br>
+  ~3,000 视频 · 3,381 人工切分片段 · <b>15 万+ 标注</b> · 与<b>职业电影摄影师</b>合作迭代数月制定
+</div>
+
+<svg viewBox="0 0 960 470" width="100%" style="background:#fff;border:1px solid #e3e7ee;border-radius:12px;margin:14px 0">
+  <text x="24" y="34" font-size="15" font-weight="700" fill="#1b1f26">CameraBench 运镜分类学 · 50+ 运动原语</text>
+  <text x="24" y="56" font-size="12" fill="#7d8695">按 3 个「参照系」组织 —— 同一段运动，参照系不同，名字就不同。这是该分类学最关键的设计。</text>
+
+  <!-- 三参照系 -->
+  <g>
+    <rect x="24" y="74" width="292" height="54" rx="8" fill="#eef4ff" stroke="#cddffb"/>
+    <text x="40" y="96" font-size="13" font-weight="700" fill="#17458f">camera-centric 摄像机参照系</text>
+    <text x="40" y="115" font-size="11.5" fill="#3a5f9e">「画面里的东西往哪动」→ 推轨 / 摇摄 / 俯仰 / 滚转</text>
+    <rect x="334" y="74" width="292" height="54" rx="8" fill="#f0fdf4" stroke="#bbf7d0"/>
+    <text x="350" y="96" font-size="13" font-weight="700" fill="#14532d">ground-centric 地面参照系</text>
+    <text x="350" y="115" font-size="11.5" fill="#2f6b45">「相对地平线怎么动」→ 升降 / 横移 / 弧形</text>
+    <rect x="644" y="74" width="292" height="54" rx="8" fill="#fdf9ec" stroke="#eadfae"/>
+    <text x="660" y="96" font-size="13" font-weight="700" fill="#5c4714">object-centric 物体参照系</text>
+    <text x="660" y="115" font-size="11.5" fill="#7a6321">「相对主体怎么动」→ 各类跟拍 tracking</text>
+  </g>
+
+  <!-- 五族 -->
+  <g font-size="12.5">
+    <rect x="24" y="150" width="178" height="176" rx="9" fill="#fff" stroke="#e3e7ee"/>
+    <text x="38" y="172" font-size="13" font-weight="700" fill="#1b1f26">① 稳定性</text>
+    <text x="38" y="190" font-size="11" fill="#7d8695">Steadiness</text>
+    <line x1="38" y1="199" x2="188" y2="199" stroke="#f0f3f8"/>
+    <text x="38" y="219" fill="#464d59">静止 static</text>
+    <text x="38" y="239" fill="#464d59">轻微手持</text>
+    <text x="38" y="259" fill="#464d59">剧烈抖动 shaky</text>
+    <text x="38" y="279" fill="#464d59">（刻意的不稳）</text>
+    <text x="38" y="305" font-size="11" fill="#a8b0bd">判据：方向一致性</text>
+
+    <rect x="212" y="150" width="178" height="176" rx="9" fill="#fff" stroke="#e3e7ee"/>
+    <text x="226" y="172" font-size="13" font-weight="700" fill="#1b1f26">② 平移</text>
+    <text x="226" y="190" font-size="11" fill="#7d8695">Translation</text>
+    <line x1="226" y1="199" x2="376" y2="199" stroke="#f0f3f8"/>
+    <text x="226" y="219" fill="#464d59">推轨 dolly in / out</text>
+    <text x="226" y="239" fill="#464d59">升降 pedestal up / down</text>
+    <text x="226" y="259" fill="#464d59">横摇 truck left / right</text>
+    <text x="226" y="285" font-size="11" fill="#a8b0bd">判据：有视差（parallax）</text>
+
+    <rect x="400" y="150" width="178" height="176" rx="9" fill="#fff" stroke="#e3e7ee"/>
+    <text x="414" y="172" font-size="13" font-weight="700" fill="#1b1f26">③ 旋转</text>
+    <text x="414" y="190" font-size="11" fill="#7d8695">Rotation</text>
+    <line x1="414" y1="199" x2="564" y2="199" stroke="#f0f3f8"/>
+    <text x="414" y="219" fill="#464d59">摇摄 pan left / right</text>
+    <text x="414" y="239" fill="#464d59">俯仰 tilt up / down</text>
+    <text x="414" y="259" fill="#464d59">滚转 roll cw / ccw</text>
+    <text x="414" y="285" font-size="11" fill="#a8b0bd">判据：无视差 + 有角速度</text>
+
+    <rect x="588" y="150" width="178" height="176" rx="9" fill="#fdf9ec" stroke="#eadfae"/>
+    <text x="602" y="172" font-size="13" font-weight="700" fill="#5c4714">④ 内在变化</text>
+    <text x="602" y="190" font-size="11" fill="#8a6d1f">Intrinsic</text>
+    <line x1="602" y1="199" x2="752" y2="199" stroke="#eadfae"/>
+    <text x="602" y="219" fill="#464d59">变焦 zoom in / out</text>
+    <text x="602" y="245" font-size="11" fill="#8a6d1f">★ 改的是「焦距」</text>
+    <text x="602" y="263" font-size="11" fill="#8a6d1f">＝ 内参 intrinsics</text>
+    <text x="602" y="288" font-size="11" fill="#a8b0bd">判据：无视差 + 等比缩放</text>
+
+    <rect x="776" y="150" width="160" height="176" rx="9" fill="#fff" stroke="#e3e7ee"/>
+    <text x="790" y="172" font-size="13" font-weight="700" fill="#1b1f26">⑤ 物体中心</text>
+    <text x="790" y="190" font-size="11" fill="#7d8695">Object-centric</text>
+    <line x1="790" y1="199" x2="922" y2="199" stroke="#f0f3f8"/>
+    <text x="790" y="219" fill="#464d59">弧形 arc L / R</text>
+    <text x="790" y="239" fill="#464d59">侧跟 side-track</text>
+    <text x="790" y="259" fill="#464d59">前导 lead / 后随</text>
+    <text x="790" y="285" font-size="11" fill="#a8b0bd">需理解主体</text>
+  </g>
+
+  <rect x="24" y="342" width="912" height="106" rx="9" fill="#fef2f2" stroke="#fecaca"/>
+  <text x="42" y="366" font-size="13" font-weight="700" fill="#7f1d1d">★ 这篇论文解决的核心混淆（也正是你这次最该记住的一条）</text>
+  <text x="42" y="390" font-size="12.5" fill="#7f1d1d">「新手可能把 <tspan font-weight="700">zoom-in（内参变化）</tspan> 和 <tspan font-weight="700">translating forward（外参变化）</tspan> 混淆，但可以通过培训区分。」</text>
+  <text x="42" y="412" font-size="12" fill="#a04a4a">→ 变焦：改焦距，全画面等比放大，<tspan font-weight="700">无视差</tspan>，画质会掉。</text>
+  <text x="42" y="432" font-size="12" fill="#a04a4a">→ 前推：相机真的往前走，近物放大快于远物，<tspan font-weight="700">有视差</tspan>，画质不掉，是「电影感」的来源。</text>
+</svg>
+
+<h2><span class="n">3</span>开源工具选型：5 个候选，怎么排</h2>
+<div class="lead">筛选闸门沿用你定的三条：<b>① 能本地跑 ② 中文可用 ③ 能落地产出</b>。缺一跳过。</div>
+
+<table>
+  <thead><tr><th>方案</th><th>类型</th><th>强项</th><th>弱项 / 代价</th><th class="c">裁定</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><b>CameraBench 微调 Qwen2.5-VL</b><br><span class="mono">chancharikm/qwen2.5-vl-{7b,32b,72b}-cam-motion</span></td>
+      <td>生成式 VLM</td>
+      <td>几何 + 语义兼顾；论文实测<b>微调后 AP 翻 1–2 倍，追平 SOTA SfM</b>；能生成运镜描述句</td>
+      <td>需 GPU（7B 起）；训练集要申请，测试集与权重已开源</td>
+      <td class="c"><span class="tag t-star">首选</span><br><span style="font-size:11.5px;color:var(--ink3)">有卡就上</span></td>
+    </tr>
+    <tr>
+      <td><b>Kandinsky Video Tools</b><br><span class="mono">gen-ai-team/kandinsky-video-tools</span></td>
+      <td>VideoMAE 分类器</td>
+      <td><b>开箱即用</b>：18 类运镜 + 3 类镜头（pov/shake/track）；2 秒段准确率 <b>75%</b>（忽略后三类 84%）；另有 3 维运动强度打分器</td>
+      <td>只有 2 秒粒度，需自己切段 + 后处理；其 18 类与 CameraBench 原语一一对应</td>
+      <td class="c"><span class="tag t-star">次选</span><br><span style="font-size:11.5px;color:var(--ink3)">最易跑</span></td>
+    </tr>
+    <tr>
+      <td><b>PySceneDetect</b><br><span class="mono">Breakthrough/PySceneDetect</span></td>
+      <td>镜头切分</td>
+      <td>最成熟的切分工具；内容/自适应/阈值三种检测器，渐变、闪白都能切；可出分镜表</td>
+      <td>只做切分，不做运镜</td>
+      <td class="c"><span class="tag t-ok">必装</span></td>
+    </tr>
+    <tr>
+      <td><b>TransNetV2</b><br><span class="mono">soCzech/TransNetV2</span></td>
+      <td>深度切分</td>
+      <td>对<b>渐变 / 溶接 / 闪白</b>比传统法更准；AIGC 片段常见软切</td>
+      <td>需 torch；推理比 PySceneDetect 慢</td>
+      <td class="c"><span class="tag t-ok">备选</span></td>
+    </tr>
+    <tr>
+      <td><b>camera-motion-detector</b><br><span class="mono">antiboredom/camera-motion-detector</span></td>
+      <td>光流</td>
+      <td>极简：逐帧输出平均运动角度、幅度、zoom 系数 → CSV</td>
+      <td>只有 3 个标量，分不出摇 / 移 / 跟</td>
+      <td class="c"><span class="tag t-mid">参考</span></td>
+    </tr>
+    <tr>
+      <td><b>OpenCV 几何路线（我自建）</b><br><span class="mono">tools/cinema_shot_analyzer.py</span></td>
+      <td>光流 + RANSAC</td>
+      <td><b>完全离线、可解释、零依赖下载</b>；能出「有视差 / 无视差」→ 直接区分变焦与前推</td>
+      <td>无语义层（不知道「为什么动」、认不出跟拍主体）</td>
+      <td class="c"><span class="tag t-ok">已落地</span></td>
+    </tr>
+    <tr>
+      <td><b>Video-Analysis-AI-Agent-System</b><br><span class="mono">lewholel-maker/…（MIT）</span></td>
+      <td>LLM 管线</td>
+      <td>评分维度设计好：镜头丰富度 / 景别·角度·构图 / 运镜方式 / <b>镜头衔接（蒙太奇）</b> 各 25 分</td>
+      <td><b>无真正的几何估计</b>——靠 LLM 逐帧猜 + SSIM 差异，属入门级；结论不稳定</td>
+      <td class="c"><span class="tag t-mid">借维度</span></td>
+    </tr>
+    <tr>
+      <td><b>MegaSAM / CUT3R / COLMAP</b></td>
+      <td>SfM</td>
+      <td>论文里几何原语最强（~50% AP）</td>
+      <td>重、慢、要 GPU；且论文实测其在<b>动态场景与低视差</b>下会崩</td>
+      <td class="c"><span class="tag t-no">暂缓</span></td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="box b-gold">
+  <b>★ 论文里最值钱的一条结论</b><br>
+  CameraBench 实测了 20 个模型后发现：<b>SfM 路线强在「几何原语」、弱在「语义原语」；VLM 路线正好相反</b>。
+  所谓「语义原语」＝ 跟拍、弧形这类<b>必须理解画面里在发生什么</b>才能判的运镜。<br>
+  → 所以正确打法是<b>两条线并用</b>：几何层用光流/SfM 算轨迹，语义层用 VLM 判意图。<b>不要指望一个工具全包。</b>
+</div>
+
+<h2><span class="n">4</span>我搭的引擎：已经跑通了</h2>
+<div class="lead">三段流水线，纯本地（OpenCV + NumPy，不联网、不上传素材）。分类学对齐 CameraBench。</div>
+
+<svg viewBox="0 0 960 250" width="100%" style="background:#fff;border:1px solid #e3e7ee;border-radius:12px;margin:14px 0">
+  <text x="24" y="32" font-size="14" font-weight="700" fill="#1b1f26">cinema_shot_analyzer.py · 三段流水线</text>
+
+  <rect x="24" y="52" width="200" height="80" rx="9" fill="#eef4ff" stroke="#cddffb"/>
+  <text x="40" y="76" font-size="13" font-weight="700" fill="#17458f">① 镜头切分</text>
+  <text x="40" y="96" font-size="11.5" fill="#3a5f9e">HSV 直方图 Bhattacharyya</text>
+  <text x="40" y="113" font-size="11.5" fill="#3a5f9e">+ 灰度均差（双阈值）</text>
+
+  <path d="M228 92 L258 92" stroke="#a8b0bd" stroke-width="2" marker-end="url(#ar)"/>
+  <defs><marker id="ar" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto">
+    <path d="M0,0 L0,6 L7,3 z" fill="#a8b0bd"/></marker></defs>
+
+  <rect x="262" y="42" width="290" height="100" rx="9" fill="#f0fdf4" stroke="#bbf7d0"/>
+  <text x="278" y="66" font-size="13" font-weight="700" fill="#14532d">② 相机运动分解（几何层）</text>
+  <text x="278" y="86" font-size="11.5" fill="#2f6b45">Shi-Tomasi 角点 → LK 光流</text>
+  <text x="278" y="103" font-size="11.5" fill="#2f6b45">→ RANSAC 部分仿射 → 每帧 (tx, ty, scale, rot)</text>
+  <text x="278" y="120" font-size="11.5" fill="#2f6b45">→ 取<b>中位数</b>（抗噪，不用累计和）</text>
+  <text x="278" y="136" font-size="11.5" fill="#b45309">★ 同时算「视差残差比」</text>
+
+  <path d="M556 92 L586 92" stroke="#a8b0bd" stroke-width="2" marker-end="url(#ar)"/>
+
+  <rect x="590" y="52" width="170" height="80" rx="9" fill="#fdf9ec" stroke="#eadfae"/>
+  <text x="606" y="76" font-size="13" font-weight="700" fill="#5c4714">③ 景别识别</text>
+  <text x="606" y="96" font-size="11.5" fill="#7a6321">人脸框高 / 画幅高</text>
+  <text x="606" y="113" font-size="11.5" fill="#7a6321">→ 远 / 全 / 中 / 近 / 特</text>
+
+  <path d="M764 92 L794 92" stroke="#a8b0bd" stroke-width="2" marker-end="url(#ar)"/>
+
+  <rect x="798" y="42" width="138" height="100" rx="9" fill="#fff" stroke="#e3e7ee"/>
+  <text x="814" y="66" font-size="13" font-weight="700" fill="#1b1f26">产出</text>
+  <text x="814" y="86" font-size="11.5" fill="#464d59">shots.csv</text>
+  <text x="814" y="103" font-size="11.5" fill="#464d59">summary.json</text>
+  <text x="814" y="120" font-size="11.5" fill="#464d59">keyframes/</text>
+
+  <rect x="24" y="164" width="912" height="66" rx="9" fill="#fef2f2" stroke="#fecaca"/>
+  <text x="42" y="188" font-size="13" font-weight="700" fill="#7f1d1d">★ 唯一的判据创新：视差残差比 parallax</text>
+  <text x="42" y="209" font-size="12" fill="#a04a4a">做法：每帧先把<b>全局平移</b>扣掉（取所有光流矢量的中位数），再看<b>剩下的残余</b>有多大。</text>
+  <text x="42" y="227" font-size="12" fill="#a04a4a">→ 残余小（无视差）＝ 全画面一起动 ＝ <b>变焦 / 纯旋转</b>；　残余大（有视差）＝ 近处动得快 ＝ <b>相机真的位移了</b>。</text>
+</svg>
+
+<h3>实测（样片：陈晔 2026-05-29 洞台村工作站 87 秒）</h3>
+<div class="lead">2,615 帧 / 29.977 fps。这是一段施工进度实录，正好用来验证引擎能不能<b>分辨</b>不同运镜。</div>
+
+<table>
+  <thead><tr><th class="c">镜</th><th class="c">时间</th><th class="c">时长</th><th>运动族</th><th>判定原语</th><th class="c">视差</th><th class="c">方向一致性</th><th class="c">景别</th><th class="c">置信</th></tr></thead>
+  <tbody>
+    <tr><td class="c"><span class="shot">#1</span></td><td class="c">0.00 → 26.25s</td><td class="c">26.25s</td><td>平移</td><td><b>前推 / 后拉（相机位移）</b><br><span style="font-size:12px;color:var(--ink3)">视差 0.43 → 是位移不是变焦</span></td><td class="c">0.43</td><td class="c">0.19</td><td class="c">无人物/空镜</td><td class="c">0.74</td></tr>
+    <tr><td class="c"><span class="shot">#2</span></td><td class="c">26.25 → 33.63s</td><td class="c">7.37s</td><td>平移</td><td><b>横移 / 侧跟（有视差）</b></td><td class="c">0.46</td><td class="c">0.64</td><td class="c">特写</td><td class="c">0.82</td></tr>
+    <tr><td class="c"><span class="shot">#3</span></td><td class="c">33.63 → 76.66s</td><td class="c">43.03s</td><td>稳定度</td><td><b>手持 / 抖动</b><br><span style="font-size:12px;color:var(--ink3)">方向一致性 0.23，无主方向</span></td><td class="c">0.25</td><td class="c">0.23</td><td class="c">无人物/空镜</td><td class="c">0.64</td></tr>
+    <tr><td class="c"><span class="shot">#4</span></td><td class="c">76.66 → 87.23s</td><td class="c">10.57s</td><td>变焦</td><td><b>变焦推 / 拉（改焦距）</b><br><span style="font-size:12px;color:var(--ink3)">视差 0.22 → 全画面等比缩放</span></td><td class="c">0.22</td><td class="c">0.54</td><td class="c">中景</td><td class="c">0.76</td></tr>
+  </tbody>
+</table>
+
+<div class="box b-ok">
+  <b>汇总</b>：4 个镜头 · 平均镜长 ASL <b>21.8 秒</b> · 剪辑密度 0.05 切/秒 · 运动镜占比 100%<br>
+  运动族分布：平移 ×2 / 稳定度 ×1 / 变焦 ×1　｜　景别分布：无人物·空镜 ×2 / 特写 ×1 / 中景 ×1<br>
+  <span style="font-size:12.5px;color:#2f6b45">→ 4 个镜头给出了 4 种不同判定，说明引擎在<b>分辨</b>而不是在猜。代表帧已目视复核，与判定一致。</span>
+</div>
+
+<div class="box b-warn">
+  <b>诚实说三条局限</b>
+  <ul style="margin-bottom:0">
+    <li><b>第 4 镜的 0.22 卡在阈值上</b>（阈值 0.22）——变焦与前推的边界情形，置信度只有 0.76。这类边缘镜头需要 VLM 复核。</li>
+    <li><b>认不出「跟拍 / 弧形 / POV」</b>——这些属 CameraBench 的「语义原语」，必须理解画面内容。要上就得装 VLM。</li>
+    <li><b>本机 torch 是 CPU 版</b>，跑不动 7B 级 VLM。语义层要么等你有显卡的机器，要么用云端。</li>
+  </ul>
+</div>
+
+<h2><span class="n">5</span>所以，「注意运镜」到底注意什么</h2>
+<div class="lead">把上面这套东西翻译成<b>现场能执行</b>的话。</div>
+
+<div class="box b-red">
+  <b>★ 第一条，也是最重要的一条：分清「变焦」和「前推」</b>
+  <ul style="margin-bottom:0">
+    <li><b>要「推」的效果 → 用相机真的往前走</b>（稳定器 / 滑轨 / 电控小车）。这才有视差、有空间纵深、有电影感，而且<b>画质不掉</b>。</li>
+    <li><b>不要用手机的数码变焦去「推」</b>——那只是裁切放大，画质直接塌，而且没有视差，一眼假。这也是 CameraBench 专门点名新手最常犯的错。</li>
+    <li><b>变焦有它自己的用途</b>：机位动不了的时候（比如固定机位、空间狭窄），或者要做「眩晕变焦」（推轨 + 反向变焦，希区柯克效果）。用对地方是高级手法，用错地方是廉价感。</li>
+  </ul>
+</div>
+
+<h3>去山西前，这 12 条照着做</h3>
+<table>
+  <thead><tr><th class="c" style="width:38px">#</th><th>要点</th><th style="width:34%">为什么</th></tr></thead>
+  <tbody>
+    <tr><td class="c">1</td><td><b>先把运镜写进分镜，再到现场</b>——每个镜头标三件事：<b>景别 / 运镜 / 时长</b></td><td>现场再想运镜，一定退化成「手持随手拍」</td></tr>
+    <tr><td class="c">2</td><td><b>推用「移动」不用「变焦」</b>（见上）</td><td>画质 + 视差，是专业与业余的分水岭</td></tr>
+    <tr><td class="c">3</td><td><b>先确认交付画幅</b>：横屏 16:9 还是竖屏 9:16</td><td>她发的参考片是 <b>1280×720 横屏</b>；画幅错了整片白拍</td></tr>
+    <tr><td class="c">4</td><td><b>每个镜头起幅、落幅各留 2 秒</b>静止</td><td>剪辑时才有余量；AIGC 生成片段尤其需要</td></tr>
+    <tr><td class="c">5</td><td><b>运镜必须有理由</b>：跟拍＝跟主体 / 推＝强调 / 拉＝交代环境 / 摇＝建立空间</td><td>没理由的运镜＝花哨，评委会看出来的</td></tr>
+    <tr><td class="c">6</td><td><b>稳定器优先</b>；手持只能用于「刻意的抖」</td><td>抖动是 CameraBench 单列的一族（steadiness），是手法不是失误</td></tr>
+    <tr><td class="c">7</td><td><b>现场每种运镜各拍一条 10 秒「运镜测试条」</b></td><td>回去剪的时候有备用；也能自检稳定器设置</td></tr>
+    <tr><td class="c">8</td><td><b>山西题材的运镜搭配</b>：古建 / 窑洞 / 黄土大景 → <b>升降 + 横摇</b>；人物 → <b>跟拍</b>；细节（砖雕 / 窗棂）→ <b>前推 + 特写</b></td><td>大景靠「动」交代体量，细节靠「推」引导视线</td></tr>
+    <tr><td class="c">9</td><td><b>控制平均镜长</b>：先测参考片的 ASL，再定自己的</td><td>ASL 是剪辑节奏最硬的指标（我的引擎直接输出这个数）</td></tr>
+    <tr><td class="c">10</td><td><b>素材命名与分镜表一一对应</b></td><td>13 分钟的片子，剪辑时找素材会要命</td></tr>
+    <tr><td class="c">11</td><td><b>每天回酒店备份 + 粗剪</b>（3-2-1）</td><td>现场丢失素材是不可逆事故</td></tr>
+    <tr><td class="c">12</td><td><b>先问她一句：「运镜是您定还是我定？」</b></td><td>她既然专门提「要考虑运镜」，说明这是<b>她会给分的地方</b>——先确认标准，比埋头拍强</td></tr>
+  </tbody>
+</table>
+
+<div class="box b-warn">
+  <b>⚠️ 这 12 条里，第 3、9 条要等《绝对者》到手才能定死</b><br>
+  参考片的<b>真实 ASL、运镜类型分布、景别分布</b>，我都能从片子里直接算出来。拿到片子，这两条就变成具体数字，而不是原则。
+</div>
+
+<h2><span class="n">6</span>把《绝对者》给我：3 条路径</h2>
+<div class="lead">拿到片子，我当天就能出<b>全片逐镜表</b>（镜号 / 起止 / 时长 / 运镜 / 景别 / 视差 / 置信度）+ 关键帧联系表 + 统计。</div>
+
+<table>
+  <thead><tr><th class="c" style="width:44px">路</th><th>怎么做</th><th>可行性</th><th class="c">推荐</th></tr></thead>
+  <tbody>
+    <tr>
+      <td class="c"><b>A</b></td>
+      <td><b>在电脑微信里把这条视频从头播一遍</b>（要让它缓冲完）。播完告诉我，我去抓视频号播放器的缓存目录。</td>
+      <td>最省事；我刚查过 <span class="mono">XPlayer</span> 目录是空的，说明还没播过 → 播完就有</td>
+      <td class="c"><span class="tag t-star">最推荐</span></td>
+    </tr>
+    <tr>
+      <td class="c"><b>B</b></td>
+      <td>视频号里点「···」→ <b>保存到相册</b>（有的号允许）→ 传到电脑，丢给我路径。</td>
+      <td>一步到位拿原片，画质最好；但部分视频号不允许保存</td>
+      <td class="c"><span class="tag t-ok">首选</span></td>
+    </tr>
+    <tr>
+      <td class="c"><b>C</b></td>
+      <td><b>手机录屏</b>（设置里调到 1080p / 60fps）→ 传到电脑。录屏时<b>别开弹幕、别滑动</b>，全屏播放。</td>
+      <td>一定能成；缺点是画质有损（但做运镜分析够用）</td>
+      <td class="c"><span class="tag t-mid">保底</span></td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="box b-blue">
+  <b>拿到之后我会做三件事</b>
+  <ol style="margin-bottom:0">
+    <li><b>几何层</b>（我的引擎）：切镜 → 逐镜运镜判定 + 视差 + 景别 → 全片 ASL / 剪辑密度 / 分布图</li>
+    <li><b>语义层</b>（需你确认能不能用有显卡的机器，或走云端）：判「跟拍 / 弧形 / POV」和「为什么这么动」</li>
+    <li><b>对照表</b>：把她这片子的运镜手法，逐条对上「山西要怎么拍」——<b>这才是你真正要拿去用的东西</b></li>
+  </ol>
+</div>
+
+<h2><span class="n">7</span>红线与边界</h2>
+<div class="box b-red">
+  <ol style="margin-bottom:0">
+    <li><b>不得声称「已经分析完《绝对者》」</b>——片子不在本机，目前只有元数据与 2 张封面。第 4 节的实测是<b>另一段样片</b>（洞台村 87 秒），用途是验证引擎，<b>不是</b>《绝对者》的结论。</li>
+    <li><b>引擎只出「几何层」结论</b>。凡是需要理解画面内容才能判的（跟拍主体、弧形、POV、运镜意图），一律标「需 VLM」，不猜。</li>
+    <li><b>视频内容未经你确认前，不写进任何人际结论</b>（沿用引擎 `05-纠偏层.md` 三·补·49 / 三·补·50）。</li>
+    <li><b>《绝对者》是他人作品</b>——本机分析仅供你个人学习参考，<b>不得外传、不得进对外材料</b>。</li>
+    <li><b>数据主权</b>：全程本地处理，素材不上传第三方。</li>
+  </ol>
+</div>
+
+<footer>
+  生成 2026-10-08 ｜ 引擎 <span class="mono">tools/cinema_shot_analyzer.py</span> · 模型 <span class="mono">tools/models/haarcascades/</span> ｜
+  依据 CameraBench（arXiv 2504.15376 / NeurIPS 2025 Spotlight）· Kandinsky Video Tools · PySceneDetect<br>
+  配套：<b>决策卡_陈晔临汾_第一轮_2026-10-08.html</b> · <b>待补信息_陈晔临汾_2026-10-08.html</b>
+</footer>
+
+</div>
+</body>
+</html>

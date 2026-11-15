@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>导！急速回，三思回得体！！！</title>
+<style>
+  :root { color-scheme: dark; }
+  body { font-family: "Segoe UI", "Microsoft YaHei", system-ui, sans-serif; background:#121417; color:#e8eaed; margin:0; }
+  h1 { font-size: 20px; margin: 18px 16px 2px; }
+  .meta { color:#9aa0a6; font-size: 12px; margin: 0 16px 14px; }
+  #chat { display:flex; flex-direction:column; gap:10px; padding: 0 16px 20px; max-width: 860px; margin: 0 auto; }
+  .msg { display:flex; flex-direction:column; max-width: 72%; }
+  .msg.me { align-self: flex-end; align-items: flex-end; }
+  .msg.peer { align-self: flex-start; align-items: flex-start; }
+  .who { font-size: 12px; color:#9aa0a6; margin-bottom: 3px; padding: 0 4px; }
+  .bubble { background:#1e2329; border:1px solid #2b313a; border-radius: 12px; padding: 8px 12px;
+            word-break: break-word; white-space: pre-wrap; line-height: 1.5; }
+  .msg.me .bubble { background:#1f4e36; border-color:#2c6b4c; }
+  .tag { color:#e8c76a; font-size: 11px; margin-right: 6px; }
+  .time { font-size: 11px; color:#6b7280; margin-top: 2px; padding: 0 4px; }
+  .footer { text-align:center; color:#6b7280; font-size: 12px; padding: 8px 0 24px; }
+  .media-img { display:block; max-width: 320px; max-height: 320px; border-radius: 8px; margin-top: 8px; border:1px solid #333a44; }
+  /* ---- cards (M4) ---- */
+  .card { margin-top: 6px; }
+  .card.media { position: relative; }
+  .card.media img { display:block; max-width: 320px; max-height: 320px; border-radius: 8px; border:1px solid #333a44; }
+  .card.media img.thumb { max-width: 160px; max-height: 160px; }
+  .card.media video { display:block; max-width: 360px; border-radius: 8px; background:#000; }
+  .badge { position:absolute; right:6px; bottom:6px; background: rgba(0,0,0,.62); color:#dfe5ea; font-size:10px; padding:2px 6px; border-radius:5px; }
+  .card.stub, .card.app { display:flex; gap:9px; align-items:flex-start; background:#171c22; border:1px solid #2b333d;
+                           border-radius:10px; padding:8px 10px; min-width:190px; max-width:340px; }
+  .msg.me .card.stub, .msg.me .card.app { background:#1b3a2c; border-color:#2c6b4c; }
+  .card .ic { font-size:19px; line-height:1.1; }
+  .card .cbody { min-width:0; }
+  .card .ctitle { font-size:13px; font-weight:600; }
+  .card .csub { font-size:11px; color:#98a1ab; margin-top:2px; }
+  .card .cwhy { font-size:11px; color:#d9a05b; margin-top:3px; }
+  .card .curl { display:block; font-size:11px; color:#78c8a4; margin-top:3px; word-break:break-all; }
+  .card.voice { display:flex; align-items:center; gap:8px; }
+  .card.voice audio { height:34px; max-width:250px; }
+  .quote { font-size:11px; color:#9aa0a6; border-left:2px solid #4a5462; padding:2px 0 2px 7px; margin-top:4px; word-break:break-word; }
+  .sysmsg { align-self:center; max-width:82%; text-align:center; margin:6px 0; }
+  .sysbody { display:inline-block; background:#1a1e24; border:1px solid #262d36; color:#98a1ab; font-size:11.5px; padding:4px 10px; border-radius:10px; line-height:1.5; }
+  .sysmsg .time { font-size:10px; color:#5d6570; }
+  .media-img.thumb { max-width: 160px; max-height: 160px; }
+  .media-video { display:block; max-width: 380px; margin-top: 8px; border-radius: 8px; background:#000; }
+  .voice { color:#7fd0a0; font-weight:600; text-decoration:none; }
+  .media-note { font-size: 11px; color:#9aa0a6; margin-top: 4px; }
+  .media-note a, .voice a { color:#7fd0a0; }
+  .media-warn { color:#d9a05b; font-size: 12px; }
+</style>
+</head>
+<body>
+<h1>导！急速回，三思回得体！！！</h1>
+<div class="meta">username: deerluna · media: on</div>
+<div id="chat">
+<div class="msg me"><div class="who">我</div><div class="bubble"><div class="card media"><a href="869.jpg" target="_blank"><img loading="lazy" src="869.jpg" alt="图片"></a><div class="badge">489×274 · 624.8 KB</div></div></div><div class="time">2026-10-17 18:07:25</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">老师这就是这个模型建立的模型</div><div class="time">2026-10-17 18:07:37</div></div>
+<div class="msg peer"><div class="who">导！急速回，三思回得体！！！</div><div class="bubble">你发个视频我看看，我现在看不清楚了</div><div class="time">2026-10-17 18:21:38</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">明白老师</div><div class="time">2026-10-17 18:39:14</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">我回家就给您发</div><div class="time">2026-10-17 18:39:19</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">依据这种平台模型无法具身识别方位的问题能解决一些</div><div class="time">2026-10-17 18:39:43</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">比陈卓老师他们 aigc 平台的技术还是更成熟一些暂时</div><div class="time">2026-10-17 18:40:32</div></div>
+<div class="msg peer"><div class="who">导！急速回，三思回得体！！！</div><div class="bubble">爱奇艺也有一个智能导演台</div><div class="time">2026-10-17 18:48:56</div></div>
+<div class="msg peer"><div class="who">导！急速回，三思回得体！！！</div><div class="bubble"><div class="quote">引用：&lt;?xml version=&quot;1.0&quot;?&gt;
+&lt;msg&gt;
+	&lt;img aeskey=&quot;fa77c6123e40c32a6fba84b19c7c1bab&quot; encryver=&quot;1&quot; c</div><div class="card app"><span class="ic">💬</span><div class="cbody"><div class="ctitle">你这个是今天下午讲的吗？</div></div></div></div><div class="time">2026-10-17 18:49:09</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">是的老师</div><div class="time">2026-10-17 18:54:55</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">这个简单省 token 便宜[旺柴]</div><div class="time">2026-10-17 18:55:07</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">成本低</div><div class="time">2026-10-17 18:55:12</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">但没那么好用</div><div class="time">2026-10-17 18:55:18</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">主要是一个结构化的过程</div><div class="time">2026-10-17 18:55:55</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">老师我再研究研究</div><div class="time">2026-10-17 18:56:13</div></div>
+<div class="msg peer"><div class="who">导！急速回，三思回得体！！！</div><div class="bubble"><div class="quote">引用：老师我再研究研究</div><div class="card app"><span class="ic">💬</span><div class="cbody"><div class="ctitle">对</div></div></div></div><div class="time">2026-10-17 18:58:12</div></div>
+<div class="msg peer"><div class="who">导！急速回，三思回得体！！！</div><div class="bubble"><div class="quote">引用：爱奇艺也有一个智能导演台</div><div class="card app"><span class="ic">💬</span><div class="cbody"><div class="ctitle">这应该就是爱奇艺的导演台吧</div></div></div></div><div class="time">2026-10-17 18:59:07</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">可能是</div><div class="time">2026-10-17 18:59:24</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">我回去看一下老师</div><div class="time">2026-10-17 18:59:35</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">对比一下</div><div class="time">2026-10-17 18:59:51</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">明白老师</div><div class="time">2026-10-17 18:59:59</div></div>
+<div class="msg peer"><div class="who">导！急速回，三思回得体！！！</div><div class="bubble"><div class="card media"><a href="890.jpg" target="_blank"><img loading="lazy" src="890.jpg" alt="图片"></a><div class="badge">210×157 · 86.1 KB</div></div></div><div class="time">2026-10-17 19:00:57</div></div>
+<div class="msg peer"><div class="who">导！急速回，三思回得体！！！</div><div class="bubble"><div class="card media"><a href="891.jpg" target="_blank"><img loading="lazy" src="891.jpg" alt="图片"></a><div class="badge">210×157 · 96.6 KB</div></div></div><div class="time">2026-10-17 19:01:32</div></div>
+<div class="msg peer"><div class="who">导！急速回，三思回得体！！！</div><div class="bubble">纳逗画布</div><div class="time">2026-10-17 19:01:38</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">纳逗画布我也看一下</div><div class="time">2026-10-17 19:32:30</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">这个是自己建灵活一点可能</div><div class="time">2026-10-17 19:33:08</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">我比一下老师</div><div class="time">2026-10-17 19:33:15</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">学习一下老师</div><div class="time">2026-10-17 19:39:19</div></div>
+<div class="msg peer"><div class="who">导！急速回，三思回得体！！！</div><div class="bubble">你联系下王沂老師</div><div class="time">2026-10-20 17:10:11</div></div>
+<div class="msg peer"><div class="who">导！急速回，三思回得体！！！</div><div class="bubble">有几个木版要转丝网</div><div class="time">2026-10-20 17:10:32</div></div>
+<div class="msg peer"><div class="who">导！急速回，三思回得体！！！</div><div class="bubble"><div class="card app"><span class="ic">👤</span><div class="cbody"><div class="ctitle">Wang🌿</div><div class="csub">v3_020b3826fd0301000000000007922df876fef1000000501ea9a3dba12f95f6b60a0536a1adb6b03b9083cbe0772110ac6638b72aed9083dbe56ae466258197bf2fba3191b53b404a90dde54b842b38d6fa4850e51b378cf209375e8d615839432e358d@stranger</div></div></div></div><div class="time">2026-10-20 17:10:46</div></div>
+<div class="msg me"><div class="who">我</div><div class="bubble">没问题老师</div><div class="time">2026-10-20 17:13:05</div></div>
+</div>
+<div class="footer">32 messages · 媒体附件目录: 导_1017_assets/（图片 3，语音 0，视频 0）</div>
+</body></html>

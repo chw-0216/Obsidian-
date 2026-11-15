@@ -1,0 +1,184 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+<meta name="wb-stamp" content="20261004-162858|2026-10-04|2026-10-04 16:28:58|v1-migrate-20261004">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>系统重构 · 第一轮 · 证据与更新机制</title><style>
+:root{--bg:#f7f7f5;--card:#fff;--ink:#1c1c1e;--ink2:#4a4a4f;--ink3:#8a8a90;--line:#e5e5e2;
+--red:#c0392b;--red-bg:#fdf2f0;--blue:#1f5c8b;--blue-bg:#eff5fa;--green:#1e7a52;--green-bg:#eef7f2;
+--amber:#9a6b00;--amber-bg:#fdf6e6;--purple:#5b4b8a;--purple-bg:#f2effa}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.75 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
+.wrap{max-width:1040px;margin:0 auto;padding:48px 28px 80px}
+h1{font-size:30px;line-height:1.3;margin:0 0 6px;letter-spacing:-.4px}
+.sub{color:var(--ink3);font-size:13.5px;margin-bottom:34px}
+h2{font-size:20px;margin:44px 0 14px;padding-bottom:9px;border-bottom:2px solid var(--ink)}
+h3{font-size:15.5px;margin:26px 0 10px;color:var(--ink2)}
+p{margin:10px 0}
+.lead{background:var(--card);border-left:4px solid var(--red);border-radius:0 10px 10px 0;padding:18px 22px;margin:20px 0 30px}
+.lead b{color:var(--red)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin:14px 0}
+table{width:100%;border-collapse:collapse;font-size:13px;margin:12px 0}
+th{text-align:left;background:#fafaf8;color:var(--ink2);font-weight:600;padding:8px 9px;border-bottom:2px solid var(--line);white-space:nowrap}
+td{padding:7px 9px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:last-child td{border-bottom:none}
+.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+code{background:#f2f2ef;padding:1px 5px;border-radius:4px;font-size:12.5px;font-family:"SFMono-Regular",Consolas,monospace}
+pre{background:#1e1e22;color:#e8e8ea;padding:14px 16px;border-radius:8px;overflow-x:auto;font-size:12.5px;line-height:1.65}
+.tag{display:inline-block;padding:1px 8px;border-radius:20px;font-size:11px;font-weight:600;white-space:nowrap}
+.t-red{background:var(--red-bg);color:var(--red)}.t-blue{background:var(--blue-bg);color:var(--blue)}
+.t-green{background:var(--green-bg);color:var(--green)}.t-amber{background:var(--amber-bg);color:var(--amber)}
+.t-purple{background:var(--purple-bg);color:var(--purple)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:12px;margin:16px 0}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.kpi .v{font-size:24px;font-weight:700;letter-spacing:-.5px;line-height:1.2}
+.kpi .k{font-size:12px;color:var(--ink3);margin-top:3px}
+.bar{height:7px;background:#eee;border-radius:4px;overflow:hidden;min-width:40px}
+.bar i{display:block;height:100%;background:var(--blue)}
+.bar i.r{background:var(--red)}.bar i.g{background:var(--green)}.bar i.a{background:#d9a300}
+.foot{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);color:var(--ink3);font-size:12px}
+ul{margin:8px 0 8px 4px;padding-left:18px}li{margin:5px 0}
+.ok{color:var(--green);font-weight:600}.no{color:var(--red);font-weight:600}
+</style></head><body><div class="wrap">
+
+<h1>系统重构 · 第一轮：先修证据与更新机制</h1>
+<div class="sub">analysis.sqlite · 永久事件 ID · 证据回链 · 结论状态 · 统一生成管线 ｜ 数据截至 2026-10-04 ｜ run_id <code>20261004-162858</code></div>
+
+<div class="lead">
+<b>一句话：</b>你提的三个问题都是真的，而且比描述的更严重 —— 「编号」列 <b>100% 空</b>；「证据」列只有 <b>38.7%</b> 是真 ID，且这些 ID <b>一个都回链不上</b>（孤儿）；「情感负荷」把机器规则和本人感受混在一列。
+<br><br>
+第一轮四件事已全部落地并<b>通过 22 项自动验收</b>：永久事件 ID（2,864 个）· 证据分级回链（可追溯率 <b>0% → 51.4%</b>）· 结论状态管理（57 条，已撤回 8 条退出画像）· 统一生成管线（一次计算 → 30 份产物同一版本戳）。现在<b>任何一条结论都能回查到原始消息</b>。
+</div>
+
+<h2>一、你提的三个问题 · 实测结果</h2>
+<table>
+<tr><th>问题</th><th>你的描述</th><th>实测</th><th>严重度</th></tr>
+<tr><td>「编号」列</td><td>全部为空</td><td>2,864 行 <b>100% 空</b>（列存在但从未写过值）</td><td><span class="tag t-red">确认</span></td></tr>
+<tr><td>「证据」列</td><td>缺原始消息 ID</td><td>仅 1,108 条（38.7%）像 ID；其余是「正常」「ts转换」等<b>状态词</b>或原文片段。且那 1,108 条是 <code>msg_xxx</code> <b>孤儿 ID</b>，回链 <code>messages.id/server_id/local_id</code> <b>全部 0 命中</b> —— 生成脚本已不存在</td><td><span class="tag t-red">比描述更严重</span></td></tr>
+<tr><td>「情感负荷」</td><td>规则算出，应标为规则评分</td><td>同列混了规则评分与人工标注，<b>无字段区分</b></td><td><span class="tag t-amber">确认</span></td></tr>
+<tr><td>复核状态 / 生成版本</td><td>缺失</td><td>确认缺失，全表无任何版本痕迹</td><td><span class="tag t-amber">确认</span></td></tr>
+</table>
+
+<h2>二、第一轮四件事 · 落地状态</h2>
+<div class="grid">
+<div class="kpi"><div class="v">2,864</div><div class="k">永久事件 ID<br>唯一 2,864 · 非空 100%</div></div>
+<div class="kpi"><div class="v">51.4%</div><div class="k">证据可追溯率<br>（原 0%）</div></div>
+<div class="kpi"><div class="v">57</div><div class="k">结论状态管理<br>已撤回 8 条退出画像</div></div>
+<div class="kpi"><div class="v">30</div><div class="k">产物同一版本戳<br>一次计算全部生成</div></div>
+</div>
+
+<h3>2.1 永久事件 ID</h3>
+<p>格式 <code>EVT-YYYYMMDD-NNN</code>（无日期 → <code>EVT-UNDATED-NNN</code>）。分配依据是<b>自然键</b> <code>sha1(日期|对话人|事件全文)</code>，重跑时按自然键复用旧 ID。</p>
+<ul>
+<li><b>改内容</b>：自然键变 → 需二次匹配（当前按「对话人+事件」匹配，命中唯一则复用）</li>
+<li><b>改日期</b>：按「对话人+事件」匹配 → <b>复用旧 ID</b>，旧日期→新日期写进 <code>revisions</code></li>
+<li><b>重排序 / 重复运行</b>：自然键不变 → 完全不换 ID</li>
+</ul>
+
+<h3>2.2 证据分级与回链</h3>
+<p>原来一列「证据」被拆成 6 档，每条标明状态与置信度：</p>
+<table>
+<tr><th>状态</th><th class="num">条数</th><th>含义</th></tr>
+<tr><td><span class="tag t-green">rebuilt</span></td><td class="num">939</td><td>回链成功（高置信，2-gram 相似度 ≥ 0.35）→ 拿到真实 <code>msg_id</code></td></tr>
+<tr><td><span class="tag t-blue">ambiguous</span></td><td class="num">532</td><td>低置信候选（0.12–0.35），待人确认</td></tr>
+<tr><td><span class="tag t-amber">unlinked</span></td><td class="num">1,036</td><td>未命中（对话人不在库 / 摘要与原文字面差异大）</td></tr>
+<tr><td><span class="tag t-red">orphan</span></td><td class="num">1,108</td><td>旧 <code>msg_xxx</code> 孤儿 ID，生成脚本已失，永久不可回链</td></tr>
+<tr><td><span class="tag t-red">not_evidence</span></td><td class="num">1,576</td><td>原「证据」列填的状态词（「正常」「ts转换」…），本就不是证据</td></tr>
+<tr><td><span class="tag t-purple">text_only</span></td><td class="num">272</td><td>原文片段，未关联消息 ID</td></tr>
+</table>
+<p>回链算法：<b>对话人 → 候选会话（按消息量取前 5）→ 日期 ±1 天 → 2-gram 相似度三档分级</b>。有 <code>msg_id</code> 的证据 <b>1,471 条 100% 校验回链成功</b>。</p>
+
+<h3>2.3 结论状态管理</h3>
+<p>从 <code>05-纠偏层.md</code> 提取 <b>57 条结论</b>，每条记录：支持证据 / 反例 / 本人确认 / 适用时间 / 状态。</p>
+<table>
+<tr><th>状态</th><th class="num">条数</th><th>是否进入当前画像</th></tr>
+<tr><td><span class="tag t-green">有效</span></td><td class="num">36</td><td>是</td></tr>
+<tr><td><span class="tag t-blue">已修正</span></td><td class="num">12</td><td>是（以修正后为准）</td></tr>
+<tr><td><span class="tag t-red">已撤回</span></td><td class="num">8</td><td><b>否</b> —— 视图 <code>v_conclusions_current</code> 已排除</td></tr>
+<tr><td><span class="tag t-amber">待核实</span></td><td class="num">1</td><td>是（标为待核实）</td></tr>
+</table>
+<p>已退出画像的 8 条样例：笑一「朋友·潜在恋人」· 陈昶文「朋友·学弟」· 租她家的车跑滴滴 · 「不同意就分手」…</p>
+
+<h3>2.4 统一生成管线</h3>
+<pre>python tools\regenerate_all.py
+
+[0] run_id + _tmp/pipeline_stamp.json
+[1] build_analysis_db.py      分析库（永久 ID + 证据 + 复核状态）
+[2] relink_evidence.py        证据回链
+[3] extract_conclusions.py    结论状态
+[4] build_daily_master.py     逐日全维主表
+[5] render_daily.py           逐日全维 HTML + Obsidian（25 篇）
+[6] build_master_index.py     分析总览 HTML + Obsidian
+[7] build_number_baseline.py  数字基准（同一次计算）
+[8] 给 30 份产物打同一戳 → _tmp/pipeline_manifest.json
+[9] verify_analysis.py        22 项验收</pre>
+<p>产物按类型分两种承载方式：<b>文本产物</b>（HTML / MD，28 份）内嵌 <code>run_id|数据截至|生成时间|版本</code>；<b>二进制产物</b>（CSV / DB，2 份）在清单里记 <code>sha1</code>。</p>
+
+<h2>三、验收：22 项全通过</h2>
+<table>
+<tr><th>#</th><th>检查项</th><th>结果</th></tr>
+<tr><td>1</td><td>事件 ID 唯一且非空 · 格式合规 · 自然键唯一</td><td><span class="ok">4/4 通过</span></td></tr>
+<tr><td>2</td><td>证据引用有效（有 msg_id 的全部回链成功）</td><td><span class="ok">3/3 通过</span></td></tr>
+<tr><td>3</td><td>重复运行不新增重复事件（<b>实跑三次</b> 2,864→2,864→2,864）</td><td><span class="ok">2/2 通过</span></td></tr>
+<tr><td>4</td><td>日期修改保留历史（<b>实跑改日期 CSV</b>：ID 复用 + revisions 留痕）</td><td><span class="ok">4/4 通过</span></td></tr>
+<tr><td>5</td><td>已撤回结论退出当前画像</td><td><span class="ok">2/2 通过</span></td></tr>
+<tr><td>6</td><td>各产物版本一致（戳 vs 库 meta vs 28 份文本产物）</td><td><span class="ok">5/5 通过</span></td></tr>
+<tr><td>7</td><td>中文检索验收：两字项目名 / 姓名 / 旧备注 / 日期</td><td><span class="ok">1/1 通过</span></td></tr>
+</table>
+<p><b>第 4 项是真跑出来的</b>：复制分析库 → 把一条事件日期改成 2030-01-01 → 重跑 → 事件总数不变（2,864）· 事件 ID 复用（<code>EVT-20260504-001</code> 未变）· <code>revisions</code> 新增一条 <code>2026-05-04 → 2030-01-01</code>。</p>
+<p><b>第 7 项全部命中</b>（两字词走 <code>LIKE</code> 兜底，不走 trigram FTS）：井邻 40 · 澜沧 5 · 植墨 2 · 笑一 22 · 洞台 16 · 陈晔 120 · 安奇 5 · 刘丽萍 59 · 旧备注「急速回 / 三思回」22 · 日期 2026-04-02 共 77 条。</p>
+
+<h2>四、怎么用：从结论回查依据</h2>
+<pre>python tools\trace.py CON-003              # 查结论：状态 + 反例 + 相关事件
+python tools\trace.py EVT-20260808-002     # 查事件：证据 → 原文 → 修订史
+python tools\trace.py --search 井邻        # 关键词找事件（两字词也支持）
+python tools\trace.py --list-concl 已撤回  # 按状态列结论</pre>
+<div class="card">
+<b>实测样例 · 结论回查</b>
+<pre>结论 CON-003
+  陈述      笑一「朋友·潜在恋人」
+  状态      已撤回   ← 已退出当前画像
+  反例      只读 600 条 / 截至 7/17；实际现任女友 5,625 条
+  出处      05-纠偏层.md · 二、已推翻清单</pre>
+</div>
+<div class="card">
+<b>实测样例 · 事件回查（一路回到原始消息）</b>
+<pre>事件 EVT-20260808-002
+  日期      2026-08-08（确定）
+  事件      ★★★ 母亲：「他们以为我帮陈晔在井邻，以为能挣钱。其实我帮我儿子。」
+  规则评分  低（负荷分 13）   ← 机器规则，非本人感受
+  本人感受  （未确认）
+  证据 2 条：
+    [rebuilt] 他们以为我帮陈晔在井邻，以为能挣钱。其实我帮我儿子。
+        → #295304  [them] 他们以为我帮陈晔在井邻，以为能挣钱。其实我帮我儿子。</pre>
+</div>
+
+<h2>五、新增文件</h2>
+<table>
+<tr><th>文件</th><th>作用</th></tr>
+<tr><td><code>analysis.sqlite</code></td><td>分析库：<code>events</code> / <code>evidence</code> / <code>conclusions</code> / <code>meta</code> / <code>persons</code> / <code>aliases</code> / <code>revisions</code> + 视图 <code>v_conclusions_current</code></td></tr>
+<tr><td><code>tools/build_analysis_db.py</code></td><td>建库 / 增量 / 日期修订（幂等）</td></tr>
+<tr><td><code>tools/relink_evidence.py</code></td><td>证据回链</td></tr>
+<tr><td><code>tools/extract_conclusions.py</code></td><td>结论状态提取</td></tr>
+<tr><td><code>tools/build_number_baseline.py</code></td><td>数字基准（每指标带范围/去重/查询）</td></tr>
+<tr><td><code>tools/regenerate_all.py</code></td><td>统一生成管线</td></tr>
+<tr><td><code>tools/verify_analysis.py</code></td><td>22 项验收检查</td></tr>
+<tr><td><code>tools/trace.py</code></td><td>结论 / 事件回查</td></tr>
+</table>
+<p><b>原始数据全程只读</b>：所有对 <code>index.sqlite</code> 的访问一律 <code>file:...?mode=ro</code>，从未写入。</p>
+
+<h2>六、下一轮（你建议里尚未启动的部分）</h2>
+<table>
+<tr><th>优先级</th><th>事项</th><th>说明</th></tr>
+<tr><td><span class="tag t-red">高</span></td><td>Ollama 结构化抽取</td><td>JSON Schema + Pydantic 校验，先补 2026-08 之后的缺口；失败进复核队列</td></tr>
+<tr><td><span class="tag t-red">高</span></td><td>FTS5 + 人物别名表</td><td><code>persons</code> / <code>aliases</code> 表已建好但为空，待灌数据；两字词走别名索引</td></tr>
+<tr><td><span class="tag t-amber">中</span></td><td>Obsidian Bases 四视图</td><td>待本人确认 / 最近更新 / 证据不足或矛盾 / 当前行动</td></tr>
+<tr><td><span class="tag t-amber">中</span></td><td>时间盲测</td><td>只给截至某日的资料，隐藏之后内容</td></tr>
+<tr><td><span class="tag t-blue">低</span></td><td>隐私核对</td><td>Obsidian Sync 实际同步范围 · Ollama <code>disable_ollama_cloud</code></td></tr>
+</table>
+
+<div class="foot">
+数据截至 2026-10-04 ｜ 生成 2026-10-04 ｜ 抽取版本 v1-migrate-20261004 ｜ run_id 20261004-162858<br>
+本报告含真人姓名与关系判断，<b>不得外传</b>。原始聊天数据全程本地处理，未上传第三方。
+</div>
+
+</div></body></html>

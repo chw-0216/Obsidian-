@@ -1,0 +1,190 @@
+<!DOCTYPE html><html lang="zh-CN"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>第三方报告审读：《核心架构重建与行为动力学预测》</title><style>
+:root{--bg:#f7f7f5;--card:#fff;--ink:#1c1c1e;--ink2:#4a4a4f;--ink3:#8a8a90;--line:#e5e5e2;
+--red:#c0392b;--red-bg:#fdf2f0;--blue:#1f5c8b;--blue-bg:#eff5fa;--green:#1e7a52;--green-bg:#eef7f2;
+--amber:#9a6b00;--amber-bg:#fdf6e6;--purple:#5b4b8a;--purple-bg:#f2effa}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.75 -apple-system,"PingFang SC","Microsoft YaHei",sans-serif}
+.wrap{max-width:1040px;margin:0 auto;padding:48px 28px 80px}
+h1{font-size:29px;line-height:1.3;margin:0 0 6px;letter-spacing:-.4px}
+.sub{color:var(--ink3);font-size:13.5px;margin-bottom:34px}
+h2{font-size:20px;margin:44px 0 14px;padding-bottom:9px;border-bottom:2px solid var(--ink)}
+h3{font-size:15.5px;margin:26px 0 10px;color:var(--ink2)}
+p{margin:10px 0}
+.lead{background:var(--card);border-left:4px solid var(--red);border-radius:0 10px 10px 0;padding:18px 22px;margin:20px 0 30px}
+.lead b{color:var(--red)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 20px;margin:14px 0}
+.card.red{border-left:4px solid var(--red)}
+.card.amber{border-left:4px solid var(--amber)}
+.card.green{border-left:4px solid var(--green)}
+table{width:100%;border-collapse:collapse;font-size:13px;margin:12px 0}
+th{text-align:left;background:#fafaf8;color:var(--ink2);font-weight:600;padding:8px 9px;border-bottom:2px solid var(--line);white-space:nowrap}
+td{padding:7px 9px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:last-child td{border-bottom:none}
+.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+code{background:#f2f2ef;padding:1px 5px;border-radius:4px;font-size:12.5px;font-family:"SFMono-Regular",Consolas,monospace}
+.tag{display:inline-block;padding:1px 8px;border-radius:20px;font-size:11px;font-weight:600;white-space:nowrap}
+.t-red{background:var(--red-bg);color:var(--red)}.t-blue{background:var(--blue-bg);color:var(--blue)}
+.t-green{background:var(--green-bg);color:var(--green)}.t-amber{background:var(--amber-bg);color:var(--amber)}
+.t-purple{background:var(--purple-bg);color:var(--purple)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:16px 0}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.kpi .v{font-size:25px;font-weight:700;letter-spacing:-.5px;line-height:1.2}
+.kpi .k{font-size:12px;color:var(--ink3);margin-top:3px}
+.foot{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);color:var(--ink3);font-size:12px}
+ul{margin:8px 0 8px 4px;padding-left:18px}li{margin:5px 0}
+.ok{color:var(--green);font-weight:600}.no{color:var(--red);font-weight:600}
+.q{border-left:3px solid var(--line);padding-left:12px;color:var(--ink2);font-size:13.5px;margin:8px 0}
+</style></head><body><div class="wrap">
+
+<h1>第三方报告审读：《核心架构重建与行为动力学预测》</h1>
+<div class="sub">逐项核对 · 红线检查 · 处置建议 ｜ 2026-10-05 ｜ 核对基准 = <code>analysis.sqlite</code>（59 结论 / 2,864 事件）+ <code>05-纠偏层.md</code> + 索引库原文</div>
+
+<div class="lead">
+<b>一句话：</b>这份报告 <b>90% 是引擎已有裁定的复述</b>——事实层基本可信（因为它抄的是引擎），但它<b>有 3 处与引擎已裁定直接冲突</b>（其中依恋类型是<b>整个第 5 节的地基</b>）、<b>5 处违反引擎明令红线</b>、<b>3 处数据不支撑</b>。<br>
+<b>它的真正价值不是结论，是 4 个可证伪的预测</b>——但必须以「待验证」登记，不能当结论用。
+</div>
+
+<div class="grid">
+<div class="kpi"><div class="v">30</div><div class="k">逐项核对</div></div>
+<div class="kpi"><div class="v ok">19</div><div class="k">有据可查</div></div>
+<div class="kpi"><div class="v no">3</div><div class="k">与裁定冲突</div></div>
+<div class="kpi"><div class="v" style="color:var(--amber)">5</div><div class="k">违反红线</div></div>
+<div class="kpi"><div class="v" style="color:var(--ink3)">3</div><div class="k">数据不支撑</div></div>
+</div>
+
+<h2>一、它准确的部分（19 项 · 有据可查）</h2>
+<p>这些不是它的功劳——是它<b>照抄了引擎的裁定</b>。我逐条回原始数据验过，都能对上。</p>
+
+<table>
+<tr><th>报告的说法</th><th>核对结果</th><th>证据</th></tr>
+<tr><td>98 人锚点（53 核心 + 29 补标 + 16 井邻线）</td><td><span class="tag t-green">对</span></td><td>引擎铁律 0 原文一致</td></tr>
+<tr><td>十一种失效模式（含性别倒置 / 窗口截断 / 线下共存失真…）</td><td><span class="tag t-green">对</span></td><td><code>05</code> 一节逐条对应</td></tr>
+<tr><td>距离定律两次修正</td><td><span class="tag t-green">对</span></td><td><code>05</code> 三节</td></tr>
+<tr><td>父亲 4 次高强度冲突 + 原话（要害死我 / 可以蹲监狱 / 不认儿子 / 贼）</td><td><span class="tag t-green">对</span></td><td>EVT-20241227-001 · 20241230-001 · 20250409-002 · 20260627-001</td></tr>
+<tr><td>手术周多线并行（剐蹭 / 衣服 / 生日礼物 / 接机送车 / 介绍对象 / 同事聚餐）</td><td><span class="tag t-green">对</span></td><td>EVT-20250320-003·004 · 20250319-002·003 · 20250322-001·002 · 20250325-003·005</td></tr>
+<tr><td>拟录取 2025-03-26</td><td><span class="tag t-green">对</span></td><td>EVT-20250326-003（蔡浩文和杨丁懿被拟录取）</td></tr>
+<tr><td>程颂孟秋 2,000 元 · 2025-11 → 2026-07 · 催收 3 次</td><td><span class="tag t-green">对</span></td><td>EVT-20251107-001 · 20260228-001 · 20260520-001 · 20260712-001</td></tr>
+<tr><td>3,000/月 刚性还款 · 至少到 2027-09 · 覆盖研二研三</td><td><span class="tag t-green">对</span></td><td><code>07-事件档案</code> 已记</td></tr>
+<tr><td>沐茜妍 2026-05-04 手术 · 全库最高情感负荷 55 分 · 他去了厦门</td><td><span class="tag t-green">对</span></td><td>EVT-20260504-001（load_score = 55）</td></tr>
+<tr><td>Summer 2025-04-15 长篇反思 → 「先搁置吧，夏夏能找到更好的」</td><td><span class="tag t-green">对</span></td><td>EVT-20250415-002 · 20250415-006</td></tr>
+<tr><td>冯梦波 2025-01/02 前置运作（答疑 / 结课作业 / 安排研一课程）</td><td><span class="tag t-green">对</span></td><td><code>07</code> 已记；索引库 2025-02-02 原文可见</td></tr>
+<tr><td>武宏 2026-03-14 送木刻刀到教室</td><td><span class="tag t-green">对</span></td><td>EVT-20260314-005</td></tr>
+<tr><td>2026-04 极狐（母亲名下）</td><td><span class="tag t-green">对</span></td><td>EVT-20260402-077 · 20260403-004</td></tr>
+<tr><td>「在央美读博」口径确实存在</td><td><span class="tag t-green">对</span></td><td>EVT-20250327-004（对程颂孟秋）</td></tr>
+<tr><td>13 个月健康压力重叠期（2024-12 → 2026-01）</td><td><span class="tag t-green">对</span></td><td>奶奶确诊 2024-12-26 → 死亡证明 2026-01-23</td></tr>
+<tr><td>母亲 142 条消息（同住失真）</td><td><span class="tag t-green">对</span></td><td>引擎失效模式 4</td></tr>
+<tr><td>Eloise 4,686 · 陈昶文「学弟」 · 531 条计划 · 负产出 14.2%→4.1% · intimacy 7.29 vs 6.41</td><td><span class="tag t-green">对</span></td><td>引擎失效模式 1/5/7/10</td></tr>
+<tr><td>沐茜妍 = 工具性持有 · Summer = 第一档最低位</td><td><span class="tag t-green">对</span></td><td><code>05</code> 三·补·6 / 三·补·8</td></tr>
+<tr><td>「同一个模式，两个现场」（钱 / 车）</td><td><span class="tag t-green">对</span></td><td><code>05</code> 三·补·5 原文</td></tr>
+</table>
+
+<h2>二、⛔ 与引擎已裁定直接冲突（3 处 · 必须处理）</h2>
+
+<div class="card red">
+<h3>A1 ★ 依恋类型安反了 —— 整个第 5 节的地基是错的</h3>
+<div class="q">引擎 <code>05-纠偏层</code> 二、已推翻清单：<br>
+「『她是焦虑型依恋』｜ ⚠️ 角色错位 ｜ <b>焦虑型是他；她是恐惧-回避型</b>」</div>
+<div class="q">报告：「主体 … 必须通过引入<b>恐惧-回避型依恋</b>（Fearful-Avoidant Attachment）的理论框架才能得到完美解释」</div>
+<p><b>方向完全相反。</b>引擎说主体是<b>焦虑型</b>，报告说主体是<b>恐惧-回避型</b>。报告的「双层人际架构」「防御性贬低」「抽离与隔离」三整套解释，全部挂在这个反了的地基上。</p>
+<p><b>但真正的问题在引擎这边：</b>这条判定<b>只有一行、无出处、无展开</b>，从未经本人裁定。引擎把它写进「已推翻清单」= <b>未经锚点就定了性</b>，违反铁律 0。</p>
+<p><b>处置：两边都不能用。依恋类型回退为「未裁定」，列进待裁定清单，由本人拍板。</b></p>
+</div>
+
+<div class="card red">
+<h3>A2 ★ 债务主因被改写 —— 抹掉了「被骗」</h3>
+<div class="q">引擎 <code>05</code> 三·补·4 红线 2：<b>不要把债务归因于「乱花钱」—— 主因是被骗（受害），不是挥霍。</b><br>
+红线 3：<b>不要把两笔债混成一笔</b> —— 被骗那笔是家里兜底，泡妞那笔是他自己扛。</div>
+<div class="q">报告：「初版机器推断曾试图将这一状态归结为外生冲击（即被讹诈 1 万元导致的资金紧张）。然而，深度的交互裁定与溯源<b>彻底推翻了这一表层逻辑</b>，揭示了其本质是一个『结构性现金流缺口』」</div>
+<p>报告把经济线**完全**归到「情感支出超支 → 分期/网贷 → 3,000/月」，<b>全文一次都没提格拉斯哥被骗那笔（家里兜底的那笔）</b>。它把「被讹诈 1 万」称为「表层逻辑」并宣布推翻——但引擎明确说<b>主因是被骗</b>。</p>
+<p><b>这是把「受害」改写成「自作自受」。</b>性质最严重的一处。</p>
+</div>
+
+<div class="card red">
+<h3>A3 ★ 把学业线读成「上课读书」</h3>
+<div class="q">引擎 <code>05</code> 三·补·38 四、红线 1：<b>不得把「学业线」理解成「上课读书」—— 2026 年夏天它的实体是运营一个乡村工作站。</b></div>
+<div class="q">报告：「主体在学术场域内极度脆弱…目前的『隔离』防御机制让他能够<b>像完成任务一样应付结课作业</b>」</div>
+<p>报告整节只看到「结课作业」，没看到井邻/洞台工作站这条<b>真正的主线</b>（515 条 / 99 会话 / 跨 19 个月）。据此推出的「学业避风港」论断，前提就是错的。</p>
+</div>
+
+<h2>三、⚠️ 违反引擎明令红线（5 处）</h2>
+
+<table>
+<tr><th>#</th><th>报告怎么写的</th><th>违反哪条</th></tr>
+<tr><td>B1</td><td>「祖母的确诊、住院直至离世」「心脏搭桥开胸手术（2025-03-20 夜间至 24 日，历时 5.5 小时）」「ICU 监护期」</td><td><code>05</code> 三·补·3：<b>医疗与丧事资料永久保护。可确认时间，不得展开细节。</b></td></tr>
+<tr><td>B2</td><td>「父子零距离冲突本质为零和资源掠夺战，<b>无法调和</b>」+ 设计「<b>切断变量测试</b>」</td><td><code>05</code> 三·补·5：<b>读法：不要追问父子冲突的具体触发点</b>（会撞墙，触碰红线 1）</td></tr>
+<tr><td>B3</td><td>「捞女」「冷酷」「虚幻的自恋外壳」「贬损女性」「低端情感消费」「工具性消耗」</td><td><code>05</code> 三·补·10 红线 4：<b>不要对「手淫 / 追女孩」作道德评价</b> —— 这是孤独 + 性匮乏的正常反应</td></tr>
+<tr><td>B4</td><td>重复并渲染「在央美读博」这句话本身，作为「自恋外壳」的论据</td><td><code>05</code> 三·补·7：<b>任何对外输出不得写「他在央美读博」</b></td></tr>
+<tr><td>B5</td><td>大段展开关系网（冯梦波 / 武宏 / 章燕紫）姓名 + 运作细节</td><td><code>05</code> 三·补·9 红线 3：<b>关系网、兜底路径、「没法找工作」，任何对外输出不得出现</b>（隐私等级：最高）</td></tr>
+</table>
+
+<p><b>合起来看：这份报告「对内可读、对外绝对不可用」。</b>它把引擎里<b>隐私等级最高的三块</b>（关系网 / 医疗丧事 / 追女孩）全部展开写成了论证材料。</p>
+
+<h2>四、❓ 数据不支撑 / 夸大（3 处）</h2>
+
+<table>
+<tr><th>报告的说法</th><th>实测</th></tr>
+<tr><td>「主体在对外社交中<b>频繁</b>使用『在央美读博』」</td><td>全库<b>只有 1 条</b>（EVT-20250327-004，对程颂孟秋）。「频繁」无依据。</td></tr>
+<tr><td>章燕紫「作为央美艺术资讯网执行主编…在该体系中为主体提供着<b>隐形的系统性支撑</b>」</td><td>引擎 <code>07</code> 表格明确记：<b>章燕紫 ｜ 数据中无</b>。她确有 23 条聊天（2025-01-07 起），但<b>无任何事件层印证</b>。且「央美艺术资讯网执行主编」这个头衔<b>引擎里没有</b>，来源不明。</td></tr>
+<tr><td>冯梦波「中国新媒体艺术先锋」</td><td>属<b>外部知识注入</b>。引擎口径只用锚点 + 数据；本人原话是「冯梦波<b>院长</b>刚退休是老朋友」——报告把「院长」改成了「教授」。</td></tr>
+</table>
+
+<p><b>另有一处措辞不严谨（源自引擎）</b>：13 个月窗口（2024-12 → 2026-01）说成「覆盖了他<b>整个</b>研一学年」。研一学年是 2025-09 → 2026-07，实际只覆盖<b>研一上学期</b>。这句是引擎自己写得不严，报告照抄了——<b>要改的是引擎</b>。</p>
+
+<h2>五、四个「激进论断」怎么定性</h2>
+
+<table>
+<tr><th>论断</th><th>里面什么是引擎已有的</th><th>什么是它自己加的</th><th>定性</th></tr>
+<tr>
+<td><b>一</b> 流动性枯竭是阶层跃升死穴<br>2027-09 清零后 3 个月内切断笑一 + 重启第二档</td>
+<td>「3,000/月 结清后，那 2,000 会在一个月内还清」= <b>引擎三·补·4 原句</b></td>
+<td>「切断与笑一的联系」「重启第二档」——<b>无锚点</b>，且笑一的定性（Q15）本人裁的是「现任女友 + 资源约束」，不是「随时可切」</td>
+<td><span class="tag t-amber">半个可用</span><br>前半段是引擎的，后半段是加码</td>
+</tr>
+<tr>
+<td><b>二</b> 父子冲突 = 零和资源掠夺战，无法调和</td>
+<td>「若他不再动用家里的资源做关系投入，父亲线应显著降温」= <b>引擎三·补·5 原句</b></td>
+<td>「无法调和」是定论化；「切断变量测试」= <b>正好踩在「不要追问触发点」的红线上</b></td>
+<td><span class="tag t-red">越界</span></td>
+</tr>
+<tr>
+<td><b>三</b> 学业避风港存在崩塌风险</td>
+<td>「考央美 = 兜底安排」= 引擎三·补·9</td>
+<td>把学业读成「应付结课作业」→ <b>违反三·补·38 红线 1</b>；漏掉井邻工作站主线</td>
+<td><span class="tag t-red">前提错</span></td>
+</tr>
+<tr>
+<td><b>四</b> 恐惧-回避型防御网将被反噬</td>
+<td>「隔离 + 填充」= 引擎三·补·3 已有的机制</td>
+<td>整个框架挂在 A1 那个<b>反了的依恋类型</b>上</td>
+<td><span class="tag t-red">地基错</span></td>
+</tr>
+</table>
+
+<h2>六、处置建议</h2>
+
+<div class="card green">
+<p><b>1. 不进 <code>05-纠偏层</code> 作为结论。</b>它不符合「人工锚点」标准——不是本人裁定，是第三方推断。按铁律 0，<b>只有本人能立结论</b>。</p>
+<p><b>2. 抽 4 个预测，登记为「待验证预测」。</b>这是它唯一真正有用的产出——引擎的方法论要求「可证伪」，它做到了。但必须标明<b>未经锚点校准</b>，且要修掉论断二/三/四 里的越界部分。</p>
+<p><b>3. 依恋类型回退到「未裁定」</b>，进待裁定清单（与 Q15+ 并列）。<b>引擎自己那条也要改</b>——它未经裁定就写了定性。</p>
+<p><b>4. 补一条红线：</b>「债务叙事不得抹掉『被骗』这一主因」——A2 这种改写很容易再发生。</p>
+<p><b>5. 这份报告归档为「对外不可用样本」</b>——它是「事实抄得对、结论推得野」的典型，正好当反例。</p>
+</div>
+
+<h2>七、我做了什么</h2>
+<ul>
+<li>逐条回 <code>analysis.sqlite</code>（59 结论 / 2,864 事件）与索引库原文核对 <b>30 项</b>，全部标出证据 ID</li>
+<li>比对 <code>05-纠偏层.md</code> 的全部红线与已推翻清单，找出 <b>3 冲突 + 5 越界</b></li>
+<li>把结论写进引擎 <code>三·补·43</code>（含 4 个待验证预测的登记表）</li>
+<li><b>未改动</b>任何原始数据、未改动 <code>05-纠偏层</code> 既有裁定（只追加，不覆写）</li>
+</ul>
+
+<div class="foot">
+含真人姓名、关系判断、金额与医疗信息 —— <b>不得外传</b>。原始聊天数据全程本地处理。<br>
+核对基准：<code>analysis.sqlite</code> ｜ <code>05-纠偏层.md</code> ｜ <code>07-事件档案.md</code> ｜ <code>index.sqlite</code>（335,681 条）<br>
+生成 2026-10-05 ｜ 工作区 <code>C:\Users\wardc\WorkBuddy AI\2026-09-28-06-58-18</code>
+</div>
+
+</div></body></html>

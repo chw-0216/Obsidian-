@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#101212"><title>Gesture Synth · 双手成曲</title><link rel="icon" href="data:,"><link rel="stylesheet" href="/style.css"></head>
+<body>
+  <main id="stage">
+    <video id="webcam" autoplay playsinline muted aria-hidden="true"></video>
+    <canvas id="visual" aria-label="手势追踪与和弦声波的实时画面"></canvas>
+    <header class="header">
+      <a class="brand" id="brandHome" href="#" aria-label="Gesture Synth 首页"><span class="brand-mark" aria-hidden="true">≋</span><span>GESTURE SYNTH<small>双手成曲</small></span></a>
+      <div class="top-actions"><span id="cameraStatus" class="status"><i></i>本地乐器</span><button id="songButton">整曲提示</button><button id="helpButton">演奏指南</button><button id="settingsButton">设置</button><button id="fullscreenButton" aria-label="切换全屏">⛶</button></div>
+    </header>
+    <div id="controls" class="control-strip"><label>调性<select id="keySelect" aria-label="调性"></select></label><label>音色<select id="toneSelect" aria-label="音色"><option value="triangle">温暖合成器</option><option value="sawtooth">明亮合成器</option><option value="square">复古合成器</option></select></label><label>演奏方式<select id="modeSelect" aria-label="演奏方式"><option value="two">双手演奏</option><option value="one">单手入门</option></select></label><label id="singleQualityWrap" hidden>和弦形态<select id="singleQuality"><option value="1">原位</option><option value="2">第一转位</option><option value="3">七和弦</option><option value="4">属 / 减七</option></select></label></div>
+    <aside id="gestureGuide" class="gesture-guide" hidden><div class="panel-caption">左手 · 选择和弦</div><div id="guideRows"></div><div class="guide-foot">手腕内倾：大调<br>手腕外倾：小调</div></aside>
+    <aside id="expression" class="expression" hidden><div class="panel-caption">右手 · 塑造声音</div><div class="meter-label"><span>音量</span><b id="volumeValue">0%</b></div><div class="meter-track"><div id="volumeFill"></div></div><div class="meter-label"><span>明亮度</span><b id="filterValue">50%</b></div><div class="meter-track"><div id="filterFill"></div></div><div id="handStatus">抬起双手</div></aside>
+    <section id="songPrompt" class="song-prompt" hidden aria-live="polite"><div class="song-prompt-head"><span>完整引导演奏</span><span id="songCount">01 / 16</span></div><div id="songSection" class="song-section">引子</div><div id="songChord" class="song-chord">C</div><div id="songGesture" class="song-gesture">左手伸出 1 根手指 · 手腕向内倾</div><div class="song-beats" aria-label="四拍进度"><i></i><i></i><i></i><i></i></div><div class="song-progress"><div id="songProgress"></div></div><p id="songStatus" class="song-status">举起左手，匹配和弦后开始四拍</p><div class="song-actions"><button id="songPause">暂停引导</button><button id="songStop">结束引导</button></div></section>
+    <section id="intro" class="intro">
+      <div class="eyebrow">YOUR HANDS. YOUR INSTRUMENT.</div><h1>用双手，<br>演奏一首歌。</h1><p>左手选择和弦，右手塑造声音。<br>让每一个动作，都有听得见的回应。</p>
+      <div class="intro-actions"><button id="cameraStart" class="primary">开启摄像头演奏 <span>↗</span></button><button id="manualStart" class="secondary">先试试声音</button></div>
+      <div class="intro-note">摄像头画面仅在本机处理 · 无需麦克风</div>
+    </section>
+    <section id="loading" class="loading" hidden aria-live="polite"><span class="spinner"></span><h2 id="loadingTitle">正在准备你的乐器</h2><p id="loadingText">加载本地手部识别模型…</p><button id="cancelLoading" class="secondary">返回</button></section>
+    <section id="manualPanel" class="manual-panel" hidden>
+      <div class="panel-caption">声音预演 <span>点击保持和弦 · 再点一次松开</span></div><div id="manualKeys" class="manual-keys"></div>
+      <div class="manual-controls"><button id="majorToggle" aria-pressed="false">大调</button><label>右手形态<select id="manualQuality"><option value="1">1 指 · 原位</option><option value="2">2 指 · 第一转位</option><option value="3">3 指 · 七和弦</option><option value="4">4 指 · 属 / 减七</option></select></label><button id="octaveToggle" aria-pressed="false">标准八度</button><button id="demoButton">试听一段</button></div>
+      <div class="manual-sliders"><label>手的高度 · 音量<input id="manualVolume" type="range" min="0" max="1" step="0.01" value="1"></label><label>手腕倾斜 · 明亮度<input id="manualFilter" type="range" min="-1" max="1" step="0.01" value="0"></label></div>
+      <div class="manual-caption">预演中未开启摄像头 · 键盘 1–7 演奏，空格停音</div>
+    </section>
+    <div id="liveHint" class="live-hint" hidden aria-live="polite">先将左手举到镜头前</div>
+    <div id="chordPanel" class="chord-panel"><div id="degreeLabel">GESTURE · SOUND · EXPRESSION</div><div id="chordDisplay">—</div><div id="qualityDisplay">伸出手，让和弦开始</div><div id="noteDisplay"></div></div>
+    <div id="performanceBar" class="performance-bar" hidden><button id="guideToggle" aria-pressed="true">手势提示</button><button id="recordButton"><span class="record-dot"></span>录制演奏</button><button id="muteButton" aria-pressed="false">静音</button><button id="leaveButton">结束演奏</button></div>
+    <div id="recordingTray" class="recording-tray" hidden><span id="recordingSummary"></span><button id="replayButton">回放</button><a id="downloadRecording" download>保存录音</a><button id="closeRecording" aria-label="收起录音">×</button><audio id="recordedAudio" preload="metadata"></audio></div>
+    <footer><span>Original instrument by <a href="https://github.com/ericwei97-cloud/gesture-synth" target="_blank" rel="noopener">Eric Wei</a><span class="footer-detail"> · 中文本地改编</span></span><span id="runtimeStatus">个人 / 教学 / 非商业使用</span></footer>
+  </main>
+  <dialog id="helpDialog"><div class="dialog-head"><div><div class="eyebrow">HOW TO PLAY</div><h2>把双手当作一件乐器。</h2></div><button data-close="helpDialog" aria-label="关闭演奏指南">×</button></div><p class="dialog-lead">先在调性中选好歌曲的主调。保持手势会持续发声，换一个手势就切换和弦。</p><div class="help-grid"><div><h3>01 · 左手决定和弦</h3><div id="helpHands" class="help-hands"></div><p>1–5 根手指对应 I–V 级；食指＋小指对应 VI，加上拇指对应 VII。</p><p>手腕向内倾是大调，向外倾是小调。C 调下，VI 配合外倾就得到 Am。</p></div><div><h3>02 · 右手决定表情</h3><dl><dt>1 根手指</dt><dd>原位和弦</dd><dt>2 根手指</dt><dd>第一转位</dd><dt>3 根手指</dt><dd>大七 / 小七和弦</dd><dt>4 根手指</dt><dd>属七 / 减七和弦</dd><dt>伸出拇指</dt><dd>降低一个八度</dd><dt>上下移动</dt><dd>控制音量</dd><dt>左右倾斜</dt><dd>改变音色的明亮度</dd><dt>握拳 / 移出画面</dt><dd>声音渐弱停止</dd></dl></div></div><div class="help-tip">入门可切换“单手入门”，仅用左手切换和弦。双手识别相反时，在设置里开启“交换左右手”。</div><button class="primary" data-close="helpDialog">开始练习</button></dialog>
+  <dialog id="settingsDialog"><div class="dialog-head"><h2>演奏设置</h2><button data-close="settingsDialog" aria-label="关闭设置">×</button></div><label class="setting"><span>交换左右手<small>让选和弦的手与画面提示一致</small></span><input id="swapHands" type="checkbox"></label><label class="setting"><span>显示摄像头画面</span><input id="showVideo" type="checkbox" checked></label><label class="setting"><span>显示手部骨架</span><input id="showHands" type="checkbox" checked></label><label class="setting"><span>左手上移升半音<small>进入画面上半区时升高一个半音</small></span><input id="raisePitch" type="checkbox"></label><label class="setting"><span>左手下移降半音<small>进入画面底部五分之一时降低一个半音</small></span><input id="lowerPitch" type="checkbox"></label><p class="settings-note">识别、音色与画面在本机运行。录制只保存合成器声音，不录摄像头或麦克风。</p></dialog>
+  <dialog id="songDialog"><div class="dialog-head"><div><div class="eyebrow">GUIDED PLAY</div><h2>跟着提示演奏一整段音乐。</h2></div><button data-close="songDialog" aria-label="关闭整曲提示">×</button></div><p class="dialog-lead">《小旅程》是一段原创和弦练习曲，共 16 小节、4/4 拍、80 BPM。每小节 4 拍，匹配提示和弦后开始计时；按提示换手势，约 48 秒完成。</p><div class="song-map"><p><b>引子</b>　C　→　G</p><p><b>第一段</b>　Am　→　Em　→　F　→　C</p><p><b>副歌</b>　F　→　G　→　C　→　G　→　Am　→　Em</p><p><b>尾声</b>　F　→　C　→　G　→　C</p></div><p class="help-tip">本段为原创和弦伴奏练习，不含自动播放的歌曲或歌词。正式手势演奏使用单手入门：左手选择和弦，手腕倾斜切换大小调；右手无需参与。</p><div class="song-start-actions"><button id="songCameraStart" class="primary">开始手势演奏</button><button id="songManualStart" class="secondary">先用按钮预演</button></div></dialog>
+  <div id="toast" class="toast" hidden role="status"></div>
+  <script type="module" src="/main.js"></script>
+</body></html>

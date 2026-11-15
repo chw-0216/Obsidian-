@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Obsidian 打通与进度盘点 · 2026-09-29</title>
+<style>
+  :root{
+    --ink:#1f1f1e; --ink2:#5f5e5a; --ink3:#888780;
+    --line:#e5e3dc; --line2:#d3d1c7;
+    --bg:#ffffff; --bg2:#faf9f6;
+    --acc:#993c1d; --acc-bg:#faece7;
+    --ok:#2f6b4f; --ok-bg:#eaf3ee;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;background:var(--bg);color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    font-size:14px;line-height:1.7;
+  }
+  .wrap{max-width:900px;margin:0 auto;padding:48px 32px 80px}
+  header{border-bottom:2px solid var(--ink);padding-bottom:20px;margin-bottom:32px}
+  .kicker{font-size:12px;letter-spacing:.14em;color:var(--ink3);margin-bottom:10px}
+  h1{font-size:24px;font-weight:600;margin:0 0 8px;letter-spacing:-.01em}
+  .sub{font-size:13px;color:var(--ink2);margin:0}
+  h2{font-size:15px;font-weight:600;margin:44px 0 14px;padding-bottom:8px;border-bottom:1px solid var(--line2)}
+  h3{font-size:13px;font-weight:600;margin:24px 0 8px;color:var(--ink2)}
+  p{margin:0 0 12px}
+  .lead{background:var(--bg2);border-left:3px solid var(--acc);padding:16px 18px;margin:0 0 8px;border-radius:0 6px 6px 0}
+  .lead strong{color:var(--acc)}
+  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:13px}
+  th{text-align:left;font-weight:600;color:var(--ink2);padding:8px 10px;border-bottom:1px solid var(--line2);white-space:nowrap}
+  td{padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+  td.num{font-variant-numeric:tabular-nums;white-space:nowrap}
+  tbody tr:last-child td{border-bottom:none}
+  .hit{color:var(--acc);font-weight:600}
+  .dim{color:var(--ink3)}
+  .ok{color:var(--ok);font-weight:600}
+  code{background:var(--bg2);border:1px solid var(--line);border-radius:3px;padding:1px 5px;font-size:12px}
+  pre{
+    background:var(--bg2);border:1px solid var(--line);border-radius:6px;
+    padding:14px 16px;margin:12px 0;font-size:12.5px;line-height:1.75;
+    font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;overflow-x:auto;color:var(--ink)
+  }
+  .note{border:1px solid var(--line2);border-radius:6px;padding:14px 16px;margin:14px 0;background:var(--bg2)}
+  .note .t{font-weight:600;margin-bottom:6px;font-size:13px}
+  .warn{border-color:#e8c9c0;background:var(--acc-bg)}
+  .warn .t{color:var(--acc)}
+  .good{border-color:#c9dcd0;background:var(--ok-bg)}
+  .good .t{color:var(--ok)}
+  ul{margin:8px 0 12px;padding-left:20px}
+  li{margin-bottom:5px}
+  .pill{display:inline-block;font-size:11px;padding:1px 7px;border-radius:9px;border:1px solid var(--line2);color:var(--ink2);vertical-align:1px}
+  .pill.a{border-color:#e8c9c0;background:var(--acc-bg);color:var(--acc)}
+  .pill.g{border-color:#c9dcd0;background:var(--ok-bg);color:var(--ok)}
+
+  .bar{display:grid;grid-template-columns:190px 1fr 72px;gap:10px;align-items:center;margin-bottom:9px;font-size:13px}
+  .bar .track{height:9px;background:#efece5;border-radius:5px;overflow:hidden}
+  .bar .fill{height:100%;background:var(--acc);border-radius:5px}
+  .bar .fill.g{background:var(--ok)}
+  .bar .v{text-align:right;font-variant-numeric:tabular-nums;color:var(--ink2);font-size:12px}
+
+  footer{margin-top:56px;padding-top:20px;border-top:1px solid var(--line2);font-size:12px;color:var(--ink3)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="kicker">自我理解引擎 · 知识库打通</div>
+  <h1>Obsidian 打通与进度盘点</h1>
+  <p class="sub">2026-09-29 · 断链体检 595 篇 · 双向索引建立 · 9 篇笔记更新</p>
+</header>
+
+<div class="lead">
+  <p style="margin:0">知识库<strong>没有断链问题</strong>（595 篇 · <strong class="ok">0 断链</strong>）——
+  真正缺的是<strong>和引擎的连接</strong>。</p>
+  <p style="margin:10px 0 0">已建立双向索引，并把 19 条裁定同步回 9 篇笔记。</p>
+</div>
+
+<h2>一、断链体检：结果比预期干净</h2>
+
+<div class="bar"><div>Obsidian 笔记总数</div><div class="track"><div class="fill g" style="width:100%"></div></div><div class="v">595</div></div>
+<div class="bar"><div>断链（最终）</div><div class="track"><div class="fill g" style="width:0%"></div></div><div class="v">0</div></div>
+
+<div class="note good">
+  <div class="t">✅ 结论：Vault 链接完整度 100%</div>
+  <p style="margin:0">wiki 链接 0 断 · 相对路径 Markdown 链接 0 断。</p>
+</div>
+
+<h3>过程中修掉了扫描器自己的 3 个 bug（不是 Vault 的问题）</h3>
+<table>
+  <thead><tr><th>#</th><th>误报</th><th>真因</th></tr></thead>
+  <tbody>
+    <tr><td>1</td><td>报 31 条断链</td><td>把指向<strong>桌面</strong>的相对路径 Markdown 链接 <code>[t](../../Desktop/x.md)</code> 当成了 wiki 链接目标</td></tr>
+    <tr><td>2</td><td>报 <code>[[AAA]]</code> / <code>[[A]]</code></td><td><code>os.path.splitext</code> 在<strong>最后一个点</strong>切分 —— <code>AAA.麻辣自嗨锅女士</code> 被切成 <code>AAA</code></td></tr>
+    <tr><td>3</td><td>报 <code>[[沐茜妍/]]</code></td><td>表格里的 <code>[[目标\|别名]]</code> 是 Obsidian 正确的转义写法，正则没处理</td></tr>
+  </tbody>
+</table>
+
+<div class="note">
+  <div class="t">教训（已写进引擎 SKILL.md）</div>
+  <p style="margin:0">文件名含点时<strong>不能用 <code>splitext</code></strong> 取 basename。
+  本库有 <code>AAA.麻辣自嗨锅女士</code>、<code>A.王亮151****1241</code> 这类命名。</p>
+</div>
+
+<h2>二、打通了什么（双向）</h2>
+
+<pre>微信原始数据
+     ↓
+【引擎】.workbuddy-ai\skills\self-understanding-engine\     ← 裁定层（05-纠偏层.md）
+     ↕  ← 本次建立双向索引
+【知识库】Documents\Obsidian Vault\                          ← 承载层（594 → 595 篇）
+     ↳ 01_个人信息\自我理解引擎·打通页.md  ← 唯一接口
+     ↓
+【产出】WorkBuddy AI\2026-09-28-06-58-18\                    ← HTML 报告 / CSV / 脚本</pre>
+
+<table>
+  <thead><tr><th>方向</th><th>做了什么</th></tr></thead>
+  <tbody>
+    <tr><td>引擎 → 库</td><td>新建 <code>自我理解引擎·打通页.md</code>：三处位置 / 五个引擎文件 / <strong>19 条裁定清单</strong> / P0 七条线索 / 还差多少分析</td></tr>
+    <tr><td>库 → 引擎</td><td><code>SKILL.md</code> 新增「相关资产位置（打通）」节：登记 Vault 路径 + 双向约定 + 断链体检脚本</td></tr>
+    <tr><td>入口</td><td><code>🏠主页.md</code> 顶栏加「🧠 引擎接口 → 打通页」</td></tr>
+    <tr><td>体检</td><td><code>tools\check_vault_links.py</code>（只读，可反复跑）</td></tr>
+  </tbody>
+</table>
+
+<h2>三、更新了什么（9 篇）</h2>
+
+<table>
+  <thead><tr><th>笔记</th><th>改了什么</th><th>依据</th></tr></thead>
+  <tbody>
+    <tr><td><code>沐茜妍.md</code></td><td>加本名「<strong>林立娜</strong>」+ 定性修正（工具性持有）；机器摘要保留但标注<strong>已被推翻</strong></td><td>Q6</td></tr>
+    <tr><td><code>Summer.md</code></td><td>加「<strong>第一档最低位</strong>」+「先搁置吧＝隔离机制的语言」</td><td>Q8</td></tr>
+    <tr><td><code>笑一.md</code></td><td>加「本人称属<strong>先玩玩</strong>类」—— 全库消息量第一却在第一档</td><td>Q6</td></tr>
+    <tr><td><code>高晓斌 初中.md</code></td><td>加「<strong>第二档</strong>（可结婚·需资源）」</td><td>Q6</td></tr>
+    <tr><td><code>李博文 城市学院.md</code></td><td>加「<strong>第二档</strong>（可结婚·需资源）」</td><td>Q6</td></tr>
+    <tr><td><code>母亲-刘丽萍.md</code></td><td>加「<strong>央美关系网的来源</strong>」：章燕紫 / 冯梦波 / 武宏 + 冯梦波数据印证</td><td>Q10</td></tr>
+    <tr><td><code>_情感线总谱.md</code></td><td>新增「<strong>两档结构</strong>」整节（含性价值梯子 + 资源闭环图）</td><td>Q6 / Q8</td></tr>
+    <tr><td><code>_总览-人生时间线.md</code></td><td>2021/2022 行加「考研失败」+ 新增「<strong>主线修正</strong>」节</td><td>Q13</td></tr>
+    <tr><td><code>2017-2021 / 2022 / 2023 / 2024</code></td><td>四篇年度笔记：<strong>备考期</strong>定性 + 2024「仅获最低等学位」事实修正</td><td>Q13 / Q11</td></tr>
+  </tbody>
+</table>
+
+<h2>四、还差多少分析</h2>
+
+<div class="bar"><div>阶段覆盖 P0–P4</div><div class="track"><div class="fill g" style="width:100%"></div></div><div class="v">100%</div></div>
+<div class="bar"><div>裁定（Q1–Q13）</div><div class="track"><div class="fill g" style="width:100%"></div></div><div class="v">19 条</div></div>
+<div class="bar"><div>知识库链接完整度</div><div class="track"><div class="fill g" style="width:100%"></div></div><div class="v">100%</div></div>
+<div class="bar"><div>距离标定率</div><div class="track"><div class="fill" style="width:34%"></div></div><div class="v">34%</div></div>
+<div class="bar"><div>P0 事件级</div><div class="track"><div class="fill" style="width:5%"></div></div><div class="v">≈0%</div></div>
+
+<table>
+  <thead><tr><th>项</th><th>状态</th><th>卡在哪</th></tr></thead>
+  <tbody>
+    <tr><td>阶段覆盖</td><td><span class="pill g">完成</span></td><td>2017 → 2026-07 全通</td></tr>
+    <tr><td>裁定</td><td><span class="pill g">完成</span></td><td>19 条，全部本人亲口</td></tr>
+    <tr><td><strong>距离标定率</strong></td><td><span class="pill a">34%</span></td><td>902 / 2,686 事件有距离标注 → 需<strong>你动手</strong>补 <code>补标_29人距离表.csv</code></td></tr>
+    <tr><td><strong>P0 事件级</strong></td><td><span class="pill a">≈0%</span></td><td>本机文件时间戳已<strong>实测排除</strong> → 只剩<strong>旧邮件 / 旧手机备份 / 本人回忆</strong></td></tr>
+    <tr><td>事件复核台</td><td><span class="pill">待办</span></td><td><code>事件复核台.html</code> 待人工过一遍</td></tr>
+    <tr><td>待核 3 项</td><td><span class="pill">待办</span></td><td>Q12+「他们」指谁 · Q13+ 考了几次/出国谁定 · 2025-08 美团充电宝</td></tr>
+  </tbody>
+</table>
+
+<div class="note warn">
+  <div class="t">⚠️ 唯一的「真瓶颈」是距离标定</div>
+  <p style="margin:0">34% → 100% 需要人工标 1,784 条事件的<strong>距离半径</strong>。
+  这是唯一无法靠推理补上的缺口 —— <strong>只有你知道那段关系有多近</strong>。</p>
+</div>
+
+<h2>五、下一步建议（按性价比排序）</h2>
+<ul>
+  <li><strong>① 补距离标定</strong> —— 一次性投入，之后所有「伤害 / 资源 / 时间」的分析都能按距离分层</li>
+  <li><strong>② 补 P0 事件级</strong> —— 翻一次旧邮箱 / 旧手机备份，成本低、增量大</li>
+  <li><strong>③ 回答 3 个待核</strong> —— 一句话的事，但能关掉三个悬空分支</li>
+  <li><strong>④ 过一遍事件复核台</strong> —— 修正机器误判，提升事件库可信度</li>
+</ul>
+
+<div class="note warn">
+  <div class="t">隐私等级：最高</div>
+  <p style="margin:0">本页含本名、被骗金额、性匮乏、关系网等表述。仅本地保存，任何对外输出都不得出现。</p>
+</div>
+
+<footer>
+  自我理解引擎 · 知识库打通报告 · 2026-09-29 23:45<br>
+  数据来源：Obsidian Vault（595 篇）· 微信取证库（71,550 条）· 双源事件 2,686 条 · 全程本地处理
+</footer>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,1959 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-15",
+  "repository": "chw-0216/Obsidian-",
+  "status": "partial_source_environment_disconnected",
+  "uploaded": {
+    "browsable_documents": 1321,
+    "document_batches": 33,
+    "archive_parts": 0
+  },
+  "prepared_locally": {
+    "unique_material_files": 18980,
+    "unique_bytes": 11677537289,
+    "compressed_package_bytes": 7916497315,
+    "sqlite_snapshots": 50,
+    "archive_packages": 8,
+    "archive_parts": 319,
+    "planned_browsable_documents": 1451,
+    "all_unique_file_checks_passed": true
+  },
+  "remaining": {
+    "document_batches": [
+      "text-batch-033.json",
+      "text-batch-034.json"
+    ],
+    "documents": 130,
+    "archive_parts": [
+      {
+        "path": "相关材料/资料包/01_微信数据一致性快照.zip.001",
+        "bytes": 25165824,
+        "git_blob_sha": "5d9c54f0bf5d5fd306f059cbe6ba9bea10e9d74c",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/01_微信数据一致性快照.zip.002",
+        "bytes": 25165824,
+        "git_blob_sha": "5fa0391dc4dbfad2527549d69bd5af53ed7ed90b",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/01_微信数据一致性快照.zip.003",
+        "bytes": 25165824,
+        "git_blob_sha": "f615d9f0924c2d2d6ac25c5348c9061100e193d1",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/01_微信数据一致性快照.zip.004",
+        "bytes": 25165824,
+        "git_blob_sha": "e82c49af2147d25b47707d43cdbafd2d5044a8ed",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/01_微信数据一致性快照.zip.005",
+        "bytes": 25165824,
+        "git_blob_sha": "d8146248822c9d542f3941bdfef538bd72771c76",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/01_微信数据一致性快照.zip.006",
+        "bytes": 25165824,
+        "git_blob_sha": "ac842ffc6820417b05513caac7274fa74d2f13dd",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/01_微信数据一致性快照.zip.007",
+        "bytes": 25165824,
+        "git_blob_sha": "1f6dd52aaa4fc7f82c41ec5b89a8de901e3455ef",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/01_微信数据一致性快照.zip.008",
+        "bytes": 25165824,
+        "git_blob_sha": "7ee0026de7355e58fcc067d57db812f8073848ea",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/01_微信数据一致性快照.zip.009",
+        "bytes": 25165824,
+        "git_blob_sha": "170e689b1973faa70c3a83cb12288a62e042facc",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/01_微信数据一致性快照.zip.010",
+        "bytes": 25165824,
+        "git_blob_sha": "339edaa93ad5833f153dae51beac6ddbf178d4a9",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/01_微信数据一致性快照.zip.011",
+        "bytes": 25165824,
+        "git_blob_sha": "0b3751e8acc6e4ca9371b71b0f3c4d05ac445cd4",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/01_微信数据一致性快照.zip.012",
+        "bytes": 25165824,
+        "git_blob_sha": "8023694983de5dc6073a5d621923753def7e3751",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/01_微信数据一致性快照.zip.013",
+        "bytes": 25165824,
+        "git_blob_sha": "4da960b8bd3b4441b91eb857cf02379c20c9c59a",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/01_微信数据一致性快照.zip.014",
+        "bytes": 25165824,
+        "git_blob_sha": "88d8efa19d030e37fcd0520d73af56abe1c79359",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/01_微信数据一致性快照.zip.015",
+        "bytes": 25165824,
+        "git_blob_sha": "2200bcb7a798d6d776c1d19de6f1d6b32018dd74",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/01_微信数据一致性快照.zip.016",
+        "bytes": 25165824,
+        "git_blob_sha": "98a5fa4eefac61a785945d3da58384f6c2aa79b9",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/01_微信数据一致性快照.zip.017",
+        "bytes": 25165824,
+        "git_blob_sha": "a344d87ab93e842a5b4f81706eae9fc2d4aafb1a",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/01_微信数据一致性快照.zip.018",
+        "bytes": 25165824,
+        "git_blob_sha": "46632856a89fdbb0715b0830f99d5caa127ac77f",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/01_微信数据一致性快照.zip.019",
+        "bytes": 25165824,
+        "git_blob_sha": "9d3944256194d63ec632dfe0ca5792241804bcb3",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/01_微信数据一致性快照.zip.020",
+        "bytes": 25165824,
+        "git_blob_sha": "a4435cfb248ee4ff3404d893410763272b647b1e",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/01_微信数据一致性快照.zip.021",
+        "bytes": 25165824,
+        "git_blob_sha": "4e74450379207cee6d972d4f4e19eaa01c211bb1",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/01_微信数据一致性快照.zip.022",
+        "bytes": 25165824,
+        "git_blob_sha": "9e8a406cce5baf6c381af5460fcefea58edfecde",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/01_微信数据一致性快照.zip.023",
+        "bytes": 25165824,
+        "git_blob_sha": "0e13549a3d46d4043be38b102c01f56aec0f9065",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/01_微信数据一致性快照.zip.024",
+        "bytes": 25165824,
+        "git_blob_sha": "e540c048000112dbc7d702bfd2ba576f91184385",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/01_微信数据一致性快照.zip.025",
+        "bytes": 25165824,
+        "git_blob_sha": "ad87cc706796baa3422fd532b5f7c3b1c1d864ec",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/01_微信数据一致性快照.zip.026",
+        "bytes": 25165824,
+        "git_blob_sha": "36fe442d7bf7152c4377476413c07c5ee02dbabc",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/01_微信数据一致性快照.zip.027",
+        "bytes": 25165824,
+        "git_blob_sha": "20a879ed161d8a4dee4fafe2ca262025011d8b6f",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/01_微信数据一致性快照.zip.028",
+        "bytes": 25165824,
+        "git_blob_sha": "edf7da225a1f0ee4c68561a19fe8c9f24d5cabf3",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/01_微信数据一致性快照.zip.029",
+        "bytes": 25165824,
+        "git_blob_sha": "62168a4f0f2b024f92ebcdc843500d2f04421ccd",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/01_微信数据一致性快照.zip.030",
+        "bytes": 25165824,
+        "git_blob_sha": "498493ee5ff146c8b86efa3a53cb206b82383154",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/01_微信数据一致性快照.zip.031",
+        "bytes": 25165824,
+        "git_blob_sha": "1721f89b1d558ab57137b7b39c3289c956456b9e",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/01_微信数据一致性快照.zip.032",
+        "bytes": 25165824,
+        "git_blob_sha": "0ddb0f07953b593c6dba8f1785dbd4295c14bf46",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/01_微信数据一致性快照.zip.033",
+        "bytes": 25165824,
+        "git_blob_sha": "b26514b45a172a233542ffe0ef8a5c0529ae64ba",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/01_微信数据一致性快照.zip.034",
+        "bytes": 25165824,
+        "git_blob_sha": "cba970761add80d78f86d048b09df253069d1dcb",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/01_微信数据一致性快照.zip.035",
+        "bytes": 25165824,
+        "git_blob_sha": "4f11104f084509b604bd52c91ce3b65c0e5eed68",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/01_微信数据一致性快照.zip.036",
+        "bytes": 25165824,
+        "git_blob_sha": "06e1f17f501ef1c7d078a96aa44f8176bbf7ee68",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/01_微信数据一致性快照.zip.037",
+        "bytes": 25165824,
+        "git_blob_sha": "b5a4a53171b83013620328c039614ed05d9d676a",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/01_微信数据一致性快照.zip.038",
+        "bytes": 25165824,
+        "git_blob_sha": "4686520e3e63539180f970590da30ddaf9917f1b",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/01_微信数据一致性快照.zip.039",
+        "bytes": 25165824,
+        "git_blob_sha": "de3ff70622497590201d497b459423fbe7c7e482",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/01_微信数据一致性快照.zip.040",
+        "bytes": 25165824,
+        "git_blob_sha": "5e199001dc56df68d051f5183331ab0a60a0ddcb",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/01_微信数据一致性快照.zip.041",
+        "bytes": 25165824,
+        "git_blob_sha": "7bf285df60c84910c05aad74e1c6734d4e6cee38",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/01_微信数据一致性快照.zip.042",
+        "bytes": 25165824,
+        "git_blob_sha": "c868405d87336de3b3d3444581bc46771d84a771",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/01_微信数据一致性快照.zip.043",
+        "bytes": 25165824,
+        "git_blob_sha": "49005e0f889cdc5fcf67cabad2cae5102811ef25",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/01_微信数据一致性快照.zip.044",
+        "bytes": 25165824,
+        "git_blob_sha": "50ec39fac56dff1083f68876beefa58ee7f76721",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/01_微信数据一致性快照.zip.045",
+        "bytes": 25165824,
+        "git_blob_sha": "050363dc16061bc84c0f155fe9db658095382f61",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/01_微信数据一致性快照.zip.046",
+        "bytes": 25165824,
+        "git_blob_sha": "2005389cf18c2cde3252c19fd0b933a4b55883e9",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/01_微信数据一致性快照.zip.047",
+        "bytes": 25165824,
+        "git_blob_sha": "7443c5ea0ed18ab34406f9d46110e48d93b9b39c",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/01_微信数据一致性快照.zip.048",
+        "bytes": 25165824,
+        "git_blob_sha": "4ef3c396262f1a65dd43ddd1e38e107ffdc216b1",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/01_微信数据一致性快照.zip.049",
+        "bytes": 25165824,
+        "git_blob_sha": "663ad6e0fe94f1660e3d536228c7959b3fc346bf",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/01_微信数据一致性快照.zip.050",
+        "bytes": 25165824,
+        "git_blob_sha": "03da207e09476b1c6dc93bb695b788eb403c397d",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/01_微信数据一致性快照.zip.051",
+        "bytes": 25165824,
+        "git_blob_sha": "8c7ea99b3f926c45295b9d089adf0024e3dc8eda",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/01_微信数据一致性快照.zip.052",
+        "bytes": 25165824,
+        "git_blob_sha": "4c53afeba1e9b6f7a6dcb4cf951d7d0edc3a60bc",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/01_微信数据一致性快照.zip.053",
+        "bytes": 25165824,
+        "git_blob_sha": "6914a5448760281c61a31c74b99036187d9120a7",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/01_微信数据一致性快照.zip.054",
+        "bytes": 25165824,
+        "git_blob_sha": "04914abb2c0b4f761ddee824597932403b25a6c3",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/01_微信数据一致性快照.zip.055",
+        "bytes": 25165824,
+        "git_blob_sha": "355fc98937c9c55664238e3d7e44de946ad24b34",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/01_微信数据一致性快照.zip.056",
+        "bytes": 7053043,
+        "git_blob_sha": "c99fb9aeabe7399f509f6af78399260ee304f73b",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/02_微信导出与人物分析.zip.001",
+        "bytes": 25165824,
+        "git_blob_sha": "f60520a4e47686ae5cfe8e25684d0fbc6c464064",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/02_微信导出与人物分析.zip.002",
+        "bytes": 25165824,
+        "git_blob_sha": "38cc03fe38376eb878962ecadd095a0e4abf3d08",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/02_微信导出与人物分析.zip.003",
+        "bytes": 25165824,
+        "git_blob_sha": "4a32929ae8e4a06efb85b634f7a5c85f481a658f",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/02_微信导出与人物分析.zip.004",
+        "bytes": 25165824,
+        "git_blob_sha": "5934b2a2543fd63a2331c7e200bd401e5cf579a9",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/02_微信导出与人物分析.zip.005",
+        "bytes": 25165824,
+        "git_blob_sha": "0aabbd9f81c811c5bab88d97157b969c8e8fc92f",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/02_微信导出与人物分析.zip.006",
+        "bytes": 25165824,
+        "git_blob_sha": "5952a0d761d000065fd25c64b08d69775458f14f",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/02_微信导出与人物分析.zip.007",
+        "bytes": 25165824,
+        "git_blob_sha": "6650c99d5153f48b0c1ecf1c51497a2394146058",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/02_微信导出与人物分析.zip.008",
+        "bytes": 25165824,
+        "git_blob_sha": "29d3f483fd7743d4442f78ff355326f0e763870e",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/02_微信导出与人物分析.zip.009",
+        "bytes": 25165824,
+        "git_blob_sha": "1308d94f0dc30a3a707faa5d0cb3b0825ad449cb",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/02_微信导出与人物分析.zip.010",
+        "bytes": 25165824,
+        "git_blob_sha": "e9575c5fd581fc191e6452975661067df86d23c2",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/02_微信导出与人物分析.zip.011",
+        "bytes": 100894,
+        "git_blob_sha": "922d51d8cf71d6064478732c5eb4c51137ad08db",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/03_研究系统与工具.zip.001",
+        "bytes": 25165824,
+        "git_blob_sha": "08efa3c6596a7f5687c5db844e59e5ae54f9d396",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/03_研究系统与工具.zip.002",
+        "bytes": 25165824,
+        "git_blob_sha": "291d9af95c89f060ffc095349a19da33196f7cfe",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/03_研究系统与工具.zip.003",
+        "bytes": 25165824,
+        "git_blob_sha": "1ac4a46de30e1dbc57214c445e08687c449c61f0",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/03_研究系统与工具.zip.004",
+        "bytes": 25165824,
+        "git_blob_sha": "f559bbb399eba370d93b37bfeaabe876bccb4b1a",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/03_研究系统与工具.zip.005",
+        "bytes": 25165824,
+        "git_blob_sha": "5ec950dde6adb30eb9c765912881625875738faa",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/03_研究系统与工具.zip.006",
+        "bytes": 25165824,
+        "git_blob_sha": "68a0e6c32749d32543227cfd04dd2b9ec3f6f888",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/03_研究系统与工具.zip.007",
+        "bytes": 25165824,
+        "git_blob_sha": "f932e0b38e4f51d016ae7ce2189f86fbc2945d3f",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/03_研究系统与工具.zip.008",
+        "bytes": 25165824,
+        "git_blob_sha": "af9959fd909f1ea3298195136eca5ea6048ad87d",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/03_研究系统与工具.zip.009",
+        "bytes": 25165824,
+        "git_blob_sha": "d5863bd69559c461a41ff7d14f898f39c0c07dd2",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/03_研究系统与工具.zip.010",
+        "bytes": 25165824,
+        "git_blob_sha": "8c499c5144cdf117f333ef6cbec0b42966643fc5",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/03_研究系统与工具.zip.011",
+        "bytes": 25165824,
+        "git_blob_sha": "92d4d38dfd57444fd0eeeb8fb6c5234dfc42748b",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/03_研究系统与工具.zip.012",
+        "bytes": 25165824,
+        "git_blob_sha": "a692620eb00dccfb52e21d2033b1a8fb2a1ee851",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/03_研究系统与工具.zip.013",
+        "bytes": 25165824,
+        "git_blob_sha": "ea861a612ce83992fd66786041cc07232f128470",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/03_研究系统与工具.zip.014",
+        "bytes": 25165824,
+        "git_blob_sha": "5342be7af0c818306fe0b41458f4332553294cde",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/03_研究系统与工具.zip.015",
+        "bytes": 25165824,
+        "git_blob_sha": "1423a56106bfe3c3bf64cc325f01668287e08593",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/03_研究系统与工具.zip.016",
+        "bytes": 25165824,
+        "git_blob_sha": "eb2aa94510c1881cb72919ec0ddeec82f94bf066",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/03_研究系统与工具.zip.017",
+        "bytes": 25165824,
+        "git_blob_sha": "8cd28bc424ee8158d7e19f5d4c3d8a801f7dc94b",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/03_研究系统与工具.zip.018",
+        "bytes": 25165824,
+        "git_blob_sha": "bd94789c9b3456a7308001839880ec5e19638608",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/03_研究系统与工具.zip.019",
+        "bytes": 25165824,
+        "git_blob_sha": "696a522041f400c55273a9775924c60f8e99f83d",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/03_研究系统与工具.zip.020",
+        "bytes": 25165824,
+        "git_blob_sha": "00cdd3e8be9f56089711b6ae829e51acaa3ba1c6",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/03_研究系统与工具.zip.021",
+        "bytes": 25165824,
+        "git_blob_sha": "6eee496ae4cbcbc35b4f3512f00760b69e9c49c4",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/03_研究系统与工具.zip.022",
+        "bytes": 25165824,
+        "git_blob_sha": "bf03a8b286c700190edd42400380d0c47b258cb5",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/03_研究系统与工具.zip.023",
+        "bytes": 25165824,
+        "git_blob_sha": "329ec4afbd8b43f77fa63ebd64d3360543612900",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/03_研究系统与工具.zip.024",
+        "bytes": 25165824,
+        "git_blob_sha": "d25a900b686178cee8c1ebcc5cf1e0997246ccfc",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/03_研究系统与工具.zip.025",
+        "bytes": 7283869,
+        "git_blob_sha": "376820090fe853a5402af3b3dd2995bf0db266b7",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/04_历史会话与修改记录.zip.001",
+        "bytes": 25165824,
+        "git_blob_sha": "1ccae2d8f536310985a52371c9477599792727d1",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/04_历史会话与修改记录.zip.002",
+        "bytes": 25165824,
+        "git_blob_sha": "3b27c552afe3956ea8fbe573ab7aea80f0e91708",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/04_历史会话与修改记录.zip.003",
+        "bytes": 25165824,
+        "git_blob_sha": "18ef3cae3225180f7e007c44f5be5676c6425dd8",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/04_历史会话与修改记录.zip.004",
+        "bytes": 25165824,
+        "git_blob_sha": "e965270c8b287993aae67006063213b68793e657",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/04_历史会话与修改记录.zip.005",
+        "bytes": 25165824,
+        "git_blob_sha": "5d616377cb16017979f3be6789c2af9979852459",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/04_历史会话与修改记录.zip.006",
+        "bytes": 25165824,
+        "git_blob_sha": "643141b90fd61b3048534fb7d0639cb3e57134a4",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/04_历史会话与修改记录.zip.007",
+        "bytes": 25165824,
+        "git_blob_sha": "c9ba83a23695089942a3742c04145a1d75b468b8",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/04_历史会话与修改记录.zip.008",
+        "bytes": 25165824,
+        "git_blob_sha": "242739e2f8414986cf104a4e62ed83d9268aec19",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/04_历史会话与修改记录.zip.009",
+        "bytes": 25165824,
+        "git_blob_sha": "ef8f532ffaa12db7ffc46e89854e948a3b159ebf",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/04_历史会话与修改记录.zip.010",
+        "bytes": 25165824,
+        "git_blob_sha": "6910dd6707a0d980c9d1e0d2dfc52c590c6e18b7",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/04_历史会话与修改记录.zip.011",
+        "bytes": 25165824,
+        "git_blob_sha": "7567fa318aece9c9fc57acb96c86a610beb76ad9",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/04_历史会话与修改记录.zip.012",
+        "bytes": 25165824,
+        "git_blob_sha": "27c6623f455562a39978599300d7c90bd5b4d563",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/04_历史会话与修改记录.zip.013",
+        "bytes": 25165824,
+        "git_blob_sha": "9fc6fd657bd997c6629dd56a225b60eb17eb272e",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/04_历史会话与修改记录.zip.014",
+        "bytes": 25165824,
+        "git_blob_sha": "88fd6060d729a4355678005b0676df79ed646160",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/04_历史会话与修改记录.zip.015",
+        "bytes": 25165824,
+        "git_blob_sha": "5363d4aa8efe353a7bc5e02cb07ba4611d742564",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/04_历史会话与修改记录.zip.016",
+        "bytes": 25165824,
+        "git_blob_sha": "f01dc6382ad329d449e5d8ba0cb80622849ff310",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/04_历史会话与修改记录.zip.017",
+        "bytes": 25165824,
+        "git_blob_sha": "93b8967119e0266d21ba136a6e2412fd020be434",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/04_历史会话与修改记录.zip.018",
+        "bytes": 25165824,
+        "git_blob_sha": "6070632aaf608abafe41caa0778ba808e9409975",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/04_历史会话与修改记录.zip.019",
+        "bytes": 25165824,
+        "git_blob_sha": "4337c5b3a1c79408184ae8dfb9ee76fc6c4935c4",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/04_历史会话与修改记录.zip.020",
+        "bytes": 25165824,
+        "git_blob_sha": "18e7608037ad9ec1117e880960f7cab1ca44db3a",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/04_历史会话与修改记录.zip.021",
+        "bytes": 25165824,
+        "git_blob_sha": "aaa522f16ba7716b69a647dc162d76e62f472052",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/04_历史会话与修改记录.zip.022",
+        "bytes": 25165824,
+        "git_blob_sha": "41df27dca7412a787c16c62a6b14fbc2173825bb",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/04_历史会话与修改记录.zip.023",
+        "bytes": 25165824,
+        "git_blob_sha": "de80d5a077861814533eff10cd83cc606af72de2",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/04_历史会话与修改记录.zip.024",
+        "bytes": 25165824,
+        "git_blob_sha": "2543c901ff22b87474aef7446ae34daa39cca3d7",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/04_历史会话与修改记录.zip.025",
+        "bytes": 25165824,
+        "git_blob_sha": "0e757ebd0bfec50d9714f97aaabba7f4d6bf27e2",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/04_历史会话与修改记录.zip.026",
+        "bytes": 25165824,
+        "git_blob_sha": "027a7b680199aacd4b41f4739f937fe126b89109",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/04_历史会话与修改记录.zip.027",
+        "bytes": 25165824,
+        "git_blob_sha": "da9b63da100ae3b85ef069d8526c596509d9f204",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/04_历史会话与修改记录.zip.028",
+        "bytes": 25165824,
+        "git_blob_sha": "b0d776a44afc71f40ee75a1e81a947dd1d1ef6ed",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/04_历史会话与修改记录.zip.029",
+        "bytes": 25165824,
+        "git_blob_sha": "a2ca34d2059f08ad9ecd20ac0639374ec1c072fb",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/04_历史会话与修改记录.zip.030",
+        "bytes": 25165824,
+        "git_blob_sha": "345c21c8d47cf62fa936d99693584b03d2b2b96a",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/04_历史会话与修改记录.zip.031",
+        "bytes": 25165824,
+        "git_blob_sha": "37b14d14d3daf50591a92fbf15df449a83baf1c5",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/04_历史会话与修改记录.zip.032",
+        "bytes": 25165824,
+        "git_blob_sha": "ee9bb9cc0eca0c747837714dcb11de6aabf927c3",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/04_历史会话与修改记录.zip.033",
+        "bytes": 25165824,
+        "git_blob_sha": "33331a8375fe5075f951cd957c3ac4ca460860cf",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/04_历史会话与修改记录.zip.034",
+        "bytes": 25165824,
+        "git_blob_sha": "f424cad693bd3391b4ec30860bf29b942b5820c5",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/04_历史会话与修改记录.zip.035",
+        "bytes": 25165824,
+        "git_blob_sha": "7920a178844d9a9a53a9c826bbce641ca5fb0377",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/04_历史会话与修改记录.zip.036",
+        "bytes": 25165824,
+        "git_blob_sha": "908b7b3fd7731db00f47d9aa52e78418f57ae5f7",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/04_历史会话与修改记录.zip.037",
+        "bytes": 25165824,
+        "git_blob_sha": "ed5a76ff817bf73c12e92916593e23ad9e5b1828",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/04_历史会话与修改记录.zip.038",
+        "bytes": 25165824,
+        "git_blob_sha": "05a0a2cf7362b1828efa82bf56c5b39712f30365",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/04_历史会话与修改记录.zip.039",
+        "bytes": 25165824,
+        "git_blob_sha": "54f92c66b7c031da10bb6c77595a3f32d773a4c8",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/04_历史会话与修改记录.zip.040",
+        "bytes": 25165824,
+        "git_blob_sha": "feee0d961665de10fcb04cc1a401840c8d7dafd5",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/04_历史会话与修改记录.zip.041",
+        "bytes": 25165824,
+        "git_blob_sha": "3d74ae975ddc7a5a77a5c2cc0206474097b17f01",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/04_历史会话与修改记录.zip.042",
+        "bytes": 25165824,
+        "git_blob_sha": "710240b4df2d3293fc5cc79114ba73f45c61aa45",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/04_历史会话与修改记录.zip.043",
+        "bytes": 25165824,
+        "git_blob_sha": "203715e9dce0dd8b259d2b242d13d68b56aa6dc3",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/04_历史会话与修改记录.zip.044",
+        "bytes": 25165824,
+        "git_blob_sha": "72fe2d1e7cc77a5c23be77902cf246ffac7aea3d",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/04_历史会话与修改记录.zip.045",
+        "bytes": 25165824,
+        "git_blob_sha": "22a07da7fa6e24c65243362972f9da63f8a9800b",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/04_历史会话与修改记录.zip.046",
+        "bytes": 25165824,
+        "git_blob_sha": "1735182928385fa1ef362fbf61aa143ae4e22437",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/04_历史会话与修改记录.zip.047",
+        "bytes": 25165824,
+        "git_blob_sha": "26f3ce1e8ca8d7927adffe3f2eed7711ecc72b6e",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/04_历史会话与修改记录.zip.048",
+        "bytes": 19756514,
+        "git_blob_sha": "20fe97059ff2693996a4bf26c23121e0104bfc68",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/05_Codex项目交付.zip.001",
+        "bytes": 25165824,
+        "git_blob_sha": "09165ca14ab9d0f459fef5a916a5fabb9bd07e97",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/05_Codex项目交付.zip.002",
+        "bytes": 25165824,
+        "git_blob_sha": "afb387671931c3c5cbd25bed445b7e6f8678585a",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/05_Codex项目交付.zip.003",
+        "bytes": 25165824,
+        "git_blob_sha": "4679ab413256820545dcccc9202b5d40b0666d86",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/05_Codex项目交付.zip.004",
+        "bytes": 25165824,
+        "git_blob_sha": "822dc43287641adbc8a7f01cc046f7afd2a6f7cb",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/05_Codex项目交付.zip.005",
+        "bytes": 25165824,
+        "git_blob_sha": "da70b7227ef3ede67b141b34612d26a73f810909",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/05_Codex项目交付.zip.006",
+        "bytes": 25165824,
+        "git_blob_sha": "852eb4886e27822f1343f71d607c26611fe00fed",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/05_Codex项目交付.zip.007",
+        "bytes": 25165824,
+        "git_blob_sha": "2fc9453bd894fb7fbdf0bf449de02234a609e4e6",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/05_Codex项目交付.zip.008",
+        "bytes": 25165824,
+        "git_blob_sha": "334b67e4857cdb47acad465fc7b02ece658a7525",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/05_Codex项目交付.zip.009",
+        "bytes": 25165824,
+        "git_blob_sha": "fe34191fcd485ab6d919441656c7361b6b499b14",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/05_Codex项目交付.zip.010",
+        "bytes": 25165824,
+        "git_blob_sha": "372dc573a58a6f2a3a2e8eed6b931019a280cfd9",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/05_Codex项目交付.zip.011",
+        "bytes": 25165824,
+        "git_blob_sha": "285de2f58c7a0e3734875c023747a74804f7caa3",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/05_Codex项目交付.zip.012",
+        "bytes": 25165824,
+        "git_blob_sha": "5b069e576e1eda13527b94a1b8cd846a53a456db",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/05_Codex项目交付.zip.013",
+        "bytes": 25165824,
+        "git_blob_sha": "054d79cce26b0288f839e6a4c571d31f88f18670",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/05_Codex项目交付.zip.014",
+        "bytes": 25165824,
+        "git_blob_sha": "7588e1462a8a5d1adce02a277820f0307c8b0258",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/05_Codex项目交付.zip.015",
+        "bytes": 25165824,
+        "git_blob_sha": "52baa623066cb747e19bffff4f3896f70f41211f",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/05_Codex项目交付.zip.016",
+        "bytes": 25165824,
+        "git_blob_sha": "32b46edeab34cdc801548082e2a0c49ad3fdab5f",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/05_Codex项目交付.zip.017",
+        "bytes": 25165824,
+        "git_blob_sha": "411a157bd2ee6886a50cda021e6ac8226fd412e3",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/05_Codex项目交付.zip.018",
+        "bytes": 25165824,
+        "git_blob_sha": "2266e64c46e87d9a52879c657d847d2a9e1c9eb6",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/05_Codex项目交付.zip.019",
+        "bytes": 25165824,
+        "git_blob_sha": "b746104925a4cd2a3ac1805fcd0a046fa65b17a7",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/05_Codex项目交付.zip.020",
+        "bytes": 25165824,
+        "git_blob_sha": "8d1d24a245d9a860974cd3facaedebd7717af3da",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/05_Codex项目交付.zip.021",
+        "bytes": 25165824,
+        "git_blob_sha": "6da71a5fdd18ff6f7b3e9e8033e7a1a1a6c629e4",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/05_Codex项目交付.zip.022",
+        "bytes": 25165824,
+        "git_blob_sha": "c6abdca224b738455471873f7434f9380df5ffab",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/05_Codex项目交付.zip.023",
+        "bytes": 25165824,
+        "git_blob_sha": "344cc95fe8cc1a81659c2d403b23528b3d602619",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/05_Codex项目交付.zip.024",
+        "bytes": 25165824,
+        "git_blob_sha": "b80cd44c84650a20d6aae7b3560d8c0a71c43c4f",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/05_Codex项目交付.zip.025",
+        "bytes": 25165824,
+        "git_blob_sha": "e9f8dcdef929527239cc5eb60df3ac681ed0f505",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/05_Codex项目交付.zip.026",
+        "bytes": 25165824,
+        "git_blob_sha": "1ec4952fd41bcf852a8f04d63e19c6c0e77050cf",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/05_Codex项目交付.zip.027",
+        "bytes": 25165824,
+        "git_blob_sha": "cb68a83a1a678769b3f751cf9e289f4f9fe6a822",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/05_Codex项目交付.zip.028",
+        "bytes": 25165824,
+        "git_blob_sha": "18bc1d091c75afcb6f448260b2d0e3ecafeaf12d",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/05_Codex项目交付.zip.029",
+        "bytes": 25165824,
+        "git_blob_sha": "5163474c9dcdf2f6a3dd22dbdefc6f34fd0ac211",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/05_Codex项目交付.zip.030",
+        "bytes": 25165824,
+        "git_blob_sha": "021fcc5a30882ab74565d7322d90fae398d63b5a",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/05_Codex项目交付.zip.031",
+        "bytes": 25165824,
+        "git_blob_sha": "cd12995261da67fed2047fde628e46946c7b6b2f",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/05_Codex项目交付.zip.032",
+        "bytes": 25165824,
+        "git_blob_sha": "f5dd6f38c782e6d8ce0af985810984d858fff442",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/05_Codex项目交付.zip.033",
+        "bytes": 25165824,
+        "git_blob_sha": "62814d297ed24b06aee253e96c05aa64fd8a5cce",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/05_Codex项目交付.zip.034",
+        "bytes": 25165824,
+        "git_blob_sha": "a21f02eb15840450a4fd5a5cda45a87dad9cecfd",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/05_Codex项目交付.zip.035",
+        "bytes": 25165824,
+        "git_blob_sha": "12b2220edf226992e4c889c4c8fd7c6afc5bd108",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/05_Codex项目交付.zip.036",
+        "bytes": 25165824,
+        "git_blob_sha": "45b36cbc9125ecd5e831661d63ef367ee3137065",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/05_Codex项目交付.zip.037",
+        "bytes": 25165824,
+        "git_blob_sha": "3630140398583322a36b9503fbb49a431ec2ed66",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/05_Codex项目交付.zip.038",
+        "bytes": 25165824,
+        "git_blob_sha": "d2fd8894f42fa8fcaf5cc245b4a406494a628bcd",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/05_Codex项目交付.zip.039",
+        "bytes": 25165824,
+        "git_blob_sha": "a026345c48e0e1cae301d0f60af4817c339be287",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/05_Codex项目交付.zip.040",
+        "bytes": 25165824,
+        "git_blob_sha": "0d8f4347cfd9a2443f0102916bbfa56cf736de0b",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/05_Codex项目交付.zip.041",
+        "bytes": 25165824,
+        "git_blob_sha": "2aed8f639f7de969d15df6e8902e6beb953a967c",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/05_Codex项目交付.zip.042",
+        "bytes": 25165824,
+        "git_blob_sha": "097f32ff3c34b4abc18e031539a6832c65e275bc",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/05_Codex项目交付.zip.043",
+        "bytes": 25165824,
+        "git_blob_sha": "07c9c9d770076f46602736c72568d08e59f1b9bc",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/05_Codex项目交付.zip.044",
+        "bytes": 25165824,
+        "git_blob_sha": "0db52a1f944f25f44e6240510894eac03b3834d4",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/05_Codex项目交付.zip.045",
+        "bytes": 25165824,
+        "git_blob_sha": "ba6164864a510effab2c4466fb787a004b651c28",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/05_Codex项目交付.zip.046",
+        "bytes": 25165824,
+        "git_blob_sha": "e0255e3472e20ed34a15b8bffcb735d18038dc65",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/05_Codex项目交付.zip.047",
+        "bytes": 25165824,
+        "git_blob_sha": "8489ddbcd4c6b1803f26bd3196684ce00dafe8f4",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/05_Codex项目交付.zip.048",
+        "bytes": 25165824,
+        "git_blob_sha": "4d635c9b623a0d5b209d6e5a1125585809cd9cf7",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/05_Codex项目交付.zip.049",
+        "bytes": 25165824,
+        "git_blob_sha": "b691a7dac8ab3aeea22f1578ac7837f58d313856",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/05_Codex项目交付.zip.050",
+        "bytes": 25165824,
+        "git_blob_sha": "8d8857fa011761b841fb1744b0209d04cfdf0ee9",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/05_Codex项目交付.zip.051",
+        "bytes": 25165824,
+        "git_blob_sha": "a791f8eda0746d533379d3aa0eb5b8bbc02eef0a",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/05_Codex项目交付.zip.052",
+        "bytes": 25165824,
+        "git_blob_sha": "716776f640f57ead716ffdded0bed8ba61bb11a5",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/05_Codex项目交付.zip.053",
+        "bytes": 25165824,
+        "git_blob_sha": "c603b96912e746c7f2f25ce60f9c15ff2bc65472",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/05_Codex项目交付.zip.054",
+        "bytes": 25165824,
+        "git_blob_sha": "a5b8e7a935f0a2de1cc369e73c32bd1461b25249",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/05_Codex项目交付.zip.055",
+        "bytes": 25165824,
+        "git_blob_sha": "c687a7ec8ebd34bdadbd8ae6f77585051a706ce2",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/05_Codex项目交付.zip.056",
+        "bytes": 25165824,
+        "git_blob_sha": "f1bdd3c262e7f10dcd7a10b867933506a34f7f23",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/05_Codex项目交付.zip.057",
+        "bytes": 25165824,
+        "git_blob_sha": "7c2f7a2abc5449e4ceb4d9af0b4ff7acf0510fa9",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/05_Codex项目交付.zip.058",
+        "bytes": 25165824,
+        "git_blob_sha": "2b7a39e18749d8845fdb4ae5e55d1972c0f09303",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/05_Codex项目交付.zip.059",
+        "bytes": 25165824,
+        "git_blob_sha": "21ccba96aba0e5eaf4c9efe07ae59c5d78dae1c8",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/05_Codex项目交付.zip.060",
+        "bytes": 25165824,
+        "git_blob_sha": "e519fe781c4d98426c5b70eb28c83f07b72c991c",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/05_Codex项目交付.zip.061",
+        "bytes": 22574446,
+        "git_blob_sha": "87d473c0c680627217bc84749b85a5fce7e9e3dc",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/06_宣传片剪辑工程.zip.001",
+        "bytes": 25165824,
+        "git_blob_sha": "6a5873c3feed16a53029036b507b5d0768f7ff64",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/06_宣传片剪辑工程.zip.002",
+        "bytes": 25165824,
+        "git_blob_sha": "f768ab4bf2c46558562b32446b3081d79a3b421f",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/06_宣传片剪辑工程.zip.003",
+        "bytes": 25165824,
+        "git_blob_sha": "a7290023c73d23899444c5d7ae9360652a0b0ef7",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/06_宣传片剪辑工程.zip.004",
+        "bytes": 25165824,
+        "git_blob_sha": "48d310c5b944742696980dafd33aa5509b1c06c1",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/06_宣传片剪辑工程.zip.005",
+        "bytes": 25165824,
+        "git_blob_sha": "d5846257308b4e373427795423978b972c0fdfa2",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/06_宣传片剪辑工程.zip.006",
+        "bytes": 25165824,
+        "git_blob_sha": "38c42c4c433e1ad4aad0a4f45c9d57ccf8609828",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/06_宣传片剪辑工程.zip.007",
+        "bytes": 25165824,
+        "git_blob_sha": "cd681028c202207639f61b5644a245b3ba86ac53",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/06_宣传片剪辑工程.zip.008",
+        "bytes": 25165824,
+        "git_blob_sha": "f4aabaa0539e3abaed273805e7b6dbbd92975aa1",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/06_宣传片剪辑工程.zip.009",
+        "bytes": 25165824,
+        "git_blob_sha": "5cbe15ca7212aa06498a98a58ceaaab9f37c4c1b",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/06_宣传片剪辑工程.zip.010",
+        "bytes": 25165824,
+        "git_blob_sha": "576bc9e6e8aaecb64ec40d98a534932ab6e1df5e",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/06_宣传片剪辑工程.zip.011",
+        "bytes": 25165824,
+        "git_blob_sha": "ab961211620bd2ec02423c22855b42f9b3387424",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/06_宣传片剪辑工程.zip.012",
+        "bytes": 25165824,
+        "git_blob_sha": "349b8153394f3795db618c07812aea3c548ffd33",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/06_宣传片剪辑工程.zip.013",
+        "bytes": 25165824,
+        "git_blob_sha": "72f9146fe72dcf81b21408f5d6217645d0d23000",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/06_宣传片剪辑工程.zip.014",
+        "bytes": 25165824,
+        "git_blob_sha": "9cf682ab29fd817b51e7399e9312d1c31f6f7def",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/06_宣传片剪辑工程.zip.015",
+        "bytes": 25165824,
+        "git_blob_sha": "ceca9cb4d2f6a71c07f793eee306c0fa606637e8",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/06_宣传片剪辑工程.zip.016",
+        "bytes": 25165824,
+        "git_blob_sha": "fcbc9316f6c4ed27bfd1701b2869920e6ef5c48d",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/06_宣传片剪辑工程.zip.017",
+        "bytes": 25165824,
+        "git_blob_sha": "2b3be1a05ce69eed6b3fcd2822157188cccb82ee",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/06_宣传片剪辑工程.zip.018",
+        "bytes": 25165824,
+        "git_blob_sha": "ea77557c74e13382e8943ceaaa5831e017eef7c6",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/06_宣传片剪辑工程.zip.019",
+        "bytes": 25165824,
+        "git_blob_sha": "7ea090050144f6e7584177917c5c0b5882f15ad3",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/06_宣传片剪辑工程.zip.020",
+        "bytes": 9511660,
+        "git_blob_sha": "48f8a395e4a721ced72983fb829cea4758b41ed6",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/07_原始参考与关联附件.zip.001",
+        "bytes": 25165824,
+        "git_blob_sha": "1cdc4f470e6092f0342c772023598bd00c380b68",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/07_原始参考与关联附件.zip.002",
+        "bytes": 25165824,
+        "git_blob_sha": "74799fa5e4430f10dac7ea829e075c9752d04159",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/07_原始参考与关联附件.zip.003",
+        "bytes": 25165824,
+        "git_blob_sha": "aee2c12d88f9a634b9f6a92bf698166a9e2a72f2",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/07_原始参考与关联附件.zip.004",
+        "bytes": 25165824,
+        "git_blob_sha": "7213837a06c87231bc3f1246dfe9b5ac143bcd32",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/07_原始参考与关联附件.zip.005",
+        "bytes": 25165824,
+        "git_blob_sha": "02816f3a9c50839a7d83fd743cebe3c9229df47f",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/07_原始参考与关联附件.zip.006",
+        "bytes": 25165824,
+        "git_blob_sha": "0fe9354b2c04ba8c12375a1326e67bc5316bc560",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/07_原始参考与关联附件.zip.007",
+        "bytes": 25165824,
+        "git_blob_sha": "ade6095a9d1f964c99def0ab96b135af98083340",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/07_原始参考与关联附件.zip.008",
+        "bytes": 25165824,
+        "git_blob_sha": "ae1c5578e2334c6907bba72bf740ebfb2bb053b2",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/07_原始参考与关联附件.zip.009",
+        "bytes": 25165824,
+        "git_blob_sha": "9b0d8f9d4dcaa517c1a6f6dd83810331be99beea",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/07_原始参考与关联附件.zip.010",
+        "bytes": 25165824,
+        "git_blob_sha": "1287e0ee1e6fed47802e5764d1aecd5d87200ed6",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/07_原始参考与关联附件.zip.011",
+        "bytes": 25165824,
+        "git_blob_sha": "b4e6fae97d09f4d4272e3902250c1e8cc1e9b1fc",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/07_原始参考与关联附件.zip.012",
+        "bytes": 25165824,
+        "git_blob_sha": "7dabf2c36db469a1347f67fbb388a3bd25057dea",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/07_原始参考与关联附件.zip.013",
+        "bytes": 25165824,
+        "git_blob_sha": "28acf81401a94e474b2f9121ce3f9ce50b8aa6e4",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/07_原始参考与关联附件.zip.014",
+        "bytes": 25165824,
+        "git_blob_sha": "d9009f9edc3c94ffef35c61c861717bb95134343",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/07_原始参考与关联附件.zip.015",
+        "bytes": 25165824,
+        "git_blob_sha": "024b94f4678ea6d0ca850d33ec66cb2408916b34",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/07_原始参考与关联附件.zip.016",
+        "bytes": 25165824,
+        "git_blob_sha": "4d9ea525467158c23554548f3ceb9234d0d39341",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/07_原始参考与关联附件.zip.017",
+        "bytes": 20580297,
+        "git_blob_sha": "25733a88f28f6ea196ea1856e85658d8daaea75c",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.001",
+        "bytes": 25165824,
+        "git_blob_sha": "85735a4fe1a6669cc3efa8fa32b0c60979f8b2d0",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.002",
+        "bytes": 25165824,
+        "git_blob_sha": "cfe656793b44b7bb88861bd0706024cbddf57331",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.003",
+        "bytes": 25165824,
+        "git_blob_sha": "b08ea3a3f48b3c57d5bb3e6594a59163f035379c",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.004",
+        "bytes": 25165824,
+        "git_blob_sha": "9221cdee80e9dc2637ed5cac1b0fb5ceb739bc71",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.005",
+        "bytes": 25165824,
+        "git_blob_sha": "4affa5fb727908ef0f5c1d10467e8bb2ef269bcc",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.006",
+        "bytes": 25165824,
+        "git_blob_sha": "c55d7e5e35047575ec5ea37f8f6f92ae37e5478a",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.007",
+        "bytes": 25165824,
+        "git_blob_sha": "ee198a420fbaa8bb08d23d8282eb747ec14c3f65",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.008",
+        "bytes": 25165824,
+        "git_blob_sha": "ac9b3474d4119c2098f680196ec51c681742282d",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.009",
+        "bytes": 25165824,
+        "git_blob_sha": "96f64bee3b43a6cbf6086c0b0a23eaa573170547",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.010",
+        "bytes": 25165824,
+        "git_blob_sha": "235368548846650c188b70d032736d64625f8c6d",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.011",
+        "bytes": 25165824,
+        "git_blob_sha": "2977c32c91606905305f16700016972f6d622405",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.012",
+        "bytes": 25165824,
+        "git_blob_sha": "7b623f434ca8875a1a0ffb95de6451a11ceb504c",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.013",
+        "bytes": 25165824,
+        "git_blob_sha": "921273299d2a8699a86f8f00b9b903183284be86",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.014",
+        "bytes": 25165824,
+        "git_blob_sha": "9b947c6ba8f740b95cd77ee9d88e98059ec70160",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.015",
+        "bytes": 25165824,
+        "git_blob_sha": "6646a06e3df3bcdf888662d6ef1de73ddc8f1f96",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.016",
+        "bytes": 25165824,
+        "git_blob_sha": "c9e3afa9170c812edf31691958b7821617f394ec",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.017",
+        "bytes": 25165824,
+        "git_blob_sha": "2a47f51c5b24f2c265399cfdd42a8c4cca84705c",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.018",
+        "bytes": 25165824,
+        "git_blob_sha": "1acf329ec991ab766e11e70bbed79e2fe67591cf",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.019",
+        "bytes": 25165824,
+        "git_blob_sha": "c552b44e425a0cce6cf2adc67ae4d68b633f5a54",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.020",
+        "bytes": 25165824,
+        "git_blob_sha": "fe250ae3c1a62fd2fe2a2452a4f6577e269d184d",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.021",
+        "bytes": 25165824,
+        "git_blob_sha": "ba5a5aef97d3116df5fdeb8733da3a8dc3323379",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.022",
+        "bytes": 25165824,
+        "git_blob_sha": "05e9e56bdd655bcf2a6773ce5e91993116d974b3",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.023",
+        "bytes": 25165824,
+        "git_blob_sha": "3a6ccba8ca5208c72b927cc34ad7cdaf42315991",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.024",
+        "bytes": 25165824,
+        "git_blob_sha": "f8be062bfd6deaf667167c701147eaf1c64c1541",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.025",
+        "bytes": 25165824,
+        "git_blob_sha": "39699b223bed943acb52239d3707afe5b156704d",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.026",
+        "bytes": 25165824,
+        "git_blob_sha": "f2e52561a66f2179c3156994042647bd15aa4885",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.027",
+        "bytes": 25165824,
+        "git_blob_sha": "f746f1e84b221628b2b4f78d48a827a57e38af1d",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.028",
+        "bytes": 25165824,
+        "git_blob_sha": "f33f9682782d5c6d7ee35e2686d85e367896d6b7",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.029",
+        "bytes": 25165824,
+        "git_blob_sha": "481d0bd93b2cc5149c812e0b6c2f55ca569b85e4",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.030",
+        "bytes": 25165824,
+        "git_blob_sha": "1ce8aee7f1540f1ac4966022fb0b70154cdd2051",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.031",
+        "bytes": 25165824,
+        "git_blob_sha": "d1b3c9c831ae3f2313a363f81b3ce8176902f488",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.032",
+        "bytes": 25165824,
+        "git_blob_sha": "1260ea2c1f58884a2c3c9803bd5c3f6859bfd14d",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.033",
+        "bytes": 25165824,
+        "git_blob_sha": "665c12124d86926f46643c4782f3659b476f0805",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.034",
+        "bytes": 25165824,
+        "git_blob_sha": "a275a28cda6ddd97ac51cfc715ac89e8764cddff",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.035",
+        "bytes": 25165824,
+        "git_blob_sha": "c27dacef0cb9b4fc5481b6ce068f891065621ed5",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.036",
+        "bytes": 25165824,
+        "git_blob_sha": "3afa96aa406a6f981bc0e6ee22c908fc0b3d648a",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.037",
+        "bytes": 25165824,
+        "git_blob_sha": "72f2f4f5e95a3f5632ef6ddc4ccd125214a517c4",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.038",
+        "bytes": 25165824,
+        "git_blob_sha": "88f534cbee87439eeaefc41b7469de238bb36705",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.039",
+        "bytes": 25165824,
+        "git_blob_sha": "5a84501877df47183ffb82169b60c4f7fbe10d7c",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.040",
+        "bytes": 25165824,
+        "git_blob_sha": "35306d9e0f3dda0b6efa1d776d545edfbe0c358a",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.041",
+        "bytes": 25165824,
+        "git_blob_sha": "56a88b40e1b44c1c62d804b0e02f99da3860dec1",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.042",
+        "bytes": 25165824,
+        "git_blob_sha": "09e6ec3f025fe8eac29ee7f554ee2cf798be7606",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.043",
+        "bytes": 25165824,
+        "git_blob_sha": "b0ca27a91f4942132c3bd20745a91048d2b2eaf5",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.044",
+        "bytes": 25165824,
+        "git_blob_sha": "5a583f04987b5c21470e555d57973bc49186e4e4",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.045",
+        "bytes": 25165824,
+        "git_blob_sha": "a137450981785abded6f09a3ddbe8e8dbae4d679",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.046",
+        "bytes": 25165824,
+        "git_blob_sha": "273db017b573adb4db3c70bdeb0dbfc5689e0937",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.047",
+        "bytes": 25165824,
+        "git_blob_sha": "9e40d3a1ac7a5393fb0b6c347bb041463df6670b",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.048",
+        "bytes": 25165824,
+        "git_blob_sha": "17970990955bf5323690236f16817a2c6d8ac2b1",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.049",
+        "bytes": 25165824,
+        "git_blob_sha": "8231e7359b48ea0fcf67ebea3d278898a54f4e6e",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.050",
+        "bytes": 25165824,
+        "git_blob_sha": "4b5ccfcbff49ebeb5d9822396a93d1b95d888d9e",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.051",
+        "bytes": 25165824,
+        "git_blob_sha": "d285b7d483a4ed81aede8c565fc16b3859066192",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.052",
+        "bytes": 25165824,
+        "git_blob_sha": "abd2672dc6462e7d4974e42cf593f92ef9e20625",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.053",
+        "bytes": 25165824,
+        "git_blob_sha": "0c080b8f83461081699855b315e55208f38089e7",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.054",
+        "bytes": 25165824,
+        "git_blob_sha": "b364e1fc4431c2f1b5d8779941ef5864c658d68b",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.055",
+        "bytes": 25165824,
+        "git_blob_sha": "1fa9a5dc9733cec9fd1bf8524fc55c5d0053c214",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.056",
+        "bytes": 25165824,
+        "git_blob_sha": "582c99e8dc02eff786da60b7fcc8e9ce035cff7a",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.057",
+        "bytes": 25165824,
+        "git_blob_sha": "9c82ed4c057cd2f890ef3eed9dfe5e0342c7a6be",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.058",
+        "bytes": 25165824,
+        "git_blob_sha": "28e9c058fb145efb1eede76b5c1c0e8499f4d02c",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.059",
+        "bytes": 25165824,
+        "git_blob_sha": "9c3278226d0c0d94c9b4c9c99d6cc3625696af6e",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.060",
+        "bytes": 25165824,
+        "git_blob_sha": "a143b4ad6905fdb31c57a083432e3e334c733169",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.061",
+        "bytes": 25165824,
+        "git_blob_sha": "0cc8572b05fa8b5abffde71c73b1884808c6b310",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.062",
+        "bytes": 25165824,
+        "git_blob_sha": "6992a2d61e876bf1af0e28f0208261941e06db4c",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.063",
+        "bytes": 25165824,
+        "git_blob_sha": "7f0e0762259be4a367e8c27b6b9817d78a23b296",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.064",
+        "bytes": 25165824,
+        "git_blob_sha": "77cc1073fc5a0863f9bed2c8f064945f396d642f",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.065",
+        "bytes": 25165824,
+        "git_blob_sha": "bdc49b6d5d89ee252fe6d21d2ac979b67fc5f3ae",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.066",
+        "bytes": 25165824,
+        "git_blob_sha": "0aa81a55090e701ec227d061f9a7de247f334360",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.067",
+        "bytes": 25165824,
+        "git_blob_sha": "1dc13cbf51948364a94dc694401b222bf3b79fd7",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.068",
+        "bytes": 25165824,
+        "git_blob_sha": "705a50b6e7dbde9932660a6026d5b174c03fb544",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.069",
+        "bytes": 25165824,
+        "git_blob_sha": "f1dfd0beecbf226c182fab8c75ca423573c60ff1",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.070",
+        "bytes": 25165824,
+        "git_blob_sha": "2d2da224a581812df5e034b7fec88934190f758e",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.071",
+        "bytes": 25165824,
+        "git_blob_sha": "f4dde3dbff69a32e5e55b5c43e2b040e1e4f76bb",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.072",
+        "bytes": 25165824,
+        "git_blob_sha": "848ec201198bd87310a15c70f5b95247cc35b6ad",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.073",
+        "bytes": 25165824,
+        "git_blob_sha": "5e798d20081c35e6e30115f9582569306271906a",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.074",
+        "bytes": 25165824,
+        "git_blob_sha": "9c141ff6b3b281a62af9108aaca9ba3f257b06ae",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.075",
+        "bytes": 25165824,
+        "git_blob_sha": "05cbbaafa5c1a9e159be7a8d051374ea732d7b61",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.076",
+        "bytes": 25165824,
+        "git_blob_sha": "e39f95586378cc846e39fd1ad647ef840743cc79",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.077",
+        "bytes": 25165824,
+        "git_blob_sha": "e24075ad165b40603e2dea5ecd55fff4ebabe8dc",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.078",
+        "bytes": 25165824,
+        "git_blob_sha": "a93ef1aebdc5ecd4ecc204e3a18486c313801dd9",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.079",
+        "bytes": 25165824,
+        "git_blob_sha": "3f4c9b8c8fdfe9907a81c0e9d7274461eb3b5f03",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.080",
+        "bytes": 25165824,
+        "git_blob_sha": "8a40ee0ed76b2b3041168e4a642a96b6472a3dc5",
+        "status": "pending"
+      },
+      {
+        "path": "相关材料/资料包/08_桌面项目与课程资料.zip.081",
+        "bytes": 3065328,
+        "git_blob_sha": "3dd7105643e705e9a7be7a7ec5b034eb7212ba4a",
+        "status": "pending"
+      }
+    ]
+  },
+  "resume": {
+    "workspace": "C:\\Users\\wardc\\Documents\\Codex\\2026-11-15\\github-2",
+    "document_state": "work/docs-upload-state.json",
+    "document_tree": "107d8a0c5b1e04814922403ca58040eb962409f6",
+    "parts_plan": "work/upload-parts.json",
+    "packages_directory": "work/publish/相关材料",
+    "verification_log": "work/restore-check.log",
+    "rules": [
+      "Reconnect the original Windows source environment; reuse existing verified packages.",
+      "Check the live main branch and preserve its changes.",
+      "Upload remaining document batches excluding their stale root README.",
+      "Verify each binary part by expected Git blob SHA before reporting it uploaded.",
+      "Publish complete archive README only after all 319 parts and metadata are present."
+    ]
+  }
+}

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>待补信息清单 · 陈晔—临汾（2026-10-08）</title>
+<style>
+  :root{
+    --ink:#1c1f24; --ink2:#454b55; --ink3:#7b838f;
+    --line:#e2e6ec; --line2:#eef1f5;
+    --bg:#f7f8fa; --card:#ffffff;
+    --accent:#1f5fd6; --accent-bg:#eef4ff;
+    --warn:#b4530a; --warn-bg:#fff7ec; --warn-line:#f0d3a8;
+    --ok:#1a7f4b; --ok-bg:#eefaf2; --ok-line:#bfe6cf;
+    --red:#c0392b; --red-bg:#fdf0ee;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; padding:40px 20px 80px;
+    background:var(--bg); color:var(--ink);
+    font-family:"Segoe UI","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+    font-size:15px; line-height:1.75;
+  }
+  .wrap{max-width:940px;margin:0 auto}
+  header{border-bottom:2px solid var(--ink);padding-bottom:18px;margin-bottom:8px}
+  h1{font-size:26px;margin:0 0 6px;letter-spacing:.3px}
+  .sub{color:var(--ink3);font-size:13.5px}
+  .howto{
+    background:var(--accent-bg);border:1px solid #cfe0fb;border-radius:10px;
+    padding:14px 18px;margin:20px 0 34px;font-size:14px;color:#1b4a9c
+  }
+  .howto b{color:#123c86}
+  h2{
+    font-size:18px;margin:38px 0 4px;padding-left:12px;
+    border-left:4px solid var(--ink);line-height:1.3
+  }
+  h2 .tag{font-size:12px;color:var(--ink3);font-weight:400;margin-left:8px}
+  .lead{color:var(--ink2);font-size:14px;margin:8px 0 18px}
+  .card{
+    background:var(--card);border:1px solid var(--line);border-radius:12px;
+    padding:20px 22px;margin:14px 0;
+  }
+  .q{font-weight:600;margin:0 0 8px;font-size:15.5px}
+  .q .n{
+    display:inline-block;min-width:24px;height:24px;line-height:24px;text-align:center;
+    background:var(--ink);color:#fff;border-radius:6px;font-size:13px;margin-right:9px;
+    font-weight:700;padding:0 6px;
+  }
+  .opts{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 4px}
+  .opt{
+    border:1px solid var(--line);border-radius:20px;padding:5px 14px;
+    font-size:13.5px;color:var(--ink2);background:#fbfcfd;white-space:nowrap
+  }
+  .opt::before{content:"○ ";color:var(--ink3)}
+  .hint{font-size:13px;color:var(--ink3);margin:6px 0 0}
+  .blank{
+    margin-top:12px;border:1px dashed #c7ced8;border-radius:8px;
+    background:#fcfdfe;min-height:52px;padding:10px 12px;
+    font-size:13px;color:#aab2bd
+  }
+  .blank.lg{min-height:96px}
+  .known{
+    background:var(--ok-bg);border:1px solid var(--ok-line);border-radius:10px;
+    padding:14px 18px;margin:12px 0;font-size:13.5px;color:#155c38
+  }
+  .known b{color:#0f4a2c}
+  .known ul{margin:8px 0 0;padding-left:20px}
+  .known li{margin:3px 0}
+  .warn{
+    background:var(--warn-bg);border:1px solid var(--warn-line);border-radius:10px;
+    padding:14px 18px;margin:16px 0;font-size:13.5px;color:#7a3c06
+  }
+  .warn b{color:#5e2d03}
+  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:13.5px;background:var(--card)}
+  th,td{border:1px solid var(--line);padding:9px 12px;text-align:left;vertical-align:top}
+  th{background:#f2f5f9;font-weight:600;color:var(--ink2);font-size:13px}
+  td.c{text-align:center;white-space:nowrap}
+  .must{color:var(--red);font-weight:600}
+  .action{
+    background:#1c1f24;color:#fff;border-radius:12px;padding:22px 24px;margin:20px 0 0
+  }
+  .action h3{margin:0 0 10px;font-size:16px;color:#fff}
+  .action p{margin:6px 0;font-size:14px;color:#d5dae2}
+  .action .hl{color:#ffd479;font-weight:600}
+  .action code{background:#2c3138;padding:2px 7px;border-radius:5px;color:#ffd479;font-size:13px}
+  footer{margin-top:46px;padding-top:16px;border-top:1px solid var(--line);color:var(--ink3);font-size:12.5px}
+  .sec-no{display:inline-block;background:var(--ink);color:#fff;border-radius:5px;padding:1px 8px;font-size:13px;margin-right:8px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>待补信息清单 · 陈晔 — 临汾</h1>
+  <div class="sub">第一轮 · 2026-10-08 ｜ 配套文件：<b>决策卡_陈晔临汾_第一轮_2026-10-08.html</b></div>
+</header>
+
+<div class="howto">
+  <b>怎么用</b>：第一部分（5 题）是<strong>勾选</strong>，30 秒能答完，<strong>价值最高</strong>；第二部分是口述，想到哪答哪，<strong>不用按顺序</strong>；第三部分是数据侧<strong>已确认的事实</strong>，你只需扫一眼看有没有错，<strong>不用答</strong>。<br>
+  → 直接在聊天里回我即可（回「1B 2A 3…」这样也行），我会立刻把决策卡更新到第二轮。
+</div>
+
+<h2><span class="sec-no">壹</span>30 秒速答 <span class="tag">只需选一个，5 题</span></h2>
+<div class="lead">这 5 条是数据侧<strong>测不出来</strong>、但决定整条线怎么读的关键点。</div>
+
+<div class="card">
+  <p class="q"><span class="n">1</span>今早 07:43 她发的那条<strong>链接</strong>，是什么？</p>
+  <div class="opts">
+    <span class="opt">A 赛事/任务通知</span>
+    <span class="opt">B 参考片/样片</span>
+    <span class="opt">C 现场素材</span>
+    <span class="opt">D 公众号文章</span>
+    <span class="opt">E 没打开</span>
+  </div>
+  <p class="hint">★ 这一条能改变的判断最多。如果没打开，先打开，再回来告诉我。</p>
+</div>
+
+<div class="card">
+  <p class="q"><span class="n">2</span>临汾那个<strong>群</strong>，到现在拉了吗？</p>
+  <div class="opts">
+    <span class="opt">A 一直没拉</span>
+    <span class="opt">B 拉了，我没留意</span>
+    <span class="opt">C 拉了，在别的号/别人拉给我</span>
+    <span class="opt">D 没群，选题是私发的</span>
+  </div>
+  <p class="hint">数据侧：全库查不到临汾 / AIGC / 视协相关群。若确实是 A，那「没拿到选题」就成立。</p>
+</div>
+
+<div class="card">
+  <p class="q"><span class="n">3</span>脚本初稿，写了吗、给她了吗？</p>
+  <div class="opts">
+    <span class="opt">A 没写</span>
+    <span class="opt">B 写了，没给</span>
+    <span class="opt">C 给了</span>
+    <span class="opt">D 写了一半</span>
+  </div>
+  <p class="hint">数据侧：09-19 你说「这两天给您初稿」，之后全库无交付记录，已过 19 天。</p>
+</div>
+
+<div class="card">
+  <p class="q"><span class="n">4</span>你 2025-12-25 那句「<strong>不要 ai 制作短片和电影</strong>」，是什么性质？</p>
+  <div class="opts">
+    <span class="opt">A 长期立场，我现在也不做</span>
+    <span class="opt">B 只针对当时那件事</span>
+    <span class="opt">C 随口说的，不作数</span>
+    <span class="opt">D 我改主意了</span>
+  </div>
+  <p class="hint">★ 这条决定「方向冲突」是真冲突还是我读错了。不要跳过。</p>
+</div>
+
+<div class="card">
+  <p class="q"><span class="n">5</span>去临汾的<strong>时间</strong>，现在定了吗？</p>
+  <div class="opts">
+    <span class="opt">A 没定</span>
+    <span class="opt">B 大致知道，没定死</span>
+    <span class="opt">C 定了（几号到几号）</span>
+  </div>
+  <p class="hint">她说「下个月」＝ 10 月。若已定，请补上具体日期，我会写进时间线。</p>
+</div>
+
+<h2><span class="sec-no">贰</span>六项口述 <span class="tag">想到哪答哪，不用全答</span></h2>
+<div class="lead">每项下面我写了「<strong>我想听到什么</strong>」，照着说就行。一句话也算。</div>
+
+<div class="card">
+  <p class="q"><span class="n">①</span>事情经过和当前阶段</p>
+  <p class="hint">我想听到：这件事<strong>是谁先提的</strong>、你怎么答应的、<strong>你当时想的是什么</strong>、现在卡在哪一步。<br>特别想知道：她说「拉群发选题」之后，<strong>你有没有催过 / 问过</strong>？</p>
+  <div class="blank lg">（想到哪写到哪）</div>
+</div>
+
+<div class="card">
+  <p class="q"><span class="n">②</span>你现在最想解决的<strong>一个</strong>问题</p>
+  <p class="hint">只写一个。可以是「我怕错过选题」、「我不知道该怎么跟老师说」、「我不想去」、「我想去但没头绪」……<br>★ 这一条决定后面所有建议的方向。</p>
+  <div class="blank">（一句话就够）</div>
+</div>
+
+<div class="card">
+  <p class="q"><span class="n">③</span>关键原话与明确约定</p>
+  <p class="hint">我手上已有的是（见第三部分），<strong>你只需要补我不知道的</strong>：<br>
+  例如她私下口头说过的、当面说过的、别的渠道（电话/微信语音/其他群）里说过的。</p>
+  <div class="blank lg">（补我不知道的原话，越原样越好）</div>
+</div>
+
+<div class="card">
+  <p class="q"><span class="n">④</span>你的角色、投入和回报</p>
+  <p class="hint">我想听到：这次<strong>算谁的事</strong>（她的政绩？你的作品？市里的任务？）、<strong>你要花多少时间</strong>、<strong>你能拿到什么</strong>（署名/作品/人情/机会/学分）。<br>参考：她之前的项目（云南澜沧行）你已裁定过是「<strong>她的政绩工程，你被迫去</strong>」——这次是不是同一类？</p>
+  <div class="blank lg">（三句话即可：算谁的 / 花多少 / 拿什么）</div>
+</div>
+
+<div class="card">
+  <p class="q"><span class="n">⑤</span>你希望得到什么，以及承受范围</p>
+  <p class="hint">我想听到：<strong>最好的结果</strong>是什么；<strong>最坏你能接受到哪一步</strong>。<br>例：能接受「只出脚本不出人」吗？能接受「去了但片子没署名」吗？能接受「临时改期」吗？</p>
+  <div class="blank lg">（最好 / 最坏各一句）</div>
+</div>
+
+<div class="card">
+  <p class="q"><span class="n">⑥</span>实际体验和别人的行为</p>
+  <p class="hint">我想听到：<strong>同门/同学里有没有人也被叫</strong>？<strong>她最近对别人是什么态度</strong>？<strong>你自己跟她打交道的感觉</strong>（累？怕？想表现？）。<br>这一项是校准「这是常规任务还是特殊对待」的。</p>
+  <div class="blank lg">（零散印象也行）</div>
+</div>
+
+<h2><span class="sec-no">叁</span>数据侧已确认（供你核对，不用答） <span class="tag">错了请直接说</span></h2>
+
+<div class="known">
+  <b>✅ 已核实，可直接引用</b>
+  <ul>
+    <li><b>会话量</b>：7,264 条 · 2025-02-24 19:20 → 2026-10-08 07:43 · 590 天 · 我发 65.3%</li>
+    <li><b>2025-12-25</b> 我：「…不要 ai 制作短片和电影」</li>
+    <li><b>2026-09-15</b> 她：「第二届大学生AIGC短片短剧征集…5天…9月20-25」「中国视协主办，山西省广电局和临汾宣传部，差旅、算力全包」「你准备下临汾」「能去吧」<br>→ 我：「能去没问题老师」「一定好好学！」</li>
+    <li><b>2026-09-17</b> 她：「根据临汾市里领导的指示，你先就山西文化题材的选题进行脚本的创作，下个月来山西临汾进行落地赛。我会在这两天拉群，把选题发到群里。」</li>
+    <li><b>2026-09-19</b> 我：「临汾的选题脚本我也在拟，这两天给您初稿老师」</li>
+    <li><b>2026-09-24</b> 我：「临汾脚本和洗照片我照常做，不会耽误老师」</li>
+    <li><b>2026-10-08 07:43</b> 她：[链接] +「去山西做东西要考慮运镜」</li>
+  </ul>
+</div>
+
+<div class="known">
+  <b>🎥 她发给你的 3 个视频（全库只有 3 条）</b>
+  <ul>
+    <li>2025-09-26 19:38 · 275 秒 · 课程/讲座录像</li>
+    <li><b>2026-05-29 15:20 · 87 秒 · 洞台村工作站施工进度</b>（已抽帧细读：建筑外观 / 走廊黑白花砖 / 卫生间 / 淋浴区 / 吊顶 / 天窗；她随后说「我安排他们在砌水池」）</li>
+    <li>2026-07-18 18:06 · 32 秒 · 同条「你哪天去？」→「你的架子联系关宇佳」</li>
+  </ul>
+</div>
+
+<div class="warn">
+  <b>⚠️ 数据侧的三个「查不到」</b>（不是判断，是事实，供你确认）
+  <ul>
+    <li><b>查不到</b>任何「脚本已交 / 已发」的记录</li>
+    <li><b>查不到</b>临汾 / AIGC / 视协相关群（近期新建群只有：就业交流群2 · 盒马中秋 · 北京家教信息 · 泰语学习群）</li>
+    <li><b>查不到</b>任何具体行程日期</li>
+  </ul>
+</div>
+
+<h2><span class="sec-no">肆</span>只需一件事 <span class="tag">如果现在只做一件事</span></h2>
+
+<div class="action">
+  <h3>打开她今早 07:43 发的那条链接</h3>
+  <p>成本 ≈ <span class="hl">1 分钟</span>。它能改变的判断最多 —— 现在整条线有 3 个缺口，全都卡在「不知道她要的是什么」。</p>
+  <p>打开后，只要告诉我一句：<code>是赛事通知</code> / <code>是参考片</code> / <code>是现场素材</code> / <code>别的</code>。</p>
+  <p style="margin-top:14px;color:#9aa3ae;font-size:13px">其余 5 题和六项口述都可以慢慢来 —— 但这一条，先做。</p>
+</div>
+
+<footer>
+  生成于 2026-10-08 ｜ 引擎裁定层：<b>05-纠偏层.md 三·补·50</b> ｜ 人物条目：<b>04-人际地图.md</b> ｜ 会话：<code>deerluna</code>
+</footer>
+
+</div>
+</body>
+</html>

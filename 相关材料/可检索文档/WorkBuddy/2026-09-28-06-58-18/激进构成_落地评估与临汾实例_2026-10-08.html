@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>激进构成 · 落地评估与临汾实例 · 2026-10-08</title>
+<style>
+  :root{
+    --ink:#16202e; --ink2:#3d4a5c; --ink3:#6b7789; --line:#e3e7ee;
+    --bg:#f6f7f9; --card:#ffffff; --accent:#1d4ed8; --accent-soft:#eef3fe;
+    --red:#c62828; --red-soft:#fdeceb; --amber:#b45309; --amber-soft:#fdf4e7;
+    --gray:#7b8794; --gray-soft:#f1f3f6; --green:#0f766e; --green-soft:#e9f6f4;
+    --purple:#6d28d9; --purple-soft:#f3f0fe;
+  }
+  *{box-sizing:border-box}
+  body{margin:0; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    font-size:15px; line-height:1.75; -webkit-font-smoothing:antialiased}
+  .wrap{max-width:960px; margin:0 auto; padding:40px 24px 80px}
+
+  header.top{border-bottom:2px solid var(--ink); padding-bottom:22px; margin-bottom:34px}
+  header.top h1{font-size:27px; margin:0 0 10px; letter-spacing:-.4px; font-weight:700}
+  header.top .meta{font-size:13px; color:var(--ink3); line-height:1.9}
+  header.top .meta b{color:var(--ink2); font-weight:600}
+
+  h2{font-size:20px; margin:44px 0 16px; padding-left:13px; border-left:4px solid var(--accent); font-weight:700; letter-spacing:-.2px}
+  h3{font-size:16px; margin:26px 0 10px; color:var(--ink); font-weight:700}
+  h3 .n{display:inline-block; min-width:24px; color:var(--accent); font-weight:700}
+  p{margin:9px 0}
+  ul,ol{margin:9px 0; padding-left:22px}
+  li{margin:5px 0}
+  code{background:var(--gray-soft); padding:1px 6px; border-radius:4px; font-size:13px;
+       font-family:ui-monospace,SFMono-Regular,Consolas,monospace; color:#0f3f8f}
+
+  .card{background:var(--card); border:1px solid var(--line); border-radius:12px; padding:20px 22px; margin:16px 0;
+        box-shadow:0 1px 3px rgba(16,24,40,.04)}
+  .card.hot{border-left:4px solid var(--red)}
+  .card.warn{border-left:4px solid var(--amber)}
+  .card.calm{border-left:4px solid var(--gray)}
+  .card.ok{border-left:4px solid var(--green)}
+  .card.key{border-left:4px solid var(--purple); background:linear-gradient(180deg,#fdfcff 0%,#fff 100%)}
+
+  .lead{font-size:15px; color:var(--ink2)}
+  .big{font-size:17px; font-weight:700; line-height:1.65}
+
+  table{width:100%; border-collapse:collapse; margin:14px 0; font-size:13.5px}
+  th,td{text-align:left; padding:9px 11px; border-bottom:1px solid var(--line); vertical-align:top}
+  th{background:var(--gray-soft); font-weight:600; color:var(--ink2); font-size:12.5px}
+  tr:last-child td{border-bottom:none}
+  td.num{font-variant-numeric:tabular-nums; white-space:nowrap}
+
+  .quote{background:var(--gray-soft); border-left:3px solid #c3cbd8; padding:10px 14px; margin:10px 0;
+         font-size:13.5px; color:var(--ink2); border-radius:0 6px 6px 0}
+  .quote .who{font-weight:600; color:var(--ink); font-size:12.5px}
+  .quote .t{color:var(--ink3); font-size:12px; margin-left:6px}
+
+  .kpi{display:flex; flex-wrap:wrap; gap:12px; margin:16px 0}
+  .kpi div{flex:1 1 150px; background:var(--card); border:1px solid var(--line); border-radius:10px; padding:13px 15px}
+  .kpi .k{font-size:12px; color:var(--ink3); margin-bottom:4px}
+  .kpi .v{font-size:19px; font-weight:700; font-variant-numeric:tabular-nums; letter-spacing:-.3px}
+  .kpi .v.red{color:var(--red)} .kpi .v.green{color:var(--green)} .kpi .v.purple{color:var(--purple)}
+
+  .num-list{counter-reset:c; list-style:none; padding-left:0; margin:14px 0}
+  .num-list>li{counter-increment:c; position:relative; padding:13px 16px 13px 54px; background:var(--card);
+               border:1px solid var(--line); border-radius:10px; margin:10px 0}
+  .num-list>li::before{content:counter(c); position:absolute; left:15px; top:13px; width:24px; height:24px;
+               background:var(--accent); color:#fff; border-radius:50%; text-align:center; line-height:24px;
+               font-size:13px; font-weight:700}
+  .num-list>li .ttl{font-weight:700; display:block; margin-bottom:3px}
+  .num-list>li .sub{font-size:13px; color:var(--ink2)}
+
+  .pill{display:inline-block; font-size:11.5px; padding:2px 8px; border-radius:5px; font-weight:600; margin-right:5px}
+  .p-keep{background:var(--green-soft); color:var(--green)}
+  .p-cut{background:var(--red-soft); color:var(--red)}
+  .p-mod{background:var(--amber-soft); color:var(--amber)}
+  .p-new{background:var(--accent-soft); color:var(--accent)}
+
+  .note{font-size:12.5px; color:var(--ink3); border-top:1px dashed var(--line); margin-top:14px; padding-top:10px}
+  .infer{font-size:12px; color:var(--amber); font-weight:600}
+
+  .two{display:flex; gap:16px; flex-wrap:wrap}
+  .two>div{flex:1 1 300px}
+  .three{display:flex; gap:14px; flex-wrap:wrap}
+  .three>div{flex:1 1 260px}
+
+  .bd{display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px; margin:16px 0}
+  .bd>div{border-radius:10px; padding:14px 16px; border:1px solid var(--line); background:var(--card)}
+  .bd .h{font-size:12.5px; font-weight:700; letter-spacing:.3px; margin-bottom:8px; padding-bottom:6px; border-bottom:1px solid var(--line)}
+  .bd .n1 .h{color:var(--red)} .bd .n2 .h{color:var(--amber)} .bd .n3 .h{color:var(--green)}
+  .bd ul{padding-left:18px; margin:0; font-size:13px}
+  .bd li{margin:6px 0}
+
+  .route{border:1px solid var(--line); border-radius:10px; padding:15px 17px; background:var(--card); margin:11px 0}
+  .route .rh{font-weight:700; margin-bottom:5px}
+  .route .rk{font-size:12.5px; color:var(--ink3); margin-top:7px}
+  .route.a{border-left:4px solid var(--gray)}
+  .route.b{border-left:4px solid var(--accent)}
+  .route.c{border-left:4px solid var(--purple)}
+
+  footer{margin-top:56px; padding-top:18px; border-top:1px solid var(--line); font-size:12.5px; color:var(--ink3)}
+  @media print{body{background:#fff} .card{box-shadow:none}}
+  @media (max-width:720px){.bd{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <h1>激进构成 · 落地评估与临汾实例</h1>
+  <div class="meta">
+    生成时间：<b>2026-10-08 12:05</b>　|　对象：《激进构成：开放式探索与方法进化》<br>
+    评估口径：能否挂进现有「自我理解引擎 / 溯因引擎」并<b>真的跑起来</b><br>
+    实例数据：本地微信索引库 <b>394,095 条</b>（只读 · 最新 10-08 11:46）· 陈晔会话 <b>7,271 条</b>
+  </div>
+</header>
+
+<!-- ============ 0 ============ -->
+<h2>0 · 一句话结论</h2>
+
+<div class="card key">
+  <p class="big" style="margin-top:0">这份设计<b>抓对了一个真实缺口</b>（我现有体系只会「答问题」，不会「发现该问什么」），
+  但它有<b>两处必须砍</b>：① 12 条候选路线 → 实际只需 3 条；② 有一条建议<b>越界</b>（劝你反过来改导师的任务定义）。</p>
+  <p style="margin-bottom:0">而且它最缺的东西——<b>真实数据</b>——现在有了。下面第 4 节用刚同步出来的数据把「陈晔—临汾」实例化，
+  结论是：<b>你一直在跟一个可能根本不存在的约束较劲。</b></p>
+</div>
+
+<div class="kpi">
+  <div><div class="k">五源迁移</div><div class="v green">4 保留 / 1 改造</div><div style="font-size:12px;color:var(--ink3)">Effectuation 最实用</div></div>
+  <div><div class="k">候选路线</div><div class="v red">12 → 3</div><div style="font-size:12px;color:var(--ink3)">砍掉 9 条</div></div>
+  <div><div class="k">越界建议</div><div class="v red">1 条</div><div style="font-size:12px;color:var(--ink3)">E. 改导师任务定义</div></div>
+  <div><div class="k">实例发现</div><div class="v purple">1 个假约束</div><div style="font-size:12px;color:var(--ink3)">「必须去满 5 天」</div></div>
+</div>
+
+<!-- ============ 1 ============ -->
+<h2>1 · 它抓对了什么：一个真实的缺口</h2>
+
+<p class="lead">我现有的「溯因引擎六步」是：定目标 → 我执检索 → ≥3 互斥假设 → 强制反证 + 判别观测 → 三档方案 → 最小信息行动。</p>
+
+<p>这六步有一个**结构性缺陷**：<b>它全程假设「问题已经给定了」</b>。我优化的是「怎么把这个问题答得更好」，
+而不是「这个问题本身是不是该问的」。</p>
+
+<table>
+  <thead><tr><th style="width:210px">这份设计补的</th><th>对应我现有体系的缺口</th><th style="width:74px">判定</th></tr></thead>
+  <tbody>
+    <tr><td><b>边界批判</b>（CSH）<br><span style="font-size:12px;color:var(--ink3)">区分「必要约束」与「假设性约束」</span></td>
+        <td>★ <b>最大的缺口</b>。我的六步里没有「这个前提是真的吗」这一步，导致我经常在**假约束**上做优化（临汾就是活例，见 §4.1）。</td>
+        <td><span class="pill p-keep">核心保留</span></td></tr>
+    <tr><td><b>开放式问题生成</b>（POET/OMNI）<br><span style="font-size:12px;color:var(--ink3)">不只答问题，还生成问题</span></td>
+        <td>我的「三档方案」是**在给定选项里选**，没有「重新表述问题」的能力。这一条补的正是这个。</td>
+        <td><span class="pill p-keep">保留</span></td></tr>
+    <tr><td><b>质量-多样性</b>（MAP-Elites）<br><span style="font-size:12px;color:var(--ink3)">好 × 不同的档案</span></td>
+        <td>我只有「最优解」，没有「不同维度上的好解」。对单人系统有用，但**不需要 12 条**。</td>
+        <td><span class="pill p-mod">改造后保留</span></td></tr>
+    <tr><td><b>效果逻辑</b>（Effectuation）<br><span style="font-size:12px;color:var(--ink3)">从手段出发 + 可承受损失</span></td>
+        <td>★ <b>最实用的一条</b>。我现有体系习惯从「目标」反推，而他的实际处境（钱紧、时间碎、权力不对称）更适合从「手上有什么」出发。</td>
+        <td><span class="pill p-keep">核心保留</span></td></tr>
+    <tr><td><b>方法搜索</b>（ADAS/DGM）<br><span style="font-size:12px;color:var(--ink3)">系统自己改自己</span></td>
+        <td>方向上对，但<b>现阶段是陷阱</b>——我连「找得准 / 更新对 / 能复盘」都还没跑稳（阶段 A 未开始），现在做方法自修改＝给没地基的房子加二层。</td>
+        <td><span class="pill p-cut">暂缓</span></td></tr>
+  </tbody>
+</table>
+
+<div class="card ok">
+  <b>一句话：这份设计的真正贡献，是把「问题生成」和「边界批判」两件缺失的能力补上了。</b>
+  这两件恰好是**最便宜、收益最大**的（不需要新工具、不需要训练模型，只需要在每轮分析前多问三句话）。
+  <div class="note">而它最重的两块（质量-多样性档案、方法自进化）反而是**现阶段最不该做的**——见下一节。</div>
+</div>
+
+<!-- ============ 2 ============ -->
+<h2>2 · 两处必须砍</h2>
+
+<div class="card hot">
+  <h3 style="margin-top:0">砍 ①：12 条候选路线 → 3 条</h3>
+  <p>文档 §4 给出了 12 条「候选路线」，还要做质量-多样性保留 4 条 + 再加 4 条。对一个<b>单人、数据驱动、每周跑几次</b>的系统来说，
+  这个规模会直接导致一件事：<b>流程表演</b>——花在「生成候选」上的力气，超过了执行任何一条的力气。</p>
+  <p style="margin-bottom:0">→ 落地版：<b>每轮 3 条</b>（保守 / 进取 / 非常规各一），且每条必须**写得出下一步的具体动作**。
+  写不出动作的路线，一律删掉。</p>
+</div>
+
+<div class="card hot">
+  <h3 style="margin-top:0">砍 ②：一条越界建议 —— 「推动合作方重新定义问题」</h3>
+  <div class="quote" style="border-left-color:#c62828;background:var(--red-soft)">
+    <span class="who">原文（§4 · 候选路线 E）</span><br>
+    推动合作方重新定义问题（例如，承认拍摄只是其中一环，真正目标为纪录片/作品集/科研）
+  </div>
+  <p><b>这条在你的处境里是高风险动作，不建议执行。</b>理由有三：</p>
+  <ul style="margin-bottom:0">
+    <li><b>权力结构不允许</b>：陈晔是导师 + 党支部书记，任务来自「临汾市里领导的指示」（她 09-17 原话）。
+    「重新定义问题」＝改上游给定的任务，这在这个结构里不是「激进」，是<b>越权</b>。</li>
+    <li><b>与已有裁定冲突</b>：引擎 `三·补·14 / 16` 已裁定你在导师线上的策略是「<b>换机会的代价</b>」（要的是入党），
+    主动改任务定义会直接消耗这个筹码。</li>
+    <li><b>时机不对</b>：你手上还欠着 <b>19 天没交的脚本</b>。此时提「重新定义问题」，会被读成「不做，先讲条件」。</li>
+  </ul>
+  <div class="note">
+    <b>可替代的合法版本</b>：不问「能不能改目标」，而问「<b>我需要出勤几天</b>」——
+    同样能松动约束，但问的是执行细节，不是任务定义。见 §4.2。
+  </div>
+</div>
+
+<!-- ============ 3 ============ -->
+<h2>3 · 落地版：五源 → 四件</h2>
+
+<table>
+  <thead><tr><th style="width:150px">来源</th><th style="width:170px">落地成什么</th><th>具体怎么用（每轮分析前问）</th></tr></thead>
+  <tbody>
+    <tr><td><b>CSH</b> · 边界批判</td><td><b>约束三栏</b></td>
+        <td>把当前处境里所有「必须」，强制分进三栏：<b>必要</b>（有原话/数据支撑）/ <b>假设性</b>（我以为是硬约束，但无证据）/ <b>可重估</b>（曾经是硬约束，现在可能不是）。<br>
+        → 每轮至少找出 <b>1 个「假设性约束」</b>，否则这一栏不算做过。</td></tr>
+    <tr><td><b>POET / OMNI</b> · 问题生成</td><td><b>三问</b></td>
+        <td>在回答「怎么办」之前，先问：① 这个问题<b>该不该问</b>？② 换个表述，答案会不会变？③ 如果只允许问一个，问哪个？</td></tr>
+    <tr><td><b>Effectuation</b> · 效果逻辑</td><td><b>手段清单 + 可承受损失</b></td>
+        <td>不写「我要达成 X」，改写「<b>我手上有 A / B / C，用它们能做出什么</b>」；
+        并且给每条路线标一个<b>可承受损失上限</b>（时间 / 钱 / 关系资本），超上限即放弃。</td></tr>
+    <tr><td><b>MAP-Elites</b> · 质量-多样性</td><td><b>三档路线（保守/进取/非常规）</b></td>
+        <td>固定 3 条，每条必须落到「下一步做什么」。<b>不追求最优，追求覆盖三种不同风险偏好。</b></td></tr>
+    <tr><td><b>ADAS / DGM</b> · 方法搜索</td><td><b>暂缓</b> <span class="pill p-cut">不进首版</span></td>
+        <td>理由：阶段 A（QMD 中文版检索）都还没装，先跑稳「找得准 → 更新对 → 能复盘」三件，再谈自进化。</td></tr>
+  </tbody>
+</table>
+
+<div class="card warn">
+  <b>落地方式：不新建系统，只加一道「前置检查」。</b>
+  把它做成 <code>05-纠偏层.md</code> 里的一条**强制流程**（挂在现有六步之前），而不是另建一套并行框架。
+  否则会重演「表设计已对、是没人往里写」的老问题——工具多一套，执行少一层。
+</div>
+
+<!-- ============ 4 ============ -->
+<h2>4 · 用真实数据跑一遍：陈晔—临汾</h2>
+
+<p class="lead">文档 §4 的实例化写的是「当前选题、分工、提交状态和最新日期仍待补充」。<b>现在不用补了</b>——今天上午的数据已经把这些全部说清。</p>
+
+<div class="card calm">
+  <b>先把事实摆出来（全部来自索引库，可逐条核对）</b>
+  <ul style="margin-bottom:0">
+    <li>她 09-15 15:42：「第二届大学生AIGC短片短剧征集推荐活动之落地训练营（<b>5天</b>）。计划安排在9月20-25日进行。」「中国视协主办，山西省广电局和临汾宣传部，<b>差旅、算力全包</b>」</li>
+    <li>她 09-17 08:24：「根据临汾市里领导的指示，你先就山西文化题材的选题进行<b>脚本的创作</b>，<b>下个月</b>来山西临汾进行落地赛。我会在这两天<b>拉群</b>，把选题发到群里。」</li>
+    <li>我 09-19 19:54：「临汾的选题脚本我也在拟，<b>这两天给您初稿</b>」← 至今 19 天未交</li>
+    <li>我 09-24 17:04：「我跟美术馆确认排班<b>周一到周四在</b>」</li>
+    <li>我 10-08 10:06：「能出，两分钟…<b>这周做一下</b>」（版画工坊视频）</li>
+  </ul>
+</div>
+
+<h3><span class="n">4.1</span> ★ 边界批判：找出那个假约束</h3>
+
+<div class="bd">
+  <div class="n1">
+    <div class="h">必要约束（有据）</div>
+    <ul>
+      <li>落地赛在 <b>10 月</b>（她 09-17「下个月」）</li>
+      <li>美术馆实习<b>周一至周四在岗</b>（我 09-24 自己报的）</li>
+      <li>版画工坊视频 <b>10-11</b> 前交（我 10-06 自己承诺）</li>
+      <li>脚本<b>确实没交</b>（全库无交付记录）</li>
+      <li>群<b>确实没拉</b>（全库无相关群）</li>
+    </ul>
+  </div>
+  <div class="n2">
+    <div class="h">★ 假设性约束（无证据）</div>
+    <ul>
+      <li><b>「我必须去满 5 天」</b> ← ★★ 最关键</li>
+      <li>「AIGC 短片必须我独立完成」</li>
+      <li>「必须先把脚本交了才能去」</li>
+      <li>「去临汾＝违背我 12-25 的划界」</li>
+    </ul>
+  </div>
+  <div class="n3">
+    <div class="h">可重估（曾经硬，现在松）</div>
+    <ul>
+      <li>「实习不能请假」——09-24 说的是「确认排班」，不等于「不可调」</li>
+      <li>「她只是给标准不是派活」——10:07 秒回规格已推翻</li>
+    </ul>
+  </div>
+</div>
+
+<div class="card key">
+  <b>★★★ 本轮最大的发现：「必须去满 5 天」很可能是你自己加上去的约束。</b>
+  <p>她 09-15 的原话是「落地训练营（<b>5天</b>）。计划安排在9月20-25日进行」——
+  这说的是<b>训练营这个活动的时长</b>，<b>不是</b>「你必须出勤 5 天」。</p>
+  <p>全库<b>没有任何一句</b>说「你必须全程参加」。而 09-17 她说的是「下个月来山西临汾进行<b>落地赛</b>」——
+  <b>落地赛</b>和<b>训练营</b>在她嘴里是两个词。</p>
+  <p style="margin-bottom:0">→ 如果实际只需去<b>落地赛那 1–2 天</b>，甚至正好落在周末，<b>整个「时间冲突」就不存在</b>。
+  你一直在跟一个<b>可能根本不存在的约束</b>较劲。</p>
+</div>
+
+<h3><span class="n">4.2</span> 问题生成：该问的不是「怎么办」，是这三个</h3>
+
+<ol class="num-list">
+  <li>
+    <span class="ttl">我到底需要出勤几天？</span>
+    <span class="sub">
+      这一问同时松动两个约束（时间 + 排班），且完全<b>不涉及任务定义</b>——它是执行细节，问得理直气壮。
+      这比文档里那条「推动合作方重新定义问题」安全一百倍，效果可能更好。
+    </span>
+  </li>
+  <li>
+    <span class="ttl">版画工坊视频和临汾短片，素材能不能复用？</span>
+    <span class="sub">
+      版画工坊视频要「实拍照片 + 现场素材 + 横屏」（10:07 她定的规格）；
+      临汾要「山西文化题材」。<b>如果两者都指向实拍影像资产，那就不是两件事，是一件事</b>——
+      一次拍摄、两处交付。这一问能省掉的可能是一半工作量。
+      <span class="infer">（推断：题材是否重合需你判断）</span>
+    </span>
+  </li>
+  <li>
+    <span class="ttl">如果只允许问一个问题，问哪个？</span>
+    <span class="sub">
+      → <b>问日期 + 出勤天数</b>。因为「群」和「脚本」都依赖它：
+      日期不定，排班无从处理；而脚本的选题要等群，群的节奏又跟着日期走。<b>它是唯一的根节点。</b>
+    </span>
+  </li>
+</ol>
+
+<h3><span class="n">4.3</span> 三档路线（不是 12 条）</h3>
+
+<div class="route a">
+  <div class="rh">A · 保守：先问清，再决定动不动实习</div>
+  <p style="margin:0">一条消息问三件事：<b>落地赛具体几号 / 我需要出勤几天 / 群拉了吗</b>。
+  拿到答案后再决定是否需要调排班。</p>
+  <div class="rk"><b>可承受损失上限</b>：1 条消息 · 0 关系成本。<b>风险</b>：如果她答「必须全程 5 天」，你等于把问题提前引爆，且此时手上还没有脚本。</div>
+</div>
+
+<div class="route b">
+  <div class="rh">B · 进取：用一个交付换自主权</div>
+  <p style="margin:0">先在本周末前<b>把版画工坊视频交出去</b>（已承诺，横屏 2 分钟），
+  用一次准时交付重建「说到做到」的记录；<b>再</b>带着作品去问日期与天数。
+  此时问「我能只去 2 天吗」，分量完全不同——你是在交完东西之后提执行细节。</p>
+  <div class="rk"><b>可承受损失上限</b>：本周末 2 天时间。<b>风险</b>：如果视频质量不达她标准，筹码反而变负。</div>
+</div>
+
+<div class="route c">
+  <div class="rh">C · 非常规：把临汾当成方法实验场，而不是任务</div>
+  <p style="margin:0">你的本专业视角是<b>经济学</b>，而任务是「山西文化题材的 AIGC 短片」。
+  与其把它当作业完成，不如<b>额外记录一层</b>：一个经济学背景的人，如何用 AIGC 讲一个县域文化故事——
+  这个过程本身就是<b>可对外的方法论产出</b>（课程 / 论文 / 作品集说明）。</p>
+  <div class="rk"><b>可承受损失上限</b>：每天 30 分钟记录，不影响交付。<b>风险</b>：分心导致主线交付质量下降——所以这条<b>只能在 A/B 都跑通之后</b>启动。</div>
+</div>
+
+<h3><span class="n">4.4</span> 可承受损失（Effectuation 的核心）</h3>
+
+<table>
+  <thead><tr><th style="width:130px">资源</th><th>上限</th><th>说明</th></tr></thead>
+  <tbody>
+    <tr><td><b>时间</b></td><td>本周末 2 天给视频；临汾本身待定</td><td>周一至周四已被实习占死，可动用的是周四晚 / 周五晚 / 周末</td></tr>
+    <tr><td><b>钱</b></td><td><b>¥0</b></td><td>她 09-15 明确说「差旅、算力全包」。<b>任何要你自己垫钱的方案，直接否决</b></td></tr>
+    <tr><td><b>关系资本</b></td><td>不动实习的「不可替代性」</td><td>实习是 09-24 刚录用的，此时请假最伤——所以优先用「调排班」而非「请假」</td></tr>
+    <tr><td><b>导师信任</b></td><td>只增不减</td><td>已欠脚本 19 天，本条余额很低。<b>不能再有第二次空头承诺</b></td></tr>
+  </tbody>
+</table>
+
+<h3><span class="n">4.5</span> 最小信息行动</h3>
+
+<div class="card key">
+  <b>一条消息，问三件事，成本 1 分钟：</b>
+  <div class="quote" style="margin-bottom:0">
+    「老师，运镜整理我这周跟版画工坊的视频一起给您。<br>
+    临汾那边想跟您确认一下：<b>落地赛具体是哪几天？我需要在场几天？</b>另外<b>群拉了吗</b>，我想早点看选题把脚本定下来。」
+  </div>
+  <div class="note">
+    <b>为什么这样写</b>：① 先给交付承诺（把「欠着」转成「在推进」）② 问日期与天数（松动假约束）
+    ③ 提群与脚本（把最弱的那个缺口主动摆上桌，而不是等她催）④ 全程只谈执行，不碰任务定义。
+  </div>
+</div>
+
+<!-- ============ 5 ============ -->
+<h2>5 · 与现有「溯因引擎六步」的关系</h2>
+
+<p class="lead">不是替代，是<b>在它前面加一道闸门</b>。</p>
+
+<table>
+  <thead><tr><th style="width:150px">顺序</th><th>动作</th><th style="width:170px">来自</th></tr></thead>
+  <tbody>
+    <tr><td><b>第 0 步</b> <span class="pill p-new">新增</span></td><td><b>约束三栏</b> —— 先把所有「必须」分类，标出至少 1 个假设性约束</td><td>CSH · 边界批判</td></tr>
+    <tr><td><b>第 0.5 步</b> <span class="pill p-new">新增</span></td><td><b>三问</b> —— 该不该问 / 换个表述 / 只问一个</td><td>POET · OMNI</td></tr>
+    <tr><td>第 1 步</td><td>定目标</td><td>原有</td></tr>
+    <tr><td>第 2 步</td><td>我执检索（按四根轴捞，不按问题里的词）</td><td>原有</td></tr>
+    <tr><td>第 3 步</td><td>≥3 互斥假设</td><td>原有</td></tr>
+    <tr><td>第 4 步</td><td>强制反证 + 判别观测</td><td>原有</td></tr>
+    <tr><td><b>第 5 步</b> <span class="pill p-mod">改造</span></td><td>三档方案 → <b>加「可承受损失上限」一栏</b></td><td>原有效果逻辑</td></tr>
+    <tr><td>第 6 步</td><td>最小信息行动</td><td>原有</td></tr>
+  </tbody>
+</table>
+
+<div class="card ok">
+  <b>净变化：加 2 步，改 1 栏。</b>
+  不新建系统、不加新工具、不训练模型 —— 纯流程改造，<b>今天就能用</b>。
+  <div class="note">落地位置：引擎 <code>05-纠偏层.md</code> 的流程说明 + 每轮分析的固定动作。无需动 <code>analysis.sqlite</code> 表结构。</div>
+</div>
+
+<!-- ============ 6 ============ -->
+<h2>6 · 红线</h2>
+
+<div class="card calm">
+  <ol style="margin:0">
+    <li><b>不越权改任务定义</b>：不得建议他向导师 / 主办方「重新定义问题」。可谈执行细节（出勤天数 / 素材复用），不可谈目标本身。</li>
+    <li><b>「假设性约束」是假设，不是事实</b>：「必须去满 5 天」目前是<b>推断</b>（基于她原话的两个词不同），判别物＝她回答的出勤天数。</li>
+    <li><b>路线数上限 3 条</b>：超过 3 条一律视为流程表演，砍到 3 条。</li>
+    <li><b>每条路线必须写出「下一步做什么」</b>：写不出具体动作的路线，直接删除。</li>
+    <li><b>不引入新工具</b>：本方案是流程改造，不新增依赖。方法自进化（ADAS/DGM）在阶段 A 完成前不启动。</li>
+    <li><b>数字口径</b>：全部来自本地索引库（只读），未上传第三方。</li>
+    <li><b>本文件为内部方法论台</b>，含个人隐私信息，不得外传。</li>
+  </ol>
+</div>
+
+<footer>
+  <b>激进构成 · 落地评估与临汾实例 · 2026-10-08</b><br>
+  对象：《激进构成：开放式探索与方法进化》　|　结论：<b>保留 4 源（CSH / POET / Effectuation / MAP-Elites 改造版），暂缓 1 源（ADAS/DGM），砍 2 处（12→3 条路线 · 越界建议）</b><br>
+  数据源：本地微信索引库 <b>394,095 条</b>（只读）· 引擎 <code>05-纠偏层.md</code> 三·补·50/51 · <code>analysis.sqlite</code><br>
+  本文件为内部方法论台，含个人隐私信息，不得外传。
+</footer>
+
+</div>
+</body>
+</html>
