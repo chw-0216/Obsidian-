@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<title>人格偏移 × 丝网印刷交互</title>
+<style>
+:root{
+  --bg:#f3efe5; --ink:#173c2f; --red:#c93b2e; --paper:#fffaf0; --muted:#7b806f;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif}
+.wrap{max-width:760px;margin:auto;padding:24px 18px 60px}
+.hero{padding:24px 0 12px}
+.kicker{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+h1{font-size:34px;line-height:1.05;margin:8px 0 12px}
+.lead{font-size:15px;line-height:1.7;color:#4e5a51}
+.card{background:var(--paper);border:1px solid #d8d0bf;border-radius:18px;padding:18px;margin:16px 0;box-shadow:0 8px 24px rgba(0,0,0,.04)}
+.qtitle{font-weight:700;margin-bottom:10px}
+.scale{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.scale button{appearance:none;border:1px solid #c9c1b1;background:#fff;border-radius:12px;padding:12px 4px;font-size:13px;color:var(--ink)}
+.scale button.active{background:var(--ink);color:#fff;border-color:var(--ink)}
+.small{font-size:12px;color:var(--muted);margin-top:8px}
+.progress{height:8px;border-radius:20px;background:#ddd5c6;overflow:hidden;margin:12px 0 22px}
+.bar{height:100%;background:var(--red);width:0;transition:.2s}
+.actions{display:flex;gap:10px;position:sticky;bottom:12px}
+.actions button{flex:1;padding:14px 16px;border:0;border-radius:14px;font-size:16px;font-weight:700}
+.primary{background:var(--red);color:#fff}
+.secondary{background:var(--ink);color:#fff}
+.result{display:none}
+.type{font-size:48px;font-weight:900;letter-spacing:.08em}
+.dim{margin:15px 0}
+.dimrow{display:flex;justify-content:space-between;font-weight:700}
+.track{height:14px;background:#e6dece;border-radius:20px;overflow:hidden;margin-top:7px;position:relative}
+.fill{height:100%;background:var(--ink)}
+.mid{position:absolute;left:50%;top:0;bottom:0;width:2px;background:#fff9}
+.canvas{position:relative;height:360px;background:#f7f0df;border-radius:18px;overflow:hidden;border:1px solid #d6c9b6}
+.layer{position:absolute;inset:58px 80px;border:4px solid currentColor;mix-blend-mode:multiply;opacity:.45;transform-origin:center;border-radius:12px}
+.legend{display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:12px;margin-top:12px}
+.chip{padding:8px 10px;border:1px solid #d8d0bf;border-radius:999px;background:#fff}
+.note{font-size:13px;line-height:1.65;color:#5d655e}
+.footer{font-size:12px;color:var(--muted);margin-top:28px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<section id="quiz">
+<div class="hero">
+<div class="kicker">RURAL AESTHETIC LAB · PERSONALITY OFFSET</div>
+<h1>人格偏移 × 丝网印刷</h1>
+<p class="lead">不是把你塞进一个标签，而是把四个维度的“偏离程度”转成可印刷的视觉参数：位移、旋转、透明度、密度与套色关系。</p>
+<div class="progress"><div class="bar" id="bar"></div></div>
+</div>
+<div id="questions"></div>
+<div class="actions"><button class="primary" onclick="showResult()">生成我的丝网人格图</button></div>
+</section>
+
+<section class="result" id="result">
+<div class="hero">
+<div class="kicker">YOUR PRINT PERSONALITY</div>
+<div class="type" id="type">INTJ</div>
+<p class="lead" id="subtitle"></p>
+</div>
+
+<div class="card">
+<h3>四维偏离度</h3>
+<div id="dims"></div>
+<p class="note">50% 是中点。离中点越远，代表该维度越“偏”；视觉上会产生更明显的错位、角度、透明度或密度变化。</p>
+</div>
+
+<div class="card">
+<h3>8版叠印预览</h3>
+<div class="canvas" id="canvas"></div>
+<div class="legend">
+<div class="chip">E / I：水平位移</div>
+<div class="chip">S / N：垂直位移</div>
+<div class="chip">T / F：旋转角度</div>
+<div class="chip">J / P：透明度 / 密度</div>
+</div>
+</div>
+
+<div class="card">
+<h3>你的印刷参数</h3>
+<div id="params" class="note"></div>
+</div>
+
+<div class="actions">
+<button class="secondary" onclick="restart()">重新测试</button>
+<button class="primary" onclick="saveText()">保存结果文本</button>
+</div>
+<div class="footer">单文件离线版 · 可直接在手机浏览器运行</div>
+</section>
+</div>
+
+<script>
+const qs = [
+["在人多的环境里，我通常会更有能量。","EI",1],
+["长时间独处后，我往往觉得恢复了状态。","EI",-1],
+["我更愿意先和别人讨论，再形成自己的想法。","EI",1],
+["面对陌生人，我通常不会主动开启交流。","EI",-1],
+
+["我更关注真实、具体、可验证的细节。","SN",-1],
+["我经常从一个细节联想到更大的可能性。","SN",1],
+["相比抽象概念，我更信任经验和事实。","SN",-1],
+["我很容易被隐喻、象征和未来可能性吸引。","SN",1],
+
+["做决定时，我通常先判断是否合理、有效。","TF",-1],
+["即使逻辑正确，我也会很在意它是否伤害人的感受。","TF",1],
+["争论中，我更容易指出观点漏洞，而不是照顾气氛。","TF",-1],
+["我会根据具体的人和关系调整自己的决定。","TF",1],
+
+["我喜欢事情有明确计划、节点和完成感。","JP",-1],
+["临近截止前保留调整空间，会让我更舒服。","JP",1],
+["确定下来比一直保留选项更让我安心。","JP",-1],
+["我喜欢边做边改，而不是一开始就定死。","JP",1]
+];
+const answers = new Array(qs.length).fill(0);
+const qbox = document.getElementById('questions');
+qs.forEach((q,i)=>{
+ const c=document.createElement('div'); c.className='card';
+ c.innerHTML=`<div class="qtitle">${i+1}. ${q[0]}</div>
+ <div class="scale">${[1,2,3,4,5].map(v=>`<button onclick="ans(${i},${v},this)">${v}</button>`).join('')}</div>
+ <div class="small">1 = 非常不同意　3 = 中性　5 = 非常同意</div>`;
+ qbox.appendChild(c);
+});
+function ans(i,v,el){
+ answers[i]=v;
+ [...el.parentNode.children].forEach(b=>b.classList.remove('active'));
+ el.classList.add('active');
+ document.getElementById('bar').style.width=(answers.filter(Boolean).length/qs.length*100)+'%';
+}
+function scoreDim(code){
+ let sum=0,n=0;
+ qs.forEach((q,i)=>{
+   if(q[1]===code && answers[i]){
+     const centered=(answers[i]-3)/2; // -1..1
+     sum += centered*q[2]; n++;
+   }
+ });
+ return n ? sum/n : 0;
+}
+function clamp(x,a,b){return Math.max(a,Math.min(b,x))}
+function showResult(){
+ if(answers.some(v=>!v)){ alert("请先完成全部 16 题"); return; }
+ const e=scoreDim("EI"), n=scoreDim("SN"), f=scoreDim("TF"), p=scoreDim("JP");
+ const type=(e>=0?"E":"I")+(n>=0?"N":"S")+(f>=0?"F":"T")+(p>=0?"P":"J");
+ document.getElementById('type').textContent=type;
+ document.getElementById('subtitle').textContent="你的结果不是四个二元开关，而是四条连续轴上的位置。";
+ const dims=[
+  ["E","I",e],["N","S",n],["F","T",f],["P","J",p]
+ ];
+ const box=document.getElementById('dims'); box.innerHTML='';
+ dims.forEach(([a,b,s])=>{
+   const pct=Math.round((s+1)*50);
+   const div=document.createElement('div'); div.className='dim';
+   div.innerHTML=`<div class="dimrow"><span>${a} ${pct}%</span><span>${b} ${100-pct}%</span></div>
+   <div class="track"><div class="fill" style="width:${pct}%"></div><div class="mid"></div></div>`;
+   box.appendChild(div);
+ });
+ drawLayers(e,n,f,p);
+ const mm=x=>Math.round(Math.abs(x)*18);
+ const deg=x=>Math.round(x*12);
+ const opa=x=>(0.28+Math.abs(x)*0.5).toFixed(2);
+ document.getElementById('params').innerHTML=
+   `水平套色位移：${e>=0?"向右":"向左"} ${mm(e)} mm<br>`+
+   `垂直套色位移：${n>=0?"向上":"向下"} ${mm(n)} mm<br>`+
+   `旋转偏差：${deg(f)}°<br>`+
+   `主层透明度：${opa(p)}<br>`+
+   `综合偏离度：${Math.round((Math.abs(e)+Math.abs(n)+Math.abs(f)+Math.abs(p))/4*100)}%`;
+ document.getElementById('quiz').style.display='none';
+ document.getElementById('result').style.display='block';
+ window.scrollTo(0,0);
+}
+function drawLayers(e,n,f,p){
+ const cv=document.getElementById('canvas'); cv.innerHTML='';
+ const colors=["#cc3a2d","#1d5c48","#e0a62b","#355aa5","#9f3f77","#258b8b","#6d6a2b","#3a3a35"];
+ for(let i=0;i<8;i++){
+   const d=document.createElement('div'); d.className='layer'; d.style.color=colors[i];
+   const k=(i-3.5)/3.5;
+   const x=e*30*k, y=-n*28*k, r=f*12*k;
+   const sc=1 + p*0.055*k;
+   d.style.transform=`translate(${x}px,${y}px) rotate(${r}deg) scale(${sc})`;
+   d.style.opacity=String(clamp(.28+Math.abs(p)*.34+Math.abs(k)*.05,.2,.72));
+   if(i%2===1){d.style.borderRadius='50% 12px 50% 12px'}
+   cv.appendChild(d);
+ }
+}
+function restart(){location.reload()}
+function saveText(){
+ const t=document.getElementById('type').textContent;
+ const p=document.getElementById('params').innerText;
+ const blob=new Blob([`人格偏移 × 丝网印刷\n类型：${t}\n\n${p}`],{type:"text/plain;charset=utf-8"});
+ const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=`${t}-丝网人格结果.txt`; a.click();
+}
+</script>
+</body>
+</html>

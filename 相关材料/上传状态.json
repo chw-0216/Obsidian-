@@ -6,7 +6,10 @@
   "uploaded": {
     "browsable_documents": 1321,
     "document_batches": 33,
-    "archive_parts": 0
+    "archive_parts": 0,
+    "cloud_text_sources": 17,
+    "cloud_text_copies": 16,
+    "total_readable_documents": 1337
   },
   "prepared_locally": {
     "unique_material_files": 18980,
